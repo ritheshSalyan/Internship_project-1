@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SigninPage extends StatefulWidget {
@@ -7,10 +8,27 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPageState extends State<SigninPage> {
   static final _formkey = GlobalKey<FormState>();
+  static final _popupformkey = GlobalKey<FormState>();
 
   static String _email = "";
   static String _password = "";
+  static String _otpEmail = "";
 
+  static bool _otpvalidate() {
+    final otpform = _popupformkey.currentState;
+
+    if (otpform.validate()) {
+      otpform.save();
+      return true;
+    }
+    return false;
+  }
+
+  static otpValidation() async {
+    if (_otpvalidate()) {
+      print("$_otpEmail");
+    }
+  }
 
   static bool _validate() {
     final form = _formkey.currentState;
@@ -23,31 +41,27 @@ class _SigninPageState extends State<SigninPage> {
   }
 
   static validateAndSubmit() async {
-
-    if(_validate()){
+    if (_validate()) {
       print("hello");
-      print("$_email");
-      print("$_password");
     }
   }
-
 
   final emailField = TextFormField(
     keyboardType: TextInputType.emailAddress,
     obscureText: false,
-    validator: (value){
-      if(value.isEmpty){
+    validator: (value) {
+      if (value.isEmpty) {
         return "Email field cannot be empty";
       }
       return null;
     },
-    onSaved: (value){
+    onSaved: (value) {
       _email = value;
     },
     decoration: InputDecoration(
       prefixIcon: Icon(
         Icons.email,
-        color: Colors.grey,
+        color: Colors.black,
       ),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -55,28 +69,27 @@ class _SigninPageState extends State<SigninPage> {
       hintText: "you@example.com",
       labelText: "Email address",
       labelStyle: TextStyle(color: Colors.green),
-      hintStyle: TextStyle(color: Colors.black),
+      hintStyle: TextStyle(color: Colors.grey),
     ),
   );
 
   final passwordField = TextFormField(
     obscureText: true,
-    validator: (value){
-      if(value.isEmpty){
+    validator: (value) {
+      if (value.isEmpty) {
         return "password cannot be empty";
-      }
-      else if(value.length < 8){
+      } else if (value.length < 8) {
         return "password must be atleast 8 digits";
       }
       return null;
     },
-    onSaved: (value){
+    onSaved: (value) {
       _password = value;
     },
     decoration: InputDecoration(
       prefixIcon: Icon(
         Icons.lock,
-        color: Colors.grey,
+        color: Colors.black,
       ),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -84,7 +97,7 @@ class _SigninPageState extends State<SigninPage> {
       hintText: "Passowrd",
       labelText: "Password",
       labelStyle: TextStyle(color: Colors.green),
-      hintStyle: TextStyle(color: Colors.black),
+      hintStyle: TextStyle(color: Colors.grey),
     ),
   );
 
@@ -108,47 +121,125 @@ class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            "Sign In",
-            style: TextStyle(color: Colors.black),
-          ),
-          elevation: 0.0,
-          automaticallyImplyLeading: true,
-          backgroundColor: Colors.green),
-      body: Center(
-          child: Container(
-              color: Colors.transparent,
-              width: double.infinity,
-              height: double.infinity,
-              padding: EdgeInsets.all(20),
-              child: Form(
-                key: _formkey,
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 100),
-                    ),
-                    emailField,
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    passwordField,
-                    FlatButton(
-                      padding: EdgeInsets.only(left: 70),
-                      onPressed: () {},
-                      child: Text(
-                        "Forgot password ?",
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    loginButton
-                  ],
+        appBar: AppBar(
+            title: Text(
+              "Sign In",
+              style: TextStyle(color: Colors.black),
+            ),
+            elevation: 0.0,
+            automaticallyImplyLeading: true,
+            backgroundColor: Colors.green),
+        body: Center(
+            child: Container(
+          color: Colors.transparent,
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.all(20),
+          child: Form(
+            key: _formkey,
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 50),
                 ),
-              ),
-      )));
+                emailField,
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                passwordField,
+                FlatButton(
+                  padding: EdgeInsets.only(left: 70),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Forget Password"),
+                            content: Form(
+                                key: _popupformkey,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Container(
+                                            child: TextFormField(
+                                              validator: (value) =>
+                                                  value.isEmpty
+                                                      ? "Email cannot be empty"
+                                                      : null,
+                                              onSaved: (value) =>
+                                                  _otpEmail = value,
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                  prefixIcon: Icon(Icons.email,
+                                                      color: Colors.black),
+                                                  hintText:
+                                                      "Enter email address",
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.grey),
+                                                  labelText: "Email Address",
+                                                  labelStyle: TextStyle(
+                                                      color: Colors.green),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(10),
+                                                      borderSide: BorderSide(
+                                                          color: Colors.green,
+                                                          width: 2.0)),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green))),
+                                            ),
+                                          )),
+                                      Padding(
+                                          padding: EdgeInsets.only(top: 20),
+                                          child: ButtonTheme(
+                                            minWidth: 300,
+                                            height: 50,
+                                            buttonColor: Color(0xffffffff),
+                                            child: OutlineButton(
+                                                onPressed: otpValidation,
+                                                child: Text(
+                                                  "Send OTP",
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                                borderSide: BorderSide(
+                                                    color: Colors.green,
+                                                    width: 2.0)),
+                                          ))
+                                    ],
+                                  ),
+                                )),
+                          );
+                        });
+                  },
+                  child: Text(
+                    "Forgot password ?",
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                loginButton
+              ],
+            ),
+          ),
+        )));
   }
 }
