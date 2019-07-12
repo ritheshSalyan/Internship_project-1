@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/home.dart';
+import 'package:startupreneur/timeline/timeline.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -154,14 +155,22 @@ class _SignupPageState extends State<SignupPage> {
     ),
   );
 
-  final signUpButton = ButtonTheme(
+  Widget signUpButton(BuildContext context)=> ButtonTheme(
     minWidth: 300,
     height: 50,
     buttonColor: Color.fromRGBO(255, 116, 23, 1),
     child: RaisedButton(
       elevation: 5,
       color: Colors.green,
-      onPressed: validateAndSubmit,
+      // onPressed: validateAndSubmit,
+      onPressed: (){
+              // validateAndSubmit(context);
+             Navigator.of(context).push( MaterialPageRoute(
+                builder: (context) => new TimelinePage(title:"Title"),
+              ),
+            );
+            
+      },
       child: Text("Sign Up", style: TextStyle(color: Colors.black,fontSize: 12),),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
@@ -283,7 +292,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              signUpButton,
+              signUpButton(context),
               SizedBox(
                 height: 20,
               )
