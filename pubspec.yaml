@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flare_flutter: 1.5.4
-
+  timeline_list: ^0.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
