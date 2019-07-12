@@ -11,27 +11,16 @@ class _PageStarter1State extends State<PageStarter1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
       body: Container(
-        child: SingleChildScrollView(
+        child: Center(
           child: Column(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 150),
               ),
-              Center(
-                child: Text(
-                  "WELCOME",
-                  style: TextStyle(
-                      // color: Colors.green,
-                      fontSize: 20,
-                      fontStyle: FontStyle.italic),
-                ),
-              ),
-              FlareActor(
-                'assets/animation/arrow.flr',
-                animation: 'Arrow',
-                fit: BoxFit.contain,
+              Text(
+                "data",
+                style: TextStyle(color: Colors.green),
               ),
             ],
           ),

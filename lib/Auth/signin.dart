@@ -72,11 +72,11 @@ class _SigninPageState extends State<SigninPage> {
       // ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 5.0),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
       hintText: "you@example.com",
       labelText: "Email address",
-      labelStyle: TextStyle(fontSize: 12),
+      labelStyle: TextStyle(color:Colors.white,fontSize: 12),
       hintStyle: TextStyle(fontSize: 12),
     ),
   );
@@ -105,11 +105,11 @@ class _SigninPageState extends State<SigninPage> {
       // ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 5.0),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
       hintText: "Passowrd",
       labelText: "Password",
-      labelStyle: TextStyle(fontSize: 12),
+      labelStyle: TextStyle(color:Colors.white,fontSize: 12),
       hintStyle: TextStyle(fontSize: 12),
     ),
   );

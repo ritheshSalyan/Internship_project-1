@@ -36,7 +36,7 @@ class _homePageState extends State<homePage> {
                 height: 50,
                 child: RaisedButton(
                   elevation: 5,
-                  color: Color.fromRGBO(129, 199, 132, 1),
+                  color: Colors.green,
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -44,7 +44,7 @@ class _homePageState extends State<homePage> {
                       ),
                     );
                   },
-                  child: Text("Sign in", style: TextStyle(color: Colors.black)),
+                  child: Text("Sign in", style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -64,12 +64,12 @@ class _homePageState extends State<homePage> {
                 buttonColor: Color(0xffffffff),
                 child: RaisedButton(
                   elevation: 5,
-                  color: Color.fromRGBO(129, 199, 132, 1),
+                  color: Colors.green,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => new SignupPage()));
                   },
-                  child: Text("Sign up", style: TextStyle(color: Colors.black)),
+                  child: Text("Sign up", style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),

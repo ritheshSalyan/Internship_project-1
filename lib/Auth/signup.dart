@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/home.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -45,15 +46,11 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => fname = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.black),
+      prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
       hintText: "eg. Bob",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+      hintStyle: TextStyle(color: Colors.white,fontSize: 12),
       labelText: "Full Name *",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      labelStyle: TextStyle( color: Colors.white,fontSize: 12),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -66,15 +63,12 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => email = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.email, color: Colors.black),
+      prefixIcon: Icon(Icons.email, color: Colors.green),
       hintText: "you@example.com",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Email Address *",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+     
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -94,15 +88,12 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => mobile = value,
     keyboardType: TextInputType.phone,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.phone_android, color: Colors.black),
+      prefixIcon: Icon(Icons.phone_android, color: Colors.green),
       hintText: "9485621288",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Mobile Number *",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -114,15 +105,12 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => institutionOrCompany = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.business, color: Colors.black),
+      prefixIcon: Icon(Icons.business, color: Colors.green),
       hintText: "bob school of AI",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Institution/Company",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -134,15 +122,12 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => typeOfOccupations = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.work, color: Colors.black),
+      prefixIcon: Icon(Icons.work, color: Colors.green),
       hintText: "eg Student,business etc",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Occupation *",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -154,17 +139,14 @@ class _SignupPageState extends State<SignupPage> {
     onSaved: (value) => referalCodeFromFriend = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
-      prefixIcon: Icon(Icons.cloud_circle, color: Colors.black),
+      prefixIcon: Icon(Icons.cloud_circle, color: Colors.green),
       hintText: "Ax875b",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       helperText: "6 DIGIT CODE FROM YOUR FRIEND",
       helperStyle: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
       labelText: "Referal code",
-      labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -195,13 +177,15 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
       appBar: AppBar(
-          title: Text(
-            "Sign up",
-            style: TextStyle(color: Colors.white,fontSize: 14),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.of(context).pop(
+                 MaterialPageRoute(builder: (context)=>homePage()));
+            },
           ),
-          backgroundColor: Colors.green),
+          backgroundColor: Color(0x000000)),
       body: Container(
         padding: EdgeInsets.all(20),
         width: 600,
@@ -234,11 +218,11 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: InputDecoration(
                   prefixIcon: Icon(
                     Icons.help_outline,
-                    color: Colors.black,
+                    color: Colors.green,
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.green, width: 2.0),
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
                 ),
                 hint: Text(
