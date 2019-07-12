@@ -160,7 +160,7 @@ class _SignupPageState extends State<SignupPage> {
     buttonColor: Color.fromRGBO(255, 116, 23, 1),
     child: RaisedButton(
       elevation: 5,
-      color: Color.fromRGBO(129, 199, 132, 1),
+      color: Colors.green,
       onPressed: validateAndSubmit,
       child: Text("Sign Up", style: TextStyle(color: Colors.black,fontSize: 12),),
       shape: RoundedRectangleBorder(
@@ -227,7 +227,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 hint: Text(
                   "Select Your gender",
-                  style: TextStyle(color: Colors.green,fontSize: 12),
+                  style: TextStyle(color: Colors.white,fontSize: 12),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -240,6 +240,7 @@ class _SignupPageState extends State<SignupPage> {
                     value: value,
                     child: Text(
                       value,
+                      style: TextStyle(fontSize: 12),
                     ),
                   );
                 }).toList(),

@@ -21,14 +21,14 @@ class _homePageState extends State<homePage> {
               Padding(
                 padding: EdgeInsets.only(top: 50),
               ),
-              // Container(
-              //     child: Image.asset(
-              //   "assets/Images/Capture.PNG",
-              //   width: MediaQuery.of(context).size.width,
-              //   height: 40,
-              // )),
+              Container(
+                  child: Image.asset(
+                "assets/Images/logo.png",
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+              )),
               Padding(
-                padding: EdgeInsets.only(top: 200),
+                padding: EdgeInsets.only(top: 120),
               ),
               ButtonTheme(
                 buttonColor: Color(0xffffffff),
