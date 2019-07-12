@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/Auth/signup.dart';
 
-
 class homePage extends StatefulWidget {
   @override
   _homePageState createState() => _homePageState();
@@ -16,18 +15,18 @@ class _homePageState extends State<homePage> {
         width: double.infinity,
         height: double.infinity,
         child: Center(
+            child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 50),
               ),
               Container(
-                child: Image.asset(
-                   "assets/Images/Capture.PNG",
-                   width: MediaQuery.of(context).size.width,
-                   height: 40,
-                )
-              ),
+                  child: Image.asset(
+                "assets/Images/Capture.PNG",
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+              )),
               Padding(
                 padding: EdgeInsets.only(top: 200),
               ),
@@ -35,22 +34,22 @@ class _homePageState extends State<homePage> {
                 buttonColor: Color(0xffffffff),
                 minWidth: 300,
                 height: 50,
-                child: OutlineButton(
+                child: RaisedButton(
+                  elevation: 5,
+                  color: Color.fromRGBO(129, 199, 132, 1),
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=>new SigninPage())
-                    );
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => new SigninPage(),),);
                   },
-                  child: Text("Sign in",
-                      style: TextStyle(color: Colors.black)),
+                  child: Text("Sign in", style: TextStyle(color: Colors.black)),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),),
-                  borderSide: BorderSide(
-                    width: 1.5,
-                    color: Colors.green,
-                    style: BorderStyle.solid,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  
+                  // borderSide: BorderSide(
+                  //   width: 1.5,
+                  //   color: Colors.green,
+                  //   style: BorderStyle.solid,
+                  // ),
                 ),
               ),
               Padding(
@@ -60,28 +59,30 @@ class _homePageState extends State<homePage> {
                 minWidth: 300,
                 height: 50,
                 buttonColor: Color(0xffffffff),
-                child: OutlineButton(
+                child: RaisedButton(
+                  elevation: 5,
+                  color: Color.fromRGBO(129, 199, 132, 1),
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=>new SignupPage())
-                    );
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => new SignupPage()));
                   },
-                  child: Text(
-                    "Sign up",
-                      style: TextStyle(color: Colors.black)),
+                  child: Text("Sign up", style: TextStyle(color: Colors.black)),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),),
-                  borderSide: BorderSide(
-                    width: 1.5,
-                     color: Colors.green,
-                    style: BorderStyle.solid,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  
+                  // borderSide: BorderSide(
+                  //   width: 1.5,
+                  //    color: Colors.green,
+                  //   style: BorderStyle.solid,
+                  // ),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               )
             ],
           ),
-        ),
+        )),
       ),
     );
   }

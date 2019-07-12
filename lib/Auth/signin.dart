@@ -63,13 +63,18 @@ class _SigninPageState extends State<SigninPage> {
         Icons.email,
         color: Colors.black,
       ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
+      ),
       focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.green, width: 2.0)),
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
+      ),
       hintText: "you@example.com",
       labelText: "Email address",
-      labelStyle: TextStyle(color: Colors.green),
-      hintStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: Colors.green, fontSize: 12),
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
     ),
   );
 
@@ -91,13 +96,18 @@ class _SigninPageState extends State<SigninPage> {
         Icons.lock,
         color: Colors.black,
       ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
+      ),
       focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.green, width: 2.0)),
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.green, width: 2.0),
+      ),
       hintText: "Passowrd",
       labelText: "Password",
-      labelStyle: TextStyle(color: Colors.green),
-      hintStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: Colors.green, fontSize: 12),
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
     ),
   );
 
@@ -105,17 +115,22 @@ class _SigninPageState extends State<SigninPage> {
     minWidth: 300,
     height: 50,
     buttonColor: Color(0xffffffff),
-    child: OutlineButton(
+    child: RaisedButton(
+      elevation: 5,
+      color: Color.fromRGBO(129, 199, 132, 1),
       onPressed: validateAndSubmit,
-      child: Text("Login", style: TextStyle(color: Colors.black)),
+      child: Text(
+        "Login",
+        style: TextStyle(color: Colors.black, fontSize: 12),
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
       ),
-      borderSide: BorderSide(
-        width: 1.5,
-        color: Colors.green,
-        style: BorderStyle.solid,
-      ),
+      // borderSide: BorderSide(
+      //   width: 1.5,
+      //   color: Colors.green,
+      //   style: BorderStyle.solid,
+      // ),
     ),
   );
   @override
@@ -124,7 +139,7 @@ class _SigninPageState extends State<SigninPage> {
         appBar: AppBar(
             title: Text(
               "Sign In",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white, fontSize: 14),
             ),
             elevation: 0.0,
             automaticallyImplyLeading: true,
@@ -180,10 +195,12 @@ class _SigninPageState extends State<SigninPage> {
                                                   hintText:
                                                       "Enter email address",
                                                   hintStyle: TextStyle(
-                                                      color: Colors.grey),
+                                                      color: Colors.grey,
+                                                      fontSize: 12),
                                                   labelText: "Email Address",
                                                   labelStyle: TextStyle(
-                                                      color: Colors.green),
+                                                      color: Colors.green,
+                                                      fontSize: 12),
                                                   border: OutlineInputBorder(
                                                       borderRadius: BorderRadius
                                                           .circular(10),
@@ -212,7 +229,8 @@ class _SigninPageState extends State<SigninPage> {
                                                 child: Text(
                                                   "Send OTP",
                                                   style: TextStyle(
-                                                      color: Colors.black),
+                                                      color: Colors.black,
+                                                      fontSize: 12),
                                                 ),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -231,6 +249,7 @@ class _SigninPageState extends State<SigninPage> {
                   child: Text(
                     "Forgot password ?",
                     textAlign: TextAlign.right,
+                    style: TextStyle(color: Colors.black, fontSize: 12),
                   ),
                 ),
                 Padding(
