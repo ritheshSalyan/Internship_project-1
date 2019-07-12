@@ -6,6 +6,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  static var _value = null;
   static final _formkey = GlobalKey<FormState>();
 
   static bool isChecked = false;
@@ -49,7 +50,7 @@ class _SignupPageState extends State<SignupPage> {
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Full Name *",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -70,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Email Address *",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -98,7 +99,7 @@ class _SignupPageState extends State<SignupPage> {
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Mobile Number *",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -118,7 +119,7 @@ class _SignupPageState extends State<SignupPage> {
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Institution/Company",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -138,7 +139,7 @@ class _SignupPageState extends State<SignupPage> {
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Occupation *",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -157,10 +158,10 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "Ax875b",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       helperText: "6 DIGIT CODE FROM YOUR FRIEND",
-      helperStyle: TextStyle(color: Colors.blue, fontStyle: FontStyle.italic),
+      helperStyle: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
       labelText: "Referal code",
       labelStyle: TextStyle(color: Colors.green,fontSize: 12),
-      border: OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: Colors.green, width: 2.0),
       ),
@@ -194,6 +195,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
       appBar: AppBar(
           title: Text(
             "Sign up",
@@ -234,7 +236,7 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.help_outline,
                     color: Colors.black,
                   ),
-                  border: OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.green, width: 2.0),
                   ),
@@ -288,7 +290,7 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: () {},
                     child: Text(
                       "Accept terms and condition",
-                      style: TextStyle(color: Colors.blue,fontSize: 12),
+                      style: TextStyle(color: Colors.grey,fontSize: 12),
                     ),
                   ),
                 ],

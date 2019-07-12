@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/IntroPage/intropage.dart';
+import 'package:startupreneur/home.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -40,9 +42,10 @@ class _SigninPageState extends State<SigninPage> {
     return false;
   }
 
-  static validateAndSubmit() async {
+  static validateAndSubmit(BuildContext context) async {
     if (_validate()) {
-      print("hello");
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => new introPage()));
     }
   }
 
@@ -61,20 +64,20 @@ class _SigninPageState extends State<SigninPage> {
     decoration: InputDecoration(
       prefixIcon: Icon(
         Icons.email,
-        color: Colors.black,
+        color: Colors.green,
       ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // enabledBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
+        borderSide: BorderSide(color: Colors.green, width: 5.0),
       ),
       hintText: "you@example.com",
       labelText: "Email address",
-      labelStyle: TextStyle(color: Colors.green, fontSize: 12),
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+      labelStyle: TextStyle(fontSize: 12),
+      hintStyle: TextStyle(fontSize: 12),
     ),
   );
 
@@ -94,56 +97,70 @@ class _SigninPageState extends State<SigninPage> {
     decoration: InputDecoration(
       prefixIcon: Icon(
         Icons.lock,
-        color: Colors.black,
+        color: Colors.green,
       ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // enabledBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
+        borderSide: BorderSide(color: Colors.green, width: 5.0),
       ),
       hintText: "Passowrd",
       labelText: "Password",
-      labelStyle: TextStyle(color: Colors.green, fontSize: 12),
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+      labelStyle: TextStyle(fontSize: 12),
+      hintStyle: TextStyle(fontSize: 12),
     ),
   );
 
-  final loginButton = ButtonTheme(
-    minWidth: 300,
-    height: 50,
-    buttonColor: Color(0xffffffff),
-    child: RaisedButton(
-      elevation: 5,
-      color: Color.fromRGBO(129, 199, 132, 1),
-      onPressed: validateAndSubmit,
-      child: Text(
-        "Login",
-        style: TextStyle(color: Colors.black, fontSize: 12),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
-      // borderSide: BorderSide(
-      //   width: 1.5,
-      //   color: Colors.green,
-      //   style: BorderStyle.solid,
-      // ),
-    ),
-  );
+  Widget loginButton(BuildContext context) => ButtonTheme(
+        minWidth: 300,
+        height: 50,
+        // buttonColor: Color(0xffffffff),
+        child: RaisedButton(
+          elevation: 5,
+          color: Colors.green,
+          // color: Color.fromRGBO(129, 199, 132, 1),
+          onPressed: () {
+            // validateAndSubmit(context);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => new introPage(),
+              ),
+            );
+          },
+          child: Text(
+            "Login",
+            style: TextStyle( fontSize: 12),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          // borderSide: BorderSide(
+          //   width: 1.5,
+          //   color: Colors.green,
+          //   style: BorderStyle.solid,
+          // ),
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
         appBar: AppBar(
-            title: Text(
-              "Sign In",
-              style: TextStyle(color: Colors.white, fontSize: 14),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: (){
+               Navigator.of(context).pop(
+                 MaterialPageRoute(builder: (context)=>homePage())
+               );
+              },
             ),
-            elevation: 0.0,
-            automaticallyImplyLeading: true,
-            backgroundColor: Colors.green),
+            toolbarOpacity: 1,
+            backgroundColor: Theme.of(context).primaryColorDark,
+            automaticallyImplyLeading: false,
+            ),
         body: Center(
             child: Container(
           color: Colors.transparent,
@@ -169,7 +186,8 @@ class _SigninPageState extends State<SigninPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Forget Password"),
+                            backgroundColor: Color.fromRGBO(52, 52, 52, 1),
+                            title: Text("Forget Password" ,),
                             content: Form(
                                 key: _popupformkey,
                                 child: SingleChildScrollView(
@@ -201,7 +219,7 @@ class _SigninPageState extends State<SigninPage> {
                                                   labelStyle: TextStyle(
                                                       color: Colors.green,
                                                       fontSize: 12),
-                                                  border: OutlineInputBorder(
+                                                  enabledBorder: OutlineInputBorder(
                                                       borderRadius: BorderRadius
                                                           .circular(10),
                                                       borderSide: BorderSide(
@@ -229,7 +247,7 @@ class _SigninPageState extends State<SigninPage> {
                                                 child: Text(
                                                   "Send OTP",
                                                   style: TextStyle(
-                                                      color: Colors.black,
+                                                      color: Colors.green,
                                                       fontSize: 12),
                                                 ),
                                                 shape: RoundedRectangleBorder(
@@ -249,16 +267,17 @@ class _SigninPageState extends State<SigninPage> {
                   child: Text(
                     "Forgot password ?",
                     textAlign: TextAlign.right,
-                    style: TextStyle(color: Colors.black, fontSize: 12),
+                    style: TextStyle( fontSize: 12),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                loginButton
+                loginButton(context)
               ],
             ),
           ),
-        )));
+        ))
+        );
   }
 }

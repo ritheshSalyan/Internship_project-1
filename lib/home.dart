@@ -21,12 +21,12 @@ class _homePageState extends State<homePage> {
               Padding(
                 padding: EdgeInsets.only(top: 50),
               ),
-              Container(
-                  child: Image.asset(
-                "assets/Images/Capture.PNG",
-                width: MediaQuery.of(context).size.width,
-                height: 40,
-              )),
+              // Container(
+              //     child: Image.asset(
+              //   "assets/Images/Capture.PNG",
+              //   width: MediaQuery.of(context).size.width,
+              //   height: 40,
+              // )),
               Padding(
                 padding: EdgeInsets.only(top: 200),
               ),
@@ -38,8 +38,11 @@ class _homePageState extends State<homePage> {
                   elevation: 5,
                   color: Color.fromRGBO(129, 199, 132, 1),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => new SigninPage(),),);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => new SigninPage(),
+                      ),
+                    );
                   },
                   child: Text("Sign in", style: TextStyle(color: Colors.black)),
                   shape: RoundedRectangleBorder(
