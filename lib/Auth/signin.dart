@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/IntroPage/intropage.dart';
 import 'package:startupreneur/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -15,7 +16,25 @@ class _SigninPageState extends State<SigninPage> {
   static String _email = "";
   static String _password = "";
   static String _otpEmail = "";
+ static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+  static void signUpInwithEmail() async{
+    FirebaseUser user;
+    try{ 
+      user = await _auth.signInWithEmailAndPassword( 
+      email: _email,
+      password: _password,
+      );
+      print("Sign in Successfull");
+      
+    } catch (e){
+
+      print(e.toString());
+    }
+
+
+  }
   static bool _otpvalidate() {
     final otpform = _popupformkey.currentState;
 
@@ -44,6 +63,7 @@ class _SigninPageState extends State<SigninPage> {
 
   static validateAndSubmit() async {
     if (_validate()) {
+      signUpInwithEmail();
       // Navigator.of(context)
       //     .push(MaterialPageRoute(builder: (context) => new introPage()));
     }

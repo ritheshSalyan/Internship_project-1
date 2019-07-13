@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/trial.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -19,7 +21,30 @@ class _SignupPageState extends State<SignupPage> {
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
   static var referalCodeFromFriend = "";
+  Firestore db = Firestore.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+  static void signUpInwithEmail() async{
+    FirebaseUser user;
+    try{ 
+      user = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: "password",
+    );
+      
+    } catch (e){
+
+      print(e.toString());
+    }
+    finally{
+      if(user != null){
+
+
+      }
+    }
+
+  }
   static bool isValide() {
     final _form = _formkey.currentState;
 
@@ -32,7 +57,7 @@ class _SignupPageState extends State<SignupPage> {
 
   static validateAndSubmit() async {
     if (isValide()) {
-      print("All good");
+      signUpInwithEmail();
     }
   }
 
@@ -165,11 +190,11 @@ class _SignupPageState extends State<SignupPage> {
       color: Colors.green,
       // onPressed: validateAndSubmit,
       onPressed: (){
-              // validateAndSubmit(context);
-             Navigator.of(context).push( MaterialPageRoute(
-                builder: (context) => new TimelinePage(title:"Title"),
-              ),
-            );
+              validateAndSubmit();
+            //  Navigator.of(context).push( MaterialPageRoute(
+            //     builder: (context) => new TimelinePage(title:"Title"),
+            //   ),
+            // );
             
       },
       child: Text("Sign Up", style: TextStyle(color: Colors.black,fontSize: 12),),
