@@ -12,81 +12,77 @@ class TimelinePage extends StatefulWidget {
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  final PageController pageController =
-      PageController(initialPage: 1, keepPage: true);
-  int pageIx = 1;
-
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-     
       timelineModel(TimelinePosition.Center),
-    
     ];
 
     return Scaffold(
-      
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: PageView(
-        
-          children: pages,
-        ));
+      appBar:
+          AppBar(title: Text(widget.title), backgroundColor: Color(0x000000)),
+      body: PageView(
+        children: pages,
+      ),
+    );
   }
 
   timelineModel(TimelinePosition position) => Timeline.builder(
-      itemBuilder: centerTimelineBuilder,
-      itemCount: doodles.length,
-      physics: position == TimelinePosition.Left
-          ? ClampingScrollPhysics()
-          : BouncingScrollPhysics(),
-      position: position);
+        itemBuilder: centerTimelineBuilder,
+        itemCount: doodles.length,
+        lineColor: Colors.green,
+        // physics: position == TimelinePosition.Left
+        //     ? ClampingScrollPhysics()
+        //     : BouncingScrollPhysics(),
+        position: position,
+      );
 
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
     return TimelineModel(
-      new GestureDetector(
-       onTap: (){print("Hello");},
-        child: Card(
-          margin: EdgeInsets.symmetric(vertical: 16.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Image.network(doodle.doodle),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Text(doodle.time, style: textTheme.caption),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Text(
-                  doodle.name,
-                  style: textTheme.title,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-              ],
+        new GestureDetector(
+          onTap: () {
+            print("Hello saaman $i");
+          },
+          child: Card(
+            margin: EdgeInsets.symmetric(vertical: 16.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  // Image.network(doodle.doodle),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(doodle.time, style: textTheme.caption),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    doodle.name,
+                    style:TextStyle(
+                       fontSize: 12
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        
-      ),
-    position:
+        position:
             i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
         isFirst: i == 0,
         isLast: i == doodles.length,
         iconBackground: doodle.iconBackground,
-        icon: doodle.icon
-    );  
+        icon: doodle.icon);
   }
 }

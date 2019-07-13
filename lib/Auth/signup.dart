@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/home.dart';
-import 'package:startupreneur/timeline/timeline.dart';
+import 'package:startupreneur/timeline/trial.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -49,15 +49,16 @@ class _SignupPageState extends State<SignupPage> {
     decoration: InputDecoration(
       prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
       hintText: "eg. Bob",
-      hintStyle: TextStyle(color: Colors.white,fontSize: 12),
+      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Full Name *",
       labelStyle: TextStyle( color: Colors.white,fontSize: 12),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
+
 
   final emailAddress = TextFormField(
     validator: (value) => value.isEmpty ? "Email cannot be empty" : null,
@@ -70,10 +71,10 @@ class _SignupPageState extends State<SignupPage> {
       labelText: "Email Address *",
       labelStyle: TextStyle(color: Colors.white,fontSize: 12),
      
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
 
@@ -95,10 +96,10 @@ class _SignupPageState extends State<SignupPage> {
       labelText: "Mobile Number *",
       labelStyle: TextStyle(color: Colors.white,fontSize: 12),
       
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
 
@@ -112,10 +113,10 @@ class _SignupPageState extends State<SignupPage> {
       labelText: "Institution/Company",
      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
       
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
 
@@ -129,10 +130,10 @@ class _SignupPageState extends State<SignupPage> {
       labelText: "Occupation *",
      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
       
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
 
@@ -148,10 +149,10 @@ class _SignupPageState extends State<SignupPage> {
       labelText: "Referal code",
      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
       
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
     ),
   );
 
@@ -204,6 +205,25 @@ class _SignupPageState extends State<SignupPage> {
           key: _formkey,
           child: ListView(
             children: <Widget>[
+              Text(
+                  "SIGN UP",
+                  style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 2,
+                    fontFamily: "Open Sans"
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 200),
+                ),
+                Text(
+                  "           ",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.green,
+                    decorationThickness: 5
+                  ),
+                ),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
@@ -229,10 +249,10 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.help_outline,
                     color: Colors.green,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white, width: 2.0),
-                  ),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(10),
+                  //   borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  // ),
                 ),
                 hint: Text(
                   "Select Your gender",

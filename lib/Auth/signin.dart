@@ -42,10 +42,10 @@ class _SigninPageState extends State<SigninPage> {
     return false;
   }
 
-  static validateAndSubmit(BuildContext context) async {
+  static validateAndSubmit() async {
     if (_validate()) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => new introPage()));
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => new introPage()));
     }
   }
 
@@ -70,10 +70,10 @@ class _SigninPageState extends State<SigninPage> {
       //   borderRadius: BorderRadius.circular(10),
       //   borderSide: BorderSide(color: Colors.green, width: 2.0),
       // ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
       hintText: "you@example.com",
       labelText: "Email address",
       labelStyle: TextStyle(color:Colors.white,fontSize: 12),
@@ -103,10 +103,10 @@ class _SigninPageState extends State<SigninPage> {
       //   borderRadius: BorderRadius.circular(10),
       //   borderSide: BorderSide(color: Colors.green, width: 2.0),
       // ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.green, width: 2.0),
-      ),
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
       hintText: "Passowrd",
       labelText: "Password",
       labelStyle: TextStyle(color:Colors.white,fontSize: 12),
@@ -123,12 +123,12 @@ class _SigninPageState extends State<SigninPage> {
           color: Colors.green,
           // color: Color.fromRGBO(129, 199, 132, 1),
           onPressed: () {
-            // validateAndSubmit(context);
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => new introPage(),
-              ),
-            );
+            validateAndSubmit();
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => new introPage(),
+            //   ),
+           // );
           },
           child: Text(
             "Login",
@@ -171,6 +171,25 @@ class _SigninPageState extends State<SigninPage> {
             key: _formkey,
             child: ListView(
               children: <Widget>[
+                Text(
+                  "SIGN IN",
+                  style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 2,
+                    fontFamily: "Open Sans"
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 200),
+                ),
+                Text(
+                  "           ",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.green,
+                    decorationThickness: 5
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(top: 50),
                 ),
