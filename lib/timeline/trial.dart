@@ -3,7 +3,7 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import 'package:startupreneur/Auth/signin.dart';
-import 'package:startupreneur/ModulePages/trial.dart';
+import 'package:startupreneur/ModulePages/videoPlay.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title}) : super(key: key);
@@ -55,7 +55,7 @@ class _TimelinePageState extends State<TimelinePage> {
         new GestureDetector(
           onTap: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=>VideoApp())
+                MaterialPageRoute(builder: (context)=>videoPlayerPage())
             );
           },
           child: Stack(

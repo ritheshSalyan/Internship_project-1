@@ -164,15 +164,15 @@ class _SigninPageState extends State<SigninPage> {
         // // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context)
-                  .pop(MaterialPageRoute(builder: (context) => homePage()));
-            },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
+          onPressed: () {
+            Navigator.of(context)
+                .pop(MaterialPageRoute(builder: (context) => homePage()));
+          },
+        ),
           toolbarOpacity: 1,
           backgroundColor: Theme.of(context).primaryColorDark,
           automaticallyImplyLeading: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/timeline/data.dart';
-import 'trial.dart';
+import 'mediaPlayerContent.dart';
 
 class motivationalPage extends StatefulWidget {
 

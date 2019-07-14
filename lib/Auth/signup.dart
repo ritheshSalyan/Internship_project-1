@@ -382,6 +382,8 @@ class _SignupPageState extends State<SignupPage> {
               Row(
                 children: <Widget>[
                   Checkbox(
+                    checkColor: Colors.green,
+                    activeColor: Colors.black,
                     value: isChecked,
                     onChanged: (value) {
                       setState(() {
