@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import 'package:startupreneur/ModulePages/motiPage.dart';
+import 'package:startupreneur/Auth/signin.dart';
+import 'package:startupreneur/ModulePages/trial.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title}) : super(key: key);
@@ -20,8 +21,17 @@ class _TimelinePageState extends State<TimelinePage> {
     ];
 
     return Scaffold(
-      appBar:
-          AppBar(title: Text(widget.title), backgroundColor: Color(0x000000)),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.black,),
+          onPressed: (){
+            Navigator.of(context).pop(
+                MaterialPageRoute(builder: (context)=>SigninPage()));
+          },
+        ),
+        backgroundColor: Theme.of(context).primaryColorDark,
+       elevation: 0.0,
+      ),
       body: PageView(
         children: pages,
       ),
@@ -45,7 +55,7 @@ class _TimelinePageState extends State<TimelinePage> {
         new GestureDetector(
           onTap: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=>motivationalPage(value:i))
+                MaterialPageRoute(builder: (context)=>VideoApp())
             );
           },
           child: Stack(
@@ -81,16 +91,16 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ),
               ),
-              Container(
-                child: Opacity(
-                  opacity: 0.5,
-                  child: Image.asset(
-                    "assets/Images/logo1.png",
-                    fit: BoxFit.fill,
-                    // color: Colors.white.withOpacity(0.5),
-                  ),
-                ),
-              ),
+//              Container(
+//                child: Opacity(
+//                  opacity: 0.5,
+//                  child: Image.asset(
+//                    "assets/Images/logo1.png",
+//                    fit: BoxFit.fill,
+//                    // color: Colors.white.withOpacity(0.5),
+//                  ),
+//                ),
+//              ),
             ],
           ),
         ),

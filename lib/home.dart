@@ -23,7 +23,7 @@ class _homePageState extends State<homePage> {
               ),
               Container(
                   child: Image.asset(
-                "assets/Images/logo.png",
+                "assets/Images/Capture.PNG",
                 width: MediaQuery.of(context).size.width,
                 height: 40,
               )),
@@ -31,7 +31,7 @@ class _homePageState extends State<homePage> {
                 padding: EdgeInsets.only(top: 120),
               ),
               ButtonTheme(
-                buttonColor: Color(0xffffffff),
+//                buttonColor: Colors.black,
                 minWidth: 300,
                 height: 50,
                 child: RaisedButton(
@@ -44,7 +44,7 @@ class _homePageState extends State<homePage> {
                       ),
                     );
                   },
-                  child: Text("Sign in", style: TextStyle(color: Colors.white)),
+                  child: Text("Sign in", style: TextStyle(color: Colors.black)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -69,7 +69,7 @@ class _homePageState extends State<homePage> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => new SignupPage()));
                   },
-                  child: Text("Sign up", style: TextStyle(color: Colors.white)),
+                  child: Text("Sign up", style: TextStyle(color: Colors.black)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:startupreneur/IntroPage/intropage.dart';
+import 'package:startupreneur/timeline/trial.dart';
 import 'package:startupreneur/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -16,25 +16,24 @@ class _SigninPageState extends State<SigninPage> {
   static String _email = "";
   static String _password = "";
   static String _otpEmail = "";
- static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-  static void signUpInwithEmail() async{
+  static void signUpInwithEmail(BuildContext context) async {
     FirebaseUser user;
-    try{ 
-      user = await _auth.signInWithEmailAndPassword( 
-      email: _email,
-      password: _password,
+    try {
+      user = await _auth.signInWithEmailAndPassword(
+        email: _email,
+        password: _password,
       );
       print("Sign in Successfull");
-      
-    } catch (e){
-
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
+      );
+    } catch (e) {
       print(e.toString());
     }
-
-
   }
+
   static bool _otpvalidate() {
     final otpform = _popupformkey.currentState;
 
@@ -61,11 +60,11 @@ class _SigninPageState extends State<SigninPage> {
     return false;
   }
 
-  static validateAndSubmit() async {
+  static validateAndSubmit(BuildContext context) async {
     if (_validate()) {
-      signUpInwithEmail();
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => new introPage()));
+      signUpInwithEmail(context);
+//       Navigator.of(context)
+//           .push(MaterialPageRoute(builder: (context) => new introPage()));
     }
   }
 
@@ -96,8 +95,8 @@ class _SigninPageState extends State<SigninPage> {
       // ),
       hintText: "you@example.com",
       labelText: "Email address",
-      labelStyle: TextStyle(color:Colors.white,fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12),
+      labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+      hintStyle: TextStyle(fontSize: 12,color: Colors.black),
     ),
   );
 
@@ -129,8 +128,8 @@ class _SigninPageState extends State<SigninPage> {
       // ),
       hintText: "Passowrd",
       labelText: "Password",
-      labelStyle: TextStyle(color:Colors.white,fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12),
+      labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+      hintStyle: TextStyle(fontSize: 12,color: Colors.black),
     ),
   );
 
@@ -143,16 +142,11 @@ class _SigninPageState extends State<SigninPage> {
           color: Colors.green,
           // color: Color.fromRGBO(129, 199, 132, 1),
           onPressed: () {
-            validateAndSubmit();
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => new introPage(),
-            //   ),
-           // );
+            validateAndSubmit(context);
           },
           child: Text(
             "Login",
-            style: TextStyle( fontSize: 12),
+            style: TextStyle(fontSize: 12),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -169,18 +163,20 @@ class _SigninPageState extends State<SigninPage> {
     return Scaffold(
         // // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
         appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: (){
-               Navigator.of(context).pop(
-                 MaterialPageRoute(builder: (context)=>homePage())
-               );
-              },
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
             ),
-            toolbarOpacity: 1,
-            backgroundColor: Theme.of(context).primaryColorDark,
-            automaticallyImplyLeading: false,
-            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(MaterialPageRoute(builder: (context) => homePage()));
+            },
+          ),
+          toolbarOpacity: 1,
+          backgroundColor: Theme.of(context).primaryColorDark,
+          automaticallyImplyLeading: false,
+        ),
         body: Center(
             child: Container(
           color: Colors.transparent,
@@ -194,10 +190,7 @@ class _SigninPageState extends State<SigninPage> {
                 Text(
                   "SIGN IN",
                   style: TextStyle(
-                    fontSize: 20,
-                    letterSpacing: 2,
-                    fontFamily: "Open Sans"
-                  ),
+                      fontSize: 20, letterSpacing: 2, fontFamily: "Open Sans"),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 200),
@@ -205,10 +198,9 @@ class _SigninPageState extends State<SigninPage> {
                 Text(
                   "           ",
                   style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.green,
-                    decorationThickness: 5
-                  ),
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.green,
+                      decorationThickness: 5),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 50),
@@ -226,7 +218,9 @@ class _SigninPageState extends State<SigninPage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             backgroundColor: Color.fromRGBO(52, 52, 52, 1),
-                            title: Text("Forget Password" ,),
+                            title: Text(
+                              "Forget Password",
+                            ),
                             content: Form(
                                 key: _popupformkey,
                                 child: SingleChildScrollView(
@@ -306,7 +300,7 @@ class _SigninPageState extends State<SigninPage> {
                   child: Text(
                     "Forgot password ?",
                     textAlign: TextAlign.right,
-                    style: TextStyle( fontSize: 12),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
                 Padding(
@@ -316,7 +310,6 @@ class _SigninPageState extends State<SigninPage> {
               ],
             ),
           ),
-        ))
-        );
+        )));
   }
 }

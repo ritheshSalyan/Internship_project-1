@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/timeline/data.dart';
-import 'videoPlay.dart';
+import 'trial.dart';
 
 class motivationalPage extends StatefulWidget {
 
@@ -20,7 +20,7 @@ class _motivationalPageState extends State<motivationalPage> {
          Container(
            child:Image.network(doodle.doodle)
          ),
-          videoPlayerPage(placeValue:widget.value),  
+          VideoApp()
         ],
       ),
     );

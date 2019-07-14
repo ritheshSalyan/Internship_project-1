@@ -18,6 +18,8 @@ class _SignupPageState extends State<SignupPage> {
   static var email = "";
   static var mobile = "";
   static var gender = null;
+  static var _password = "";
+  static var _confirmPassword = "";
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
   static var referalCodeFromFriend = "";
@@ -25,22 +27,22 @@ class _SignupPageState extends State<SignupPage> {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
-  static void signUpInwithEmail() async{
+  static void signUpInwithEmail(BuildContext context) async{
     FirebaseUser user;
     try{ 
       user = await _auth.createUserWithEmailAndPassword(
       email: email,
-      password: "password",
+      password: _password,
     );
-      
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
+      );
     } catch (e){
 
       print(e.toString());
     }
     finally{
       if(user != null){
-
-
       }
     }
 
@@ -55,9 +57,9 @@ class _SignupPageState extends State<SignupPage> {
     return false;
   }
 
-  static validateAndSubmit() async {
+  static validateAndSubmit(BuildContext context) async {
     if (isValide()) {
-      signUpInwithEmail();
+      signUpInwithEmail(context);
     }
   }
 
@@ -76,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "eg. Bob",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Full Name *",
-      labelStyle: TextStyle( color: Colors.white,fontSize: 12),
+      labelStyle: TextStyle( color: Colors.black,fontSize: 12),
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
       //   borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -94,7 +96,7 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "you@example.com",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Email Address *",
-      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
      
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
@@ -119,7 +121,7 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "9485621288",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Mobile Number *",
-      labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
       
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
@@ -136,7 +138,7 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "bob school of AI",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Institution/Company",
-     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
       
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
@@ -153,7 +155,7 @@ class _SignupPageState extends State<SignupPage> {
       hintText: "eg Student,business etc",
       hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
       labelText: "Occupation *",
-     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
       
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
@@ -172,7 +174,7 @@ class _SignupPageState extends State<SignupPage> {
       helperText: "6 DIGIT CODE FROM YOUR FRIEND",
       helperStyle: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
       labelText: "Referal code",
-     labelStyle: TextStyle(color: Colors.white,fontSize: 12),
+     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
       
       // focusedBorder: OutlineInputBorder(
       //   borderRadius: BorderRadius.circular(10),
@@ -180,6 +182,64 @@ class _SignupPageState extends State<SignupPage> {
       // ),
     ),
   );
+
+  final password = TextFormField(
+    validator: (value){
+      if(value.isEmpty){
+        return "Password cannot be empty";
+      }
+      else if(value.length<8){
+        return "password must be atleast 8 in length";
+      }
+      else{
+        return null;
+      }
+    },
+    onSaved: (value) => _password = value,
+    keyboardType: TextInputType.text,
+    obscureText: true,
+    decoration: InputDecoration(
+      prefixIcon: Icon(Icons.lock, color: Colors.green),
+      hintText: "password",
+      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+      labelText: "Password *",
+      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
+
+      // focusedBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+      // ),
+    ),
+  );
+
+//  final confirmPassword = TextFormField(
+//    validator: (value){
+//      if(value.isEmpty){
+//        return "Field cannot be empty";
+//      }else if(value == _password){
+//        return null;
+//      }else{
+//        print("The value is $value");
+//        print("The password is $_password");
+//        return "Password did not match";
+//      }
+//    },
+//    obscureText: true,
+//    onSaved: (value) => _confirmPassword = value,
+//    keyboardType: TextInputType.text,
+//    decoration: InputDecoration(
+//      prefixIcon: Icon(Icons.lock_outline, color: Colors.green),
+//      hintText: "Confirm Password",
+//      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
+//      labelText: "Confirm password *",
+//      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
+//
+//      // focusedBorder: OutlineInputBorder(
+//      //   borderRadius: BorderRadius.circular(10),
+//      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+//      // ),
+//    ),
+//  );
 
   Widget signUpButton(BuildContext context)=> ButtonTheme(
     minWidth: 300,
@@ -190,11 +250,7 @@ class _SignupPageState extends State<SignupPage> {
       color: Colors.green,
       // onPressed: validateAndSubmit,
       onPressed: (){
-              validateAndSubmit();
-            //  Navigator.of(context).push( MaterialPageRoute(
-            //     builder: (context) => new TimelinePage(title:"Title"),
-            //   ),
-            // );
+              validateAndSubmit(context);
             
       },
       child: Text("Sign Up", style: TextStyle(color: Colors.black,fontSize: 12),),
@@ -214,13 +270,14 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back,color: Colors.black,),
             onPressed: (){
               Navigator.of(context).pop(
                  MaterialPageRoute(builder: (context)=>homePage()));
             },
           ),
-          backgroundColor: Color(0x000000)),
+        backgroundColor: Theme.of(context).primaryColorDark,
+          ),
       body: Container(
         padding: EdgeInsets.all(20),
         width: 600,
@@ -260,6 +317,14 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
+              password,
+//              Padding(
+//                padding: EdgeInsets.only(top: 20),
+//              ),
+//              confirmPassword,
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
               mobileNumber,
               Padding(
                 padding: EdgeInsets.only(top: 20),
@@ -281,7 +346,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 hint: Text(
                   "Select Your gender",
-                  style: TextStyle(color: Colors.white,fontSize: 12),
+                  style: TextStyle(color: Colors.black,fontSize: 12),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -294,7 +359,7 @@ class _SignupPageState extends State<SignupPage> {
                     value: value,
                     child: Text(
                       value,
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12,color: Colors.black),
                     ),
                   );
                 }).toList(),

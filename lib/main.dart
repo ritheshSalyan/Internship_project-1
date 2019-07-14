@@ -11,13 +11,13 @@ class MyApp extends StatelessWidget {
       home: homePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColorDark: Color(0x000000),
+        brightness: Brightness.light,
+        primaryColorDark: Colors.white,
         primaryColorLight: Color(0x484848),
         buttonColor: Color(0x009423),
         accentColor: Color(0x009423),
-        scaffoldBackgroundColor: Color(0x000000),
-        textSelectionColor: Colors.white
+        scaffoldBackgroundColor: Colors.white,
+        textSelectionColor: Colors.black
         
       ),
     );
