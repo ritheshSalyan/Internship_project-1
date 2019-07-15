@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "648177173682",
+    "firebase_url": "https://startupreneur-ace66.firebaseio.com",
+    "project_id": "startupreneur-ace66",
+    "storage_bucket": "startupreneur-ace66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648177173682:android:a1308a2fae5e1dfa",
+        "android_client_info": {
+          "package_name": "com.example.startupreneur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648177173682-1f936hv63uf7onfmi45dqvhji63f2qia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7dPZKME9ArEdce0w-nzrhLcjujlm8oV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648177173682-1f936hv63uf7onfmi45dqvhji63f2qia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
