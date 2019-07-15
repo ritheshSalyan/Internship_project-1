@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/timeline/trial.dart';
 import 'package:startupreneur/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class SigninPage extends StatefulWidget {
 class _SigninPageState extends State<SigninPage> {
   static final _formkey = GlobalKey<FormState>();
   static final _popupformkey = GlobalKey<FormState>();
+  static ProgressDialog progressDialog;
 
   static String _email = "";
   static String _password = "";
@@ -20,25 +23,28 @@ class _SigninPageState extends State<SigninPage> {
 
   static void signUpInwithEmail(BuildContext context) async {
     FirebaseUser user;
+    progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+    progressDialog.setMessage("Signing in ..");
     try {
+      progressDialog.show();
       user = await _auth.signInWithEmailAndPassword(
         email: _email,
         password: _password,
       );
+      progressDialog.hide();
       print("Sign in Successfull");
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
     } catch (e) {
       // print(e.toString());
-      showDialog(
-         context: context,
-         builder: (BuildContext context){
-           return AlertDialog(
-              content: Text("Hello"),
-           );
-         }
-       );
+      progressDialog.hide();
+     Toast.show(
+       "Email or password does not match",
+       context,
+       gravity:Toast.BOTTOM,
+       duration: Toast.LENGTH_LONG
+     );
     }
   }
 
@@ -147,9 +153,8 @@ class _SigninPageState extends State<SigninPage> {
         // buttonColor: Color(0xffffffff),
         child: RaisedButton(
           elevation: 5,
-          color: Colors.green,
-          // color: Color.fromRGBO(129, 199, 132, 1),
-          onPressed: () {
+          color: Colors.green,        
+          onPressed: (){
             validateAndSubmit(context);
           },
           child: Text(

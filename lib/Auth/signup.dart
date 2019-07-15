@@ -3,6 +3,8 @@ import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/trial.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   static var _value = null;
+  static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -30,21 +33,27 @@ class _SignupPageState extends State<SignupPage> {
 
   static void signUpInwithEmail(BuildContext context) async{
     FirebaseUser user;
+    progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+    progressDialog.setMessage("Saving data..");
     try{ 
+      progressDialog.show();
       user = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: _password,
     );
-      SnackBar(
-        content: Text("Creating account"),
-        duration: Duration(seconds: 4),
-      );
+    progressDialog.hide();
       print("its is $user");
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
     } catch (e){
-       print(e.toString());
+      progressDialog.hide();
+       Toast.show(
+       "Email or password does not match",
+       context,
+       gravity:Toast.BOTTOM,
+       duration: Toast.LENGTH_LONG
+     );
     }
     finally{
       if(user != null){

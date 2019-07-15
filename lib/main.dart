@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       home: homePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: Colors.green,
         brightness: Brightness.light,
         primaryColorDark: Colors.white,
         primaryColorLight: Color(0x484848),
@@ -23,4 +24,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+ 
