@@ -30,7 +30,15 @@ class _SigninPageState extends State<SigninPage> {
           MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
+      showDialog(
+         context: context,
+         builder: (BuildContext context){
+           return AlertDialog(
+              content: Text("Hello"),
+           );
+         }
+       );
     }
   }
 

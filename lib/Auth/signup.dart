@@ -12,6 +12,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   static var _value = null;
   static final _formkey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   static bool isChecked = false;
   static var fname = "";
@@ -34,12 +35,16 @@ class _SignupPageState extends State<SignupPage> {
       email: email,
       password: _password,
     );
+      SnackBar(
+        content: Text("Creating account"),
+        duration: Duration(seconds: 4),
+      );
+      print("its is $user");
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
     } catch (e){
-
-      print(e.toString());
+       print(e.toString());
     }
     finally{
       if(user != null){
@@ -268,6 +273,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back,color: Colors.black,),

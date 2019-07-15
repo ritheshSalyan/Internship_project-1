@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/timeline/trial.dart';
 import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
-//  videoPlayerPage({Key key,this.placeValue}):super(key:key);
-//  final int placeValue;
 
   @override
   _videoPlayerPageState createState() => _videoPlayerPageState();
@@ -13,7 +10,6 @@ class videoPlayerPage extends StatefulWidget {
 class _videoPlayerPageState extends State<videoPlayerPage> {
   @override
   Widget build(BuildContext context) {
-//    final doodle = doodles[widget.placeValue];
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -35,7 +31,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
 //                );
 //              },
 //            ),
-            automaticallyImplyLeading: true,
+            automaticallyImplyLeading: false,
             expandedHeight: 350,
             title: Text(
               "Module 1",
@@ -153,10 +149,10 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
