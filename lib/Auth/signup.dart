@@ -3,6 +3,8 @@ import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/trial.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   static var _value = null;
+  static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -23,28 +26,40 @@ class _SignupPageState extends State<SignupPage> {
   static var _confirmPassword = "";
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
-  static var referalCodeFromFriend = "";
-  Firestore db = Firestore.instance;
+  static var referalCodeFromFriend = "",userid = "";
+  static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
   static void signUpInwithEmail(BuildContext context) async{
     FirebaseUser user;
+    progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+    progressDialog.setMessage("Saving data..");
     try{ 
+      progressDialog.show();
       user = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: _password,
     );
-      SnackBar(
-        content: Text("Creating account"),
-        duration: Duration(seconds: 4),
+    user = await _auth.signInWithEmailAndPassword( 
+      email: email,
+      password: _password,
       );
+    userid = user.uid;
+    progressDialog.hide();
       print("its is $user");
+      createNote();
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
     } catch (e){
-       print(e.toString());
+      progressDialog.hide();
+       Toast.show(
+       "Sign up failed, please try again",
+       context,
+       gravity:Toast.BOTTOM,
+       duration: Toast.LENGTH_LONG
+     );
     }
     finally{
       if(user != null){
@@ -52,6 +67,24 @@ class _SignupPageState extends State<SignupPage> {
     }
 
   }
+   static void createNote() async {
+     
+      var dataMap = new Map<String, dynamic>();
+      dataMap['name'] = fname;
+      dataMap['email'] = email;
+      dataMap['mobile'] = mobile;
+      dataMap['gender'] = gender;
+      dataMap['institutionOrCompany'] = institutionOrCompany;
+      dataMap['typeOfOccupations'] = typeOfOccupations;
+      dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
+      dataMap['uid'] = userid;
+      db.collection("user").add(dataMap).catchError((e) {
+         print(e);
+       });
+     
+  
+  }
+
   static bool isValide() {
     final _form = _formkey.currentState;
 

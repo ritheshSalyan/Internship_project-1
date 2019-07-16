@@ -88,13 +88,8 @@ class PageStarter1State extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'IntroViews Flutter', //title of app
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ), //ThemeData
-      home: Builder(
+    return Scaffold(
+      body: Builder(
         builder: (context) => IntroViewsFlutter(
           pages,
           onTapDoneButton: () {

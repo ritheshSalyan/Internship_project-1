@@ -66,10 +66,14 @@ class _VideoAppState extends State<VideoApp> {
                   )
                 : Container(
                     child: Center(
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.red,
-                         value:null,
+                      child: VideoProgressIndicator(
+                        _controller,
+                        allowScrubbing: false,
+                        colors: VideoProgressColors(
+                          playedColor: Colors.green,
+                          bufferedColor: Colors.red,
                         ),
+                      ),
                     ),
                   ),
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/Auth/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:startupreneur/timeline/trial.dart';
+
 
 class homePage extends StatefulWidget {
   @override
@@ -8,7 +11,9 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
