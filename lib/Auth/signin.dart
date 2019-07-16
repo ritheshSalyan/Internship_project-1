@@ -5,6 +5,7 @@ import 'package:startupreneur/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -20,6 +21,13 @@ class _SigninPageState extends State<SigninPage> {
   static String _password = "";
   static String _otpEmail = "";
   static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static SharedPreferences sharedPreferences;
+
+  static preferences(String userId) async {
+      sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString("UserId", userId);
+      print(sharedPreferences.getString("UserId"));
+  }
 
   static void signUpInwithEmail(BuildContext context) async {
     FirebaseUser user;
@@ -31,6 +39,7 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
+      preferences(_email);
       progressDialog.hide();
       print("Sign in Successfull");
       Navigator.of(context).push(

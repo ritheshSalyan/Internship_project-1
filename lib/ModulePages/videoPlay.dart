@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
-
   @override
   _videoPlayerPageState createState() => _videoPlayerPageState();
 }
@@ -16,28 +15,13 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
           SliverAppBar(
             primary: false,
             backgroundColor: Theme.of(context).primaryColorDark,
-//            leading: IconButton(
-//              icon: Icon(
-//                Icons.arrow_back,
-//                color: Colors.black,
-//              ),
-//              onPressed: () {
-//                Navigator.of(context).pop(
-//                  MaterialPageRoute(
-//                    builder: (context) => TimelinePage(
-//                      title: "Road Map",
-//                    ),
-//                  ),
-//                );
-//              },
-//            ),
             automaticallyImplyLeading: false,
             expandedHeight: 350,
             title: Text(
               "Module 1",
               style: TextStyle(color: Colors.black),
             ),
-            pinned: true,
+            // pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: VideoApp(),
             ),
@@ -71,24 +55,28 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                       Divider(
                         color: Colors.green,
                       ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "How are Ideas Generated",
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              "Learn,Learn,Learn",
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              "Market research",
-                              textAlign: TextAlign.left,
-                            )
-                          ],
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                          "How are Ideas Generated",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                           "Learn,Learn,Learn",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                          "Market research",
+                          textAlign: TextAlign.left,
                         ),
                       )
+                      
                     ],
                   ),
                 ),
@@ -103,10 +91,14 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                       style: TextStyle(color: Colors.green),
                     ),
                     children: <Widget>[
-                      Text(
-                        "Three primary paths to a new business idea",
-                        textAlign: TextAlign.left,
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                          "Primary path to new business idea",
+                          textAlign: TextAlign.left,
+                        ),
                       ),
+                      
                     ],
                   ),
                 ),
@@ -121,14 +113,28 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                       style: TextStyle(color: Colors.green),
                     ),
                     children: <Widget>[
-                      Text(
-                        "Why you want to start-up (Questioning Character)",
-                        textAlign: TextAlign.left,
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                           "Why you want to start-up (Questioning Character)",
+                          textAlign: TextAlign.left,
+                        ),
                       ),
-                      Text(
-                        "Myths busted",
-                        textAlign: TextAlign.left,
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                           "Myths busted",
+                          textAlign: TextAlign.left,
+                        ),
                       ),
+                      // Text(
+                      //   "Why you want to start-up (Questioning Character)",
+                      //   textAlign: TextAlign.left,
+                      // ),
+                      // Text(
+                      //   "Myths busted",
+                      //   textAlign: TextAlign.left,
+                      // ),
                     ],
                   ),
                 ),
@@ -143,9 +149,12 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                       style: TextStyle(color: Colors.green),
                     ),
                     children: <Widget>[
-                      Text(
-                        "What to avoid ? ",
-                        textAlign: TextAlign.left,
+                      ListTile(
+                        leading: Icon(Icons.arrow_forward_ios,size:20,),
+                        title: Text(
+                           "What to avoid ?",
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                     ],
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'IntroPage/intropage.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,10 +8,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The Startupreneur',
-      home: homePage(),
+      home: introPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
         brightness: Brightness.light,
         primaryColorDark: Colors.white,
         primaryColorLight: Color(0x484848),
@@ -24,4 +23,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 
+

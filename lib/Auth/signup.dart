@@ -49,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
     } catch (e){
       progressDialog.hide();
        Toast.show(
-       "Email or password does not match",
+       "Sign up failed, please try again",
        context,
        gravity:Toast.BOTTOM,
        duration: Toast.LENGTH_LONG
