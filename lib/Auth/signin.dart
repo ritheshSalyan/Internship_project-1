@@ -39,7 +39,7 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
-      preferences(_email);
+      preferences(user.uid);
       progressDialog.hide();
       print("Sign in Successfull");
       Navigator.of(context).push(

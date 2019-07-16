@@ -26,8 +26,8 @@ class _SignupPageState extends State<SignupPage> {
   static var _confirmPassword = "";
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
-  static var referalCodeFromFriend = "";
-  Firestore db = Firestore.instance;
+  static var referalCodeFromFriend = "",userid = "";
+  static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
@@ -41,8 +41,14 @@ class _SignupPageState extends State<SignupPage> {
       email: email,
       password: _password,
     );
+    user = await _auth.signInWithEmailAndPassword( 
+      email: email,
+      password: _password,
+      );
+    userid = user.uid;
     progressDialog.hide();
       print("its is $user");
+      createNote();
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
       );
@@ -61,6 +67,24 @@ class _SignupPageState extends State<SignupPage> {
     }
 
   }
+   static void createNote() async {
+     
+      var dataMap = new Map<String, dynamic>();
+      dataMap['name'] = fname;
+      dataMap['email'] = email;
+      dataMap['mobile'] = mobile;
+      dataMap['gender'] = gender;
+      dataMap['institutionOrCompany'] = institutionOrCompany;
+      dataMap['typeOfOccupations'] = typeOfOccupations;
+      dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
+      dataMap['uid'] = userid;
+      db.collection("user").add(dataMap).catchError((e) {
+         print(e);
+       });
+     
+  
+  }
+
   static bool isValide() {
     final _form = _formkey.currentState;
 
