@@ -41,17 +41,7 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => new TimelinePage(
-                title: "Roadmap",
-              ),
-            ));
-          },
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
-        ),
+        automaticallyImplyLeading: true,
         backgroundColor: Theme.of(context).primaryColorDark,
       ),
       body: Column(

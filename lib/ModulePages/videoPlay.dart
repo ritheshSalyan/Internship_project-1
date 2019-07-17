@@ -3,6 +3,8 @@ import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
+  videoPlayerPage({Key key,this.title}):super(key:key);
+  final String title;
   _videoPlayerPageState createState() => _videoPlayerPageState();
 }
 
@@ -13,15 +15,17 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            primary: false,
+            floating: true,
+            primary: true,
             backgroundColor: Theme.of(context).primaryColorDark,
-            automaticallyImplyLeading: false,
+            // automaticallyImplyLeading: false,
             expandedHeight: 350,
             title: Text(
-              "Module 1",
+              widget.title,
               style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
             ),
-            // pinned: true,
+            pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: VideoApp(),
             ),

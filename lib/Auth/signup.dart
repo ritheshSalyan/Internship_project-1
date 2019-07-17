@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -13,8 +15,12 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   static var _value = null;
+  static  FirebaseUser user;
+  static PDFDocument doc;
+  static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
+  // static final _fieldKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   static bool isChecked = false;
@@ -30,9 +36,18 @@ class _SignupPageState extends State<SignupPage> {
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  static _pdfworks() async{
+    doc = await PDFDocument.fromAsset('assets/pdf/t_and_c.pdf');
+  }
+
+  static _preferences(String userid) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("UserId", userid);
+  }
+
 
   static void signUpInwithEmail(BuildContext context) async{
-    FirebaseUser user;
+    
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
     try{ 
@@ -41,12 +56,13 @@ class _SignupPageState extends State<SignupPage> {
       email: email,
       password: _password,
     );
+    progressDialog.hide();
     user = await _auth.signInWithEmailAndPassword( 
       email: email,
       password: _password,
       );
     userid = user.uid;
-    progressDialog.hide();
+    _preferences(userid);
       print("its is $user");
       createNote();
       Navigator.of(context).push(
@@ -108,6 +124,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   final fullName = TextFormField(
+    
     validator: (value) => value.isEmpty ? "Name cannot be empty" : null,
     onSaved: (value) => fname = value,
     keyboardType: TextInputType.text,
@@ -126,6 +143,7 @@ class _SignupPageState extends State<SignupPage> {
 
 
   final emailAddress = TextFormField(
+     
     validator: (value) => value.isEmpty ? "Email cannot be empty" : null,
     onSaved: (value) => email = value,
     keyboardType: TextInputType.text,
@@ -144,6 +162,7 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   final mobileNumber = TextFormField(
+     
     validator: (value) {
       if (value.isEmpty) {
         return "Number cannot be empty";
@@ -169,6 +188,7 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   final institution_or_company = TextFormField(
+     
     onSaved: (value) => institutionOrCompany = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
@@ -186,6 +206,7 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   final occupation = TextFormField(
+     
     onSaved: (value) => typeOfOccupations = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
@@ -203,6 +224,7 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   final referalCode = TextFormField(
+     
     onSaved: (value) => referalCodeFromFriend = value,
     keyboardType: TextInputType.text,
     decoration: InputDecoration(
@@ -222,6 +244,7 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   final password = TextFormField(
+     
     validator: (value){
       if(value.isEmpty){
         return "Password cannot be empty";
@@ -432,9 +455,16 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _pdfworks();
+                      AlertDialog(
+                        content: PDFViewer(
+                          document: doc,
+                        ),
+                      );
+                    },
                     child: Text(
-                      "Accept terms and condition",
+                      "Accept Terms & Condition",
                       style: TextStyle(color: Colors.grey,fontSize: 12),
                     ),
                   ),
