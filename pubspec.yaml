@@ -36,6 +36,8 @@ dependencies:
   toast: ^0.1.3
   shared_preferences: ^0.5.3+3
   connectivity: ^0.4.3+4
+  http: 0.12.0+2
+  percent_indicator: 2.1.1
 
 
 dev_dependencies:
@@ -71,6 +73,14 @@ flutter:
    - assets/Images/taxi.png
    - assets/Images/taxi-driver.png
    - assets/Images/waiter.png
+   - assets/Images/loading.gif
+   - assets/Images/profile_header_background.png
+   - assets/Images/portfolio_1.jpeg
+   - assets/Images/portfolio_2.jpeg
+   - assets/Images/portfolio_3.jpeg
+   - assets/Images/portfolio_4.jpeg
+   - assets/Images/portfolio_5.jpeg
+   - assets/Images/portfolio_6.jpeg
 #   - assets/videos/video.mp4
   #  - images/a_dot_ham.jpeg
 

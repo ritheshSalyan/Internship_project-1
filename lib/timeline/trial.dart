@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/home.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/ModulePages/videoPlay.dart';
+import '../utils/data.dart';
+import '../ProfilePage/profilePage.dart';
+import '../ui/friends/friends_list_page.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title}) : super(key: key);
@@ -23,14 +27,32 @@ class _TimelinePageState extends State<TimelinePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,color: Colors.black,),
-          onPressed: (){
-            Navigator.of(context).pop(
-                MaterialPageRoute(builder: (context)=>SigninPage()));
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context)
+                .pop(MaterialPageRoute(builder: (context) => SigninPage()));
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.person),
+            color: Colors.green,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  // builder: (context) => DetailsPage(
+                  //       recipe: Data.recipes[2])
+                  builder: (context) => FriendsListPage(),
+                ),
+              );
+            },
+          ),
+        ],
         backgroundColor: Theme.of(context).primaryColorDark,
-       elevation: 0.0,
+        elevation: 0.0,
       ),
       body: PageView(
         children: pages,
@@ -55,8 +77,7 @@ class _TimelinePageState extends State<TimelinePage> {
         new GestureDetector(
           onTap: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=>videoPlayerPage())
-            );
+                MaterialPageRoute(builder: (context) => videoPlayerPage()));
           },
           child: Stack(
             children: <Widget>[

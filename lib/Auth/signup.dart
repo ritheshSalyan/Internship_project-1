@@ -11,7 +11,7 @@ class SignupPage extends StatefulWidget {
   _SignupPageState createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMixin{
   static var _value = null;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
@@ -102,8 +102,10 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
