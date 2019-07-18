@@ -28,12 +28,14 @@ dependencies:
   firebase_storage: 3.0.3
   firebase_auth: any
   cloud_firestore: 0.12.7
+  transparent_image: ^1.0.0
   intro_views_flutter: ^2.4.0
   folding_cell: 0.1.2
   progress_dialog: ^1.1.0+1
   video_player: ^0.10.1+4
   modal_progress_hud: ^0.1.3
   toast: ^0.1.3
+  flutter_plugin_pdf_viewer: ^1.0.7
   shared_preferences: ^0.5.3+3
   connectivity: ^0.4.3+4
   http: 0.12.0+2
@@ -61,7 +63,7 @@ flutter:
   assets:
    - assets/Images/logo.png
    - assets/Images/log.png
-#   - assets/Images/Capture.png
+   - assets/Images/logo1.png
    - assets/Images/Capture.PNG
    - assets/animation/arrow.flr
    - assets/Images/motivational.jpg
@@ -81,6 +83,7 @@ flutter:
    - assets/Images/portfolio_4.jpeg
    - assets/Images/portfolio_5.jpeg
    - assets/Images/portfolio_6.jpeg
+   - assets/pdf/t_and_c.pdf
 #   - assets/videos/video.mp4
   #  - images/a_dot_ham.jpeg
 

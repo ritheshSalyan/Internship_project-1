@@ -3,21 +3,71 @@ import 'package:startupreneur/home.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import 'package:startupreneur/Auth/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:startupreneur/Auth/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/videoPlay.dart';
 import '../utils/data.dart';
 import '../ProfilePage/profilePage.dart';
 import '../ui/friends/friends_list_page.dart';
 
 class TimelinePage extends StatefulWidget {
-  TimelinePage({Key key, this.title}) : super(key: key);
+  TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
   final String title;
+  final String userEmail;
 
   @override
   _TimelinePageState createState() => _TimelinePageState();
 }
 
 class _TimelinePageState extends State<TimelinePage> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  SharedPreferences sharedPreferences;
+  BuildContext context;
+  FirebaseUser user;
+  String value = "";
+  String _url =
+      "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350";
+
+  Widget lockUnlock(int i, List<int> id) {
+    final doodle = doodles[i];
+    for (var k = 0; k < id.length; k++) {
+      if (doodle.time == "Module ${id[k]}") {
+        return Icon(
+          Icons.lock_open,
+          size: 0.0,
+        );
+      }
+    }
+    return Icon(
+      Icons.lock,
+      size: 50,
+    );
+  }
+
+  void initState() {
+    super.initState();
+    preferences();
+  }
+
+  void preferences() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    value = sharedPreferences.getString("UserEmail");
+    print("the value is $value");
+    if (value == null) {
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) => SigninPage(),
+      //   ),
+      // );
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
@@ -26,33 +76,83 @@ class _TimelinePageState extends State<TimelinePage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.of(context)
-                .pop(MaterialPageRoute(builder: (context) => SigninPage()));
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.person),
-            color: Colors.green,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  // builder: (context) => DetailsPage(
-                  //       recipe: Data.recipes[2])
-                  builder: (context) => FriendsListPage(),
-                ),
-              );
-            },
-          ),
-        ],
+        iconTheme: IconThemeData(color: Colors.black),
+        automaticallyImplyLeading: true,
         backgroundColor: Theme.of(context).primaryColorDark,
         elevation: 0.0,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountEmail: Text("value"),
+              accountName: Text("Subramanya c"),
+              currentAccountPicture: CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(_url),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.assignment_ind,
+              ),
+              title: Text(
+                'Profile',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.dashboard),
+              title: Text(
+                'Dashboard',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.store),
+              title: Text(
+                'Hustle store',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text(
+                'Settings',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.lock_open),
+              title: Text(
+                'Logout',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {
+                _auth.signOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => SignupPage(),
+                ));
+              },
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                "All right reserved at thestartupreneur.co",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+              ),
+            )
+          ],
+        ),
       ),
       body: PageView(
         children: pages,
@@ -73,55 +173,69 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
+    final List<int> completedCourse = [1];
+    int k;
     return TimelineModel(
         new GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => videoPlayerPage()));
+            print("value of i is $i");
+            for (k = 0; k < completedCourse.length; k++) {
+              if (completedCourse[k] == i + 1) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => videoPlayerPage(
+                      title: "Module ${i+1}",
+                    ),
+                  ),
+                );
+              }
+            }
           },
           child: Stack(
             children: <Widget>[
-              Card(
-                margin: EdgeInsets.symmetric(vertical: 16.0),
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(0.0),
-                // ),
-                clipBehavior: Clip.antiAlias,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      // Image.network(doodle.doodle),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(doodle.time, style: textTheme.caption),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(
-                        doodle.name,
-                        style: TextStyle(fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                    ],
+              Container(
+                height: 150.0,
+                width: 200.0,
+                child: Card(
+                  margin: EdgeInsets.symmetric(vertical: 16.0),
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(0.0),
+                  // ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        // Image.network(doodle.doodle),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(doodle.time, style: textTheme.caption),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(
+                          doodle.name,
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-//              Container(
-//                child: Opacity(
-//                  opacity: 0.5,
-//                  child: Image.asset(
-//                    "assets/Images/logo1.png",
-//                    fit: BoxFit.fill,
-//                    // color: Colors.white.withOpacity(0.5),
-//                  ),
-//                ),
-//              ),
+              Container(
+                width: 200.0,
+                height: 150.0,
+                child: Opacity(
+                  opacity: 1.0,
+                  child: lockUnlock(i, completedCourse),
+                ),
+              ),
             ],
           ),
         ),

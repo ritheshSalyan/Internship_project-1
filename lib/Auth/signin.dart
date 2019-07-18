@@ -23,9 +23,10 @@ class _SigninPageState extends State<SigninPage> {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static SharedPreferences sharedPreferences;
 
-  static preferences(String userId) async {
+  static preferences(String userId,String _email) async {
       sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString("UserId", userId);
+      sharedPreferences.setString("UserEmail",_email );
       print(sharedPreferences.getString("UserId"));
   }
 
@@ -39,11 +40,11 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
-      preferences(_email);
+      preferences(user.uid,_email);
       progressDialog.hide();
       print("Sign in Successfull");
       Navigator.of(context).push(
-          MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
+          MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line",userEmail: _email),)
       );
     } catch (e) {
       // print(e.toString());
