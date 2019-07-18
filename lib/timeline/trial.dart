@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ModulePages/videoPlay.dart';
+import 'package:startupreneur/ModulePages/modulePageIntro.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -110,6 +111,20 @@ class _TimelinePageState extends State<TimelinePage> {
               onTap: () {},
             ),
             ListTile(
+              leading: Icon(Icons.book),
+              title: Text(
+                'Vocabulary',
+                style: TextStyle(color: Colors.green),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (Vocabulary()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.store),
               title: Text(
                 'Hustle store',
@@ -169,7 +184,7 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
-    final List<int> completedCourse = [1];
+    final List<int> completedCourse = [1, 10];
     int k;
     return TimelineModel(
         new GestureDetector(
@@ -179,9 +194,7 @@ class _TimelinePageState extends State<TimelinePage> {
               if (completedCourse[k] == i + 1) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => videoPlayerPage(
-                      title: "Module ${i+1}",
-                    ),
+                    builder: (context) => ModulePageIntro(),
                   ),
                 );
               }
