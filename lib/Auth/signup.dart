@@ -15,13 +15,29 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   static var _value = null;
-  static  FirebaseUser user;
+  static FirebaseUser user;
   static PDFDocument doc;
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
   // static final _fieldKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static TextEditingController textEditingController1 =
+      new TextEditingController();
+  static TextEditingController textEditingController2 =
+      new TextEditingController();
+  static TextEditingController textEditingController3 =
+      new TextEditingController();
+  static TextEditingController textEditingController4 =
+      new TextEditingController();
+  static TextEditingController textEditingController5 =
+      new TextEditingController();
+  static TextEditingController textEditingController6 =
+      new TextEditingController();
+  static TextEditingController textEditingController7 =
+      new TextEditingController();
+  static TextEditingController textEditingController8 =
+      new TextEditingController();
 
   static bool isChecked = false;
   static var fname = "";
@@ -32,11 +48,12 @@ class _SignupPageState extends State<SignupPage> {
   static var _confirmPassword = "";
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
-  static var referalCodeFromFriend = "",userid = "";
+  static var referalCodeFromFriend = "", userid = "";
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static _pdfworks() async{
+  static _pdfworks() async {
+    print("hello world");
     doc = await PDFDocument.fromAsset('assets/pdf/t_and_c.pdf');
   }
 
@@ -45,60 +62,49 @@ class _SignupPageState extends State<SignupPage> {
     sharedPreferences.setString("UserId", userid);
   }
 
-
-  static void signUpInwithEmail(BuildContext context) async{
-    
+  static void signUpInwithEmail(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
-    try{ 
+    try {
       progressDialog.show();
       user = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: _password,
-    );
-    progressDialog.hide();
-    user = await _auth.signInWithEmailAndPassword( 
-      email: email,
-      password: _password,
+        email: email,
+        password: _password,
       );
-    userid = user.uid;
-    _preferences(userid);
+      progressDialog.hide();
+      user = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: _password,
+      );
+      userid = user.uid;
+      _preferences(userid);
       print("its is $user");
       createNote();
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line"),)
-      );
-    } catch (e){
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => new TimelinePage(title: "Time line"),
+      ));
+    } catch (e) {
       progressDialog.hide();
-       Toast.show(
-       "Sign up failed, please try again",
-       context,
-       gravity:Toast.BOTTOM,
-       duration: Toast.LENGTH_LONG
-     );
+      Toast.show("Sign up failed, please try again", context,
+          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+    } finally {
+      if (user != null) {}
     }
-    finally{
-      if(user != null){
-      }
-    }
-
   }
-   static void createNote() async {
-     
-      var dataMap = new Map<String, dynamic>();
-      dataMap['name'] = fname;
-      dataMap['email'] = email;
-      dataMap['mobile'] = mobile;
-      dataMap['gender'] = gender;
-      dataMap['institutionOrCompany'] = institutionOrCompany;
-      dataMap['typeOfOccupations'] = typeOfOccupations;
-      dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
-      dataMap['uid'] = userid;
-      db.collection("user").add(dataMap).catchError((e) {
-         print(e);
-       });
-     
-  
+
+  static void createNote() async {
+    var dataMap = new Map<String, dynamic>();
+    dataMap['name'] = fname;
+    dataMap['email'] = email;
+    dataMap['mobile'] = mobile;
+    dataMap['gender'] = gender;
+    dataMap['institutionOrCompany'] = institutionOrCompany;
+    dataMap['typeOfOccupations'] = typeOfOccupations;
+    dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
+    dataMap['uid'] = userid;
+    db.collection("user").add(dataMap).catchError((e) {
+      print(e);
+    });
   }
 
   static bool isValide() {
@@ -121,157 +127,194 @@ class _SignupPageState extends State<SignupPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // textEditingController.addListener((){
+
+    //   print(textEditingController.text);
+
+    // });
   }
 
-  final fullName = TextFormField(
-    
-    validator: (value) => value.isEmpty ? "Name cannot be empty" : null,
-    onSaved: (value) => fname = value,
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
-      hintText: "eg. Bob",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Full Name *",
-      labelStyle: TextStyle( color: Colors.black,fontSize: 12),
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+  Widget fullName(BuildContext context) => TextFormField(
+        controller: textEditingController1,
+        validator: (value) => value.isEmpty ? "Name cannot be empty" : null,
+        onSaved: (value) {
+          setState(() {
+            fname = value;
+          });
+        },
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
+          hintText: "eg. Bob Marley",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Full Name *",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
 
+  Widget emailAddress(BuildContext context) => TextFormField(
+        controller: textEditingController2,
+        validator: (value) => value.isEmpty ? "Email cannot be empty" : null,
+        onSaved: (value) {
+          setState(() {
+            email = value;
+          });
+        },
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.email, color: Colors.green),
+          hintText: "you@example.com",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Email Address *",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
-  final emailAddress = TextFormField(
-     
-    validator: (value) => value.isEmpty ? "Email cannot be empty" : null,
-    onSaved: (value) => email = value,
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.email, color: Colors.green),
-      hintText: "you@example.com",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Email Address *",
-      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
-     
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
 
-  final mobileNumber = TextFormField(
-     
-    validator: (value) {
-      if (value.isEmpty) {
-        return "Number cannot be empty";
-      } else if (value.length > 10) {
-        return "Number not valid";
-      }
-      return null;
-    },
-    onSaved: (value) => mobile = value,
-    keyboardType: TextInputType.phone,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.phone_android, color: Colors.green),
-      hintText: "9485621288",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Mobile Number *",
-      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
-      
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+  Widget mobileNumber(BuildContext context) => TextFormField(
+        controller: textEditingController3,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Number cannot be empty";
+          } else if (value.length > 10) {
+            return "Number not valid";
+          }
+          return null;
+        },
+        onSaved: (value) {
+          setState(() {
+            mobile = value;
+          });
+        },
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.phone_android, color: Colors.green),
+          hintText: "9485621288",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Mobile Number *",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
-  final institution_or_company = TextFormField(
-     
-    onSaved: (value) => institutionOrCompany = value,
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.business, color: Colors.green),
-      hintText: "bob school of AI",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Institution/Company",
-     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
-      
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
 
-  final occupation = TextFormField(
-     
-    onSaved: (value) => typeOfOccupations = value,
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.work, color: Colors.green),
-      hintText: "eg Student,business etc",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Occupation *",
-     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
-      
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+  Widget institution_or_company(BuildContext context) => TextFormField(
+        controller: textEditingController4,
+        onSaved: (value) {
+          setState(() {
+            institutionOrCompany = value;
+          });
+        },
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.business, color: Colors.green),
+          hintText: "bob school of AI",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Institution/Company",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
-  final referalCode = TextFormField(
-     
-    onSaved: (value) => referalCodeFromFriend = value,
-    keyboardType: TextInputType.text,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.cloud_circle, color: Colors.green),
-      hintText: "Ax875b",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      helperText: "6 DIGIT CODE FROM YOUR FRIEND",
-      helperStyle: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
-      labelText: "Referal code",
-     labelStyle: TextStyle(color: Colors.black,fontSize: 12),
-      
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
 
-  final password = TextFormField(
-     
-    validator: (value){
-      if(value.isEmpty){
-        return "Password cannot be empty";
-      }
-      else if(value.length<8){
-        return "password must be atleast 8 in length";
-      }
-      else{
-        return null;
-      }
-    },
-    onSaved: (value) => _password = value,
-    keyboardType: TextInputType.text,
-    obscureText: true,
-    decoration: InputDecoration(
-      prefixIcon: Icon(Icons.lock, color: Colors.green),
-      hintText: "password",
-      hintStyle: TextStyle(color: Colors.grey,fontSize: 12),
-      labelText: "Password *",
-      labelStyle: TextStyle(color: Colors.black,fontSize: 12),
+  Widget occupation(BuildContext context) => TextFormField(
+        controller: textEditingController5,
+        onSaved: (value) {
+          setState(() {
+            typeOfOccupations = value;
+          });
+        },
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.work, color: Colors.green),
+          hintText: "eg Student,business etc",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Occupation *",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
-      // focusedBorder: OutlineInputBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-      // ),
-    ),
-  );
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
+
+  Widget referalCode(BuildContext context) => TextFormField(
+        controller: textEditingController6,
+        validator: (value) {
+          if (value.length < 6 && value.length > 6) {
+            return "Not valid";
+          }
+          return null;
+        },
+        onSaved: (value) {
+          setState(() {
+            referalCodeFromFriend = value;
+          });
+        },
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.cloud_circle, color: Colors.green),
+          hintText: "Ax875b",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          helperText: "6 DIGIT CODE FROM YOUR FRIEND",
+          helperStyle:
+              TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
+          labelText: "Referal code",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
+
+  Widget password(BuildContext context) => TextFormField(
+        controller: textEditingController7,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Password cannot be empty";
+          } else if (value.length < 8) {
+            return "password must be atleast 8 in length";
+          } else {
+            return null;
+          }
+        },
+        onSaved: (value) {
+          setState(() {
+            _password = value;
+          });
+        },
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.lock, color: Colors.green),
+          hintText: "password",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          labelText: "Password *",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+          // ),
+        ),
+      );
 
 //  final confirmPassword = TextFormField(
 //    validator: (value){
@@ -302,44 +345,49 @@ class _SignupPageState extends State<SignupPage> {
 //    ),
 //  );
 
-  Widget signUpButton(BuildContext context)=> ButtonTheme(
-    minWidth: 300,
-    height: 50,
-    buttonColor: Color.fromRGBO(255, 116, 23, 1),
-    child: RaisedButton(
-      elevation: 5,
-      color: Colors.green,
-      // onPressed: validateAndSubmit,
-      onPressed: (){
-              validateAndSubmit(context);
-            
-      },
-      child: Text("Sign Up", style: TextStyle(color: Colors.black,fontSize: 12),),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
-      // borderSide: BorderSide(
-      //   width: 1.5,
-      //   color: Colors.green,
-      //   style: BorderStyle.solid,
-      // ),
-    ),
-  );
+  Widget signUpButton(BuildContext context) => ButtonTheme(
+        minWidth: 300,
+        height: 50,
+        buttonColor: Color.fromRGBO(255, 116, 23, 1),
+        child: RaisedButton(
+          elevation: 5,
+          color: Colors.green,
+          // onPressed: validateAndSubmit,
+          onPressed: () {
+            validateAndSubmit(context);
+          },
+          child: Text(
+            "Sign Up",
+            style: TextStyle(color: Colors.black, fontSize: 12),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          // borderSide: BorderSide(
+          //   width: 1.5,
+          //   color: Colors.green,
+          //   style: BorderStyle.solid,
+          // ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back,color: Colors.black,),
-            onPressed: (){
-              Navigator.of(context).pop(
-                 MaterialPageRoute(builder: (context)=>homePage()));
-            },
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
+          onPressed: () {
+            Navigator.of(context)
+                .pop(MaterialPageRoute(builder: (context) => homePage()));
+          },
+        ),
         backgroundColor: Theme.of(context).primaryColorDark,
-          ),
+      ),
       body: Container(
         padding: EdgeInsets.all(20),
         width: 600,
@@ -350,36 +398,32 @@ class _SignupPageState extends State<SignupPage> {
           child: ListView(
             children: <Widget>[
               Text(
-                  "SIGN UP",
-                  style: TextStyle(
-                    fontSize: 20,
-                    letterSpacing: 2,
-                    fontFamily: "Open Sans"
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 200),
-                ),
-                Text(
-                  "           ",
-                  style: TextStyle(
+                "SIGN UP",
+                style: TextStyle(
+                    fontSize: 20, letterSpacing: 2, fontFamily: "Open Sans"),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 200),
+              ),
+              Text(
+                "           ",
+                style: TextStyle(
                     decoration: TextDecoration.underline,
                     decorationColor: Colors.green,
-                    decorationThickness: 5
-                  ),
-                ),
+                    decorationThickness: 5),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              fullName,
+              fullName(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              emailAddress,
+              emailAddress(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              password,
+              password(context),
 //              Padding(
 //                padding: EdgeInsets.only(top: 20),
 //              ),
@@ -387,7 +431,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              mobileNumber,
+              mobileNumber(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
@@ -408,7 +452,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 hint: Text(
                   "Select Your gender",
-                  style: TextStyle(color: Colors.black,fontSize: 12),
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -421,7 +465,7 @@ class _SignupPageState extends State<SignupPage> {
                     value: value,
                     child: Text(
                       value,
-                      style: TextStyle(fontSize: 12,color: Colors.black),
+                      style: TextStyle(fontSize: 12, color: Colors.black),
                     ),
                   );
                 }).toList(),
@@ -429,15 +473,15 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              occupation,
+              occupation(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              institution_or_company,
+              institution_or_company(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              referalCode,
+              referalCode(context),
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
@@ -456,6 +500,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   FlatButton(
                     onPressed: () {
+                      print("hello");
                       _pdfworks();
                       AlertDialog(
                         content: PDFViewer(
@@ -465,7 +510,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                     child: Text(
                       "Accept Terms & Condition",
-                      style: TextStyle(color: Colors.grey,fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),
                 ],

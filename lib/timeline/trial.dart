@@ -3,7 +3,7 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:startupreneur/Auth/signin.dart';
+import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/videoPlay.dart';
 
@@ -51,11 +51,11 @@ class _TimelinePageState extends State<TimelinePage> {
     value = sharedPreferences.getString("UserEmail");
     print("the value is $value");
     if (value == null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => SigninPage(),
-        ),
-      );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) => SigninPage(),
+      //   ),
+      // );
     }
   }
 
@@ -134,7 +134,7 @@ class _TimelinePageState extends State<TimelinePage> {
               onTap: () {
                 _auth.signOut();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SigninPage(),
+                  builder: (context) => SignupPage(),
                 ));
               },
             ),
