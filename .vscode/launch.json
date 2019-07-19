@@ -7,7 +7,7 @@
         
         {
             "name": "Dart",
-            "program": "bin/main.dart",
+            "program": "lib/main.dart",
             "request": "launch",
             "type": "dart"
         }
