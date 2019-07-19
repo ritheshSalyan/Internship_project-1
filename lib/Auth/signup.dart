@@ -462,7 +462,7 @@ class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMi
                     print("$gender");
                   });
                 },
-                items: ['Male', 'Female'].map((String value) {
+                items: ['Male', 'Female','Others'].map((String value) {
                   return DropdownMenuItem(
                     value: value,
                     child: Text(
