@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/videoPlay.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'quiz_finished.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuizPage extends StatefulWidget {
+  QuizPage({Key key,this.modNum}):super(key:key);
+  final int modNum;
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -23,30 +26,15 @@ class _QuizPageState extends State<QuizPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
-  // @override
-  // // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   FirebaseFetch.getEventsFromFirestore();
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
-    // Question question = widget.questions[_currentIndex];
-    // final List<dynamic> options = question.incorrectAnswers;
-    // if(!options.contains(question.correctAnswer)) {
-    //   options.add(question.correctAnswer);
-    //   options.shuffle();
-    // }
     String question = "";
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         key: _key,
-        // appBar: AppBar(
-        //   title: Text("hello"),
-        //   elevation: 0,
-        // ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Stack(
@@ -55,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
                 clipper: WaveClipperTwo(),
                 child: Container(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
+                      BoxDecoration(color: Colors.grey),
                   height: 200,
                 ),
               ),
@@ -170,7 +158,7 @@ class _QuizPageState extends State<QuizPage> {
                           if (_answerIs == correctAns) {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context)=>videoPlayerPage(title:"What is Startup")
+                                builder: (context)=>videoPlayerPage(title:"What is Startup",modNum:widget.modNum)
                               )
                             );
                           }

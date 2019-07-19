@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../vocabulary/vocabulary.dart';
 import 'package:startupreneur/casestudy/loading.dart';
 import 'package:startupreneur/home.dart';
 
@@ -211,7 +211,7 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
-    final List<int> completedCourse = [1, 10];
+    final List<int> completedCourse = [1];
     int k;
     return TimelineModel(
         new GestureDetector(
@@ -219,9 +219,13 @@ class _TimelinePageState extends State<TimelinePage> {
             print("value of i is $i");
             for (k = 0; k < completedCourse.length; k++) {
               if (completedCourse[k] == i + 1) {
+                print("hello ${completedCourse[k]}");
+                var val = completedCourse[k];
+                print("val is $val");
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ModulePageIntro(modNum:completedCourse[k]),
+                    builder: (context) => ModulePageIntro(modNum:val),
+                    // builder: (context)=>Vocabulary(),
                   ),
                 );
               }
