@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import '../vocabulary/vocabulary.dart';
+import '../ModulePages/finalVideoPage.dart';
 import 'package:startupreneur/casestudy/loading.dart';
-import 'package:startupreneur/home.dart';
-
-import '../ModulePages/quiz/quiz_page.dart';
-
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
@@ -109,11 +106,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context)=>FriendsListPage(),
-                  )
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context)=>FriendsListPage(),
+                //   )
+                // );
               },
             ),
             ListTile(
@@ -123,11 +120,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (QuizPage()),
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => (videoPlayerPage(title: "Video",modNum: 1,)),
+                //   ),
+                // );
               },
             ),
             ListTile(
@@ -137,11 +134,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (Vocabulary()),
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => (Vocabulary()),
+                //   ),
+                // );
               },
             ),
             ListTile(
@@ -151,11 +148,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                  Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (Loading()),
-                  ),
-                );
+                //   Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => (Loading()),
+                //   ),
+                // );
 
               },
             ),
