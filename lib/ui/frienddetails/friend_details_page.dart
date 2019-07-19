@@ -33,36 +33,36 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
     // );
 
     return new Scaffold(
-      body:CustomPaint(
-        painter:  BluePainter(),
+        body: SingleChildScrollView(
+      child: CustomPaint(
+        painter: BluePainter(),
         child: new SingleChildScrollView(
-        child: new Container(
-          // decoration: linearGradient,
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new FriendDetailHeader(
-                widget.friend,
-                avatarTag: widget.avatarTag,
-              ),
-              new Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: new FriendDetailBody(widget.friend),
-              ),
-              new Padding(
-                padding: EdgeInsets.only(top:200),
-                child: Text("   "),
-              )
-              //new FriendShowcase(widget.friend),
-            ],
+          child: new Container(
+            // decoration: linearGradient,
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                new FriendDetailHeader(
+                  widget.friend,
+                  avatarTag: widget.avatarTag,
+                ),
+                new Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: new FriendDetailBody(widget.friend),
+                ),
+                new Padding(
+                  padding: EdgeInsets.only(top: 200),
+                  child: Text("   "),
+                )
+                //new FriendShowcase(widget.friend),
+              ],
+            ),
           ),
         ),
       ),
-    )
-    );
+    ),);
   }
 }
-
 
 class BluePainter extends CustomPainter {
   @override
@@ -73,7 +73,7 @@ class BluePainter extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    paint.color = Colors.white;
+    paint.color = Colors.grey[300];
     canvas.drawPath(mainBackground, paint);
 
     Path ovalPath = new Path();
@@ -82,13 +82,13 @@ class BluePainter extends CustomPainter {
 
     // paint a curve from current position to middle of the screen
     ovalPath.quadraticBezierTo(
-        width * 0.56, height * 0.5, width , height * 0.25);
+        width * 0.56, height * 0.5, width, height * 0.25);
 
     // Paint a curve from current position to bottom left of screen at width * 0.1
-   // ovalPath.quadraticBezierTo(width * 0.93, height * 0.2, width, height*0.2);
+    // ovalPath.quadraticBezierTo(width * 0.93, height * 0.2, width, height*0.2);
 
     // draw remaining line to bottom left side
-    ovalPath.lineTo(width, 0);  
+    ovalPath.lineTo(width, 0);
     ovalPath.lineTo(0, 0);
 
     // Close line to reset it back

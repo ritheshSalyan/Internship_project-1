@@ -3,6 +3,7 @@ import 'package:startupreneur/home.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import '../ui/friends/friends_list_page.dart';
 import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
@@ -101,7 +102,13 @@ class _TimelinePageState extends State<TimelinePage> {
                 'Profile',
                 style: TextStyle(color: Colors.green),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context)=>FriendsListPage(),
+                  )
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.dashboard),

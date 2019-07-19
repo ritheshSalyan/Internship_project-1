@@ -49,7 +49,7 @@ class FriendDetailBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 30), 
+          padding: EdgeInsets.only(top: 50), 
         child:new Text(
           "Progress",
           style: TextStyle(
@@ -64,16 +64,22 @@ class FriendDetailBody extends StatelessWidget {
                  new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width*0.65,
                 animation: true,
-                lineHeight: 10.0,
+                lineHeight: 20.0,
                 animationDuration: 2500,
                 percent: 0.8,
+                center: Text("80.0%",
+                style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
+                ),
                 
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
-              new Text("80.0%",
-                style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
-                ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: new Text("80.0%",
+              //   style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
+              //   ),
+              // )
                ],
                ),
         ),
