@@ -43,78 +43,175 @@ class FriendDetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-  //  var textTheme = theme.textTheme;
+    //  var textTheme = theme.textTheme;
 
     return new Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      // crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
+        // Padding(
+        //   padding: EdgeInsets.only(top: 60),
+        // child:new Card(
+        //     child: new Padding(
+        //         padding: EdgeInsets.all(15),
+        //           child: new Text(
+        //     "Progress",
+        //     style: TextStyle(
+        //       fontSize: 20,color: Colors.black,fontFamily: "Open Sans"
+        //     ),
+        //   ),
+        //     ),
+        // ),
+        // ),
+        // new Padding(
+        //       padding: EdgeInsets.all(15.0),
+        //       child: new Row(
+        //        children: <Widget>[
+        //          new LinearPercentIndicator(
+        //         width: MediaQuery.of(context).size.width*0.65,
+        //         animation: true,
+        //         lineHeight: 20.0,
+        //         animationDuration: 2500,
+        //         percent: 0.8,
+        //         center: Text("80.0%",
+        //         style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
+        //         ),
+
+        //         linearStrokeCap: LinearStrokeCap.roundAll,
+        //         progressColor: Colors.green,
+        //       ),
+        //       // SingleChildScrollView(
+        //       //   scrollDirection: Axis.horizontal,
+        //       //   child: new Text("80.0%",
+        //       //   style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
+        //       //   ),
+        //       // )
+        //        ],
+        //        ),
+        // ),
         Padding(
-          padding: EdgeInsets.only(top: 50), 
-        child:new Text(
-          "Progress",
-          style: TextStyle(
-            fontSize: 20,color: Colors.black,fontFamily: "Open Sans"
-          ),
-        ),
-        ),
-        new Padding(
-              padding: EdgeInsets.all(15.0),
-              child: new Row(
-               children: <Widget>[ 
-                 new LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width*0.65,
-                animation: true,
-                lineHeight: 20.0,
-                animationDuration: 2500,
-                percent: 0.8,
-                center: Text("80.0%",
-                style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
-                ),
-                
-                linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.green,
-              ),
-              // SingleChildScrollView(
-              //   scrollDirection: Axis.horizontal,
-              //   child: new Text("80.0%",
-              //   style: TextStyle(fontFamily: "Open Sans",color: Colors.black),
-              //   ),
-              // )
-               ],
-               ),
-        ),
-        new Padding(
-          padding: const EdgeInsets.only(top: 16.0),
+          padding: const EdgeInsets.only(top: 50),
           child: new Column(
             children: <Widget>[
-              Text("Personal Details ",
-              style: TextStyle(fontFamily: "Open Sans",color: Colors.black,fontSize: 18),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text(
+                  "Personal Details ",
+                  style: TextStyle(
+                      fontFamily: "Open Sans",
+                      color: Colors.green,
+                      fontSize: 20
+                      ),
+                ),
               ),
-              Padding( 
-              padding: EdgeInsets.only(left:50,
-                                        top: 10),
-              child:new Column(
-                children: <Widget>[ 
-                  new Column( 
-                    children: <Widget>[ 
-                      Text("data@email.com",
-                      style: TextStyle(fontFamily: "Open Sans",color: Colors.black,fontSize: 16),
+              Padding(
+                padding: EdgeInsets.only(left: 0, top: 10),
+                child: new Column(
+                  children: <Widget>[
+                    Card(
+                      child: new Padding(
+                        padding: EdgeInsets.only(left: 0, top: 5),
+                        child: new Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                              child: new Row(
+                                children: <Widget>[
+                                  Icon(Icons.email, color: Colors.green),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "data@email.com",
+                                      style: TextStyle(
+                                          fontFamily: "Open Sans",
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                              child: new Row(
+                                children: <Widget>[
+                                  Icon(Icons.phone_android, color: Colors.green),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "9966332255",
+                                      style: TextStyle(
+                                          fontFamily: "Open Sans",
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                              child: new Row(
+                                children: <Widget>[
+                                  Icon(Icons.help_outline, color: Colors.green),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "Female",
+                                      style: TextStyle(
+                                          fontFamily: "Open Sans",
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                              child: new Row(
+                                children: <Widget>[
+                                  Icon(Icons.business, color: Colors.green),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "School of AI",
+                                      style: TextStyle(
+                                          fontFamily: "Open Sans",
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                             Padding(
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                              child: new Row(
+                                children: <Widget>[
+                                  Icon(Icons.work, color: Colors.green),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "Student",
+                                      style: TextStyle(
+                                          fontFamily: "Open Sans",
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text("data@email.com",
-                      style: TextStyle(fontFamily: "Open Sans",color: Colors.black,fontSize: 16),
-                      ),
-                      Text("data@email.com",
-                      style: TextStyle(fontFamily: "Open Sans",color: Colors.black,fontSize: 16),
-                      ),
-                    ],
-                  ),
-              ],
-              ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-        
       ],
     );
   }

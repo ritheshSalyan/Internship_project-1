@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/casestudy/loading.dart';
 import 'package:startupreneur/home.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/modulePageIntro.dart';
+import '../casestudy/intro.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -138,7 +140,14 @@ class _TimelinePageState extends State<TimelinePage> {
                 'Hustle store',
                 style: TextStyle(color: Colors.green),
               ),
-              onTap: () {},
+              onTap: () {
+                  Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (Loading()),
+                  ),
+                );
+
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings),
