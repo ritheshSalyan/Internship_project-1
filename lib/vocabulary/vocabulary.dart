@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class ItemList {
+  List<String> list = [];
+}
 
 class Vocabulary extends StatefulWidget {
   @override
@@ -6,8 +11,14 @@ class Vocabulary extends StatefulWidget {
 }
 
 class _VocabularyState extends State<Vocabulary> {
- final List<String> list = ["Helo","Hiii","world","You","Me"];
+  Firestore db = Firestore.instance;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // dataRetrieve();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +26,7 @@ class _VocabularyState extends State<Vocabulary> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 350,
+            expandedHeight: 300,
             title: Text("Start-up Glossary"),
             pinned: true,
             backgroundColor: Colors.black,
@@ -29,14 +40,39 @@ class _VocabularyState extends State<Vocabulary> {
           SliverList(
             delegate: SliverChildListDelegate(
               <Widget>[
-                AnimatedList(
-                  itemBuilder,
-                )
+                StreamBuilder<QuerySnapshot>(
+                  stream:
+                      Firestore.instance.collection("vocabulary").snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    // return Text("value ${snapshot.data.documents[0].data["word"].length}");
+                    if (snapshot.hasError) {
+                      print("error");
+                      // return Text("Error ${snapshot.error}");
+                    }
+                    switch (snapshot.data) {
+                      case null:
+                        return Text("hello");
+                        break;
+                      default:
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                snapshot.data.documents[0].data["word"].length,
+                            itemBuilder: (context, index) {
+                            return ListTile(
+                                leading: Icon(Icons.book),
+                                title: Text( snapshot.data.documents[0].data["word"][index])
+                              );
+                            });
+                    }
+                  },
+                ),
               ],
             ),
           )
         ],
       ),
     );
+
   }
 }
