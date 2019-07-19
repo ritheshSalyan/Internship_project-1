@@ -211,7 +211,8 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
-    final List<int> completedCourse = [1, 10];
+    final List<int> completedCourse = new List();
+    completedCourse.add(1);
     int k;
     return TimelineModel(
         new GestureDetector(
@@ -219,9 +220,12 @@ class _TimelinePageState extends State<TimelinePage> {
             print("value of i is $i");
             for (k = 0; k < completedCourse.length; k++) {
               if (completedCourse[k] == i + 1) {
+                int modNum = completedCourse[k];
+                 print("Value of completedCourse[k] is "+modNum.toString());
                 Navigator.of(context).push(
+                 
                   MaterialPageRoute(
-                    builder: (context) => ModulePageIntro(modNum:completedCourse[k]),
+                    builder: (context) => ModulePageIntro(modNum:modNum),
                   ),
                 );
               }

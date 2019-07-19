@@ -14,8 +14,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFetch.getEventsFromFirestore(1).then((module){
-
+    FirebaseFetch.getEventsFromFirestore(widget.modNum).then((module){
+        
        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => motivationalPage(module: module,),
