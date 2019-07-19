@@ -1,20 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../casestudy/loading.dart';
 import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
-  videoPlayerPage({Key key, this.title}) : super(key: key);
+  videoPlayerPage({Key key, this.title,this.modNum}) : super(key: key);
   final String title;
+  final int modNum;
   _videoPlayerPageState createState() => _videoPlayerPageState();
 }
 
 class _videoPlayerPageState extends State<videoPlayerPage> {
   Firestore db = Firestore.instance;
   String description = "";
-  String link =  "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/videos%2FVideo%201%20-%20What%20is%20a%20Startup.mp4?alt=media&token=e3df2e48-4475-4889-a5a0-7f42217a5073";
-   
+  String link =
+      "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/videos%2FVideo%201%20-%20What%20is%20a%20Startup.mp4?alt=media&token=e3df2e48-4475-4889-a5a0-7f42217a5073";
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             ),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: VideoApp(link:link),
+              background: VideoApp(link: link),
             ),
           ),
           SliverList(
@@ -43,7 +45,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                 StreamBuilder<QuerySnapshot>(
                   stream: db
                       .collection("module")
-                      .where("id", isEqualTo: 1)
+                      .where("id", isEqualTo: widget.modNum)
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     switch (snapshot.data) {
@@ -74,10 +76,16 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                 padding: EdgeInsets.only(top: 30),
                                 child: RaisedButton(
                                   shape: BeveledRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   color: Colors.green,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Loading(),
+                                      ),
+                                    );
+                                  },
                                   child: Icon(
                                     Icons.navigate_next,
                                     size: 40.0,

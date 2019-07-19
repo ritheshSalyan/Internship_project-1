@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/motiPage.dart';
 import 'overviewContent.dart';
+import '../ModulePages/quiz/quiz_page.dart';
 
 class ModulePageIntro extends StatefulWidget {
-
-  ModulePageIntro({Key key,this.modNum}):super(key: key);
+  ModulePageIntro({Key key, this.modNum}) : super(key: key);
   final int modNum;
   @override
   _ModulePageIntroState createState() => _ModulePageIntroState();
 }
 
 class _ModulePageIntroState extends State<ModulePageIntro> {
-
   @override
   Widget build(BuildContext context) {
-    FirebaseFetch.getEventsFromFirestore(widget.modNum).then((module){
-        
-       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => motivationalPage(module: module,),
-          ),
-        );
-     
-    }).catchError((e){
-return Container();
+    FirebaseFetch.getEventsFromFirestore(widget.modNum).then((module) {
+      // print("module $module");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) =>
+              motivationalPage(module: module, modNum: widget.modNum),
+        ),
+      );
+    }).catchError((e) {
+      return Container();
     });
     //return Container();
     return Scaffold(
@@ -54,7 +53,23 @@ return Container();
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                 ),
-               
+                RaisedButton(
+                  shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  color: Colors.green,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => QuizPage(modNum:widget.modNum),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.navigate_next,
+                    size: 40.0,
+                  ),
+                ),
                 // Card(
                 //   shape: BeveledRectangleBorder(
                 //     borderRadius: BorderRadius.circular(15.0),
@@ -90,7 +105,7 @@ return Container();
                 //           textAlign: TextAlign.left,
                 //         ),
                 //       )
-                      
+
                 //     ],
                 //   ),
                 // ),
@@ -112,7 +127,7 @@ return Container();
                 //           textAlign: TextAlign.left,
                 //         ),
                 //       ),
-                      
+
                 //     ],
                 //   ),
                 // ),
@@ -173,13 +188,11 @@ return Container();
                 //     ],
                 //   ),
                 // ),
-             ],
+              ],
             ),
           ),
         ],
       ),
     );
   }
-
- 
 }

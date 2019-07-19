@@ -48,6 +48,7 @@ class IntroScreenState extends State<IntroScreen> {
 
   void onTabChangeCompleted(index) {
     // Index of current tab is focused
+    
   }
 
   Widget renderNextBtn() {
