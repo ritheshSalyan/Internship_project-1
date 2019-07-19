@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'dot_animation_enum.dart';
 import 'intro_slider.dart';
 import 'slide_object.dart';
+import '../ModulePages/finalVideoPage.dart';
 
 
 
@@ -22,61 +23,6 @@ class IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
-    
-    // slides.add(
-    //   new Slide(
-    //     title: " ",
-    //     styleTitle: TextStyle(
-    //         color: Color(0xff3da4ab),
-    //         fontSize: 30.0,
-    //         fontWeight: FontWeight.bold,
-    //         fontFamily: 'RobotoMono'),
-    //     description:
-    //         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-    //     styleDescription: TextStyle(
-    //         color: Color(0xfffe9c8f),
-    //         fontSize: 20.0,
-    //         fontStyle: FontStyle.italic,
-    //         fontFamily: 'Raleway'),
-    //     pathImage: "assets/Images/character.png",
-    //   ),
-    // );
-    // slides.add(
-    //   new Slide(
-    //     title: " ",
-    //     styleTitle: TextStyle(
-    //         color: Color(0xff3da4ab),
-    //         fontSize: 30.0,
-    //         fontWeight: FontWeight.bold,
-    //         fontFamily: 'RobotoMono'),
-    //     description:
-    //         "Ye indulgence unreserved connection alteration appearance",
-    //     styleDescription: TextStyle(
-    //         color: Color(0xfffe9c8f),
-    //         fontSize: 20.0,
-    //         fontStyle: FontStyle.italic,
-    //         fontFamily: 'Raleway'),
-    //     pathImage: "assets/Images/character.png",
-    //   ),
-    // );
-    // slides.add(
-    //   new Slide(
-    //     title: " ",
-    //     styleTitle: TextStyle(
-    //         color: Color(0xff3da4ab),
-    //         fontSize: 30.0,
-    //         fontWeight: FontWeight.bold,
-    //         fontFamily: 'RobotoMono'),
-    //     description:
-    //         "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-    //     styleDescription: TextStyle(
-    //         color: Color(0xfffe9c8f),
-    //         fontSize: 20.0,
-    //         fontStyle: FontStyle.italic,
-    //         fontFamily: 'Raleway'),
-    //     pathImage: "assets/Images/character.png",
-    //   ),
-    //);
   }
   
   void createSlides(){
@@ -98,7 +44,12 @@ class IntroScreenState extends State<IntroScreen> {
   }
   void onDonePress() {
     // Back to the first tab
-    this.goToTab(0);
+    //this.goToTab(0);
+    Navigator.of(context).pushReplacement( 
+      MaterialPageRoute(
+            builder: (context) => videoPlayerPage(title: "Are you Ready?",modNum:1,),
+          ),
+          );
   }
 
   void onTabChangeCompleted(index) {

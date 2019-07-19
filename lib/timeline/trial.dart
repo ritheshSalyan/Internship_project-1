@@ -134,11 +134,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => (Vocabulary()),
-                //   ),
-                // );
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (Vocabulary()),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -220,6 +220,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 var val = completedCourse[k];
                 print("val is $val");
                 Navigator.of(context).push(
+                 
                   MaterialPageRoute(
                     builder: (context) => ModulePageIntro(modNum:val),
                     // builder: (context)=>Vocabulary(),
