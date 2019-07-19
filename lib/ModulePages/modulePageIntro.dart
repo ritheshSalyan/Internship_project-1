@@ -3,6 +3,9 @@ import 'package:startupreneur/ModulePages/motiPage.dart';
 import 'overviewContent.dart';
 
 class ModulePageIntro extends StatefulWidget {
+
+  ModulePageIntro({Key key,this.modNum}):super(key: key);
+  final int modNum;
   @override
   _ModulePageIntroState createState() => _ModulePageIntroState();
 }
@@ -11,7 +14,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFetch.getEventsFromFirestore().then((module){
+    FirebaseFetch.getEventsFromFirestore(1).then((module){
 
        Navigator.of(context).pushReplacement(
           MaterialPageRoute(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/home.dart';
+import '../ModulePages/quiz/quiz_page.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
@@ -116,7 +116,13 @@ class _TimelinePageState extends State<TimelinePage> {
                 'Dashboard',
                 style: TextStyle(color: Colors.green),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (QuizPage()),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.book),
@@ -202,7 +208,7 @@ class _TimelinePageState extends State<TimelinePage> {
               if (completedCourse[k] == i + 1) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ModulePageIntro(),
+                    builder: (context) => ModulePageIntro(modNum:completedCourse[k]),
                   ),
                 );
               }

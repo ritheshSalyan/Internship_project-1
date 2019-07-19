@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/timeline/trial.dart';
 
 class VideoApp extends StatefulWidget {
+  VideoApp({Key key,this.link}):super(key : key);
+  final String link;
   @override
   _VideoAppState createState() => _VideoAppState();
 }
@@ -15,8 +17,7 @@ class _VideoAppState extends State<VideoApp> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-//      "assets/videos/video.mp4",
-      'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
+        widget.link,
     )
       ..addListener(() {
         final bool isPlaying = _controller.value.isPlaying;

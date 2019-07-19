@@ -19,7 +19,7 @@ class _introPageState extends State<introPage> {
   @override
   void initState() {
     super.initState();
-    FirebaseFetch.getEventsFromFirestore();
+    FirebaseFetch.getEventsFromFirestore(1);
   }
 
   static Future<bool> firstLogin() async {

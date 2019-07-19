@@ -34,11 +34,13 @@ dependencies:
   progress_dialog: ^1.1.0+1
   video_player: ^0.10.1+4
   modal_progress_hud: ^0.1.3
+  font_awesome_flutter: ^8.5.0
   toast: ^0.1.3
   flutter_plugin_pdf_viewer: ^1.0.7
   shared_preferences: ^0.5.3+3
   connectivity: ^0.4.3+4
   http: 0.12.0+2
+  flutter_custom_clippers: ^1.0.4
   flip_card: ^0.4.0
   percent_indicator: 2.1.1
 
