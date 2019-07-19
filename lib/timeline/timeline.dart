@@ -3,6 +3,7 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 
+
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -20,10 +21,11 @@ class _TimelinePageState extends State<TimelinePage> {
 
     return Scaffold(
       appBar:
-          AppBar(title: Text(widget.title), backgroundColor: Color(0x000000)),
+          AppBar(title: Text(widget.title), backgroundColor: Color(0x000000),),
       body: PageView(
         children: pages,
       ),
+
     );
   }
 

@@ -4,6 +4,7 @@ import 'page1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../ModulePages/overviewContent.dart';
 
 class introPage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _introPageState extends State<introPage> {
   @override
   void initState() {
     super.initState();
+    FirebaseFetch.getEventsFromFirestore();
   }
 
   static Future<bool> firstLogin() async {

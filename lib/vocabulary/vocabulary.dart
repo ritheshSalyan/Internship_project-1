@@ -59,10 +59,10 @@ class _VocabularyState extends State<Vocabulary> {
                             itemCount:
                                 snapshot.data.documents[0].data["word"].length,
                             itemBuilder: (context, index) {
-                            return ListTile(
-                                leading: Icon(Icons.book),
-                                title: Text( snapshot.data.documents[0].data["word"][index])
-                              );
+                              return ListTile(
+                                  leading: Icon(Icons.book),
+                                  title: Text(snapshot
+                                      .data.documents[0].data["word"][index]));
                             });
                     }
                   },
@@ -73,6 +73,5 @@ class _VocabularyState extends State<Vocabulary> {
         ],
       ),
     );
-
   }
 }
