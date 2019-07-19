@@ -29,7 +29,7 @@ class _motivationalPageState extends State<motivationalPage> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                "assets/Images/idea.png",
+                "assets/Images/start_up.png",
                 fit: BoxFit.fitWidth,
                 // height: 100,
               ),
@@ -38,6 +38,7 @@ class _motivationalPageState extends State<motivationalPage> {
           SliverList(
             delegate: SliverChildListDelegate(
               overView(module),
+             
             ),
           ),
         ],
@@ -134,6 +135,23 @@ class _motivationalPageState extends State<motivationalPage> {
     //             ),
     //           ),
     //   );
+    widgetList.add( RaisedButton(
+                  shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  color: Colors.green,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => QuizPage(modNum:widget.modNum),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.navigate_next,
+                    size: 40.0,
+                  ),
+                ));
     return widgetList;
   }
 }

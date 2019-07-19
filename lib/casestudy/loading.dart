@@ -18,11 +18,20 @@ class _LoadingState extends State<Loading> {
           ),
         );
       }
-    }).catchError(() {
+    }).catchError((e) {
       return CircularProgressIndicator(
         backgroundColor: Colors.green,
       );
+      //  return Container(
+      // color: Colors.white,
+    // );
     });
-    return Container();
+    return Container(
+      color: Colors.white,
+      // child: CircularProgressIndicator(
+      //   backgroundColor: Colors.green,
+      // ),
+    );
+     
   }
 }

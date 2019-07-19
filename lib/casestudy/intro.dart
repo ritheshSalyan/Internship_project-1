@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'dot_animation_enum.dart';
 import 'intro_slider.dart';
 import 'slide_object.dart';
+import '../ModulePages/finalVideoPage.dart';
 
 
 
@@ -43,7 +44,12 @@ class IntroScreenState extends State<IntroScreen> {
   }
   void onDonePress() {
     // Back to the first tab
-    this.goToTab(0);
+    //this.goToTab(0);
+    Navigator.of(context).pushReplacement( 
+      MaterialPageRoute(
+            builder: (context) => videoPlayerPage(title: "Are you Ready?",modNum:1,),
+          ),
+          );
   }
 
   void onTabChangeCompleted(index) {

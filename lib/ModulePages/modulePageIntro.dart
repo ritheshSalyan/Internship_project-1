@@ -40,7 +40,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                "assets/Images/idea.png",
+                "assets/Images/start_up.png",
                 fit: BoxFit.fitWidth,
                 // height: 100,
               ),
