@@ -40,14 +40,14 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
           child: new Container(
             // decoration: linearGradient,
             child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 new FriendDetailHeader(
                   widget.friend,
                   avatarTag: widget.avatarTag,
                 ),
                 new Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: new FriendDetailBody(widget.friend),
                 ),
                 new Padding(
