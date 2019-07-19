@@ -30,7 +30,7 @@ class _VocabularyState extends State<Vocabulary> {
             delegate: SliverChildListDelegate(
               <Widget>[
                 AnimatedList(
-                  itemBuilder,
+                  // itemBuilder,
                 )
               ],
             ),
