@@ -134,11 +134,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => (Vocabulary()),
-                //   ),
-                // );
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (Vocabulary()),
+                  ),
+                );
               },
             ),
             ListTile(
