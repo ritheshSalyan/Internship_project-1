@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/videoPlay.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'quiz_finished.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuizPage extends StatefulWidget {
@@ -18,11 +16,9 @@ class _QuizPageState extends State<QuizPage> {
   final TextStyle _questionStyle = TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white);
   List<dynamic> options = [];
-  int _currentIndex = 0;
   int selectedRadio = 0;
   String reason = "";
   String correctAns = "";
-  final Map<int, dynamic> _answers = {};
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
@@ -159,7 +155,7 @@ class _QuizPageState extends State<QuizPage> {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context)=>videoPlayerPage(title:"What is Startup",modNum:widget.modNum)
-                              )
+                              ),
                             );
                           }
                         },
@@ -167,31 +163,13 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  // void _nextSubmit() {
-  //   if(_answers[_currentIndex] == null) {
-  //     _key.currentState.showSnackBar(SnackBar(
-  //       content: Text("You must select an answer to continue."),
-  //     ));
-  //     return;
-  //   }
-  //   if(_currentIndex < (widget.questions.length - 1)){
-  //     setState(() {
-  //         _currentIndex++;
-  //     });
-  //   } else {
-  //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //       builder: (_) => QuizFinishedPage(questions: widget.questions, answers: _answers)
-  //     ));
-  //   }
-  // }
 
   Future<bool> _onWillPop() async {
     return showDialog<bool>(

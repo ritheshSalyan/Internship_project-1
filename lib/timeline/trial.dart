@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../vocabulary/vocabulary.dart';
-import '../ModulePages/finalVideoPage.dart';
-import 'package:startupreneur/casestudy/loading.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import '../ui/friends/friends_list_page.dart';
+import '../Auth/signin.dart';
+import 'package:video_player/video_player.dart';
+import '../ModulePages/contentTimeline.dart';
 import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/modulePageIntro.dart';
-import '../casestudy/intro.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -25,6 +26,8 @@ class TimelinePage extends StatefulWidget {
 class _TimelinePageState extends State<TimelinePage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   SharedPreferences sharedPreferences;
+  bool _isPlaying = false;
+  VideoPlayerController controller;
   BuildContext context;
   FirebaseUser user;
   String value = "";
@@ -41,27 +44,44 @@ class _TimelinePageState extends State<TimelinePage> {
         );
       }
     }
-    return Icon(
-      Icons.lock,
-      size: 50,
+    return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Icon(
+        Icons.lock,
+        size: 30,
+      ),
     );
   }
 
   void initState() {
     super.initState();
-    preferences();
+    controller = VideoPlayerController.network(
+        "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FAre%20You%20Ready%20720p.mp4?alt=media&token=583c2a4a-cae1-4e67-9898-cc5099474147")
+      ..addListener(() {
+        final bool isPlaying = controller.value.isPlaying;
+        if (isPlaying != _isPlaying) {
+          setState(() {
+            _isPlaying = isPlaying;
+          });
+        }
+      })
+      ..initialize().then((_) {
+        setState(() {});
+      });
+    // super.initState();
+    preferences(context);
   }
 
-  void preferences() async {
+  void preferences(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    value = sharedPreferences.getString("UserEmail");
+    setState(() {
+      value = sharedPreferences.getString("UserEmail");
+    });
     print("the value is $value");
     if (value == null) {
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (context) => SigninPage(),
-      //   ),
-      // );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => SigninPage(),
+      ));
     }
   }
 
@@ -77,131 +97,158 @@ class _TimelinePageState extends State<TimelinePage> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        automaticallyImplyLeading: true,
-        backgroundColor: Theme.of(context).primaryColorDark,
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountEmail: Text("value"),
-              accountName: Text("Subramanya c"),
-              currentAccountPicture: CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(_url),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.green,
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.assignment_ind,
-              ),
-              title: Text(
-                'Profile',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context)=>FriendsListPage(),
-                //   )
-                // );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text(
-                'Dashboard',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => (videoPlayerPage(title: "Video",modNum: 1,)),
-                //   ),
-                // );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.book),
-              title: Text(
-                'Vocabulary',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (Vocabulary()),
+        extendBody: true,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          automaticallyImplyLeading: true,
+          backgroundColor: Theme.of(context).primaryColorDark,
+          elevation: 0.0,
+          actions: <Widget>[
+            Row(
+              children: <Widget>[
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    FontAwesomeIcons.solidGem,
+                    color: Colors.green,
+                    size: 15,
                   ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.store),
-              title: Text(
-                'Hustle store',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {
-                //   Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => (Loading()),
-                //   ),
-                // );
-
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text(
-                'Settings',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.lock_open),
-              title: Text(
-                'Logout',
-                style: TextStyle(color: Colors.green),
-              ),
-              onTap: () {
-                _auth.signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SignupPage(),
-                ));
-              },
-            ),
-            Divider(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                "All right reserved at thestartupreneur.co",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
-              ),
+                ),
+                Text(
+                  "1000",
+                  style: TextStyle(color: Colors.black),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 20),
+                ),
+              ],
             )
           ],
         ),
-      ),
-      body: PageView(
-        children: pages,
-      ),
-    );
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountEmail: Text(value),
+                accountName: Text("Subramanya c"),
+                currentAccountPicture: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(_url),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.assignment_ind,
+                ),
+                title: Text(
+                  'Profile',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VideoPlay(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.dashboard),
+                title: Text(
+                  'Dashboard',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => (videoPlayerPage(title: "Video",modNum: 1,)),
+                  //   ),
+                  // );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.book),
+                title: Text(
+                  'Vocabulary',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (Vocabulary()),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.store),
+                title: Text(
+                  'Hustle store',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {
+                  //   Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => (Loading()),
+                  //   ),
+                  // );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text(
+                  'Settings',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.lock_open),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onTap: () {
+                  _auth.signOut();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => SignupPage(),
+                  ));
+                },
+              ),
+              Divider(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  "All right reserved at thestartupreneur.co",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                ),
+              )
+            ],
+          ),
+        ),
+        body: Stack(
+          children: <Widget>[
+            // ClipPath(
+            //   clipper: WaveClipperTwo(),
+            //   child: Container(
+            //     decoration: BoxDecoration(color: Colors.green),
+            //     height: 200,
+            //   ),
+            // ),
+            PageView(
+              children: pages,
+            ),
+          ],
+        ));
   }
 
   timelineModel(TimelinePosition position) => Timeline.builder(
         itemBuilder: centerTimelineBuilder,
         itemCount: doodles.length,
         lineColor: Colors.green,
-        // physics: position == TimelinePosition.Left
-        //     ? ClampingScrollPhysics()
-        //     : BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         position: position,
       );
 
@@ -220,9 +267,8 @@ class _TimelinePageState extends State<TimelinePage> {
                 var val = completedCourse[k];
                 print("val is $val");
                 Navigator.of(context).push(
-                 
                   MaterialPageRoute(
-                    builder: (context) => ModulePageIntro(modNum:val),
+                    builder: (context) => ModulePageIntro(modNum: val),
                     // builder: (context)=>Vocabulary(),
                   ),
                 );

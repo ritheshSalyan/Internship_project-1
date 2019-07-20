@@ -26,11 +26,11 @@ class _introPageState extends State<introPage> {
     sharedPreferences = await SharedPreferences.getInstance();
     try {
       var value = sharedPreferences.getString("UserId");
-      if (value.isNotEmpty) {
+      if (value==null) {
         print(" log");
-        return true;
+        return false;
       }
-      return false;
+      return true;
     } catch (e) {
       print(e.toString());
       // return ;

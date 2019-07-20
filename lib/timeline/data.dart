@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class Doodle {
   final String name;
@@ -148,9 +150,9 @@ const List<Doodle> doodles = [
     doodle:
         "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
     icon: Icon(
-      Icons.star,
+      FontAwesomeIcons.trophy,
       color: Colors.white,
-      size: 32.0,
+      size: 30.0,
     ),
     iconBackground: Colors.blue,
   ),
