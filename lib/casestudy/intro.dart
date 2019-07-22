@@ -26,6 +26,8 @@ class IntroScreenState extends State<IntroScreen> {
   }
   
   void createSlides(){
+    // slides.clear();
+    slides = new List();
       for (String item in dialogue) {
          slides.add(
       new Slide(
@@ -39,8 +41,10 @@ class IntroScreenState extends State<IntroScreen> {
         pathImage: "assets/Images/character.png",
       ),
     );
-      }
 
+    
+      }
+print("Length of slides "+slides.length.toString());
   }
   void onDonePress() {
     // Back to the first tab

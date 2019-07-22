@@ -502,6 +502,7 @@ class IntroSliderState extends State<IntroSlider>
     switch (typeDotAnimation) {
       case dotSliderAnimation.DOT_MOVEMENT:
         for (int i = 0; i < slides.length; i++) {
+          print("Size date in 505"+i.toString());
           sizeDots.add(sizeDot);
           opacityDots.add(1.0);
         }
@@ -1036,9 +1037,10 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (int i = 0; i < slides.length; i++) {
-      try{ 
+      // try{ 
+        print("sizeDots[i] = "+i.toString());
       dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i]));
-      }catch(e){}
+      // }catch(e){}
     }
     return dots;
   }
