@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/casestudy/liquid_slide.dart';
 import 'firebaseConnect.dart';
 import 'intro.dart';
+import 'liquid_slide.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _LoadingState extends State<Loading> {
       if (dialogue.length != 0) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => IntroScreen(dialogue: dialogue),
+            builder: (context) =>IntroScreen_Liquid(dialogue: dialogue),
           ),
         );
       }
