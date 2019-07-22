@@ -1,0 +1,482 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class SocializeTask extends StatefulWidget {
+  @override
+  _SocializeTaskState createState() => _SocializeTaskState();
+}
+
+class _SocializeTaskState extends State<SocializeTask> {
+  static final _formkey = GlobalKey<FormState>();
+  var _job = false;
+  var _startup = false;
+
+  bool _validate() {
+    final form = _formkey.currentState;
+
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  validateAndSubmit(BuildContext context) async {
+    if (_validate()) {
+      setState(() {
+        _job = true;
+        print(_job);
+      });
+      // signUpInwithEmail(context);
+//       Navigator.of(context)
+//           .push(MaterialPageRoute(builder: (context) => new introPage()));
+    }
+  }
+
+  bool _validateStartup() {
+    final form = _formkey.currentState;
+
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  validateAndSubmitStartup(BuildContext context) async {
+    if (_validateStartup()) {
+      setState(() {
+        _startup = true;
+      });
+    }
+  }
+
+  Future<Widget> _jobPopUp(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: AlertDialog(
+            content: Column(
+              children: <Widget>[
+                Container(
+                  child: Form(
+                    key: _formkey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        Text(
+                          "Pros",
+                          style: TextStyle(
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_one,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_two,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_3,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        Text(
+                          "Cons",
+                          style: TextStyle(
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_one,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_two,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_3,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.15,
+                              MediaQuery.of(context).size.width * 0.05,
+                              0,
+                              0),
+                          child: FlatButton(
+                            onPressed: () {
+                              validateAndSubmit(context);
+                            },
+                            child: Center(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Submit"),
+                                  Icon(
+                                    Icons.done_outline,
+                                    color: Colors.green,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<Widget> _startPopUp(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: AlertDialog(
+            content: Column(
+              children: <Widget>[
+                Container(
+                  child: Form(
+                    key: _formkey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        Text(
+                          "Pros",
+                          style: TextStyle(
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_one,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_two,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_3,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        Text(
+                          "Cons",
+                          style: TextStyle(
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.0),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_one,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_two,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Cannot be empty" : null,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.looks_3,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.15,
+                              MediaQuery.of(context).size.width * 0.05,
+                              0,
+                              0),
+                          child: FlatButton(
+                            onPressed: () {
+                              validateAndSubmitStartup(context);
+                            },
+                            child: Center(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Submit"),
+                                  Icon(
+                                    Icons.done_outline,
+                                    color: Colors.green,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Builder(
+          builder: (context) {
+            return Stack(
+              children: <Widget>[
+                ClipPath(
+                  clipper: WaveClipperOne(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                    ),
+                    height: 150,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.height * 0.1),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Time for Socialize",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * 0.5),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Speak to at least one person each in your network who is currently working in a job or doing their own startup and ask them about their experiences.\n\n Share the top 3 pros and cons of being in a job and starting up, here:",
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.1,
+                              top: MediaQuery.of(context).size.width * 0.2,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: FlatButton(
+                                // color: Colors.green,
+                                onPressed: () {
+                                  _jobPopUp(context);
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Text("Job"),
+                                    Icon(
+                                      Icons.navigate_next,
+                                      color: Colors.green[600],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.02,
+                              top: MediaQuery.of(context).size.width * 0.2,
+                            ),
+                            child: Container(
+                              child: FlatButton(
+                                // color: Colors.green,
+                                onPressed: () {
+                                  _startPopUp(context);
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Text("Startup"),
+                                    Icon(
+                                      Icons.navigate_next,
+                                      color: Colors.green[600],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.02,
+                          top: MediaQuery.of(context).size.width * 0.1,
+                        ),
+                        child: OutlineButton(
+                          // color: Colors.green,
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 1.0),
+                          onPressed: () {
+                            
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Lets move on",
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                color: Colors.green[600],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

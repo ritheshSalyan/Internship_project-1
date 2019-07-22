@@ -1,6 +1,6 @@
 import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
+import '../ModulePages/Activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
@@ -56,36 +56,57 @@ class _VideoPlayState extends State<VideoPlay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          ClipPath(
-            clipper: WaveClipperOne(),
-            child: Container(
-              decoration: BoxDecoration(color: Colors.green),
-              height: 200,
-              width: double.infinity,
-              child: Padding(
-            padding: EdgeInsets.only(top: 50.0),
-            child: Text(
-              "Here you go",
-              style: TextStyle(
-                fontFamily: "QuickSand",
-                fontSize: 25.0,
-                color: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ClipPath(
+              clipper: WaveClipperOne(),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.green),
+                height: 200,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.1),
+                  child: Text(
+                    "Here you go",
+                    style: TextStyle(
+                      fontFamily: "QuickSand",
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.05)),
+            Center(
+              child: Chewie(
+                controller: _chewieController,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 50.0),
-          ),
-          Center(
-            child: Chewie(
-              controller: _chewieController,
-            ),
-          ),
-        ],
+            Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width * 0.1)),
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => ActivityPage(),
+                ));
+              },
+              child: Text(
+                "Tap to continue",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 15.0,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

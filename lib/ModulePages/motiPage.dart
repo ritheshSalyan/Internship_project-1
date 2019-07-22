@@ -19,7 +19,7 @@ class _motivationalPageState extends State<motivationalPage> {
         slivers: <Widget>[
           SliverAppBar(
             iconTheme: IconThemeData(color: Colors.white),
-            expandedHeight: 350,
+            expandedHeight: 200,
             // backgroundColor: Theme.of(context).primaryColorDark,
             backgroundColor: Colors.black,
             pinned: true,
