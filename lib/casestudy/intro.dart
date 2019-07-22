@@ -5,10 +5,8 @@ import 'intro_slider.dart';
 import 'slide_object.dart';
 import '../ModulePages/finalVideoPage.dart';
 
-
-
 class IntroScreen extends StatefulWidget {
-  IntroScreen({Key key,this.dialogue}) : super(key: key);
+  IntroScreen({Key key, this.dialogue}) : super(key: key);
   List<String> dialogue;
 
   @override
@@ -17,7 +15,7 @@ class IntroScreen extends StatefulWidget {
 
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
-   List<String> dialogue;
+  List<String> dialogue;
   Function goToTab;
 
   @override
@@ -45,20 +43,40 @@ class IntroScreenState extends State<IntroScreen> {
     
       }
 print("Length of slides "+slides.length.toString());
+
+  void createSlides() {
+    for (String item in dialogue) {
+      slides.add(
+        new Slide(
+          description: item,
+          styleDescription: TextStyle(
+              color: Colors.green,
+              fontSize: 20.0,
+              fontStyle: FontStyle.normal,
+              fontFamily: 'Open Sans'),
+          pathImage: "assets/Images/character.png",
+        ),
+      );
+    }
   }
-  void onDonePress() {
+
+  void onDonePress(BuildContext context) {
+    print("hello");
     // Back to the first tab
     //this.goToTab(0);
-    Navigator.of(context).pushReplacement( 
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-            builder: (context) => videoPlayerPage(title: "Are you Ready?",modNum:1,),
-          ),
-          );
+        builder: (context) => videoPlayerPage(
+          title: "Are you Ready?",
+          modNum: 1,
+        ),
+      ),
+    );
   }
 
   void onTabChangeCompleted(index) {
     // Index of current tab is focused
-    
+    print("index is $index");
   }
 
   Widget renderNextBtn() {
@@ -72,7 +90,7 @@ print("Length of slides "+slides.length.toString());
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
-      color:Colors.green,
+      color: Colors.green,
     );
   }
 
@@ -88,62 +106,58 @@ print("Length of slides "+slides.length.toString());
     for (int i = 0; i < slides.length; i++) {
       Slide currentSlide = slides[i];
       tabs.add(Container(
-        // width: double.infinity,
-        // height: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(top:00),
-            child: Container(
-          
-          alignment: Alignment.bottomRight,
-          margin: EdgeInsets.only(bottom: 60.0, top: 60.0),
-          child: Column( 
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-             
-              // Container(
-              //   child: Text(
-              //     currentSlide.title,
-              //     style: currentSlide.styleTitle,
-              //     textAlign: TextAlign.start,
-              //   ),
-              //   margin: EdgeInsets.only(top: 20.0),
-              // ),
-              Container(
-                alignment: Alignment.center,
-                child:Padding( 
-                  padding: EdgeInsets.only(left: 19,top: 0,right: 10),
-                  child: Text(
-                  currentSlide.description,
-                  style: currentSlide.styleDescription,
-                  textAlign: TextAlign.start,
-                  
-                  overflow: TextOverflow.visible,
+          // width: double.infinity,
+          // height: double.infinity,
+          child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(top: 00),
+          child: Container(
+            alignment: Alignment.bottomRight,
+            margin: EdgeInsets.only(bottom: 60.0, top: 60.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // Container(
+                //   child: Text(
+                //     currentSlide.title,
+                //     style: currentSlide.styleTitle,
+                //     textAlign: TextAlign.start,
+                //   ),
+                //   margin: EdgeInsets.only(top: 20.0),
+                // ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 19, top: 0, right: 10),
+                    child: Text(
+                      currentSlide.description,
+                      style: currentSlide.styleDescription,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                  margin: EdgeInsets.only(top: 20.0),
                 ),
-                ),
-                margin: EdgeInsets.only(top: 20.0),
-              ),
-               GestureDetector(
-                  child: Image.asset(
-                currentSlide.pathImage,
-                width: 200.0,
-                height: 400.0,
-                fit: BoxFit.contain,
-              )),
-            ],
+                GestureDetector(
+                    child: Image.asset(
+                  currentSlide.pathImage,
+                  width: 200.0,
+                  height: 400.0,
+                  fit: BoxFit.contain,
+                )),
+              ],
+            ),
           ),
         ),
-          ),
-        )
-      ));
+      )));
     }
     return tabs;
   }
 
   @override
   Widget build(BuildContext context) {
-     dialogue = widget.dialogue;
-     createSlides();
+    dialogue = widget.dialogue;
+    createSlides();
     return new IntroSlider(
       // List slides
       slides: this.slides,
@@ -158,7 +172,17 @@ print("Length of slides "+slides.length.toString());
 
       // Done button
       renderDoneBtn: this.renderDoneBtn(),
-      onDonePress: this.onDonePress,
+      // onDonePress: this.onDonePress,
+      onDonePress: () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => videoPlayerPage(
+              title: "Are you Ready?",
+              modNum: 1,
+            ),
+          ),
+        );
+      },
       colorDoneBtn: Colors.green[200],
       highlightColorDoneBtn: Colors.green[300],
 

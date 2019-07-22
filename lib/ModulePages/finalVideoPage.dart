@@ -16,7 +16,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
   Firestore db = Firestore.instance;
   String description = "";
   String link =
-      "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/videos%2FVideo%202%20-%20Are%20you%20Ready.mp4?alt=media&token=8edb3441-c5d7-4bd8-9f06-dd8977d65391";
+      "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FAre%20You%20Ready%20720p.mp4?alt=media&token=583c2a4a-cae1-4e67-9898-cc5099474147";
 
   @override
   Widget build(BuildContext context) {

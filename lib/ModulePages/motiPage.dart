@@ -3,7 +3,7 @@ import 'overviewContent.dart';
 import '../ModulePages/quiz/quiz_page.dart';
 
 class motivationalPage extends StatefulWidget {
-  motivationalPage({Key key, this.module,this.modNum}) : super(key: key);
+  motivationalPage({Key key, this.module, this.modNum}) : super(key: key);
   final List<overview> module;
   final int modNum;
   @override
@@ -38,7 +38,6 @@ class _motivationalPageState extends State<motivationalPage> {
           SliverList(
             delegate: SliverChildListDelegate(
               overView(module),
-             
             ),
           ),
         ],
@@ -135,23 +134,28 @@ class _motivationalPageState extends State<motivationalPage> {
     //             ),
     //           ),
     //   );
-    widgetList.add( RaisedButton(
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  color: Colors.green,
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => QuizPage(modNum:widget.modNum),
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    Icons.navigate_next,
-                    size: 40.0,
-                  ),
-                ));
+    widgetList.add(
+     Container(
+       width: 50,
+       child:  RaisedButton(
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        color: Colors.green,
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => QuizPage(modNum: widget.modNum),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.navigate_next,
+          size: 40.0,
+        ),
+      ),
+     )
+    );
     return widgetList;
   }
 }

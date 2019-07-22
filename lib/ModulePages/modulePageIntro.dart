@@ -53,23 +53,26 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                 ),
-                RaisedButton(
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  color: Colors.green,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => QuizPage(modNum:widget.modNum),
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    Icons.navigate_next,
-                    size: 40.0,
-                  ),
-                ),
+                // Container(
+                //   width: 50.0,
+                //   child: RaisedButton(
+                //   shape: BeveledRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   color: Colors.green,
+                //   onPressed: () {
+                //     Navigator.of(context).push(
+                //       MaterialPageRoute(
+                //         builder: (context) => QuizPage(modNum:widget.modNum),
+                //       ),
+                //     );
+                //   },
+                //   child: Icon(
+                //     Icons.navigate_next,
+                //     size: 40.0,
+                //   ),
+                // ),
+                // )
                 // Card(
                 //   shape: BeveledRectangleBorder(
                 //     borderRadius: BorderRadius.circular(15.0),

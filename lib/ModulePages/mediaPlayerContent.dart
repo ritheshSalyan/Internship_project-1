@@ -1,9 +1,8 @@
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:startupreneur/timeline/trial.dart';
 
 class VideoApp extends StatefulWidget {
-  VideoApp({Key key,this.link}):super(key : key);
+  VideoApp({Key key, this.link}) : super(key: key);
   final String link;
   @override
   _VideoAppState createState() => _VideoAppState();
@@ -17,7 +16,7 @@ class _VideoAppState extends State<VideoApp> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-        widget.link,
+      widget.link,
     )
       ..addListener(() {
         final bool isPlaying = _controller.value.isPlaying;

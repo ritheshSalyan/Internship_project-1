@@ -79,19 +79,27 @@ class _VocabularyState extends State<Vocabulary> {
 
   Widget _buildBottomWidget(String word, String meaning) {
     return Container(
+      height: 200.0,
       color: Color(0xFFecf2f9),
       alignment: Alignment.bottomCenter,
       child: Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Material(
-            type: MaterialType.canvas,
-            child: SingleChildScrollView(
-              child: Text(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Material(
+          type: MaterialType.canvas,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+              child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
               meaning,
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: "Open Sans",
+              ),
             ),
-            ),
-          ),),
+          )),
+        ),
+      ),
     );
   }
 
@@ -148,7 +156,7 @@ class _VocabularyState extends State<Vocabulary> {
                     }
                     switch (snapshot.data) {
                       case null:
-                        return Text("hello");
+                        return CircularProgressIndicator();
                         break;
                       default:
                         return ListView.builder(
@@ -157,18 +165,19 @@ class _VocabularyState extends State<Vocabulary> {
                               snapshot.data.documents[0].data["word"].length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                                onTap: () {
-                                  // print(" ${snapshot.data.documents[0].data["meaning"][index]}");
-                                  popDialog(
-                                      context,
-                                      snapshot.data.documents[0].data["word"]
-                                          [index],
-                                      snapshot.data.documents[0].data["meaning"]
-                                          [index]);
-                                },
-                                leading: Icon(Icons.book),
-                                title: Text(snapshot
-                                    .data.documents[0].data["word"][index]));
+                              onTap: () {
+                                // print(" ${snapshot.data.documents[0].data["meaning"][index]}");
+                                popDialog(
+                                    context,
+                                    snapshot.data.documents[0].data["word"]
+                                        [index],
+                                    snapshot.data.documents[0].data["meaning"]
+                                        [index]);
+                              },
+                              leading: Icon(Icons.book),
+                              title: Text(snapshot
+                                  .data.documents[0].data["word"][index]),
+                            );
                           },
                         );
                     }
