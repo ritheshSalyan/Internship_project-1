@@ -449,11 +449,11 @@ class _SocializeTaskState extends State<SocializeTask> {
                         ),
                         child: OutlineButton(
                           // color: Colors.green,
-                          borderSide:
-                              BorderSide(color: Colors.green, width: 1.0),
-                          onPressed: () {
-                            
-                          },
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 1.0,
+                          ),
+                          onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
