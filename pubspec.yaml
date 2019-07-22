@@ -47,6 +47,8 @@ dependencies:
   flutter_simple_video_player: ^0.0.9
   device_info: ^0.4.0+2
   intro_slider: ^1.0.8
+  liquid_swipe: ^1.1.0
+
 
 
 dev_dependencies:
