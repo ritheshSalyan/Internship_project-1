@@ -7,7 +7,7 @@ import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
-import '../ModulePages/contentTimeline.dart';
+import '../ModulePages/ModuleVideoPage.dart';
 import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
@@ -102,7 +102,7 @@ class _TimelinePageState extends State<TimelinePage> {
           iconTheme: IconThemeData(color: Colors.black),
           automaticallyImplyLeading: true,
           backgroundColor: Theme.of(context).primaryColorDark,
-          elevation: 0.0,
+          elevation: 10.0,
           actions: <Widget>[
             Row(
               children: <Widget>[
@@ -148,9 +148,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => VideoPlay(),
-                  ));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => VideoPlay(),
+                    ),
+                  );
                 },
               ),
               ListTile(

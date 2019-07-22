@@ -20,7 +20,7 @@ class _LoadingState extends State<Loading> {
       }
     }).catchError((e) {
       return CircularProgressIndicator(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).primaryColor,
       );
       //  return Container(
       // color: Colors.white,

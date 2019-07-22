@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../casestudy/loading.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import '../ModulePages/ModuleVideoPage.dart';
 import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
@@ -28,7 +29,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             primary: true,
             backgroundColor: Theme.of(context).primaryColorDark,
             // automaticallyImplyLeading: false,
-            expandedHeight: 350,
+            expandedHeight: 200,
             title: Text(
               widget.title,
               style: TextStyle(color: Colors.black),
@@ -36,7 +37,9 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             ),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: VideoApp(link: link),
+              background: ClipPath(
+                clipper: WaveClipperOne(),
+              )
             ),
           ),
           SliverList(
@@ -82,7 +85,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => Loading(),
+                                        builder: (context) => VideoPlay(),
                                       ),
                                     );
                                   },
