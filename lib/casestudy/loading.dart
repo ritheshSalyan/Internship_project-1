@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/casestudy/liquid_slide.dart';
 import 'firebaseConnect.dart';
-import 'intro.dart';
 import 'liquid_slide.dart';
 
 class Loading extends StatefulWidget {
