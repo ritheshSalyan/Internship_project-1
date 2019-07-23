@@ -84,7 +84,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => VideoPlay(videoLink: 'assets/videos/4.m4v',title:"Here you go!"),
+                                        builder: (context) => VideoPlay(videoLink: 'assets/videos/2.mp4',title:"Here you go!"),
                                       ),
                                     );
                                   },
