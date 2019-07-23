@@ -43,7 +43,7 @@ class _SigninPageState extends State<SigninPage> {
       preferences(user.uid,_email);
       progressDialog.hide();
       print("Sign in Successfull");
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line",userEmail: _email),)
       );
     } catch (e) {
@@ -88,7 +88,7 @@ class _SigninPageState extends State<SigninPage> {
     if (_validate()) {
       signUpInwithEmail(context);
 //       Navigator.of(context)
-//           .push(MaterialPageRoute(builder: (context) => new introPage()));
+//           .pushReplacement(MaterialPageRoute(builder: (context) => new introPage()));
     }
   }
 

@@ -148,11 +148,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => VideoPlay(),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => VideoPlay(),
+                  //   ),
+                  // );
                 },
               ),
               ListTile(
@@ -257,7 +257,7 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
-    final List<int> completedCourse = [1];
+    final List<int> completedCourse = [1,2];
     int k;
     return TimelineModel(
         new GestureDetector(
@@ -274,6 +274,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     // builder: (context)=>Vocabulary(),
                   ),
                 );
+                break;
               }
             }
           },
