@@ -25,8 +25,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     height: 150,
                     width: double.infinity,
                     child: Padding(
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.height * 0.1),
+                      padding: EdgeInsets.only(
+                         top: MediaQuery.of(context).size.height * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(

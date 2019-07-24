@@ -202,7 +202,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                       width: 1.5,
                                     ),
                                     onPressed: () {
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (context)=>DiscussionPage(),
                                         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../ModulePages/QuestionFinalPage.dart';
 
 class SocializeTask extends StatefulWidget {
   @override
@@ -28,9 +28,6 @@ class _SocializeTaskState extends State<SocializeTask> {
         _job = true;
         print(_job);
       });
-      // signUpInwithEmail(context);
-//       Navigator.of(context)
-//           .push(MaterialPageRoute(builder: (context) => new introPage()));
     }
   }
 
@@ -204,7 +201,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                   child: Form(
                     key: _formkey,
                     child: ListView(
-                      shrinkWrap: true,
+                      // shrinkWrap: true,
                       children: <Widget>[
                         Text(
                           "Pros",
@@ -349,8 +346,8 @@ class _SocializeTaskState extends State<SocializeTask> {
                     height: 150,
                     width: double.infinity,
                     child: Padding(
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.height * 0.1),
+                      padding: EdgeInsets.only(
+                         top: MediaQuery.of(context).size.height * 0.05),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -453,7 +450,35 @@ class _SocializeTaskState extends State<SocializeTask> {
                             color: Colors.green,
                             width: 1.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_job == false && _startup == false) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: Duration(seconds: 2),
+                                  content: Text("Well done ! will move a head"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                              Future.delayed(Duration(seconds: 3)).then(
+                                (value) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => QuestionFinalPage(),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: Duration(seconds: 1),
+                                  content: Text(
+                                      "Fill both pros and cons of 2 tasks"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

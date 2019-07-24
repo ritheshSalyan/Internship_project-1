@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import '../ModulePages/finalVideoPage.dart';
+import '../ModulePages/Activity.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
   IntroScreen_Liquid({Key key, this.dialogue}) : super(key: key);
@@ -142,9 +142,8 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
 
                               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => videoPlayerPage(
-                      title: "Are you Ready?",
-                      modNum: 1,
+                    builder: (context) => ActivityPage(
+                     
                     ),
                     
                   ),
@@ -167,6 +166,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: new Scaffold(
             body: LiquidSwipe(
       pages: pages,

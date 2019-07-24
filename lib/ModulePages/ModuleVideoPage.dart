@@ -1,11 +1,14 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
-import '../ModulePages/Activity.dart';
+import '../casestudy/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlay extends StatefulWidget {
+  VideoPlay({Key key, this.videoLink, this.title}) : super(key: key);
+  final String videoLink;
+  final String title;
   @override
   State<StatefulWidget> createState() {
     return _VideoPlayState();
@@ -21,25 +24,28 @@ class _VideoPlayState extends State<VideoPlay> {
     super.initState();
     _videoPlayerController1 = VideoPlayerController.asset(
       // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d',
-      'assets/videos/video.mp4',
+      widget.videoLink,
     );
     _chewieController = ChewieController(
       autoInitialize: true,
       isLive: false,
       videoPlayerController: _videoPlayerController1,
       materialProgressColors: ChewieProgressColors(
-          backgroundColor: Colors.green,
-          playedColor: Colors.red,
-          bufferedColor: Colors.black,
-          handleColor: Colors.blue),
-      aspectRatio: 16 / 10,
+        backgroundColor: Colors.green,
+        playedColor: Colors.red,
+        bufferedColor: Colors.black,
+        handleColor: Colors.blue,
+      ),
+      aspectRatio: 9/ 5,
       autoPlay: false,
       looping: true,
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text(
             errorMessage,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         );
       },
@@ -69,7 +75,7 @@ class _VideoPlayState extends State<VideoPlay> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.1),
                   child: Text(
-                    "Here you go",
+                    widget.title,
                     style: TextStyle(
                       fontFamily: "QuickSand",
                       fontSize: 25.0,
@@ -89,12 +95,14 @@ class _VideoPlayState extends State<VideoPlay> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.1)),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.width * 0.1,
+              ),
+            ),
             FlatButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => ActivityPage(),
+                  builder: (context) => Loading(),
                 ));
               },
               child: Text(
@@ -104,7 +112,7 @@ class _VideoPlayState extends State<VideoPlay> {
                   fontSize: 15.0,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

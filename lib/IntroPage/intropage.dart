@@ -4,7 +4,7 @@ import 'page1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../ModulePages/overviewContent.dart';
+
 
 class introPage extends StatefulWidget {
   @override
@@ -19,37 +19,37 @@ class _introPageState extends State<introPage> {
   @override
   void initState() {
     super.initState();
-    FirebaseFetch.getEventsFromFirestore(1);
+    
   }
 
-  static Future<bool> firstLogin() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    try {
-      var value = sharedPreferences.getString("UserId");
-      if (value==null) {
-        print(" log");
-        return false;
-      }
-      return true;
-    } catch (e) {
-      print(e.toString());
-      // return ;
-    }
-  }
+  // static Future<bool> firstLogin() async {
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   try {
+  //     var value = sharedPreferences.getString("UserId");
+  //     if (value==null) {
+  //       print(" log");
+  //       return false;
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     // return ;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    firstLogin().then((s) {
-      print(s);
-      if (s==true) {
-        print("hello");
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => TimelinePage(title: "Road Map",),
-          ),
-        );
-      }
-    });
+    // firstLogin().then((s) {
+    //   print("Intro page$s");
+    //   if (s==true) {
+    //     print("intro hello");
+    //     Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(
+    //         builder: (context) => TimelinePage(title: "Road Map"),
+    //       ),
+    //     );
+    //   }
+    // });
     return Scaffold(
       body: PageView(
         children: <Widget>[

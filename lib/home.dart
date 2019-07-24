@@ -3,7 +3,8 @@ import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/timeline/trial.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/IntroPage/intropage.dart';
 
 class homePage extends StatefulWidget {
   @override
@@ -11,11 +12,50 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  static SharedPreferences sharedPreferences;
   void initState() {
     super.initState();
   }
+
+  
+  static Future<bool> firstLogin() async {
+    
+    sharedPreferences = await SharedPreferences.getInstance();
+    try {
+      var value = sharedPreferences.getString("UserId");
+      if (value==null) {
+        print(" log");
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print(e.toString());
+      // return ;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+     firstLogin().then((s) {
+      print("home page$s");
+      if (s==true) {
+        print("home hello");
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => TimelinePage(title: "Road Map",),
+          ),
+        );
+      }
+      else{
+
+         print("home hello");
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => introPage(),
+          ),
+        );
+      }
+    });
     return Scaffold(
       body: Container(
         width: double.infinity,

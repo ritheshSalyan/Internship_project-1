@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../ModulePages/ModuleVideoPage.dart';
-import 'package:startupreneur/ModulePages/mediaPlayerContent.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
@@ -16,8 +15,8 @@ class videoPlayerPage extends StatefulWidget {
 class _videoPlayerPageState extends State<videoPlayerPage> {
   Firestore db = Firestore.instance;
   String description = "";
-  String link =
-      "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d";
+  // String link =
+  //     "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d";
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => VideoPlay(),
+                                        builder: (context) => VideoPlay(videoLink: 'assets/videos/2.mp4',title:"Here you go!"),
                                       ),
                                     );
                                   },

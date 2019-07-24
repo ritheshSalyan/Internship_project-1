@@ -80,7 +80,7 @@ class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMi
       _preferences(userid);
       print("its is $user");
       createNote();
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => new TimelinePage(title: "Time line"),
       ));
     } catch (e) {
