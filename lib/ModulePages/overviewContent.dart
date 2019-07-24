@@ -20,7 +20,7 @@ class FirebaseFetch {
     static Future<List<overview>> getEventsFromFirestore(int modNum) async {
 CollectionReference ref = Firestore.instance.collection('module');
 QuerySnapshot eventsQuery = await ref
-    .where("id", isEqualTo: 1)
+    .where("id", isEqualTo: modNum)
     .getDocuments();
 
  List<overview> module = new List<overview>();
