@@ -1,13 +1,15 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
-import '../casestudy/loading.dart';
+import '../timeline/MainRoadmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlay extends StatefulWidget {
-  VideoPlay({Key key, this.videoLink, this.title}) : super(key: key);
+  VideoPlay({Key key, this.videoLink, this.title, this.btnTitle})
+      : super(key: key);
   final String videoLink;
+  final String btnTitle;
   final String title;
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +38,7 @@ class _VideoPlayState extends State<VideoPlay> {
         bufferedColor: Colors.black,
         handleColor: Colors.blue,
       ),
-      aspectRatio: 9/ 5,
+      aspectRatio: 9 / 5,
       autoPlay: false,
       looping: true,
       errorBuilder: (context, errorMessage) {
@@ -99,14 +101,18 @@ class _VideoPlayState extends State<VideoPlay> {
                 top: MediaQuery.of(context).size.width * 0.1,
               ),
             ),
-            FlatButton(
+            OutlineButton(
+              borderSide: BorderSide(
+                color: Colors.green,
+                width: 1.5,
+              ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Loading(),
+                  builder: (context) => TimelinePage(),
                 ));
               },
               child: Text(
-                "Tap to continue",
+                widget.btnTitle,
                 style: TextStyle(
                   color: Colors.green,
                   fontSize: 15.0,

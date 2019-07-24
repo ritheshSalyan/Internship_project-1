@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../vocabulary/vocabulary.dart';
 import 'package:timeline_list/timeline.dart';
@@ -7,12 +6,11 @@ import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
-import '../ModulePages/ModuleVideoPage.dart';
 import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ModulePages/modulePageIntro.dart';
+import 'package:startupreneur/ModulePages/ModuleOverview.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -29,6 +27,7 @@ class _TimelinePageState extends State<TimelinePage> {
   bool _isPlaying = false;
   VideoPlayerController controller;
   BuildContext context;
+  List<int> completedCourse = [1];
   FirebaseUser user;
   String value = "";
   String _url =
@@ -83,6 +82,15 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
+  }
+
+  bool check(int i) {
+    for (int k = 0; k < completedCourse.length; k++) {
+      if (completedCourse[k] == i + 1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @override
@@ -257,25 +265,31 @@ class _TimelinePageState extends State<TimelinePage> {
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
     final textTheme = Theme.of(context).textTheme;
-    final List<int> completedCourse = [1,2];
+
     int k;
+    var val = 1;
     return TimelineModel(
         new GestureDetector(
           onTap: () {
             print("value of i is $i");
-            for (k = 0; k < completedCourse.length; k++) {
-              if (completedCourse[k] == i + 1) {
-                print("hello ${completedCourse[k]}");
-                var val = completedCourse[k];
-                print("val is $val");
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ModulePageIntro(modNum: val),
-                    // builder: (context)=>Vocabulary(),
-                  ),
-                );
-                break;
-              }
+            // for (k = 0; k < completedCourse.length; k++) {
+            // if (completedCourse[k] == i + 1) {
+              
+            if (check(i)) {
+              print("saaman true");
+              // val = completedCourse[k];
+              print("val is $val");
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ModulePageIntro(modNum: val),
+                  // builder: (context)=>Vocabulary(),
+                ),
+              );
+              // break;
+              // }
+            }
+            else{
+              print("saaman false");
             }
           },
           child: Stack(

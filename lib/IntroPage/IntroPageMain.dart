@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
-import '../home.dart';
+import '../Auth/signin.dart';
 
 class PageStarter1State extends StatelessWidget {
   //making list of pages needed to pass in IntroViewsFlutter constructor.
@@ -69,7 +69,7 @@ class PageStarter1State extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => homePage(),
+                builder: (context) => SigninPage(),
               ), //MaterialPageRoute
             );
           },

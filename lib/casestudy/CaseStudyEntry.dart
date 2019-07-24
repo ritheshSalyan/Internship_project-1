@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/casestudy/liquid_slide.dart';
+import 'CaseStudyProcess.dart';
 import 'firebaseConnect.dart';
-import 'liquid_slide.dart';
 
 class Loading extends StatefulWidget {
   @override

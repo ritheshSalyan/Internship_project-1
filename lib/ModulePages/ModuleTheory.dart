@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../ModulePages/ModuleVideoPage.dart';
+import '../ModulePages/VideoController.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
-  videoPlayerPage({Key key, this.title,this.modNum}) : super(key: key);
+  videoPlayerPage({Key key, this.title, this.modNum}) : super(key: key);
   final String title;
   final int modNum;
   _videoPlayerPageState createState() => _videoPlayerPageState();
@@ -36,10 +36,9 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             ),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: ClipPath(
-                clipper: WaveClipperOne(),
-              )
-            ),
+                background: ClipPath(
+              clipper: WaveClipperOne(),
+            )),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -84,7 +83,11 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => VideoPlay(videoLink: 'assets/videos/2.mp4',title:"Here you go!"),
+                                        builder: (context) => VideoPlay(
+                                          videoLink: 'assets/videos/video.mp4',
+                                          title: "Here you go!",
+                                          btnTitle: "Tap to continue",
+                                        ),
                                       ),
                                     );
                                   },

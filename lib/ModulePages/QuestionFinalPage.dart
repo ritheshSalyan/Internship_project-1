@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:startupreneur/ModulePages/ModuleVideoPage.dart';
+import 'package:startupreneur/ModulePages/VideoController.dart';
 
 class QuestionFinalPage extends StatefulWidget {
   @override
@@ -9,7 +9,6 @@ class QuestionFinalPage extends StatefulWidget {
 
 class _QuestionFinalPageState extends State<QuestionFinalPage> {
   static final _formkey = GlobalKey<FormState>();
-
 
   bool _validate() {
     final form = _formkey.currentState;
@@ -22,12 +21,9 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
 
   validateAndSubmit(BuildContext context) async {
     if (_validate()) {
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => new VideoPlay(
-            videoLink: 'assets/videos/2.mp4',
-            title: "Are you ready?",
-          ),
+          builder: (context) => new RevealPage(),
         ),
       );
     }
@@ -51,7 +47,7 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.1),
+                          top: MediaQuery.of(context).size.height * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(
@@ -127,7 +123,7 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Almost there !!",
+                                "Lets see !!",
                                 style: TextStyle(color: Colors.green),
                               ),
                               Icon(
@@ -147,5 +143,128 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
         ),
       ),
     );
+  }
+}
+
+class RevealPage extends StatefulWidget {
+  @override
+  _RevealPageState createState() => _RevealPageState();
+}
+
+class _RevealPageState extends State<RevealPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: SingleChildScrollView(
+      child: Builder(
+        builder: (context) {
+          return Stack(
+            children: <Widget>[
+              ClipPath(
+                clipper: WaveClipperOne(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                  ),
+                  height: 150,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.1),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "Let's see what we got!",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width * 0.4,
+                ),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Unlimited Growth"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Don’t want to do an MBA"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Becoming a Founder or Own Boss"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Getting Funded and Famous"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Following a Passion"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.fiber_manual_record),
+                        title: Text("Don’t Like a 9-5 Job"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.error_outline),
+                        title: Text(
+                          "Well, if your answer is close to any of these reasons, think twice!",
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: OutlineButton(
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 1.5,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => new VideoPlay(
+                                  videoLink: 'assets/videos/2.mp4',
+                                  title: "Are you ready?",
+                                  btnTitle: "Ready !!",
+                                ),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                "Almost there !!",
+                                textAlign: TextAlign.center,
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ));
   }
 }
