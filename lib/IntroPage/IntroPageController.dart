@@ -39,17 +39,17 @@ class _introPageState extends State<introPage> {
 
   @override
   Widget build(BuildContext context) {
-    firstLogin().then((s) {
-      print(s);
-      if (s==true) {
-        print("hello");
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => TimelinePage(title: "Road Map",),
-          ),
-        );
-      }
-    });
+    // firstLogin().then((s) {
+    //   print(s);
+    //   if (s==true) {
+    //     print("hello");
+    //     Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(
+    //         builder: (context) => TimelinePage(title: "Road Map",),
+    //       ),
+    //     );
+    //   }
+    // });
     return Scaffold(
       body: PageView(
         children: <Widget>[
