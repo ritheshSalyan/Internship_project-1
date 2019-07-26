@@ -77,6 +77,15 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
        typeList.add(Type.summary);
         print("summary");
         break;
+
+        case "Type.discussion":
+         typeList.add(Type.discussion);
+        print("summary");
+        break;
+
+        default:
+            print("Default");
+
         
     }
       }

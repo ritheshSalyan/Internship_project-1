@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import '../ModulePages/quiz/quizLoader.dart';
+import '../ModulePages/quiz/quiz_page.dart';
 import '../ModulePages/VideoController/VideoController.dart';
+import '../ModulePages/VideoController/VideoControllerLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
+import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheoryLoader.dart';
+import '../casestudy/CaseStudyEntry.dart';
+import '../ModulePages/Activity/ActivityLoader.dart';
+import '../ModulePages/Discussion/DiscussionLoader.dart';
+import '../timeline/MainRoadmap.dart';
 
-enum Type{
+enum Type {
   quote,
   quiz,
   caseStudy,
@@ -12,84 +19,98 @@ enum Type{
   theory,
   activity,
   decisionGame,
+  discussion,
   summary,
-  
 }
 
-class orderManagement{
- static  List<Type> order = [];
+class orderManagement {
+  static List<Type> order = [];
   static int currentIndex = 0;
   List<dynamic> arguments = [];
-  static void moveNextIndex(BuildContext context,arguments){
+  static void moveNextIndex(BuildContext context, arguments) {
     currentIndex++;
     print("Arguments ${arguments}");
-    switch(order[currentIndex]){
-      case Type.quote:
-        print("quote");
-        break;
+    if (currentIndex == order.length) {
+           Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => TimelinePage(title: "Road Map",),
+          ),
+        );
 
+    } else {
+      switch (order[currentIndex]) {
+        case Type.quote:
+          print("quote");
+          break;
 
-       case Type.quiz:
-        print("quiz");
-         Navigator.of(context).pushReplacement(
+        case Type.quiz:
+          print("quiz");
+          Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => QuizLoading(modNum: arguments[0]),
+              builder: (context) => QuizPage(modNum: arguments[0]),
             ),
           );
-        break;
+          break;
 
+        case Type.activity:
+          print("activity");
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => ActivityLoading(
+              modNum: arguments[0],
+            ),
+          ));
+          break;
 
-       case Type.activity:
-        print("activity");
-        break;
+        case Type.decisionGame:
+          print("decisionGame");
+          break;
 
+        case Type.caseStudy:
+          print("caseStudy");
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => Loading(
+              modNum: arguments[0],
+            ),
+          ));
+          break;
 
-       case Type.decisionGame:
-        print("decisionGame");
-        break;
+        case Type.video:
+          print("video");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => VideoControllerLoading(
+                modNum: arguments[0],
+              ),
+            ),
+          );
+          break;
 
-
-       case Type.caseStudy:
-        print("caseStudy");
-        break;
-
-
-       case Type.video:
-        print("video");
-        Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => VideoPlay(
-                                          videoLink: 'assets/videos/video.mp4',
-                                          title: "Here you go!",
-                                          btnTitle: "Tap to continue",
-                                        ),
-                                      ),
-                                    );
-        break;
-
-
-       case Type.overView:
-        print("overView");
-        break;
-
+        case Type.overView:
+          print("overView");
+          break;
 
         case Type.theory:
-        print("theory");
-         Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => videoPlayerPage(
-                                            title: "lets start",
-                                            modNum:arguments[0]),
-                                      ),
-                                    );
-        break;
+          print("theory");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => TheoryLoading(modNum: arguments[0]),
+            ),
+          );
+          break;
 
+        case Type.summary:
+          print("summary");
+          break;
 
-       case Type.summary:
-        print("summary");
-        break;
-        
+        case Type.discussion:
+          print("discussion");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => DiscussionLoading(modNum: arguments[0]),
+            ),
+          );
+          break;
+      }
     }
-
   }
 }
