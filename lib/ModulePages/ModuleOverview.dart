@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../ModulePages/quiz/quiz_page.dart';
 
-
 class ModulePageIntro extends StatefulWidget {
   ModulePageIntro({Key key, this.modNum}) : super(key: key);
   final int modNum;
@@ -15,17 +14,17 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   dynamic dataSnapshot;
 
   @override
-  initState(){
+  initState() {
     super.initState();
     print("init hello");
   }
+
   List<Widget> wList(String index) {
     List<Widget> listWidget = new List<Widget>();
     for (dynamic i in dataSnapshot["$index"]) {
       print("val i $i");
-      listWidget.add(
-        ListTile(
-          leading: Icon(Icons.done),
+      listWidget.add(ListTile(
+        leading: Icon(Icons.done),
         title: Text(i),
       ));
     }
@@ -45,9 +44,13 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         children: wList(index.toString()),
       ));
     }
-    listWidget.add(
-     RaisedButton(
-        shape: BeveledRectangleBorder(
+    listWidget.add(SizedBox(
+      height: 70,
+    ));
+    listWidget.add(Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         color: Colors.green,
@@ -63,7 +66,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           size: 40.0,
         ),
       ),
-    );
+    ));
     print(listWidget);
     return listWidget;
   }
@@ -96,7 +99,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                 StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance
                       .collection("module")
-                      .where("id", isEqualTo: 2)
+                      .where("id", isEqualTo: widget.modNum)
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     // if(snapshot.error){

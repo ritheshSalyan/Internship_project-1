@@ -28,7 +28,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             primary: true,
             backgroundColor: Theme.of(context).primaryColorDark,
             // automaticallyImplyLeading: false,
-            expandedHeight: 200,
+            expandedHeight: MediaQuery.of(context).size.height*0.2,
             title: Text(
               widget.title,
               style: TextStyle(color: Colors.black),
@@ -73,10 +73,12 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 30),
+                              Container(
+                                width: MediaQuery.of(context).size.height*0.3,
+                                child: Padding(
+                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1),
                                 child: RaisedButton(
-                                  shape: BeveledRectangleBorder(
+                                  shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   color: Colors.green,
@@ -96,6 +98,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                     size: 40.0,
                                   ),
                                 ),
+                              ),
                               )
                             ],
                           ),

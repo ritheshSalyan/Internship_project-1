@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class Doodle {
   final String name;
   final String time;
@@ -9,18 +8,24 @@ class Doodle {
   final String doodle;
   final Color iconBackground;
   final Icon icon;
-  const Doodle({
+  final Icon pointsIcon;
+  final Text points;
+  // final Text
+  Doodle({
     this.name,
     this.time,
     this.content,
     this.doodle,
     this.icon,
     this.iconBackground,
+    this.pointsIcon,
+    this.points,
+    
   });
 }
 
-const List<Doodle> doodles = [
-  Doodle(
+List<Doodle> doodles = [
+  new Doodle(
     name: "Starting up",
     time: "Module 1",
     doodle:
@@ -30,6 +35,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.cyan,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Ideas",
@@ -41,6 +54,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.redAccent,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Market Analysis",
@@ -53,6 +74,14 @@ const List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.yellow,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Product",
@@ -64,6 +93,14 @@ const List<Doodle> doodles = [
       color: Colors.black87,
     ),
     iconBackground: Colors.amber,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Pricing",
@@ -75,6 +112,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.green,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Business Model",
@@ -86,6 +131,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.indigo,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Legal and Compliance",
@@ -97,6 +150,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.pinkAccent,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Branding and Marketing",
@@ -109,6 +170,14 @@ const List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.deepPurpleAccent,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Team",
@@ -120,6 +189,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.teal,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Technology",
@@ -132,6 +209,14 @@ const List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.blue,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 10,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Funding and Financing",
@@ -143,6 +228,14 @@ const List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.teal,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
   Doodle(
     name: "Business plan and Go to Market",
@@ -151,9 +244,17 @@ const List<Doodle> doodles = [
         "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
     icon: Icon(
       FontAwesomeIcons.trophy,
-      color: Colors.white,
-      size: 30.0,
+      color: Colors.green,
+      size: 25.0,
     ),
     iconBackground: Colors.blue,
+    pointsIcon: Icon(
+      FontAwesomeIcons.solidGem,
+      color: Colors.green,
+      size: 15,
+    ),
+    points: Text(
+      "100",
+    ),
   ),
 ];

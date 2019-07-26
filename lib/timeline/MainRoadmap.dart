@@ -44,10 +44,10 @@ class _TimelinePageState extends State<TimelinePage> {
       }
     }
     return Padding(
-      padding: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.only(top: 100),
       child: Icon(
         Icons.lock,
-        size: 30,
+        size: 20,
       ),
     );
   }
@@ -194,7 +194,7 @@ class _TimelinePageState extends State<TimelinePage> {
               ListTile(
                 leading: Icon(Icons.store),
                 title: Text(
-                  'Hustle store',
+                  'Hustle Store',
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
@@ -222,7 +222,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   _auth.signOut();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SignupPage(),
+                    builder: (context) => SigninPage(),
                   ));
                 },
               ),
@@ -240,13 +240,6 @@ class _TimelinePageState extends State<TimelinePage> {
         ),
         body: Stack(
           children: <Widget>[
-            // ClipPath(
-            //   clipper: WaveClipperTwo(),
-            //   child: Container(
-            //     decoration: BoxDecoration(color: Colors.green),
-            //     height: 200,
-            //   ),
-            // ),
             PageView(
               children: pages,
             ),
@@ -274,7 +267,7 @@ class _TimelinePageState extends State<TimelinePage> {
             print("value of i is $i");
             // for (k = 0; k < completedCourse.length; k++) {
             // if (completedCourse[k] == i + 1) {
-              
+
             if (check(i)) {
               print("saaman true");
               // val = completedCourse[k];
@@ -287,21 +280,17 @@ class _TimelinePageState extends State<TimelinePage> {
               );
               // break;
               // }
-            }
-            else{
+            } else {
               print("saaman false");
             }
           },
           child: Stack(
             children: <Widget>[
               Container(
-                height: 150.0,
+                height: 200.0,
                 width: 200.0,
                 child: Card(
                   margin: EdgeInsets.symmetric(vertical: 16.0),
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(0.0),
-                  // ),
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -323,6 +312,14 @@ class _TimelinePageState extends State<TimelinePage> {
                         ),
                         const SizedBox(
                           height: 8.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            doodle.pointsIcon,
+                            Text(" "),
+                            doodle.points,
+                          ],
                         ),
                       ],
                     ),

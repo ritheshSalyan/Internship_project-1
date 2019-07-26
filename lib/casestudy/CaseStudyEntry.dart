@@ -3,6 +3,8 @@ import 'CaseStudyProcess.dart';
 import 'firebaseConnect.dart';
 
 class Loading extends StatefulWidget {
+  Loading({Key key , this.modNum}):super(key :key);
+  final int modNum;
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -10,7 +12,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
-    FirebaseFetch.getEventsFromFirestore(1).then((dialogue) {
+    FirebaseFetch.getEventsFromFirestore(widget.modNum).then((dialogue) {
       if (dialogue.length != 0) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

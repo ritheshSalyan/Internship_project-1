@@ -201,7 +201,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                   child: Form(
                     key: _formkey,
                     child: ListView(
-                      // shrinkWrap: true,
+                      shrinkWrap: true,
                       children: <Widget>[
                         Text(
                           "Pros",
