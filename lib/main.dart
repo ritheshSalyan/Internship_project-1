@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/home.dart';
-import 'IntroPage/intropage.dart';
+import 'IntroPage/IntroPageController.dart';
+import 'home.dart';
 
 void main() => runApp(MyApp());
 

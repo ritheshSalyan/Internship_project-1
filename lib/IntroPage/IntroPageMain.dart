@@ -3,6 +3,7 @@ import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:startupreneur/Auth/signin.dart';
 import '../home.dart';
+import '../Auth/signin.dart';
 
 class PageStarter1State extends StatelessWidget {
   //making list of pages needed to pass in IntroViewsFlutter constructor.

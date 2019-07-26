@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/timeline/trial.dart';
-import 'page1.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
+import 'IntroPageMain.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,12 +40,12 @@ class _introPageState extends State<introPage> {
   @override
   Widget build(BuildContext context) {
     // firstLogin().then((s) {
-    //   print("Intro page$s");
+    //   print(s);
     //   if (s==true) {
-    //     print("intro hello");
+    //     print("hello");
     //     Navigator.of(context).pushReplacement(
     //       MaterialPageRoute(
-    //         builder: (context) => TimelinePage(title: "Road Map"),
+    //         builder: (context) => TimelinePage(title: "Road Map",),
     //       ),
     //     );
     //   }

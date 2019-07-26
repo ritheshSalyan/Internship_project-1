@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:startupreneur/timeline/trial.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:startupreneur/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
+import 'signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninPage extends StatefulWidget {
@@ -23,11 +24,11 @@ class _SigninPageState extends State<SigninPage> {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static SharedPreferences sharedPreferences;
 
-  static preferences(String userId,String _email) async {
-      sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString("UserId", userId);
-      sharedPreferences.setString("UserEmail",_email );
-      print(sharedPreferences.getString("UserId"));
+  static preferences(String userId, String _email) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("UserId", userId);
+    sharedPreferences.setString("UserEmail", _email);
+    print(sharedPreferences.getString("UserId"));
   }
 
   static void signUpInwithEmail(BuildContext context) async {
@@ -40,21 +41,18 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
-      preferences(user.uid,_email);
+      preferences(user.uid, _email);
       progressDialog.hide();
       print("Sign in Successfull");
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context)=>new TimelinePage(title: "Time line",userEmail: _email),)
-      );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) =>
+            new TimelinePage(title: "Time line", userEmail: _email),
+      ));
     } catch (e) {
       // print(e.toString());
       progressDialog.hide();
-     Toast.show(
-       "Email or password does not match",
-       context,
-       gravity:Toast.BOTTOM,
-       duration: Toast.LENGTH_LONG
-     );
+      Toast.show("Email or password does not match", context,
+          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     }
   }
 
@@ -92,6 +90,18 @@ class _SigninPageState extends State<SigninPage> {
     }
   }
 
+  Widget createAccountLink(BuildContext context) => FlatButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SignupPage(),
+          ));
+        },
+        child: Text("New User? Register",
+            style: TextStyle(
+              color: Colors.green,
+            )),
+      );
+
   final emailField = TextFormField(
     keyboardType: TextInputType.emailAddress,
     obscureText: false,
@@ -120,7 +130,7 @@ class _SigninPageState extends State<SigninPage> {
       hintText: "you@example.com",
       labelText: "Email address",
       labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12,color: Colors.black),
+      hintStyle: TextStyle(fontSize: 12, color: Colors.black),
     ),
   );
 
@@ -153,7 +163,7 @@ class _SigninPageState extends State<SigninPage> {
       hintText: "Passowrd",
       labelText: "Password",
       labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12,color: Colors.black),
+      hintStyle: TextStyle(fontSize: 12, color: Colors.black),
     ),
   );
 
@@ -163,8 +173,8 @@ class _SigninPageState extends State<SigninPage> {
         // buttonColor: Color(0xffffffff),
         child: RaisedButton(
           elevation: 5,
-          color: Colors.green,        
-          onPressed: (){
+          color: Colors.green,
+          onPressed: () {
             validateAndSubmit(context);
           },
           child: Text(
@@ -187,15 +197,15 @@ class _SigninPageState extends State<SigninPage> {
         // // backgroundColor: Color.fromRGBO(52, 52, 52, 1),
         appBar: AppBar(
           leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(MaterialPageRoute(builder: (context) => homePage()));
+            },
           ),
-          onPressed: () {
-            Navigator.of(context)
-                .pop(MaterialPageRoute(builder: (context) => homePage()));
-          },
-        ),
           toolbarOpacity: 1,
           backgroundColor: Theme.of(context).primaryColorDark,
           automaticallyImplyLeading: false,
@@ -329,7 +339,11 @@ class _SigninPageState extends State<SigninPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                loginButton(context)
+                loginButton(context),
+                SizedBox(
+                  height: 20,
+                ),
+                createAccountLink(context),
               ],
             ),
           ),
