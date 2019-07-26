@@ -12,9 +12,9 @@ class introPage extends StatefulWidget {
 }
 
 class _introPageState extends State<introPage> {
-  FirebaseAuth _auth;
+  // FirebaseAuth _auth;
   Firestore db;
-  static SharedPreferences sharedPreferences;
+  // static SharedPreferences sharedPreferences;
 
   @override
   void initState() {

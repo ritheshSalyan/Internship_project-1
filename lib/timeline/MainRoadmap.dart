@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview.dart';
+import '../ModuleOrderController/Types.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -27,9 +28,11 @@ class _TimelinePageState extends State<TimelinePage> {
   bool _isPlaying = false;
   VideoPlayerController controller;
   BuildContext context;
-  List<int> completedCourse = [1];
+  List<int> completedCourse = [1,2];
   FirebaseUser user;
   String value = "";
+  var val= 1;
+  
   String _url =
       "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350";
 
@@ -54,19 +57,19 @@ class _TimelinePageState extends State<TimelinePage> {
 
   void initState() {
     super.initState();
-    controller = VideoPlayerController.network(
-        "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FAre%20You%20Ready%20720p.mp4?alt=media&token=583c2a4a-cae1-4e67-9898-cc5099474147")
-      ..addListener(() {
-        final bool isPlaying = controller.value.isPlaying;
-        if (isPlaying != _isPlaying) {
-          setState(() {
-            _isPlaying = isPlaying;
-          });
-        }
-      })
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    // controller = VideoPlayerController.network(
+    //     "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FAre%20You%20Ready%20720p.mp4?alt=media&token=583c2a4a-cae1-4e67-9898-cc5099474147")
+    //   ..addListener(() {
+    //     final bool isPlaying = controller.value.isPlaying;
+    //     if (isPlaying != _isPlaying) {
+    //       setState(() {
+    //         _isPlaying = isPlaying;
+    //       });
+    //     }
+    //   })
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //   });
     // super.initState();
     preferences(context);
   }
@@ -87,6 +90,7 @@ class _TimelinePageState extends State<TimelinePage> {
   bool check(int i) {
     for (int k = 0; k < completedCourse.length; k++) {
       if (completedCourse[k] == i + 1) {
+        val = completedCourse[k];
         return true;
       }
     }
@@ -103,6 +107,7 @@ class _TimelinePageState extends State<TimelinePage> {
     List<Widget> pages = [
       timelineModel(TimelinePosition.Center),
     ];
+    orderManagement.currentIndex = 0;
 
     return Scaffold(
         extendBody: true,
@@ -276,12 +281,13 @@ class _TimelinePageState extends State<TimelinePage> {
             // if (completedCourse[k] == i + 1) {
               
             if (check(i)) {
-              print("saaman true");
+
+              print("saaman true $i");
               // val = completedCourse[k];
               print("val is $val");
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ModulePageIntro(modNum: val),
+                  builder: (context) => ModulePageIntro(modNum: i+1),
                   // builder: (context)=>Vocabulary(),
                 ),
               );

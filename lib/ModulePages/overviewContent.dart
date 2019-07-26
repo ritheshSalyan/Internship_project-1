@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:startupreneur/ModuleOrderController/Types.dart' as prefix0;
+import '../ModuleOrderController/Types.dart';
 
 class overview {
   String headding = "";
@@ -41,11 +43,15 @@ eventsQuery.documents.forEach((document) {
    print("the headding is "+current.headding);
 
    module.add(current);
+
  }
-     
+
 });
 
+
+
 print(module[0].content[0]);
+
  return module;
 }
 

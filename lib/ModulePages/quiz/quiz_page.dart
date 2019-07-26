@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class QuizPage extends StatefulWidget {
   QuizPage({Key key, this.modNum}) : super(key: key);
@@ -159,47 +160,45 @@ class _QuizPageState extends State<QuizPage> {
                                 if (_answerIs == correctAns) {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text(
-                                        "Hurray ! You got it right\n Lets move on !",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Open Sans",
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      backgroundColor: Colors.green[600],
-                                      shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      duration: Duration(seconds: 2)
-                                    ),
+                                        content: Text(
+                                          "Hurray ! You got it right\n Lets move on !",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "Open Sans",
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        backgroundColor: Colors.green[600],
+                                        shape: BeveledRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        duration: Duration(seconds: 2)),
                                   );
-                                 Future.delayed(Duration(seconds: 3)).then((o){
-                                    Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => videoPlayerPage(title:"What is Startup",modNum:1),
-                                    ),
-                                  );
-                                 });
+                                  Future.delayed(Duration(seconds: 3))
+                                      .then((o) {
+                                    List<dynamic> arguments = [widget.modNum,"What is Startup "];
+                                    orderManagement.moveNextIndex(context, arguments);
+
+                                    
+                                  });
                                 } else {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text(
-                                        "Oops! Wrong answer",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Open Sans",
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      backgroundColor: Colors.red[600],
-                                      shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      duration: Duration(seconds: 1)
-                                    ),
+                                        content: Text(
+                                          "Oops! Wrong answer",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "Open Sans",
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        backgroundColor: Colors.red[600],
+                                        shape: BeveledRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        duration: Duration(seconds: 1)),
                                   );
                                 }
                               },
