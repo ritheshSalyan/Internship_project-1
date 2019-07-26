@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../ModulePages/quiz/quiz_page.dart';
+import 'package:startupreneur/ModuleOrderController/Types.dart' ;
+import '../quiz/quiz_page.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
   ModulePageIntro({Key key, this.modNum}) : super(key: key);
@@ -17,6 +19,69 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   initState() {
     super.initState();
     print("init hello");
+  }
+
+  List<Type> convert(List<dynamic> list ){
+    List<Type> typeList = [];
+      for (var item in list) {
+      switch(item){
+      case "Type.quote":
+        print("quote");
+        typeList.add(Type.quote);
+        break;
+
+
+       case "Type.quiz":
+        print("quiz");
+        typeList.add(Type.quiz);
+        break;
+
+
+       case "Type.activity":
+        print("activity");
+        typeList.add(Type.activity);
+        break;
+
+
+       case "Type.decisionGame":
+        print("decisionGame");
+        typeList.add(Type.decisionGame);
+        break;
+
+
+       case "Type.caseStudy":
+        print("caseStudy");
+        typeList.add(Type.caseStudy);
+        break;
+
+
+       case "Type.video":
+        print("video");
+       typeList.add(Type.video);
+        break;
+
+
+       case "Type.overView":
+        print("overView");
+        typeList.add(Type.overView);
+        break;
+
+
+        case "Type.theory":
+        print("theory");
+        typeList.add(Type.theory);
+        break;
+
+
+       case "Type.summary":
+       typeList.add(Type.summary);
+        print("summary");
+        break;
+        
+    }
+      }
+      return typeList;
+
   }
 
   List<Widget> wList(String index) {
@@ -55,11 +120,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         ),
         color: Colors.green,
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => QuizPage(modNum: widget.modNum),
-            ),
-          );
+          List<dynamic> arguments = [widget.modNum];
+          orderManagement.moveNextIndex(context, arguments);
         },
         child: Icon(
           Icons.navigate_next,
@@ -88,7 +150,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                "assets/Images/start_up.png",
+                "assets/Images/${widget.modNum}.png",
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -116,7 +178,16 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                           for (dynamic i in document.data["overview"]) {
                             list.add(i);
                           }
+                          orderManagement.order = convert(document.data["order"]);
+
+                          print("orderManagement.order "+orderManagement.order.toString());
+                           //=
+                          // print(
+                          //     "orderManagement.order = ${document.data}"); //[Type.overView,Type.quiz,Type.decisionGame];
                         });
+
+                        // orderManagement.order = [Type.overView,Type.quiz,Type.theory,Type.video];
+
                         return Column(
                           children: wExList(),
                         );

@@ -1,6 +1,6 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
-import '../ModulePages/Discussion.dart';
+import '../Discussion/Discussion.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ActivityPage extends StatefulWidget {

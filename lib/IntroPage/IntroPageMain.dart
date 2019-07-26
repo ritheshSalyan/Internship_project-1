@@ -68,7 +68,7 @@ class PageStarter1State extends StatelessWidget {
         builder: (context) => IntroViewsFlutter(
           pages,
           onTapDoneButton: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => SigninPage(),

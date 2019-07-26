@@ -1,10 +1,10 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
-import '../ModulePages/SummaryPage.dart';
+import '../SummaryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
-import '../casestudy/CaseStudyEntry.dart';
+import '../../casestudy/CaseStudyEntry.dart';
 
 class VideoPlay extends StatefulWidget {
   VideoPlay({Key key, this.videoLink, this.title, this.btnTitle})
