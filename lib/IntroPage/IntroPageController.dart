@@ -22,20 +22,20 @@ class _introPageState extends State<introPage> {
     
   }
 
-  static Future<bool> firstLogin() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    try {
-      var value = sharedPreferences.getString("UserId");
-      if (value==null) {
-        print(" log");
-        return false;
-      }
-      return true;
-    } catch (e) {
-      print(e.toString());
-      // return ;
-    }
-  }
+  // static Future<bool> firstLogin() async {
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   try {
+  //     var value = sharedPreferences.getString("UserId");
+  //     if (value==null) {
+  //       print(" log");
+  //       return false;
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     // return ;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
