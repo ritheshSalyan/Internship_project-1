@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import '../ModulePages/Activity.dart';
+import '../ModulePages/Activity/Activity.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
   IntroScreen_Liquid({Key key, this.dialogue}) : super(key: key);

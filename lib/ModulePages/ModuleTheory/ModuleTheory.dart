@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../ModulePages/VideoController.dart';
+import '../VideoController/VideoController.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
@@ -83,15 +84,8 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   ),
                                   color: Colors.green,
                                   onPressed: () {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => VideoPlay(
-                                          videoLink: 'assets/videos/video.mp4',
-                                          title: "Here you go!",
-                                          btnTitle: "Tap to continue",
-                                        ),
-                                      ),
-                                    );
+                                     List<dynamic> arguments = [widget.modNum,"What is Startup "];
+                                    orderManagement.moveNextIndex(context, arguments);
                                   },
                                   child: Icon(
                                     Icons.navigate_next,

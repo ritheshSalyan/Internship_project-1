@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory.dart';
+import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class QuizPage extends StatefulWidget {
   QuizPage({Key key, this.modNum}) : super(key: key);
@@ -179,13 +180,10 @@ class _QuizPageState extends State<QuizPage> {
                                   );
                                   Future.delayed(Duration(seconds: 3))
                                       .then((o) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => videoPlayerPage(
-                                            title: "What is Startup",
-                                            modNum: 1),
-                                      ),
-                                    );
+                                    List<dynamic> arguments = [widget.modNum,"What is Startup "];
+                                    orderManagement.moveNextIndex(context, arguments);
+
+                                    
                                   });
                                 } else {
                                   Scaffold.of(context).showSnackBar(

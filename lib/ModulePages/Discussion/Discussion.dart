@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../ModulePages/socialize.dart';
+import '../Socialize/socialize.dart';
 
 class DiscussionPage extends StatefulWidget {
   @override

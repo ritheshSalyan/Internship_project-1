@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:startupreneur/ModulePages/VideoController.dart';
+import 'package:startupreneur/ModulePages/VideoController/VideoController.dart';
 
 class QuestionFinalPage extends StatefulWidget {
   @override
