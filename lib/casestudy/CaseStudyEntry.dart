@@ -3,7 +3,7 @@ import 'CaseStudyProcess.dart';
 import 'firebaseConnect.dart';
 
 class Loading extends StatefulWidget {
-  Loading({Key key,this.modNum}):super(key:key);
+  Loading({Key key , this.modNum}):super(key :key);
   final int modNum;
   @override
   _LoadingState createState() => _LoadingState();

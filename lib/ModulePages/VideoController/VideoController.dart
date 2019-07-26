@@ -1,9 +1,10 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
-import '../../timeline/MainRoadmap.dart';
+import '../SummaryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
+import '../../casestudy/CaseStudyEntry.dart';
 
 class VideoPlay extends StatefulWidget {
   VideoPlay({Key key, this.videoLink, this.title, this.btnTitle})
@@ -107,9 +108,16 @@ class _VideoPlayState extends State<VideoPlay> {
                 width: 1.5,
               ),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => TimelinePage(),
-                ));
+                if (widget.btnTitle == "Tap to continue") {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => Loading(),
+                  ));
+                }
+                else{
+                   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => SummaryPage(),
+                  ));
+                }
               },
               child: Text(
                 widget.btnTitle,

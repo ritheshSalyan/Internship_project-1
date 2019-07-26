@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../ModulePages/QuestionFinalPage.dart';
+import '../QuestionFinalPage/QuestionFinalPage.dart';
 
 class SocializeTask extends StatefulWidget {
   @override
@@ -201,7 +201,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                   child: Form(
                     key: _formkey,
                     child: ListView(
-                      // shrinkWrap: true,
+                      shrinkWrap: true,
                       children: <Widget>[
                         Text(
                           "Pros",

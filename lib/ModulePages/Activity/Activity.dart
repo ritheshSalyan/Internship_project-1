@@ -1,6 +1,6 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
-import '../ModulePages/Discussion.dart';
+import '../Discussion/Discussion.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ActivityPage extends StatefulWidget {
@@ -9,7 +9,79 @@ class ActivityPage extends StatefulWidget {
 }
 
 class _ActivityPageState extends State<ActivityPage> {
-
+  List<Widget> formList(BuildContext context) {
+    List<Widget> itemInside = [];
+    itemInside.add(
+      Center(
+        child: Text(
+          "Please fill it",
+        ),
+      ),
+    );
+    itemInside.add(
+      SizedBox(
+        height: 10,
+        width: MediaQuery.of(context).size.width,
+      ),
+    );
+    for (int i = 0; i < 4; i++) {
+      itemInside.add(
+        TextFormField(
+          obscureText: false,
+          keyboardType: TextInputType.text,
+          maxLines: 1,
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              FontAwesomeIcons.building,
+              color: Colors.green,
+            ),
+            hintText: "ABZ startup",
+            labelText: "Category ${i + 1}",
+            labelStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+            ),
+            hintStyle: TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      );
+    }
+     itemInside.add(
+      SizedBox(
+        height: 20,
+        width: MediaQuery.of(context).size.width,
+      ),
+    );
+    itemInside.add(
+      Container(
+        width: MediaQuery.of(context).size.width*0.5,
+        child: OutlineButton(
+        splashColor: Colors.green,
+        borderSide: BorderSide(
+          color: Colors.green,
+          width: 1.5,
+        ),
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => DiscussionPage(),
+            ),
+          );
+        },
+        textColor: Colors.green,
+        highlightedBorderColor: Colors.green,
+        child: Text("Let's discuss"),
+        shape:RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      )
+    );
+    return itemInside;
+  }
 
   Widget categoryOne(BuildContext context) => TextFormField(
         obscureText: false,
@@ -176,46 +248,49 @@ class _ActivityPageState extends State<ActivityPage> {
                             Form(
                               child: ListView(
                                 shrinkWrap: true,
-                                children: <Widget>[
-                                  Center(
-                                    child: Text(
-                                      "Please fill it",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                    width: MediaQuery.of(context).size.width,
-                                  ),
-                                  categoryOne(context),
-                                  categoryTwo(context),
-                                  categoryThree(context),
-                                  categoryFour(context),
-                                  categoryFive(context),
-                                  SizedBox(
-                                    height: 20,
-                                    width: MediaQuery.of(context).size.width,
-                                  ),
-                                  OutlineButton(
-                                    splashColor: Colors.green,
-                                    borderSide: BorderSide(
-                                      color: Colors.green,
-                                      width: 1.5,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context)=>DiscussionPage(),
-                                        ),
-                                      );
-                                    },
-                                    textColor: Colors.green,
-                                    highlightedBorderColor: Colors.green,
-                                    child: Text("Let's discuss"),
-                                    shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                ],
+                                // children: <Widget>[
+                                //   Center(
+                                //     child: Text(
+                                //       "Please fill it",
+                                //     ),
+                                //   ),
+                                //   SizedBox(
+                                //     height: 10,
+                                //     width: MediaQuery.of(context).size.width,
+                                //   ),
+
+                                //   // categoryOne(context),
+                                //   // categoryTwo(context),
+                                //   // categoryThree(context),
+                                //   // categoryFour(context),
+                                //   // categoryFive(context),
+                                //   SizedBox(
+                                //     height: 20,
+                                //     width: MediaQuery.of(context).size.width,
+                                //   ),
+                                //   OutlineButton(
+                                //     splashColor: Colors.green,
+                                //     borderSide: BorderSide(
+                                //       color: Colors.green,
+                                //       width: 1.5,
+                                //     ),
+                                //     onPressed: () {
+                                //       Navigator.of(context).pushReplacement(
+                                //         MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               DiscussionPage(),
+                                //         ),
+                                //       );
+                                //     },
+                                //     textColor: Colors.green,
+                                //     highlightedBorderColor: Colors.green,
+                                //     child: Text("Let's discuss"),
+                                //     shape: BeveledRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(10.0),
+                                //     ),
+                                //   ),
+                                // ],
+                                children: formList(context),
                               ),
                             ),
                           ],

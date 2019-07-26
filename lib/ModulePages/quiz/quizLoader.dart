@@ -15,11 +15,7 @@ class _QuizLoading extends State<QuizLoading> {
   @override
   Widget build(BuildContext context) {
   
-      Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => QuizPage(modNum: widget.modNum),
-            ),
-          );
+     return Scaffold();
   }
   
 }

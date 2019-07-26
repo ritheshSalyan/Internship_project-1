@@ -15,7 +15,10 @@ class _QuizPageState extends State<QuizPage> {
   Firestore db = Firestore.instance;
 
   final TextStyle _questionStyle = TextStyle(
-      fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white);
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
   List<dynamic> options = [];
   int selectedRadio = 0;
   String reason = "";
@@ -37,7 +40,7 @@ class _QuizPageState extends State<QuizPage> {
                 child: Stack(
                   children: <Widget>[
                     ClipPath(
-                      clipper: WaveClipperTwo(),
+                      clipper: WaveClipperOne(),
                       child: Container(
                         decoration: BoxDecoration(color: Colors.green),
                         height: 200,
@@ -70,7 +73,7 @@ class _QuizPageState extends State<QuizPage> {
                                     print(snapshot.data);
                                     switch (snapshot.data) {
                                       case null:
-                                        return Text("hello");
+                                        return CircularProgressIndicator();
                                       default:
                                         snapshot.data.documents
                                             .forEach((document) {
@@ -220,18 +223,25 @@ class _QuizPageState extends State<QuizPage> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: Text(
-                "Are you sure you want to quit the quiz? All your progress will be lost."),
-            title: Text("Warning!"),
+            content: Text("Are you sure you want to quit the quiz? "),
+            title: Text(
+              "Warning!",
+            ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Yes"),
+                child: Text(
+                  "Yes",
+                  style: TextStyle(color: Colors.red),
+                ),
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
               ),
               FlatButton(
-                child: Text("No"),
+                child: Text(
+                  "No",
+                  style: TextStyle(color: Colors.green),
+                ),
                 onPressed: () {
                   Navigator.pop(context, false);
                 },

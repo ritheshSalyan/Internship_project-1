@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:startupreneur/ModuleOrderController/Types.dart' as prefix0;
+import 'package:startupreneur/ModuleOrderController/Types.dart' ;
 import '../quiz/quiz_page.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -109,9 +109,13 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         children: wList(index.toString()),
       ));
     }
-    listWidget.add(
-      RaisedButton(
-        shape: BeveledRectangleBorder(
+    listWidget.add(SizedBox(
+      height: 70,
+    ));
+    listWidget.add(Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         color: Colors.green,
@@ -124,7 +128,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           size: 40.0,
         ),
       ),
-    );
+    ));
     print(listWidget);
     return listWidget;
   }
