@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'quiz_page.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class QuizLoading extends StatefulWidget {
-  QuizLoading({Key key,this.modNum}):super(key:key);
+  QuizLoading({Key key, this.modNum}) : super(key: key);
   final int modNum;
   @override
   _QuizLoading createState() => _QuizLoading();
@@ -13,9 +14,25 @@ class QuizLoading extends StatefulWidget {
 
 class _QuizLoading extends State<QuizLoading> {
   @override
-  Widget build(BuildContext context) {
-  
-     return Scaffold();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
-  
+
+  @override
+  Widget build(BuildContext context) {
+    getEventsFromFirestore().then((value) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => QuizPage(
+            modNum: widget.modNum,
+            order: orderManagement.currentIndex,
+          ),
+        ),
+      );
+    });
+    return Scaffold();
+  }
+
+  static Future<void> getEventsFromFirestore() async {}
 }

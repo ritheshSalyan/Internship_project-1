@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import '../ModulePages/Activity/Activity.dart';
+import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
-  IntroScreen_Liquid({Key key, this.dialogue}) : super(key: key);
+  IntroScreen_Liquid({Key key, this.dialogue,this.modNum}) : super(key: key);
   final List<String> dialogue;
+  int modNum;
 
   @override
   IntroScreenState createState() => new IntroScreenState();
@@ -140,14 +142,8 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                       color: Colors.white,),
                         onPressed: (){
 
-                              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => ActivityPage(
-                     
-                    ),
-                    
-                  ),
-                );
+                     List<dynamic> arguments = [widget.modNum];
+          orderManagement.moveNextIndex(context, arguments);
                         },
 
                         color: Colors.green,

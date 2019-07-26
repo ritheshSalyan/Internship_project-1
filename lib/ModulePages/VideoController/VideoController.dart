@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
 import '../../casestudy/CaseStudyEntry.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {
-  VideoPlay({Key key, this.videoLink, this.title, this.btnTitle})
+  VideoPlay({Key key,this.modNum ,this.videoLink, this.title, this.btnTitle})
       : super(key: key);
+  final int modNum;
   final String videoLink;
   final String btnTitle;
   final String title;
@@ -108,16 +110,19 @@ class _VideoPlayState extends State<VideoPlay> {
                 width: 1.5,
               ),
               onPressed: () {
-                if (widget.btnTitle == "Tap to continue") {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => Loading(),
-                  ));
-                }
-                else{
-                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SummaryPage(),
-                  ));
-                }
+                // if (widget.btnTitle == "Tap to continue") {
+                //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) => Loading(),
+                //   ));
+                // }
+                // else{
+                //    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) => SummaryPage(),
+                //   ));
+                // }
+
+                List<dynamic> arguments = [widget.modNum,];
+                orderManagement.moveNextIndex(context, arguments);
               },
               child: Text(
                 widget.btnTitle,

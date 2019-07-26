@@ -2,8 +2,12 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
 import '../Discussion/Discussion.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class ActivityPage extends StatefulWidget {
+  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle}):super(key:key);
+  final int modNum;
+  final String question,buttonTitle;
   @override
   _ActivityPageState createState() => _ActivityPageState();
 }
@@ -65,15 +69,17 @@ class _ActivityPageState extends State<ActivityPage> {
           width: 1.5,
         ),
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => DiscussionPage(),
-            ),
-          );
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //     builder: (context) => DiscussionPage(),
+          //   ),
+          // );
+           List<dynamic> arguments = [widget.modNum,];
+                                    orderManagement.moveNextIndex(context, arguments);
         },
         textColor: Colors.green,
         highlightedBorderColor: Colors.green,
-        child: Text("Let's discuss"),
+        child: Text(widget.buttonTitle),
         shape:RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -83,115 +89,6 @@ class _ActivityPageState extends State<ActivityPage> {
     return itemInside;
   }
 
-  Widget categoryOne(BuildContext context) => TextFormField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            FontAwesomeIcons.building,
-            color: Colors.green,
-          ),
-          hintText: "ABZ startup",
-          labelText: "Category 1",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      );
-
-  Widget categoryTwo(BuildContext context) => TextFormField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            FontAwesomeIcons.building,
-            color: Colors.green,
-          ),
-          hintText: "ABZ startup",
-          labelText: "Category 2",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      );
-
-  Widget categoryThree(BuildContext context) => TextFormField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            FontAwesomeIcons.building,
-            color: Colors.green,
-          ),
-          hintText: "ABZ startup",
-          labelText: "Category 3",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      );
-
-  Widget categoryFour(BuildContext context) => TextFormField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            FontAwesomeIcons.building,
-            color: Colors.green,
-          ),
-          hintText: "ABZ startup",
-          labelText: "Category 4",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      );
-
-  Widget categoryFive(BuildContext context) => TextFormField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            FontAwesomeIcons.building,
-            color: Colors.green,
-          ),
-          hintText: "ABZ startup",
-          labelText: "Category 5",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +123,8 @@ class _ActivityPageState extends State<ActivityPage> {
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
+                                  widget.question,
+                                  // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontFamily: "Open Sans",
