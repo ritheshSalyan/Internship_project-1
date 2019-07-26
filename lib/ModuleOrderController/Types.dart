@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../ModulePages/quiz/quizLoader.dart';
-import '../ModulePages/VideoController.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory.dart';
+import '../ModulePages/VideoController/VideoController.dart';
+import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 
 enum Type{
   quote,

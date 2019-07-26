@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart' as prefix0;
-import '../ModulePages/quiz/quiz_page.dart';
-import '../ModuleOrderController/Types.dart';
+import '../quiz/quiz_page.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
   ModulePageIntro({Key key, this.modNum}) : super(key: key);

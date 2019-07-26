@@ -10,7 +10,7 @@ import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ModulePages/ModuleOverview.dart';
+import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../ModuleOrderController/Types.dart';
 
 class TimelinePage extends StatefulWidget {

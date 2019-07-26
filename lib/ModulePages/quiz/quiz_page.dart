@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory.dart';
+import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
