@@ -4,6 +4,7 @@ import '../vocabulary/vocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:startupreneur/vocabulary/vocabulary.dart';
@@ -203,11 +204,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                  //   Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => (Loading()),
-                  //   ),
-                  // );
+                    Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (HustleStore()),
+                    ),
+                  );
                 },
               ),
               ListTile(
