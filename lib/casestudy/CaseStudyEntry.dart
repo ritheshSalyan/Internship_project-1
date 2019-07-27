@@ -3,7 +3,7 @@ import 'CaseStudyProcess.dart';
 import 'firebaseConnect.dart';
 
 class Loading extends StatefulWidget {
-  Loading({Key key,this.modNum}):super(key:key);
+  Loading({Key key, this.modNum}) : super(key: key);
   final int modNum;
   @override
   _LoadingState createState() => _LoadingState();
@@ -14,9 +14,13 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     FirebaseFetch.getEventsFromFirestore(widget.modNum).then((dialogue) {
       if (dialogue.length != 0) {
+        print("Widget.modNum is "+widget.modNum.toString());
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) =>IntroScreen_Liquid(dialogue: dialogue),
+            builder: (context) => IntroScreen_Liquid(
+              dialogue: dialogue,
+              modNum: widget.modNum,
+            ),
           ),
         );
       }
@@ -26,7 +30,7 @@ class _LoadingState extends State<Loading> {
       );
       //  return Container(
       // color: Colors.white,
-    // );
+      // );
     });
     return Container(
       color: Colors.white,
@@ -34,6 +38,5 @@ class _LoadingState extends State<Loading> {
       //   backgroundColor: Colors.green,
       // ),
     );
-     
   }
 }

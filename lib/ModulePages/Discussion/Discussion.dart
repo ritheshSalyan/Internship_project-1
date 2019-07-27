@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../Socialize/socialize.dart';
+import '../socialize/socialize.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class DiscussionPage extends StatefulWidget {
+  DiscussionPage({Key key,this.content,this.button,this.modNum,this.title}):super(key:key);
+  String content,button,title;
+  int modNum;
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
 }
@@ -22,18 +26,20 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: 150,
+                    height:  MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.1),
+                         top: MediaQuery.of(context).size.height * 0.1,
+                         left: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Startup or Job",
+                            widget.title,
+                            //"Startup or Job",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 25.0,
                                 fontWeight: FontWeight.w400),
                           ),
                         ],
@@ -43,7 +49,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.width * 0.4),
+                      top: MediaQuery.of(context).size.height * 0.3),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -55,7 +61,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  "Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
+                                  widget.content,
+                                  //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
                                   style: TextStyle(
                                     fontSize: 18.0,
                                     fontFamily: "Open Sans",
@@ -69,16 +76,21 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       ),
                       FlatButton(
                         onPressed: (){
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context)=>SocializeTask(),
-                            )
-                          );
+                          // Navigator.of(context).pushReplacement(
+                          //   MaterialPageRoute(
+                          //     builder: (context)=>SocializeTask(),
+                          //   )
+                          // );
+                           List<dynamic> arguments = [widget.modNum,];
+                                    orderManagement.moveNextIndex(context, arguments);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            Text("Lets Socialize"),
+                            Text(widget.button,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700
+                              )),
                             Icon(Icons.navigate_next),
                           ],
                         ),

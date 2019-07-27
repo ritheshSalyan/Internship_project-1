@@ -13,9 +13,11 @@ class _SummaryPageState extends State<SummaryPage> {
       body: Container(
         child: RaisedButton(
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => TimelinePage(),
-              ));
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => TimelinePage(),
+                ),
+              );
             },
             child: Row(
               children: <Widget>[

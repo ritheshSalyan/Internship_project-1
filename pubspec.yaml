@@ -37,6 +37,7 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   chewie: ^0.9.7
   toast: ^0.1.3
+  auto_size_text: ^2.0.2+1
   flutter_plugin_pdf_viewer: ^1.0.7
   shared_preferences: ^0.5.3+3
   connectivity: ^0.4.3+4
@@ -73,25 +74,7 @@ flutter:
   assets:
    - assets/Images/
    - assets/videos/
-  #  - assets/Images/logo.png
-  #  - assets/Images/log.png
-  #  - assets/Images/logo1.png
-  #  - assets/Images/Capture.PNG
-  #  - assets/animation/arrow.flr
-  #  - assets/Images/motivational.jpg
-  #  - assets/Images/air-hostess.png
-  #  - assets/Images/airplane.png
-  #  - assets/Images/bus-driver.png
-  #  - assets/Images/bus.png
-  #  - assets/Images/hotel.png
-  #  - assets/Images/taxi.png
-  #  - assets/Images/taxi-driver.png
-  #  - assets/Images/waiter.png
-  #  - assets/pdf/t_and_c.pdf
-  #  - assets/Images/idea.png
-   
-#   - assets/videos/video.mp4
-  #  - images/a_dot_ham.jpeg
+ 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

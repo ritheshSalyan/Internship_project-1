@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class QuizPage extends StatefulWidget {
-  QuizPage({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  QuizPage({Key key, this.modNum,this.order}) : super(key: key);
+  final int modNum,order;
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -63,7 +63,8 @@ class _QuizPageState extends State<QuizPage> {
                                 child: StreamBuilder<QuerySnapshot>(
                                   stream: Firestore.instance
                                       .collection("quiz")
-                                      .where("module", isEqualTo: 1)
+                                      .where("module", isEqualTo: widget.modNum)
+                                      .where("order",isEqualTo: widget.order)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -97,7 +98,8 @@ class _QuizPageState extends State<QuizPage> {
                                 StreamBuilder<QuerySnapshot>(
                                   stream: db
                                       .collection("quiz")
-                                      .where("module", isEqualTo: 1)
+                                      .where("module", isEqualTo: widget.modNum)
+                                      .where("order",isEqualTo: widget.order)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -180,10 +182,8 @@ class _QuizPageState extends State<QuizPage> {
                                   );
                                   Future.delayed(Duration(seconds: 3))
                                       .then((o) {
-                                    List<dynamic> arguments = [widget.modNum,"What is Startup "];
+                                    List<dynamic> arguments = [widget.modNum,];
                                     orderManagement.moveNextIndex(context, arguments);
-
-                                    
                                   });
                                 } else {
                                   Scaffold.of(context).showSnackBar(

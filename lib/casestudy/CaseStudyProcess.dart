@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import '../ModulePages/Activity/Activity.dart';
+import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
-  IntroScreen_Liquid({Key key, this.dialogue}) : super(key: key);
+  IntroScreen_Liquid({Key key, this.dialogue,this.modNum}) : super(key: key);
   final List<String> dialogue;
+  int modNum;
 
   @override
   IntroScreenState createState() => new IntroScreenState();
@@ -23,81 +25,8 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
     List<String> list = widget.dialogue;
     for (int i = 0; i < list.length; i++) {
       String item = list[i];
-      if (i % 2 == 0) {
-        pages.add(Container(
-          alignment: Alignment.center,
-          color: Colors.white,
-          width: double.infinity,
-          height: double.infinity,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      new Text(
-                        item,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Open Sans",
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-                Image.asset(
-                  'assets/Images/character.png',
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 400,
-                ),
-              ],
-            ),
-          ),
-        ));
-      }
-      if (i % 2 == 1) {
-        pages.add(Container(
-          alignment: Alignment.center,
-          color: Colors.greenAccent,
-          width: double.infinity,
-          height: double.infinity,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      new Text(
-                        item,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Open Sans",
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-                Image.asset(
-                  'assets/Images/character.png',
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 400,
-                ),
-              ],
-            ),
-          ),
-        ));
-      }
       if (i == list.length - 1) {
+        print("end i = $i");
         pages.add(Container(
           alignment: Alignment.center,
           color: Colors.grey,
@@ -140,14 +69,8 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                       color: Colors.white,),
                         onPressed: (){
 
-                              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => ActivityPage(
-                     
-                    ),
-                    
-                  ),
-                );
+                     List<dynamic> arguments = [widget.modNum];
+          orderManagement.moveNextIndex(context, arguments);
                         },
 
                         color: Colors.green,
@@ -160,6 +83,83 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
           ),
         ));
       }
+      else if (i % 2 == 1) {
+        print("odd i = $i");
+        pages.add(Container(
+          alignment: Alignment.center,
+          color: Colors.greenAccent,
+          width: double.infinity,
+          height: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: <Widget>[
+                      new Text(
+                        item,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Image.asset(
+                  'assets/Images/character.png',
+                  fit: BoxFit.cover,
+                  width: 200,
+                  height: 400,
+                ),
+              ],
+            ),
+          ),
+        ));
+      }
+      else if (i % 2 == 0) {
+        print("even i = $i");
+        pages.add(Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: <Widget>[
+                      new Text(
+                        item,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "Open Sans",
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Image.asset(
+                  'assets/Images/character.png',
+                  fit: BoxFit.cover,
+                  width: 200,
+                  height: 400,
+                ),
+              ],
+            ),
+          ),
+        ));
+      }
+      
     }
   }
 

@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../vocabulary/vocabulary.dart';
+import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import '../ModulePages/DecisionGame/DecisionGame.dart';
+import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
-import 'package:startupreneur/vocabulary/vocabulary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../ModuleOrderController/Types.dart';
@@ -24,13 +25,16 @@ class TimelinePage extends StatefulWidget {
 
 class _TimelinePageState extends State<TimelinePage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  Firestore db = Firestore.instance;
   SharedPreferences sharedPreferences;
   bool _isPlaying = false;
+  int gems= 1000;
   VideoPlayerController controller;
   BuildContext context;
-  List<int> completedCourse = [1,2];
+  List<int> completedCourse = [];
   FirebaseUser user;
   String value = "";
+  String uid = "";
   var val= 1;
   
   String _url =
@@ -57,20 +61,6 @@ class _TimelinePageState extends State<TimelinePage> {
 
   void initState() {
     super.initState();
-    // controller = VideoPlayerController.network(
-    //     "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FAre%20You%20Ready%20720p.mp4?alt=media&token=583c2a4a-cae1-4e67-9898-cc5099474147")
-    //   ..addListener(() {
-    //     final bool isPlaying = controller.value.isPlaying;
-    //     if (isPlaying != _isPlaying) {
-    //       setState(() {
-    //         _isPlaying = isPlaying;
-    //       });
-    //     }
-    //   })
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //   });
-    // super.initState();
     preferences(context);
   }
 
@@ -78,6 +68,7 @@ class _TimelinePageState extends State<TimelinePage> {
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       value = sharedPreferences.getString("UserEmail");
+      uid = sharedPreferences.getString("UserId");
     });
     print("the value is $value");
     if (value == null) {
@@ -85,6 +76,25 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
+  await db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
+    document.documents.forEach((value){
+      setState(() {
+        gems = value["points"]; 
+      });
+    });
+  });
+
+  await db.collection("user").where("uid",isEqualTo:uid).getDocuments().then((document){
+    document.documents.forEach((value){
+      for(int i in value["completed"]){
+       setState(() {
+         print("done");
+         completedCourse.add(i); 
+       });
+      }
+    });
+  });
+
   }
 
   bool check(int i) {
@@ -128,7 +138,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ),
                 Text(
-                  "1000",
+                  "$gems",
                   style: TextStyle(color: Colors.black),
                 ),
                 Padding(
@@ -161,11 +171,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => VideoPlay(),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DecisionGame(),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -203,11 +213,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                  //   Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => (Loading()),
-                  //   ),
-                  // );
+                    Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (HustleStore()),
+                    ),
+                  );
                 },
               ),
               ListTile(

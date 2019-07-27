@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:startupreneur/ModuleOrderController/Types.dart' as prefix0;
+import 'package:startupreneur/ModuleOrderController/Types.dart' ;
 import '../quiz/quiz_page.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -28,6 +28,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
       case "Type.quote":
         print("quote");
         typeList.add(Type.quote);
+        break;
+
+      case "Type.vocabulary":
+        print("vocabulary");
+        typeList.add(Type.vocabulary);
         break;
 
 
@@ -77,6 +82,15 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
        typeList.add(Type.summary);
         print("summary");
         break;
+
+        case "Type.discussion":
+         typeList.add(Type.discussion);
+        print("summary");
+        break;
+
+        default:
+            print("Default");
+
         
     }
       }
@@ -109,13 +123,12 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         children: wList(index.toString()),
       ));
     }
-    listWidget.add(
-      SizedBox(height: 30,)
-    );
-    listWidget.add(
-      Container(
-        width: MediaQuery.of(context).size.width*0.5,
-        child: RaisedButton(
+    listWidget.add(SizedBox(
+      height: 70,
+    ));
+    listWidget.add(Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
