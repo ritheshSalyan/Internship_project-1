@@ -35,21 +35,24 @@ class _DiscussionLoading extends State<DiscussionLoading> {
         ),
       );
     });
-    return Scaffold();
+    return Scaffold(
+      body: CircularProgressIndicator(),
+    );
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('module');
+    CollectionReference ref = Firestore.instance.collection('discussion');
     QuerySnapshot eventsQuery =
-        await ref.where("id", isEqualTo: modNum).getDocuments();
+        await ref.where("module", isEqualTo: modNum)
+        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.documents.forEach((document) {
       print("Discussion " +
-          document["order${orderManagement.currentIndex}"].toString());
+          document.toString());
 
-      title = convert(document["order${orderManagement.currentIndex}"]);
+      title = convert(document["content"]);
     });
     return title;
   }

@@ -11,9 +11,9 @@ class DecisionGame extends StatefulWidget {
   _DecisionGameState createState() => _DecisionGameState();
 }
 
-class _DecisionGameState extends State<DecisionGame> {
+class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClientMixin {
   Firestore db = Firestore.instance;
-
+  
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
@@ -26,6 +26,9 @@ class _DecisionGameState extends State<DecisionGame> {
   String correctAns = "";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   int _answerIs = 0;
+ 
+ @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +112,7 @@ class _DecisionGameState extends State<DecisionGame> {
                                         return Text("No data available");
                                       default:
                                         options.clear();
+                                        
                                         snapshot.data.documents
                                             .forEach((document) {
                                           document["answer"].toString();
@@ -134,6 +138,9 @@ class _DecisionGameState extends State<DecisionGame> {
                                                 setState(() {
                                                   selectedRadio = value;
                                                   _answerIs = (value);
+                                                  options = options;
+                                                  answers = answers;
+                                                  question = question;
                                                   // _answers[_currentIndex] = value;
                                                   print("answer $_answerIs");
                                                 });
@@ -181,7 +188,13 @@ class _DecisionGameState extends State<DecisionGame> {
                                       label: "Ok",
                                       onPressed: () {
                                         // homeScaffoldKey.currentState.hideCurrentSnackBar();
-                                        Scaffold.of(context).hideCurrentSnackBar();
+                                        Scaffold.of(context)
+                                            .hideCurrentSnackBar();
+                                        List<dynamic> arguments = [
+                                          widget.modNum,
+                                        ];
+                                        orderManagement.moveNextIndex(
+                                            context, arguments);
                                       },
                                     ),
                                     // duration: Duration(seconds: 2)
