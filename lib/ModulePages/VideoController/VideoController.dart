@@ -8,9 +8,9 @@ import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {
-  VideoPlay({Key key,this.modNum ,this.videoLink, this.title, this.btnTitle})
+  VideoPlay({Key key,this.modNum ,this.videoLink, this.title, this.btnTitle,this.index})
       : super(key: key);
-  final int modNum;
+  final int modNum,index;
   final String videoLink;
   final String btnTitle;
   final String title;
@@ -121,7 +121,7 @@ class _VideoPlayState extends State<VideoPlay> {
                 //   ));
                 // }
 
-                List<dynamic> arguments = [widget.modNum,];
+                List<dynamic> arguments = [widget.modNum,widget.index+1];
                 orderManagement.moveNextIndex(context, arguments);
               },
               child: Text(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../QuestionFinalPage/QuestionFinalPage.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class SocializeTask extends StatefulWidget {
+  SocializeTask({Key key,this.index,this.modNum}):super(key:key);
+  final int index,modNum;
   @override
   _SocializeTaskState createState() => _SocializeTaskState();
 }
@@ -461,11 +464,13 @@ class _SocializeTaskState extends State<SocializeTask> {
                               );
                               Future.delayed(Duration(seconds: 3)).then(
                                 (value) {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => QuestionFinalPage(),
-                                    ),
-                                  );
+                                  // Navigator.of(context).pushReplacement(
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => QuestionFinalPage(),
+                                  //   ),
+                                  // );
+                                    List<dynamic> arguments = [widget.modNum,widget.index+1];
+          orderManagement.moveNextIndex(context, arguments);
                                 },
                               );
                             } else {

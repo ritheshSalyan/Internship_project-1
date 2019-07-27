@@ -4,9 +4,9 @@ import '../ModulePages/Activity/Activity.dart';
 import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
-  IntroScreen_Liquid({Key key, this.dialogue,this.modNum}) : super(key: key);
+  IntroScreen_Liquid({Key key, this.dialogue,this.modNum,this.index}) : super(key: key);
   final List<String> dialogue;
-  int modNum;
+  int modNum,index;
 
   @override
   IntroScreenState createState() => new IntroScreenState();
@@ -69,7 +69,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                       color: Colors.white,),
                         onPressed: (){
 
-                     List<dynamic> arguments = [widget.modNum];
+                     List<dynamic> arguments = [widget.modNum,widget.index];
           orderManagement.moveNextIndex(context, arguments);
                         },
 

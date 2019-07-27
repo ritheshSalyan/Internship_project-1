@@ -4,9 +4,10 @@ import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class DiscussionPage extends StatefulWidget {
-  DiscussionPage({Key key,this.content,this.button,this.modNum,this.title}):super(key:key);
-  String content,button,title;
-  int modNum;
+  DiscussionPage({Key key, this.content, this.button, this.modNum, this.title,this.index})
+      : super(key: key);
+  String content, button, title;
+  int modNum,index;
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
 }
@@ -26,12 +27,12 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height:  MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.1,
-                         left: MediaQuery.of(context).size.width * 0.1),
+                          top: MediaQuery.of(context).size.height * 0.1,
+                          left: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(
@@ -49,14 +50,18 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.3),
+                      top: MediaQuery.of(context).size.height * 0.15),
                   child: Column(
                     children: <Widget>[
-                      Row(
+                      Column(
                         children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Card(
+                          Image.asset(
+                            "assets/Images/photo.png",
+                            height: MediaQuery.of(context).size.height*0.25,
+                            width: MediaQuery.of(context).size.width*0.75,
+                            alignment: Alignment.center,
+                          ),
+                           Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
@@ -71,26 +76,27 @@ class _DiscussionPageState extends State<DiscussionPage> {
                                 ),
                               ),
                             ),
-                          ),
+                         
                         ],
                       ),
                       FlatButton(
-                        onPressed: (){
+                        onPressed: () {
                           // Navigator.of(context).pushReplacement(
                           //   MaterialPageRoute(
                           //     builder: (context)=>SocializeTask(),
                           //   )
                           // );
-                           List<dynamic> arguments = [widget.modNum,];
-                                    orderManagement.moveNextIndex(context, arguments);
+                          List<dynamic> arguments = [
+                            widget.modNum,
+                            widget.index+1
+                          ];
+                          orderManagement.moveNextIndex(context, arguments);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(widget.button,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700
-                              )),
+                                style: TextStyle(fontWeight: FontWeight.w700)),
                             Icon(Icons.navigate_next),
                           ],
                         ),

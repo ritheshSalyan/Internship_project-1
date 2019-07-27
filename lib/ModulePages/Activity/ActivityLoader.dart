@@ -6,8 +6,8 @@ import 'Activity.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ActivityLoading extends StatefulWidget {
-  ActivityLoading({Key key, this.modNum}) : super(key: key);
-  int modNum;
+  ActivityLoading({Key key, this.modNum,this.index}) : super(key: key);
+  int modNum,index;
   @override
   _ActivityLoading createState() => _ActivityLoading();
 }
@@ -29,6 +29,7 @@ class _ActivityLoading extends State<ActivityLoading> {
             modNum: widget.modNum,
             question: title[0],
             buttonTitle: title[1],
+            index:widget.index+1
           ),
         ),
       );

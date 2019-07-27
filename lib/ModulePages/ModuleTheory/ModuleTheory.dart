@@ -7,9 +7,9 @@ import '../../ModuleOrderController/Types.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
-  videoPlayerPage({Key key, this.title, this.modNum}) : super(key: key);
+  videoPlayerPage({Key key, this.title, this.modNum,this.index}) : super(key: key);
   final String title;
-  final int modNum;
+  final int modNum,index;
   _videoPlayerPageState createState() => _videoPlayerPageState();
 }
 
@@ -84,7 +84,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   ),
                                   color: Colors.green,
                                   onPressed: () {
-                                     List<dynamic> arguments = [widget.modNum,"What is Startup "];
+                                     List<dynamic> arguments = [widget.modNum,widget.index+1];
                                     orderManagement.moveNextIndex(context, arguments);
                                   },
                                   child: Icon(
