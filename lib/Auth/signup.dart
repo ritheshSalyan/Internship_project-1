@@ -60,6 +60,7 @@ class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMi
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
+    sharedPreferences.setString("UserEmail", email);
   }
 
   static void signUpInwithEmail(BuildContext context) async {
@@ -102,6 +103,9 @@ class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMi
     dataMap['typeOfOccupations'] = typeOfOccupations;
     dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
     dataMap['uid'] = userid;
+    dataMap['points'] = 0;
+    dataMap['completed'] = [1];
+    // dataMap['uid'] = userid;
     db.collection("user").add(dataMap).catchError((e) {
       print(e);
     });
