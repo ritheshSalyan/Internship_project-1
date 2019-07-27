@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../ModuleOrderController/Types.dart';
 
 class FirebaseFetch {
 
@@ -7,6 +8,7 @@ class FirebaseFetch {
 CollectionReference ref = Firestore.instance.collection('story');
 QuerySnapshot eventsQuery = await ref
     .where("module", isEqualTo: modNum)
+    .where("order",isEqualTo: orderManagement.currentIndex)
     .getDocuments();
 
  List<String> module = new List<String>();

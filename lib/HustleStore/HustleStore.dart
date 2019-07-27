@@ -11,6 +11,7 @@ class HustleStore extends StatefulWidget {
 class _HustleStoreState extends State<HustleStore> {
   int gems = 1000;
   int i = itemList.length;
+  double width ,height;
 
   @override
   initState() {
@@ -20,8 +21,8 @@ class _HustleStoreState extends State<HustleStore> {
 
   Widget _buildCategoryItem(BuildContext context, int index) {
     return  MaterialButton(
-      minWidth: MediaQuery.of(context).size.width*0.5,
-      height: MediaQuery.of(context).size.height*0.7,
+      // minWidth: ,
+      height: MediaQuery.of(context).size.height*0.2,
         elevation: 1.0,
         highlightElevation: 1.0,
         onPressed: () {},
@@ -47,13 +48,17 @@ class _HustleStoreState extends State<HustleStore> {
         print("You tapped $index");
       },
      child: Container(
-
+       width: MediaQuery.of(context).size.width,
+        color: Colors.black,
       )
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width*0.5;
+    height = MediaQuery.of(context).size.height*0.4  ;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Hustle Store"),
@@ -105,12 +110,12 @@ class _HustleStoreState extends State<HustleStore> {
                 sliver: SliverGrid(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1.2,
+                    childAspectRatio: width/height,
                     crossAxisSpacing: 10.0,
                     mainAxisSpacing: 10.0,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    _buildCategoryItem,
+                   _buildCategoryItem2,
                     childCount: i,
                   ),
                 ),
