@@ -48,7 +48,7 @@ class orderManagement  {
 
         case Type.quiz:
           print("quiz");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => QuizPage(modNum: arguments[0]),
             ),
