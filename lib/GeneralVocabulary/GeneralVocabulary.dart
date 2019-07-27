@@ -14,6 +14,8 @@ class Vocabulary extends StatefulWidget {
 
 class _VocabularyState extends State<Vocabulary> {
   Firestore db = Firestore.instance;
+  List<String> listGiven = [];
+  List<String> listMeaning = [];
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   void initState() {
@@ -87,17 +89,17 @@ class _VocabularyState extends State<Vocabulary> {
         child: Material(
           type: MaterialType.canvas,
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              meaning,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontFamily: "Open Sans",
-              ),
-            ),
-          )),
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  meaning,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: "Open Sans",
+                  ),
+                ),
+              )),
         ),
       ),
     );
@@ -125,6 +127,24 @@ class _VocabularyState extends State<Vocabulary> {
     );
   }
 
+  List<Widget> listGenerated(BuildContext context, int index, int length,
+      AsyncSnapshot<QuerySnapshot> snapshot) {
+    List<Widget> list = [];
+    for (int i = index; i < length; i++) {
+      list.add(ListTile(
+        onTap: () {
+          // print(" ${snapshot.data.documents[0].data["meaning"][index]}");
+          popDialog(context, snapshot.data.documents[0].data["word"][index],
+              snapshot.data.documents[0].data["meaning"][index]);
+        },
+        leading: Icon(Icons.book),
+        title: Text(snapshot.data.documents[i].data["word"][index]),
+      ));
+    }
+    print(list);
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,6 +170,7 @@ class _VocabularyState extends State<Vocabulary> {
                       Firestore.instance.collection("vocabulary").snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     // return Text("value ${snapshot.data.documents[0].data["word"].length}");
+                    print("vocabulary ${snapshot.data}");
                     if (snapshot.hasError) {
                       print("error");
                       // return Text("Error ${snapshot.error}");
@@ -159,25 +180,41 @@ class _VocabularyState extends State<Vocabulary> {
                         return CircularProgressIndicator();
                         break;
                       default:
+                        listGiven.clear();
+                        for (int i = 0;
+                            i < snapshot.data.documents.length;
+                            i++) {
+                          for (String k
+                              in snapshot.data.documents[i].data["word"]) {
+                            print(k);
+                            listGiven.add(k);
+                          }
+                        }
+
+                        for (int i = 0;i<snapshot.data.documents.length;i++){
+                          for(String k in snapshot.data.documents[i].data["meaning"] ){
+                           listMeaning.add(k);
+                          }
+                        }
+                        // print(listGiven);
                         return ListView.builder(
                           shrinkWrap: true,
-                          itemCount:
-                              snapshot.data.documents[0].data["word"].length,
+                          itemCount: listGiven.length,
                           itemBuilder: (context, index) {
                             return ListTile(
                               onTap: () {
                                 // print(" ${snapshot.data.documents[0].data["meaning"][index]}");
+                                print(index);
                                 popDialog(
-                                    context,
-                                    snapshot.data.documents[0].data["word"]
-                                        [index],
-                                    snapshot.data.documents[0].data["meaning"]
-                                        [index]);
+                                  context,
+                                  listGiven[index],
+                                  listMeaning[index],
+                                );
                               },
                               leading: Icon(Icons.book),
-                              title: Text(snapshot
-                                  .data.documents[0].data["word"][index]),
+                              title: Text(listGiven[index]),
                             );
+                            // listGenerated(context,index,snapshot.data.documents.length,snapshot);
                           },
                         );
                     }
