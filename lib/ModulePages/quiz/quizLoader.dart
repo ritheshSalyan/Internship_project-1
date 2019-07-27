@@ -17,6 +17,11 @@ class _QuizLoading extends State<QuizLoading> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (context) => QuizPage(modNum: widget.modNum),
+    //   ),
+    // );
   }
 
   @override

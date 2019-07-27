@@ -26,11 +26,12 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: 150,
+                    height:  MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.1),
+                         top: MediaQuery.of(context).size.height * 0.1,
+                         left: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(
@@ -38,7 +39,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                             //"Startup or Job",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 25.0,
                                 fontWeight: FontWeight.w400),
                           ),
                         ],
@@ -48,7 +49,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.width * 0.4),
+                      top: MediaQuery.of(context).size.height * 0.3),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -86,7 +87,10 @@ class _DiscussionPageState extends State<DiscussionPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            Text(widget.button),
+                            Text(widget.button,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700
+                              )),
                             Icon(Icons.navigate_next),
                           ],
                         ),

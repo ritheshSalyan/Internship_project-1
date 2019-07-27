@@ -30,6 +30,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         typeList.add(Type.quote);
         break;
 
+      case "Type.vocabulary":
+        print("vocabulary");
+        typeList.add(Type.vocabulary);
+        break;
+
 
        case "Type.quiz":
         print("quiz");
@@ -137,7 +142,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           size: 40.0,
         ),
       ),
-    ));
+      )
+    );
     print(listWidget);
     return listWidget;
   }

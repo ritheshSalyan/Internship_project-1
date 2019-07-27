@@ -63,7 +63,8 @@ class _QuizPageState extends State<QuizPage> {
                                 child: StreamBuilder<QuerySnapshot>(
                                   stream: Firestore.instance
                                       .collection("quiz")
-                                      .where("module", isEqualTo: 1)
+                                      .where("module", isEqualTo: widget.modNum)
+                                      .where("order",isEqualTo: widget.order)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {

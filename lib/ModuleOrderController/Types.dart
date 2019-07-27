@@ -8,11 +8,13 @@ import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheoryLoader.dart';
 import '../casestudy/CaseStudyEntry.dart';
 import '../ModulePages/Activity/ActivityLoader.dart';
 import '../ModulePages/Discussion/DiscussionLoader.dart';
+import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../timeline/MainRoadmap.dart';
 
 enum Type {
   quote,
   quiz,
+  vocabulary,
   caseStudy,
   overView,
   video,
@@ -23,11 +25,12 @@ enum Type {
   summary,
 }
 
-class orderManagement {
+class orderManagement  {
   static List<Type> order = [];
   static int currentIndex = 0;
   List<dynamic> arguments = [];
   static void moveNextIndex(BuildContext context, arguments) {
+    
     currentIndex++;
     print("Arguments ${arguments}");
     if (currentIndex == order.length) {
@@ -61,8 +64,24 @@ class orderManagement {
           ));
           break;
 
+          case Type.vocabulary:
+          print("vocabulary");
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => ActivityLoading(
+              modNum: arguments[0],
+            ),
+          ));
+          break;
+
         case Type.decisionGame:
           print("decisionGame");
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => DecisionGameLoading(
+                modNum: arguments[0],
+              ),
+            ),
+          );
           break;
 
         case Type.caseStudy:
@@ -110,6 +129,9 @@ class orderManagement {
             ),
           );
           break;
+
+        default:
+          print("Default");
       }
     }
   }
