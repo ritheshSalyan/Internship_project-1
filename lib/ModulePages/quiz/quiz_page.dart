@@ -183,8 +183,6 @@ class _QuizPageState extends State<QuizPage> {
                                       .then((o) {
                                     List<dynamic> arguments = [widget.modNum,];
                                     orderManagement.moveNextIndex(context, arguments);
-
-                                    
                                   });
                                 } else {
                                   Scaffold.of(context).showSnackBar(

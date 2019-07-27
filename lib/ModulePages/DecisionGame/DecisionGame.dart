@@ -161,7 +161,6 @@ class _DecisionGameState extends State<DecisionGame> {
                               child: Text("Submit"),
                               onPressed: () {
                                 print("hello $_answerIs");
-
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -180,20 +179,17 @@ class _DecisionGameState extends State<DecisionGame> {
                                       textColor: Colors.white,
                                       label: "Ok",
                                       onPressed: () {
-                                        // homeScaffoldKey.currentState.hideCurrentSnackBar();
-                                        Scaffold.of(context).hideCurrentSnackBar();
+                                        Scaffold.of(context)
+                                            .hideCurrentSnackBar();
+                                        List<dynamic> arguments = [
+                                          widget.modNum,
+                                        ];
+                                        orderManagement.moveNextIndex(
+                                            context, arguments);
                                       },
                                     ),
-                                    // duration: Duration(seconds: 2)
                                   ),
                                 );
-                                // Future.delayed(Duration(seconds: 3)).then((o) {
-                                //   List<dynamic> arguments = [
-                                //     widget.modNum,
-                                //   ];
-                                //   orderManagement.moveNextIndex(
-                                //       context, arguments);
-                                // });
                               },
                             ),
                           ),
@@ -213,7 +209,7 @@ class _DecisionGameState extends State<DecisionGame> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: Text("Are you sure you want to quit the quiz? "),
+            content: Text("Are you sure you want to quit from decision game? "),
             title: Text(
               "Warning!",
             ),

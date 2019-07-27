@@ -5,6 +5,7 @@ import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import '../ModulePages/ModuleVocabulary/ModuleVocabulary.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
@@ -179,20 +180,6 @@ class _TimelinePageState extends State<TimelinePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.dashboard),
-                title: Text(
-                  'Dashboard',
-                  style: TextStyle(color: Colors.green),
-                ),
-                onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => (videoPlayerPage(title: "Video",modNum: 1,)),
-                  //   ),
-                  // );
-                },
-              ),
-              ListTile(
                 leading: Icon(Icons.book),
                 title: Text(
                   'Vocabulary',
@@ -226,7 +213,13 @@ class _TimelinePageState extends State<TimelinePage> {
                   'Settings',
                   style: TextStyle(color: Colors.green),
                 ),
-                onTap: () {},
+                onTap: () {
+                    Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (ModuleVocabulary()),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.lock_open),
