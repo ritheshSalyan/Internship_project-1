@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
@@ -290,7 +291,7 @@ class _TimelinePageState extends State<TimelinePage> {
               print("val is $val");
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ModulePageIntro(modNum: i+1),
+                  builder: (context) => QuoteLoading(modNum: i+1),
                   // builder: (context)=>Vocabulary(),
                 ),
               );

@@ -5,8 +5,8 @@ import '../quiz/quiz_page.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
-  ModulePageIntro({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  ModulePageIntro({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _ModulePageIntroState createState() => _ModulePageIntroState();
 }
@@ -21,82 +21,82 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
     print("init hello");
   }
 
-  List<Type> convert(List<dynamic> list ){
-    List<Type> typeList = [];
-      for (var item in list) {
-      switch(item){
-      case "Type.quote":
-        print("quote");
-        typeList.add(Type.quote);
-        break;
+  // List<Type> convert(List<dynamic> list ){
+  //   List<Type> typeList = [];
+  //     for (var item in list) {
+  //     switch(item){
+  //     case "Type.quote":
+  //       print("quote");
+  //       typeList.add(Type.quote);
+  //       break;
 
-      case "Type.vocabulary":
-        print("vocabulary");
-        typeList.add(Type.vocabulary);
-        break;
-
-
-       case "Type.quiz":
-        print("quiz");
-        typeList.add(Type.quiz);
-        break;
+  //     case "Type.vocabulary":
+  //       print("vocabulary");
+  //       typeList.add(Type.vocabulary);
+  //       break;
 
 
-       case "Type.activity":
-        print("activity");
-        typeList.add(Type.activity);
-        break;
+  //      case "Type.quiz":
+  //       print("quiz");
+  //       typeList.add(Type.quiz);
+  //       break;
 
 
-       case "Type.decisionGame":
-        print("decisionGame");
-        typeList.add(Type.decisionGame);
-        break;
+  //      case "Type.activity":
+  //       print("activity");
+  //       typeList.add(Type.activity);
+  //       break;
 
 
-       case "Type.caseStudy":
-        print("caseStudy");
-        typeList.add(Type.caseStudy);
-        break;
+  //      case "Type.decisionGame":
+  //       print("decisionGame");
+  //       typeList.add(Type.decisionGame);
+  //       break;
 
 
-       case "Type.video":
-        print("video");
-       typeList.add(Type.video);
-        break;
+  //      case "Type.caseStudy":
+  //       print("caseStudy");
+  //       typeList.add(Type.caseStudy);
+  //       break;
 
 
-       case "Type.overView":
-        print("overView");
-        typeList.add(Type.overView);
-        break;
+  //      case "Type.video":
+  //       print("video");
+  //      typeList.add(Type.video);
+  //       break;
 
 
-        case "Type.theory":
-        print("theory");
-        typeList.add(Type.theory);
-        break;
+  //      case "Type.overView":
+  //       print("overView");
+  //       typeList.add(Type.overView);
+  //       break;
 
 
-       case "Type.summary":
-       typeList.add(Type.summary);
-        print("summary");
-        break;
+  //       case "Type.theory":
+  //       print("theory");
+  //       typeList.add(Type.theory);
+  //       break;
 
-        case "Type.discussion":
-         typeList.add(Type.discussion);
-        print("summary");
-        break;
 
-        default:
-            print("Default");
+  //      case "Type.summary":
+  //      typeList.add(Type.summary);
+  //       print("summary");
+  //       break;
+
+  //       case "Type.discussion":
+  //        typeList.add(Type.discussion);
+  //       print("summary");
+  //       break;
+
+  //       default:
+  //           print("Default");
 
         
-    }
-      }
-      return typeList;
+  //   }
+  //     }
+  //     return typeList;
 
-  }
+  // }
 
   List<Widget> wList(String index) {
     List<Widget> listWidget = new List<Widget>();
@@ -134,7 +134,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         ),
         color: Colors.green,
         onPressed: () {
-          List<dynamic> arguments = [widget.modNum];
+          List<dynamic> arguments = [widget.modNum,widget.index+1];
           orderManagement.moveNextIndex(context, arguments);
         },
         child: Icon(
@@ -192,9 +192,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                           for (dynamic i in document.data["overview"]) {
                             list.add(i);
                           }
-                          orderManagement.order = convert(document.data["order"]);
+                        //   if(orderManagement.order.isEmpty){
+                        //   orderManagement.order = convert(document.data["order"]);
 
-                          print("orderManagement.order "+orderManagement.order.toString());
+                           print("orderManagement.order "+orderManagement.order.toString());
+                        // }
                            //=
                           // print(
                           //     "orderManagement.order = ${document.data}"); //[Type.overView,Type.quiz,Type.decisionGame];

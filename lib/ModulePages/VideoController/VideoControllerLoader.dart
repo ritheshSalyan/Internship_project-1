@@ -6,8 +6,8 @@ import 'VideoController.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoControllerLoading extends StatefulWidget {
-  VideoControllerLoading({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  VideoControllerLoading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _VideoControllerLoading createState() => _VideoControllerLoading();
 }
@@ -21,11 +21,12 @@ class _VideoControllerLoading extends State<VideoControllerLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
+    getEventsFromFirestore(widget.modNum,widget.index).then((title) {
       print("Title is " + title.toString());
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => VideoPlay(
+            index:widget.index,
             videoLink: title[1],
             title: title[0],
             btnTitle: title[2],
@@ -37,18 +38,21 @@ class _VideoControllerLoading extends State<VideoControllerLoading> {
     return Scaffold();
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('module');
+  static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
+
+    print("Index in video "+index.toString());
+    CollectionReference ref = Firestore.instance.collection('videos');
     QuerySnapshot eventsQuery =
-        await ref.where("id", isEqualTo: modNum).getDocuments();
+        await ref.where("module", isEqualTo: modNum)
+        .where("order",isEqualTo: index).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.documents.forEach((document) {
       print("videoController " +
-          document["order${orderManagement.currentIndex}"].toString());
+          document["content"].toString());
 
-      title = convert(document["order${orderManagement.currentIndex}"]);
+      title = convert(document["content"]);
     });
     return title;
   }

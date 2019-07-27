@@ -192,6 +192,7 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                             .hideCurrentSnackBar();
                                         List<dynamic> arguments = [
                                           widget.modNum,
+                                          widget.order+1
                                         ];
                                         orderManagement.moveNextIndex(
                                             context, arguments);

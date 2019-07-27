@@ -6,8 +6,8 @@ import 'Discussion.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class DiscussionLoading extends StatefulWidget {
-  DiscussionLoading({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  DiscussionLoading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _DiscussionLoading createState() => _DiscussionLoading();
 }
@@ -26,7 +26,7 @@ class _DiscussionLoading extends State<DiscussionLoading> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => DiscussionPage(
-           
+           index:widget.index,
             modNum: widget.modNum,
             title: title[0],
             content: title[1],

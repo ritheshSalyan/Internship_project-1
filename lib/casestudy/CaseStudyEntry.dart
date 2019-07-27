@@ -3,8 +3,8 @@ import 'CaseStudyProcess.dart';
 import 'firebaseConnect.dart';
 
 class Loading extends StatefulWidget {
-  Loading({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  Loading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -20,6 +20,7 @@ class _LoadingState extends State<Loading> {
             builder: (context) => IntroScreen_Liquid(
               dialogue: dialogue,
               modNum: widget.modNum,
+              index:widget.index+1,
             ),
           ),
         );

@@ -6,8 +6,8 @@ import 'quiz_page.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class QuizLoading extends StatefulWidget {
-  QuizLoading({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  QuizLoading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _QuizLoading createState() => _QuizLoading();
 }
@@ -27,6 +27,7 @@ class _QuizLoading extends State<QuizLoading> {
           builder: (context) => QuizPage(
             modNum: widget.modNum,
             order: orderManagement.currentIndex,
+            index:widget.index+1,
           ),
         ),
       );

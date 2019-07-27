@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ActivityPage extends StatefulWidget {
-  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle}):super(key:key);
-  final int modNum;
+  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle,this.index}):super(key:key);
+  final int modNum,index;
   final String question,buttonTitle;
   @override
   _ActivityPageState createState() => _ActivityPageState();
@@ -74,7 +74,7 @@ class _ActivityPageState extends State<ActivityPage> {
           //     builder: (context) => DiscussionPage(),
           //   ),
           // );
-           List<dynamic> arguments = [widget.modNum,];
+           List<dynamic> arguments = [widget.modNum,widget.index];
                                     orderManagement.moveNextIndex(context, arguments);
         },
         textColor: Colors.green,

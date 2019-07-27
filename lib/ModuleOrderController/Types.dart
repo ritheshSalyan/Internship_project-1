@@ -9,6 +9,7 @@ import '../casestudy/CaseStudyEntry.dart';
 import '../ModulePages/Activity/ActivityLoader.dart';
 import '../ModulePages/Discussion/DiscussionLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
+import '../ModulePages/Socialize/socialize.dart';
 import '../timeline/MainRoadmap.dart';
 
 enum Type {
@@ -22,6 +23,7 @@ enum Type {
   activity,
   decisionGame,
   discussion,
+  socialize,
   summary,
 }
 
@@ -31,10 +33,11 @@ class orderManagement  {
   List<dynamic> arguments = [];
   static void moveNextIndex(BuildContext context, arguments) {
     
-    currentIndex++;
+    currentIndex = arguments[1];
     print("Arguments ${arguments}");
+    print("currentIndex ${currentIndex}");
     if (currentIndex == order.length) {
-           Navigator.of(context).pushReplacement(
+           Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => TimelinePage(title: "Road Map",),
           ),
@@ -48,37 +51,50 @@ class orderManagement  {
 
         case Type.quiz:
           print("quiz");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => QuizPage(modNum: arguments[0]),
+              builder: (context) => QuizLoading(modNum: arguments[0],index:currentIndex),
             ),
           );
           break;
 
         case Type.activity:
           print("activity");
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ActivityLoading(
               modNum: arguments[0],
+              index:currentIndex
+            ),
+          ));
+          break;
+
+          case Type.socialize:
+          print("socialize");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SocializeTask(
+              modNum: arguments[0],
+              index:currentIndex
             ),
           ));
           break;
 
           case Type.vocabulary:
           print("vocabulary");
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ActivityLoading(
               modNum: arguments[0],
+              index:currentIndex
             ),
           ));
           break;
 
         case Type.decisionGame:
           print("decisionGame");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DecisionGameLoading(
                 modNum: arguments[0],
+                index:currentIndex
               ),
             ),
           );
@@ -86,19 +102,21 @@ class orderManagement  {
 
         case Type.caseStudy:
           print("caseStudy");
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Loading(
               modNum: arguments[0],
+              index:currentIndex
             ),
           ));
           break;
 
         case Type.video:
           print("video");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => VideoControllerLoading(
                 modNum: arguments[0],
+                index:currentIndex
               ),
             ),
           );
@@ -110,9 +128,9 @@ class orderManagement  {
 
         case Type.theory:
           print("theory");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => TheoryLoading(modNum: arguments[0]),
+              builder: (context) => TheoryLoading(modNum: arguments[0],index:currentIndex),
             ),
           );
           break;
@@ -123,9 +141,9 @@ class orderManagement  {
 
         case Type.discussion:
           print("discussion");
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => DiscussionLoading(modNum: arguments[0]),
+              builder: (context) => DiscussionLoading(modNum: arguments[0],index:currentIndex),
             ),
           );
           break;

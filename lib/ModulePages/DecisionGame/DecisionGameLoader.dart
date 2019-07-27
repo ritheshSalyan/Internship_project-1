@@ -6,8 +6,8 @@ import 'DecisionGame.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class DecisionGameLoading extends StatefulWidget {
-  DecisionGameLoading({Key key, this.modNum}) : super(key: key);
-  final int modNum;
+  DecisionGameLoading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
   _DecisionGameLoading createState() => _DecisionGameLoading();
 }
@@ -26,7 +26,7 @@ class _DecisionGameLoading extends State<DecisionGameLoading> {
         MaterialPageRoute(
           builder: (context) => DecisionGame(
             modNum: widget.modNum,
-            order: orderManagement.currentIndex,
+            order: widget.index,
           ),
         ),
       );

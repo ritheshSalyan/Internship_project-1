@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'ModuleTheory.dart';
+import 'quote.dart';
 import '../../ModuleOrderController/Types.dart';
 
-class TheoryLoading extends StatefulWidget {
-  TheoryLoading({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+class QuoteLoading extends StatefulWidget {
+  QuoteLoading({Key key, this.modNum}) : super(key: key);
+  final int modNum;
   @override
-  _TheoryLoading createState() => _TheoryLoading();
+  _QuoteLoading createState() => _QuoteLoading();
 }
 
-class _TheoryLoading extends State<TheoryLoading> {
+class _QuoteLoading extends State<QuoteLoading> {
   @override
   void initState() {
     // TODO: implement initState
@@ -23,10 +23,10 @@ class _TheoryLoading extends State<TheoryLoading> {
   @override
   Widget build(BuildContext context) {
     getEventsFromFirestore(widget.modNum).then((title){
-      print("Title is "+title);
+      print("Title is "+title.toString());
          Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => videoPlayerPage(modNum: widget.modNum,title: title,index:widget.index),
+        builder: (context) => Quote(modNum: widget.modNum,quote: title),
       ),
     );
 
@@ -34,18 +34,22 @@ class _TheoryLoading extends State<TheoryLoading> {
     return Scaffold();
   }
 
-  static Future<String> getEventsFromFirestore(int modNum) async {
+  static Future<List<String>> getEventsFromFirestore(int modNum) async {
       CollectionReference ref = Firestore.instance.collection('module');
 QuerySnapshot eventsQuery = await ref
     .where("id", isEqualTo: modNum)
     .getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
-String title = "hello";
+List<String> title =[];
 eventsQuery.documents.forEach((document) {
-  print("title "+document["order${orderManagement.currentIndex}" ].toString());
+  print("Quote "+document.toString());
 
-  title = document["order${orderManagement.currentIndex}" ].toString();
+  for (var item in document["quote" ]) {
+     title.add(item.toString());
+  }
+ 
+  
 });
   return title;
   }
