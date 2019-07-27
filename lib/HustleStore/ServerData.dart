@@ -14,7 +14,7 @@ class Component {
 
 List<Component> itemList = [
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit eli",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -22,12 +22,14 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit eli",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -35,12 +37,14 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -48,12 +52,14 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit eli",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -61,12 +67,14 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit eli",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -74,12 +82,14 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "LoVelit elit amet nisi magna enim et quis velit ipsum ex.",
+    description: "LoVelit eli",
     claimIt: RaisedButton(
       onPressed: () {},
       child: Text("Claim it"),
@@ -87,8 +97,10 @@ List<Component> itemList = [
     gemIcon: Icon(
       FontAwesomeIcons.solidGem,
       color: Colors.green,
+      size: 15,
     ),
     price: 100,
-    logo: "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+    logo:
+        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   )
 ];

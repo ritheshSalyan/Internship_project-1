@@ -26,11 +26,12 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: 150,
+                    height:  MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.1),
+                         top: MediaQuery.of(context).size.height * 0.1,
+                         left: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: <Widget>[
                           Text(
