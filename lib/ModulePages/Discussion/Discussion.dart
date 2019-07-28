@@ -4,17 +4,120 @@ import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class DiscussionPage extends StatefulWidget {
-  DiscussionPage({Key key, this.content, this.button, this.modNum, this.title,this.index})
+  DiscussionPage(
+      {Key key, this.content, this.button, this.modNum, this.title, this.index})
       : super(key: key);
   String content, button, title;
-  int modNum,index;
+  int modNum, index;
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
 }
 
 class _DiscussionPageState extends State<DiscussionPage> {
+  String data;
+  int item = 0;
+  List<String> _listViewData = [
+    // "Swipe Right / Left to remove",
+    // "Swipe Right / Left to remove",
+  ];
+  _onSubmit() {
+    setState(() {
+      item;
+      if (item < data.split(". ").length ) {
+        // for (var item in ) {
+        _listViewData.add(data.split(".")[item]+".");
+        item++;
+        // }
+
+      }
+
+// _listViewData.add(_textController.text);
+    });
+  }
+
+  List<Widget> convertTolist() {
+    List<Widget> list = [];
+    list.addAll(_listViewData.map((data) {
+      // return Dismissible(
+      //   key: Key(data),
+      //   child: ListTile(
+      //     title: Text(data),
+      //   ),
+      // );
+      return Card(
+          elevation: 0,
+          margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+                child: Text(
+                  data,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontFamily: "Open Sans",
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
+          ));
+    }).toList());
+
+    if (item < data.split(". ").length) {
+      list.add(Center(
+        child: OutlineButton(
+          borderSide: BorderSide(
+            color: Colors.green
+          ),
+          onPressed: _onSubmit,
+          child: Text(
+            'Tap here to Continue',
+            style: TextStyle(
+              letterSpacing: 1.5,
+              fontFamily: "Open Sans",
+              color: Colors.green,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          color: Colors.white,
+        ),
+      ));
+    } else {
+      list.add(Center(
+        child: FlatButton(
+          onPressed: () {
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context)=>SocializeTask(),
+            //   )
+            // );
+            List<dynamic> arguments = [widget.modNum, widget.index + 1];
+            orderManagement.moveNextIndex(context, arguments);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(widget.button,
+                  style: TextStyle(fontWeight: FontWeight.w700)),
+              Icon(Icons.navigate_next),
+            ],
+          ),
+        ),
+      ));
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
+    data = widget.content;
     return Scaffold(
       body: SingleChildScrollView(
         child: Builder(
@@ -39,9 +142,11 @@ class _DiscussionPageState extends State<DiscussionPage> {
                             widget.title,
                             //"Startup or Job",
                             style: TextStyle(
+                              fontFamily: "Open Sans",
+
                                 color: Colors.white,
                                 fontSize: 25.0,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
@@ -53,54 +158,56 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       top: MediaQuery.of(context).size.height * 0.15),
                   child: Column(
                     children: <Widget>[
+                      Image.asset(
+                        "assets/Images/photo.png",
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        alignment: Alignment.center,
+                      ),
                       Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Images/photo.png",
-                            height: MediaQuery.of(context).size.height*0.25,
-                            width: MediaQuery.of(context).size.width*0.75,
-                            alignment: Alignment.center,
-                          ),
-                           Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  widget.content,
-                                  //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontFamily: "Open Sans",
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                         
-                        ],
+                        // children: <Widget>[
+
+                        //    Card(
+                        //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                        //       child: Padding(
+                        //         padding: EdgeInsets.all(10.0),
+                        //         child: Text(
+                        //           widget.content,
+                        //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
+                        //           style: TextStyle(
+                        //             fontSize: 18.0,
+                        //             fontFamily: "Open Sans",
+                        //             fontWeight: FontWeight.w500,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+
+                        // ],
+                        children: convertTolist(),
                       ),
-                      FlatButton(
-                        onPressed: () {
-                          // Navigator.of(context).pushReplacement(
-                          //   MaterialPageRoute(
-                          //     builder: (context)=>SocializeTask(),
-                          //   )
-                          // );
-                          List<dynamic> arguments = [
-                            widget.modNum,
-                            widget.index+1
-                          ];
-                          orderManagement.moveNextIndex(context, arguments);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(widget.button,
-                                style: TextStyle(fontWeight: FontWeight.w700)),
-                            Icon(Icons.navigate_next),
-                          ],
-                        ),
-                      ),
+                      // FlatButton(
+                      //   onPressed: () {
+                      //     // Navigator.of(context).pushReplacement(
+                      //     //   MaterialPageRoute(
+                      //     //     builder: (context)=>SocializeTask(),
+                      //     //   )
+                      //     // );
+                      //     List<dynamic> arguments = [
+                      //       widget.modNum,
+                      //       widget.index+1
+                      //     ];
+                      //     orderManagement.moveNextIndex(context, arguments);
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     children: <Widget>[
+                      //       Text(widget.button,
+                      //           style: TextStyle(fontWeight: FontWeight.w700)),
+                      //       Icon(Icons.navigate_next),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

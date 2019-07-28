@@ -14,6 +14,8 @@ import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
+import '../Trial/trial.dart';
+
 import '../ModuleOrderController/Types.dart';
 import 'package:startupreneur/trial.dart';
 
@@ -181,7 +183,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   );
                 },
               ),
-              ListTile(
+              ListTile( 
                 leading: Icon(Icons.book),
                 title: Text(
                   'Vocabulary',
