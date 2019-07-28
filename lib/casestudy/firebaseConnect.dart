@@ -17,9 +17,9 @@ QuerySnapshot eventsQuery = await ref
 eventsQuery.documents.forEach((document) {
   print(document["dialogue" ].toString());
 
-  module = convert(document["dialogue" ]);
+  List<String>module1 = convert(document["dialogue" ]);
 
-     
+    module = singleLine(module1);
 });
 
 
@@ -35,6 +35,24 @@ eventsQuery.documents.forEach((document) {
        print(item.toString());
     }
     return list;
+  }
+  
+  static List<String> singleLine(List<String> dlist){
+
+      List<String> single = [];
+
+      for(String item in dlist){
+        print("singleLine ==>"+item);
+        for (var i in item.split(".")) {
+           print("singleLine i ==>"+i);
+           if(i.isNotEmpty || i == " "){
+           single.add(i);
+           }
+
+        }
+      }
+      return single;
+
   }
 
   
