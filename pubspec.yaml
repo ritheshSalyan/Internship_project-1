@@ -108,7 +108,10 @@ flutter:
         - asset: assets/fonts/quickSand/Quicksand-Bold.ttf
         - asset: assets/fonts/quickSand/Quicksand-Light.ttf
         - asset: assets/fonts/quickSand/Quicksand-Medium.ttf
-        
+
+    - family: Slabo_27px
+      fonts:
+        - asset: assets/fonts/Slabo_27px/Slabo27px-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

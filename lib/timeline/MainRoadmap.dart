@@ -215,7 +215,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.settings),
                 title: Text(
                   'Settings',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: Colors.green,fontFamily:"Slabo_27px"),
                 ),
                 onTap: () {
                     Navigator.of(context).push(
