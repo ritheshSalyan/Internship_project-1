@@ -48,7 +48,7 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
     //     .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
     await Firestore.instance
         .collection("vocabulary")
-        .where("module", isEqualTo: 2)
+        .where("module", isEqualTo: modNum)
         .getDocuments()
         .then((document) {
       document.documents.forEach((value) {

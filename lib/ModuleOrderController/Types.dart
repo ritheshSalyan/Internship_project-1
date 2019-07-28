@@ -11,6 +11,7 @@ import '../ModulePages/Discussion/DiscussionLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../ModulePages/Socialize/socialize.dart';
 import '../timeline/MainRoadmap.dart';
+import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 
 enum Type {
   quote,
@@ -81,7 +82,7 @@ class orderManagement  {
           case Type.vocabulary:
           print("vocabulary");
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ActivityLoading(
+            builder: (context) => ModuleVocabularyLoading(
               modNum: arguments[0],
               index:currentIndex
             ),
