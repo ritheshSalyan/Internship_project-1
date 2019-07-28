@@ -13,6 +13,8 @@ import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
+import '../Trial/trial.dart';
+
 import '../ModuleOrderController/Types.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -188,7 +190,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   // Navigator.of(context).push(
                   //   MaterialPageRoute(
-                  //     builder: (context) => (videoPlayerPage(title: "Video",modNum: 1,)),
+                  //     builder: (context) => (AddRemoveListView()),
                   //   ),
                   // );
                 },
