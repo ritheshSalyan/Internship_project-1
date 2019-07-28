@@ -28,6 +28,7 @@ class _VocabularyState extends State<Vocabulary> {
     return Material(
       type: MaterialType.transparency,
       child: Container(
+        height: MediaQuery.of(context).size.height*0.5,
         color: Colors.grey,
         alignment: Alignment.center,
         child: Column(
@@ -81,7 +82,7 @@ class _VocabularyState extends State<Vocabulary> {
 
   Widget _buildBottomWidget(String word, String meaning) {
     return Container(
-      height: 200.0,
+      height: MediaQuery.of(context).size.height*0.5,
       color: Color(0xFFecf2f9),
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -114,7 +115,7 @@ class _VocabularyState extends State<Vocabulary> {
           alignment: Alignment.center,
           child: SimpleFoldingCell(
             key: _foldingCellKey,
-            cellSize: Size(MediaQuery.of(context).size.width, 125),
+            cellSize: Size(MediaQuery.of(context).size.width, 250),
             padding: EdgeInsets.all(15),
             animationDuration: Duration(milliseconds: 300),
             borderRadius: 10,

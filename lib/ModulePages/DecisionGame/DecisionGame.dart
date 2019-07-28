@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -168,7 +167,6 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                               child: Text("Submit"),
                               onPressed: () {
                                 print("hello $_answerIs");
-
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -198,16 +196,8 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                             context, arguments);
                                       },
                                     ),
-                                    // duration: Duration(seconds: 2)
                                   ),
                                 );
-                                // Future.delayed(Duration(seconds: 3)).then((o) {
-                                //   List<dynamic> arguments = [
-                                //     widget.modNum,
-                                //   ];
-                                //   orderManagement.moveNextIndex(
-                                //       context, arguments);
-                                // });
                               },
                             ),
                           ),
@@ -227,7 +217,7 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: Text("Are you sure you want to quit the quiz? "),
+            content: Text("Are you sure you want to quit from decision game? "),
             title: Text(
               "Warning!",
             ),

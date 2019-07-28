@@ -185,8 +185,6 @@ class _QuizPageState extends State<QuizPage> {
                                     List<dynamic> arguments = [widget.modNum,widget.index];
                                     print("Inside Quiz"+arguments.toString());
                                     orderManagement.moveNextIndex(context, arguments);
-
-                                    
                                   });
                                 } else {
                                   Scaffold.of(context).showSnackBar(

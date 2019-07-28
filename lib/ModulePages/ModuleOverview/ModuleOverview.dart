@@ -142,7 +142,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           size: 40.0,
         ),
       ),
-    ));
+      )
+    );
     print(listWidget);
     return listWidget;
   }
