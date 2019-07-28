@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class ModuleVocabulary extends StatefulWidget {
   ModuleVocabulary({Key key, this.modNum, this.index, this.meaning, this.word})
@@ -270,7 +271,14 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                               ),
                               child: OutlineButton(
                                 borderSide: BorderSide(color: Colors.white),
-                                onPressed: () {},
+                                onPressed: () {
+                                  List<dynamic> arguments = [
+                                    widget.modNum,
+                                    widget.index + 1
+                                  ];
+                                  orderManagement.moveNextIndex(
+                                      context, arguments);
+                                },
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.25,
@@ -297,6 +305,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                         ),
                       ),
                     ),
+
                     back: Container(
                       alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width,

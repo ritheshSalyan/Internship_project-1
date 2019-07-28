@@ -79,7 +79,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
             'Tap here to Continue',
             style: TextStyle(
               letterSpacing: 1.5,
-              fontFamily: "Open Sans",
+              fontFamily: "Slabo_27px",
               color: Colors.green,
               fontSize: 18,
               fontWeight: FontWeight.w600,
