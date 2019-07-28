@@ -6,22 +6,21 @@ class Trial extends StatefulWidget {
 }
 
 class _TrialState extends State<Trial> {
-  List<String> simpleList = ["hello world. how are you. long time no see"];
-  List<String> split=[];
+  List<String> simpleList = ["hello world. how are you. long time no see."];
+  List<String> split = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-  //  print(simpleList[0].split("."));
-   
+    //  print(simpleList[0].split("."));
+    setState(() {
+      split = simpleList[0].split(".");
+    });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    setState(() {
-     simpleList[0].split("."); 
-    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -34,7 +33,7 @@ class _TrialState extends State<Trial> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "This is the trail page",
+                    "This is the trial page",
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w900,
@@ -55,16 +54,17 @@ class _TrialState extends State<Trial> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Card(
-              elevation: 10.0,
-              child:FlatButton(
-                onPressed: (){
-                for(String i in split){
-                      print("value is $i");
-                }
-                },
-                child: Text("Tap to continue"),
-              )
-            ),
+                  elevation: 10.0,
+                  child: Column(
+                    children: <Widget>[
+                      ListView.builder(
+                        itemCount: split.length,
+                        itemBuilder: (context,int index){
+                          
+                        },
+                      )
+                    ],
+                  )),
             )
           ],
         ),

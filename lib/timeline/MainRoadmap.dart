@@ -6,7 +6,7 @@ import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import '../ModulePages/ModuleVocabulary/ModuleVocabulary.dart';
+import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
@@ -176,7 +176,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => DecisionGame(),
+                      builder: (context) => Trial(),
                     ),
                   );
                 },
@@ -218,7 +218,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                     Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (ModuleVocabulary()),
+                      builder: (context) => (ModuleVocabularyLoading()),
                     ),
                   );
                 },
