@@ -169,7 +169,7 @@ class _QuizPageState extends State<QuizPage> {
                                           "Hurray ! You got it right\n Lets move on !",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontFamily: "Open Sans",
+                                              
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -193,7 +193,7 @@ class _QuizPageState extends State<QuizPage> {
                                           "Oops! Wrong answer",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontFamily: "Open Sans",
+                                              
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold),
                                         ),

@@ -35,7 +35,7 @@ class _QuoteState extends State<Quote> {
                         child: Text(
                           widget.quote[0],
                           style: TextStyle(
-                            fontFamily: "Open Sans",
+                            
                             letterSpacing: 1.5,
                             fontSize: 25,
                             color: Colors.white,
@@ -50,7 +50,7 @@ class _QuoteState extends State<Quote> {
                           child: Text(
                             widget.quote[1],
                             style: TextStyle(
-                                fontFamily: "Open Sans",
+                                
                                 letterSpacing: 1.5,
                                 fontSize: 20,
                                 color: Colors.black,
@@ -70,7 +70,7 @@ class _QuoteState extends State<Quote> {
                           Text(
                             "Start",
                             style: TextStyle(
-                              fontFamily: "Open Sans",
+                              
                               letterSpacing: 1.5,
                               fontSize: 20,
                               color: Colors.black,

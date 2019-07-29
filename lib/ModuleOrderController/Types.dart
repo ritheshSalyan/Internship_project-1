@@ -88,7 +88,6 @@ class orderManagement  {
             ),
           ));
           break;
-
         case Type.decisionGame:
           print("decisionGame");
           Navigator.of(context).push(
