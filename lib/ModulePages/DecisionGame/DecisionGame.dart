@@ -176,7 +176,9 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                           fontFamily: "Open Sans",
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
+                                          
                                     ),
+                                    duration: Duration(hours: 1),
                                     backgroundColor: Colors.green[600],
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),

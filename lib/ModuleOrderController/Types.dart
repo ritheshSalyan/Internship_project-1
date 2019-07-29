@@ -12,6 +12,7 @@ import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../ModulePages/Socialize/socialize.dart';
 import '../timeline/MainRoadmap.dart';
 import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
+import '../ModulePages/FileActivity/FileUploadLoader.dart';
 
 enum Type {
   quote,
@@ -26,24 +27,25 @@ enum Type {
   discussion,
   socialize,
   summary,
+  uploadActivity
 }
 
-class orderManagement  {
+class orderManagement {
   static List<Type> order = [];
   static int currentIndex = 0;
   List<dynamic> arguments = [];
   static void moveNextIndex(BuildContext context, arguments) {
-    
     currentIndex = arguments[1];
     print("Arguments ${arguments}");
     print("currentIndex ${currentIndex}");
     if (currentIndex == order.length) {
-           Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => TimelinePage(title: "Road Map",),
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => TimelinePage(
+            title: "Road Map",
           ),
-        );
-
+        ),
+      );
     } else {
       switch (order[currentIndex]) {
         case Type.quote:
@@ -54,38 +56,40 @@ class orderManagement  {
           print("quiz");
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => QuizLoading(modNum: arguments[0],index:currentIndex),
+              builder: (context) =>
+                  QuizLoading(modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
 
+        case Type.uploadActivity:
+          print("activity");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                FileUploadLoading(modNum: arguments[0], index: currentIndex),
+          ));
+          break;
         case Type.activity:
           print("activity");
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ActivityLoading(
-              modNum: arguments[0],
-              index:currentIndex
-            ),
+            builder: (context) =>
+                ActivityLoading(modNum: arguments[0], index: currentIndex),
           ));
           break;
 
-          case Type.socialize:
+        case Type.socialize:
           print("socialize");
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SocializeTask(
-              modNum: arguments[0],
-              index:currentIndex
-            ),
+            builder: (context) =>
+                SocializeTask(modNum: arguments[0], index: currentIndex),
           ));
           break;
 
-          case Type.vocabulary:
+        case Type.vocabulary:
           print("vocabulary");
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ModuleVocabularyLoading(
-              modNum: arguments[0],
-              index:currentIndex
-            ),
+                modNum: arguments[0], index: currentIndex),
           ));
           break;
 
@@ -94,9 +98,7 @@ class orderManagement  {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DecisionGameLoading(
-                modNum: arguments[0],
-                index:currentIndex
-              ),
+                  modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
@@ -104,10 +106,8 @@ class orderManagement  {
         case Type.caseStudy:
           print("caseStudy");
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Loading(
-              modNum: arguments[0],
-              index:currentIndex
-            ),
+            builder: (context) =>
+                Loading(modNum: arguments[0], index: currentIndex),
           ));
           break;
 
@@ -116,9 +116,7 @@ class orderManagement  {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => VideoControllerLoading(
-                modNum: arguments[0],
-                index:currentIndex
-              ),
+                  modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
@@ -131,7 +129,8 @@ class orderManagement  {
           print("theory");
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => TheoryLoading(modNum: arguments[0],index:currentIndex),
+              builder: (context) =>
+                  TheoryLoading(modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
@@ -144,7 +143,8 @@ class orderManagement  {
           print("discussion");
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => DiscussionLoading(modNum: arguments[0],index:currentIndex),
+              builder: (context) =>
+                  DiscussionLoading(modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
