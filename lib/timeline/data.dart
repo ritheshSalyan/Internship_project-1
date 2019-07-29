@@ -8,7 +8,7 @@ class Doodle {
   final String doodle;
   final Color iconBackground;
   final Icon icon;
-  final Icon pointsIcon;
+  final Image pointsIcon;
   final Text points;
   // final Text
   Doodle({
@@ -20,7 +20,6 @@ class Doodle {
     this.iconBackground,
     this.pointsIcon,
     this.points,
-    
   });
 }
 
@@ -35,10 +34,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.cyan,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -54,10 +53,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.redAccent,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -74,10 +73,10 @@ List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.yellow,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -93,10 +92,10 @@ List<Doodle> doodles = [
       color: Colors.black87,
     ),
     iconBackground: Colors.amber,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -112,10 +111,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.green,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -131,10 +130,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.indigo,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -150,10 +149,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.pinkAccent,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -170,10 +169,10 @@ List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.deepPurpleAccent,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -189,10 +188,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.teal,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -209,10 +208,10 @@ List<Doodle> doodles = [
       size: 32.0,
     ),
     iconBackground: Colors.blue,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 10,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -228,10 +227,10 @@ List<Doodle> doodles = [
       color: Colors.white,
     ),
     iconBackground: Colors.teal,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",
@@ -248,10 +247,10 @@ List<Doodle> doodles = [
       size: 25.0,
     ),
     iconBackground: Colors.blue,
-    pointsIcon: Icon(
-      FontAwesomeIcons.solidGem,
-      color: Colors.green,
-      size: 15,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
     ),
     points: Text(
       "100",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
+import 'HustleStore/HustleStore.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +26,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         textSelectionColor: Colors.black,
       ),
+      routes: <String, WidgetBuilder> {
+    '/hustle': (BuildContext context) => new HustleStore(),
+    
+  },
     );
   }
 }

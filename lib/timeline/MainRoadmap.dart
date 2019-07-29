@@ -8,7 +8,7 @@ import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import '../ModulePages/SummaryPage/SummaryPage.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
-import 'package:startupreneur/HustleStore/HustleStore.dart';
+import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,15 +33,15 @@ class _TimelinePageState extends State<TimelinePage> {
   Firestore db = Firestore.instance;
   SharedPreferences sharedPreferences;
   bool _isPlaying = false;
-  int gems= 1000;
+  int gems = 1000;
   VideoPlayerController controller;
   BuildContext context;
   List<int> completedCourse = [];
   FirebaseUser user;
   String value = "";
   String uid = "";
-  var val= 1;
-  
+  var val = 1;
+
   String _url =
       "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350";
 
@@ -81,25 +81,32 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-  await db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
-    document.documents.forEach((value){
-      setState(() {
-        gems = value["points"]; 
+    await db
+        .collection("user")
+        .where("uid", isEqualTo: uid)
+        .getDocuments()
+        .then((document) {
+      document.documents.forEach((value) {
+        setState(() {
+          gems = value["points"];
+        });
       });
     });
-  });
 
-  await db.collection("user").where("uid",isEqualTo:uid).getDocuments().then((document){
-    document.documents.forEach((value){
-      for(int i in value["completed"]){
-       setState(() {
-         print("done");
-         completedCourse.add(i); 
-       });
-      }
+    await db
+        .collection("user")
+        .where("uid", isEqualTo: uid)
+        .getDocuments()
+        .then((document) {
+      document.documents.forEach((value) {
+        for (int i in value["completed"]) {
+          setState(() {
+            print("done");
+            completedCourse.add(i);
+          });
+        }
+      });
     });
-  });
-
   }
 
   bool check(int i) {
@@ -134,16 +141,21 @@ class _TimelinePageState extends State<TimelinePage> {
           actions: <Widget>[
             Row(
               children: <Widget>[
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    FontAwesomeIcons.solidGem,
-                    color: Colors.green,
-                    size: 15,
-                  ),
+                // IconButton(
+                //   onPressed: () {},
+                //   icon: Icon(
+                //     FontAwesomeIcons.solidGem,
+                //     color: Colors.green,
+                //     size: 15,
+                //   ),
+                // ),
+                Image.asset(
+                  "assets/Images/coins.png",
+                  height: 20,
+                  width: 20,
                 ),
                 Text(
-                  "$gems",
+                  " $gems",
                   style: TextStyle(color: Colors.black),
                 ),
                 Padding(
@@ -183,7 +195,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   );
                 },
               ),
-              ListTile( 
+              ListTile(
                 leading: Icon(Icons.book),
                 title: Text(
                   'Vocabulary',
@@ -204,9 +216,9 @@ class _TimelinePageState extends State<TimelinePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onTap: () {
-                    Navigator.of(context).push(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (HustleStore()),
+                      builder: (context) => (HustleStoreLoader()),
                     ),
                   );
                 },
@@ -215,10 +227,11 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.settings),
                 title: Text(
                   'Settings',
-                  style: TextStyle(color: Colors.green,fontFamily:"Slabo_27px"),
+                  style:
+                      TextStyle(color: Colors.green, fontFamily: "Slabo_27px"),
                 ),
                 onTap: () {
-                    Navigator.of(context).push(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => (SummaryPage()),
                     ),
@@ -281,13 +294,12 @@ class _TimelinePageState extends State<TimelinePage> {
             // if (completedCourse[k] == i + 1) {
 
             if (check(i)) {
-
               print("saaman true $i");
               // val = completedCourse[k];
               print("val is $val");
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => QuoteLoading(modNum: i+1),
+                  builder: (context) => QuoteLoading(modNum: i + 1),
                   // builder: (context)=>Vocabulary(),
                 ),
               );

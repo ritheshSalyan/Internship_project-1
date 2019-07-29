@@ -106,7 +106,7 @@ class _SignupPageState extends State<SignupPage> with AutomaticKeepAliveClientMi
     dataMap['points'] = 0;
     dataMap['completed'] = [1];
     // dataMap['uid'] = userid;
-    db.collection("user").add(dataMap).catchError((e) {
+    db.collection("user").document(userid).setData(dataMap,merge: true).catchError((e){
       print(e);
     });
   }
