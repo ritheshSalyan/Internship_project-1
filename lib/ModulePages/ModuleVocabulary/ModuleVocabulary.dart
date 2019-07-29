@@ -26,7 +26,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
     // TODO: implement initState
     super.initState();
     controller = PageController();
-    widget.modNum = 1;
+    // widget.modNum ;
     print("init inisde ${widget.word}");
   }
 

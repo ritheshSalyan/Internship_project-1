@@ -31,6 +31,7 @@ class _DiscussionLoading extends State<DiscussionLoading> {
             title: title[0],
             content: title[1],
             button: title[2],
+            image: title[3],
           ),
         ),
       );
@@ -53,7 +54,9 @@ class _DiscussionLoading extends State<DiscussionLoading> {
           document.toString());
 
       title = convert(document["content"]);
+      title.add(document["image"].toString());
     });
+
     return title;
   }
   
@@ -65,6 +68,7 @@ class _DiscussionLoading extends State<DiscussionLoading> {
        list.add(item.toString());
        print(item.toString());
     }
+    //list.add("assets/Images/think.png");
     return list;
   }
 }
