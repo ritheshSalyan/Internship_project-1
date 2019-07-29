@@ -8,6 +8,7 @@ import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 import '../ModulePages/SummaryPage/SummaryPage.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
+import '../ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
@@ -81,7 +82,7 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-  await db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
+   db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
     document.documents.forEach((value){
       setState(() {
         gems = value["points"]; 
@@ -220,7 +221,9 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                     Navigator.of(context).push(
                     MaterialPageRoute(
+
                       builder: (context) => (SummaryPage()),
+
                     ),
                   );
                 },

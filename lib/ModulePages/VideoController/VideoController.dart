@@ -81,6 +81,7 @@ class _VideoPlayState extends State<VideoPlay> {
                       top: MediaQuery.of(context).size.height * 0.1),
                   child: Text(
                     widget.title,
+                    textAlign:TextAlign.center,
                     style: TextStyle(
                       fontFamily: "QuickSand",
                       fontSize: 25.0,
@@ -99,6 +100,19 @@ class _VideoPlayState extends State<VideoPlay> {
                 controller: _chewieController,
               ),
             ),
+             Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.1,
+              ),
+              child:  Center(
+            child: Text("Wait and watch the above video to get started!",
+            style: TextStyle(fontSize: 18),),
+                   
+            ),
+            ),
+           
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.width * 0.1,

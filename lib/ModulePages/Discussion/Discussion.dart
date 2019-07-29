@@ -23,12 +23,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
   _onSubmit() {
     setState(() {
       item;
-      if (item < data.split(". ").length ) {
+      if (item <= data.split(". ").length ) {
+        print("data.split(" ").length = "+data.split(". ").length.toString()+data.split(". ").toString());
         // for (var item in ) {
           if(data.split(".")[item].length>3){ 
-        _listViewData.add(data.split(".")[item]+".");
+        _listViewData.add(data.split(". ")[item]+".");
           }
-        item++;
+          item++;
+       
         // }
 
       }
@@ -46,6 +48,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
       //     title: Text(data),
       //   ),
       // );
+      print(_listViewData);
       return Card(
           elevation: 0,
           margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -58,8 +61,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                   data,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    // letterSpacing: 1.1,
-                    fontFamily: "sans-serif",
+
                     color: Colors.black,
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -75,6 +77,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         child: Padding(
           padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04),
           child: OutlineButton(
+            highlightedBorderColor: Colors.greenAccent,
           borderSide: BorderSide(
             color: Colors.green
           ),
@@ -83,7 +86,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
             'Tap here to Continue',
             style: TextStyle(
               // letterSpacing: 1.5,
-              fontFamily: "Open Sans",
+              // fontFamily: "Open Sans",
               color: Colors.green,
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -159,7 +162,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.18),
+                      top: MediaQuery.of(context).size.height * 0.2),
                   child: Column(
                     children: <Widget>[
                       Image.asset(
