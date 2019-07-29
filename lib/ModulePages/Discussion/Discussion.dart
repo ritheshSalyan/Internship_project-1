@@ -5,9 +5,9 @@ import '../../ModuleOrderController/Types.dart';
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
-      {Key key, this.content, this.button, this.modNum, this.title, this.index})
+      {Key key, this.content, this.button, this.modNum, this.title, this.index,this.image})
       : super(key: key);
-  String content, button, title;
+  String content, button, title,image;
   int modNum, index;
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
@@ -25,7 +25,9 @@ class _DiscussionPageState extends State<DiscussionPage> {
       item;
       if (item < data.split(". ").length ) {
         // for (var item in ) {
+          if(data.split(".")[item].length>3){ 
         _listViewData.add(data.split(".")[item]+".");
+          }
         item++;
         // }
 
@@ -70,7 +72,9 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
     if (item < data.split(". ").length) {
       list.add(Center(
-        child: OutlineButton(
+        child: Padding(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04),
+          child: OutlineButton(
           borderSide: BorderSide(
             color: Colors.green
           ),
@@ -78,8 +82,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
           child: Text(
             'Tap here to Continue',
             style: TextStyle(
-              letterSpacing: 1.5,
-              fontFamily: "Slabo_27px",
+              // letterSpacing: 1.5,
+              fontFamily: "Open Sans",
               color: Colors.green,
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -87,6 +91,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
           ),
           color: Colors.white,
         ),
+        )
       ));
     } else {
       list.add(Center(
@@ -135,7 +140,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     child: Padding(
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.1,
-                          left: MediaQuery.of(context).size.width * 0.1),
+                          left: MediaQuery.of(context).size.width * 0.02),
                       child: Column(
                         children: <Widget>[
                           Text(
@@ -155,12 +160,13 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.15),
+                      top: MediaQuery.of(context).size.height * 0.18),
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "assets/Images/photo.png",
-                        height: MediaQuery.of(context).size.height * 0.25,
+                        widget.image,
+                       // "assets/Images/photo.png",
+                        height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.75,
                         alignment: Alignment.center,
                       ),
