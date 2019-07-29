@@ -127,7 +127,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                   // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
                                   style: TextStyle(
                                     fontSize: 16.0,
-                                    fontFamily: "Open Sans",
+                                    
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),

@@ -92,7 +92,6 @@ class orderManagement {
                 modNum: arguments[0], index: currentIndex),
           ));
           break;
-
         case Type.decisionGame:
           print("decisionGame");
           Navigator.of(context).push(

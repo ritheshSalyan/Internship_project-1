@@ -69,7 +69,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                 child: Text(
                                   description,
                                   style: TextStyle(
-                                    fontFamily: "Open Sans",
+                                    
                                     fontSize: 16.0,
                                   ),
                                 ),

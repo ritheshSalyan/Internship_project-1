@@ -69,7 +69,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Pros",
                           style: TextStyle(
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -116,7 +116,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Cons",
                           style: TextStyle(
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -209,7 +209,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Pros",
                           style: TextStyle(
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -256,7 +256,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Cons",
                           style: TextStyle(
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,

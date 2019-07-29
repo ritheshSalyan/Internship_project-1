@@ -28,27 +28,6 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
     controller = PageController();
     // widget.modNum ;
     print("init inisde ${widget.word}");
-    // db
-    //     .collection("vocabulary")
-    //     .where("module", isEqualTo: 2)
-    //     .getDocuments()
-    //     .then((document) {
-    //   document.documents.forEach((value) {
-    //     // words.clear();
-    //     // meanings.clear();
-    //     for (String i in value["word"]) {
-    //       print(i);
-    //       setState(() {
-    //         words.add(i);
-    //       });
-    //     }
-    //     for (String i in value["meaning"]) {
-    //       setState(() {
-    //         meanings.add(i);
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   @override
@@ -92,12 +71,12 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           },
                           text: [
                             "Startup Dictionary",
-                            "Swipe Right",
+                            "Swipe Right to Explore",
                           ],
                           textStyle: TextStyle(
-                              fontSize: 42.0,
-                              fontFamily: "Open Sans",
-                              letterSpacing: 1.5),
+                            fontSize: 42.0,
+                            letterSpacing: 1.5,
+                          ),
                           textAlign: TextAlign.start,
                           alignment: AlignmentDirectional
                               .topStart // or Alignment.topLeft

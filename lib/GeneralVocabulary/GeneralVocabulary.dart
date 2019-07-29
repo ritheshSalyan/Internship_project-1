@@ -97,7 +97,7 @@ class _VocabularyState extends State<Vocabulary> {
                   meaning,
                   style: TextStyle(
                     fontSize: 16.0,
-                    fontFamily: "Open Sans",
+                    
                   ),
                 ),
               )),

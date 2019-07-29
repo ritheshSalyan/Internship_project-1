@@ -61,8 +61,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                   data,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    letterSpacing: 1.5,
-                    // fontFamily: "Open Sans",
+
                     color: Colors.black,
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -151,8 +150,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                             widget.title,
                             //"Startup or Job",
                             style: TextStyle(
-                              fontFamily: "Open Sans",
-
+                              fontFamily: "sans-serif",
                                 color: Colors.white,
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.w700),
@@ -186,7 +184,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                         //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
                         //           style: TextStyle(
                         //             fontSize: 18.0,
-                        //             fontFamily: "Open Sans",
+                        //             
                         //             fontWeight: FontWeight.w500,
                         //           ),
                         //         ),

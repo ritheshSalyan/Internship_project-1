@@ -46,7 +46,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                         item,
                         style: TextStyle(
                             fontSize: 18,
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                       ),
@@ -104,7 +104,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                         item,
                         style: TextStyle(
                             fontSize: 18,
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -142,7 +142,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                         item,
                         style: TextStyle(
                             fontSize: 18,
-                            fontFamily: "Open Sans",
+                            
                             fontWeight: FontWeight.w600),
                       ),
                     ],

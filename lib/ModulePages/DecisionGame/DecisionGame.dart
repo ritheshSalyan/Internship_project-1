@@ -173,7 +173,7 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                       answers[_answerIs],
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontFamily: "Open Sans",
+                                          
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
                                           
