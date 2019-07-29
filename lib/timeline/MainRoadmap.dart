@@ -9,6 +9,8 @@ import 'data.dart';
 import '../ModulePages/SummaryPage/SummaryPage.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
+import '../ModulePages/FileActivity/FileUploadLoader.dart';
+import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,17 +83,24 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-    await db
-        .collection("user")
-        .where("uid", isEqualTo: uid)
-        .getDocuments()
-        .then((document) {
-      document.documents.forEach((value) {
-        setState(() {
-          gems = value["points"];
-        });
-      });
-    });
+// <<<<<<< HEAD
+//     await db
+//         .collection("user")
+//         .where("uid", isEqualTo: uid)
+//         .getDocuments()
+//         .then((document) {
+//       document.documents.forEach((value) {
+//         setState(() {
+//           gems = value["points"];
+//         });
+// =======
+//    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
+//     document.documents.forEach((value){
+//       setState(() {
+//         gems = value["points"]; 
+// >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
+//       });
+//     });
 
     await db
         .collection("user")
@@ -233,7 +242,9 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
+
                       builder: (context) => (SummaryPage()),
+
                     ),
                   );
                 },
