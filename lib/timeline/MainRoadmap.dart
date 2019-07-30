@@ -108,8 +108,8 @@ class _TimelinePageState extends State<TimelinePage> {
 //       setState(() {
 //         gems = value["points"]; 
 // >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
-       });
-     });
+    //    });
+    //  });
 
     await db
         .collection("user")
@@ -314,7 +314,7 @@ class _TimelinePageState extends State<TimelinePage> {
             // if (completedCourse[k] == i + 1) {
 
             if (check(i)) {
-              print("saaman true $i");
+              print(" true $i");
               // val = completedCourse[k];
               print("val is $val");
               Navigator.of(context).push(
@@ -326,7 +326,7 @@ class _TimelinePageState extends State<TimelinePage> {
               // break;
               // }
             } else {
-              print("saaman false");
+              print(" false");
             }
           },
           child: Stack(
