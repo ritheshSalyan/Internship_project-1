@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'ServerData.dart';
 import 'FullScreenDialog.dart';
+import 'DataListing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -194,77 +195,80 @@ class _HustleStoreState extends State<HustleStore> {
                               print("You tapped $index");
                               setState(
                                 () {
-                                  if (widget.points >= component.price) {
+                                  if(component.decision){
                                     Navigator.of(context).push(
-                                      new MaterialPageRoute<Null>(
-                                        builder: (BuildContext context) {
-                                          return new AddEntryDialog(
-                                            points: component.price,
-                                            available: widget.points,
-                                            descript : component.product,
-                                            image : component.logo,
-                                            title: component.description,
-                                          );
-                                        },
-                                        fullscreenDialog: true,
-                                      ),
+                                      MaterialPageRoute(builder: (context)=>ListingData(title:component.description),)
                                     );
-                                    if (widget.overall != null) {
-                                      print("hy ${widget.overall}");
-                                      var data = Map<String, dynamic>();
-                                      data["points"] = widget.overall;
-                                      db
-                                          .collection("user")
-                                          .document(userId)
-                                          .setData(data, merge: true);
+                                  }
+                                  else {
+                                    if (widget.points >= component.price) {
+                                      Navigator.of(context).push(
+                                        new MaterialPageRoute<Null>(
+                                          builder: (BuildContext context) {
+                                            return new AddEntryDialog(
+                                              points: component.price,
+                                              available: widget.points,
+                                              descript: component.product,
+                                              image: component.logo,
+                                              title: component.description,
+                                              userid: userId,
+                                              decision: component.decision,
+                                            );
+                                          },
+                                          fullscreenDialog: true,
+                                        ),
+                                      );
+                                      print("hey ${component.decision}");
                                     }
-                                    else{
-                                      print("null boy");
-                                    }
-                                  } else {
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        elevation: 5.0,
-                                        duration: Duration(seconds: 10),
-                                        backgroundColor: Colors.green,
-                                        content: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.5,
-                                          child: Column(
-                                            children: <Widget>[
-                                              Image.asset(
-                                                "assets/Images/air-hostess.png",
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.3,
-                                                height: MediaQuery.of(context)
+                                    else {
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          elevation: 5.0,
+                                          duration: Duration(seconds: 10),
+                                          backgroundColor: Colors.green,
+                                          content: Container(
+                                            height: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .height *
+                                                0.5,
+                                            child: Column(
+                                              children: <Widget>[
+                                                Image.asset(
+                                                  "assets/Images/air-hostess.png",
+                                                  width: MediaQuery
+                                                      .of(context)
+                                                      .size
+                                                      .width *
+                                                      0.3,
+                                                  height: MediaQuery
+                                                      .of(context)
+                                                      .size
+                                                      .height *
+                                                      0.1,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: MediaQuery
+                                                        .of(context)
                                                         .size
                                                         .height *
-                                                    0.1,
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                  top: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.02,
-                                                ),
-                                                child: AutoSizeText(
-                                                  "Sorry! You do not have enough points to unlock this cool product.\n\nHead to 'Earn Points' to know more.\n\nKeep earning more points to Hustle!",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 16,
+                                                        0.02,
+                                                  ),
+                                                  child: AutoSizeText(
+                                                    "Sorry! You do not have enough points to unlock this cool product.\n\nHead to 'Earn Points' to know more.\n\nKeep earning more points to Hustle!",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    }
                                   }
                                 },
                               );

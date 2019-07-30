@@ -34,7 +34,7 @@ List<Component> itemList = [
       size: 15,
     ),
     price: 20000,
-    decision: false,
+    decision: true,
     logo:
         "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
@@ -85,7 +85,7 @@ List<Component> itemList = [
       size: 15,
     ),
     price: 4000,
-    decision: false,
+    decision: true,
     logo:
         "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),

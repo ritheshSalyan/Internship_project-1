@@ -84,23 +84,23 @@ class _TimelinePageState extends State<TimelinePage> {
       ));
     }
 // <<<<<<< HEAD
-//     await db
-//         .collection("user")
-//         .where("uid", isEqualTo: uid)
-//         .getDocuments()
-//         .then((document) {
-//       document.documents.forEach((value) {
-//         setState(() {
-//           gems = value["points"];
-//         });
+     await db
+         .collection("user")
+         .where("uid", isEqualTo: uid)
+         .getDocuments()
+         .then((document) {
+       document.documents.forEach((value) {
+         setState(() {
+           gems = value["points"];
+         });
 // =======
 //    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
 //     document.documents.forEach((value){
 //       setState(() {
 //         gems = value["points"]; 
 // >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
-//       });
-//     });
+       });
+     });
 
     await db
         .collection("user")
