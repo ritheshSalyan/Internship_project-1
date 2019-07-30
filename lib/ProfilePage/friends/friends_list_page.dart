@@ -23,9 +23,9 @@ class _FriendsListPageState extends State<FriendsListPage> {
     http.Response response =
         await http.get('https://randomuser.me/api/?results=25');
 
-    setState(() {
-      _friends = Friend.allFromResponse(response.body);
-    });
+    // setState(() {
+    //   _friends = Friend.allFromResponse(response.body);
+    // });
   }
 
   Widget _buildFriendListTile(BuildContext context, int index) {
@@ -45,13 +45,13 @@ class _FriendsListPageState extends State<FriendsListPage> {
   }
 
   void _navigateToFriendDetails(Friend friend, Object avatarTag) {
-    Navigator.of(context).push(
-      new MaterialPageRoute(
-        builder: (c) {
-          return new FriendDetailsPage(friend, avatarTag: avatarTag);
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   new MaterialPageRoute(
+    //     builder: (c) {
+    //       return new FriendDetailsPage(friend);
+    //     },
+    //   ),
+    // );
   }
 
   @override

@@ -6,13 +6,13 @@ import '../friends/friend.dart';
 import 'package:meta/meta.dart';
 
 class FriendDetailsPage extends StatefulWidget {
-  FriendDetailsPage(
-    this.friend, {
-    @required this.avatarTag,
-  });
-
-  final Friend friend;
-  final Object avatarTag;
+  // FriendDetailsPage(
+  //   this.friend, {
+  //   this.avatarTag,
+  // });
+  FriendDetailsPage({Key key,this.friend}):super(key:key);
+   Friend friend;
+  // final Object avatarTag;
 
   @override
   _FriendDetailsPageState createState() => new _FriendDetailsPageState();
@@ -43,17 +43,15 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
               //crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 new FriendDetailHeader(
-                  widget.friend,
-                  avatarTag: widget.avatarTag,
+                  friend:widget.friend,
+                  context: context,
+                 // avatarTag: widget.avatarTag,
                 ),
                 new Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new FriendDetailBody(widget.friend),
                 ),
-                new Padding(
-                  padding: EdgeInsets.only(top: 200),
-                  child: Text("   "),
-                )
+               
                 //new FriendShowcase(widget.friend),
               ],
             ),
@@ -82,10 +80,8 @@ class BluePainter extends CustomPainter {
 
     // paint a curve from current position to middle of the screen
     ovalPath.quadraticBezierTo(
-        width * 0.56, height * 0.5, width, height * 0.25);
+        width * 0.5, height * 0.5, width, height * 0.25);
 
-    // Paint a curve from current position to bottom left of screen at width * 0.1
-    // ovalPath.quadraticBezierTo(width * 0.93, height * 0.2, width, height*0.2);
 
     // draw remaining line to bottom left side
     ovalPath.lineTo(width, 0);

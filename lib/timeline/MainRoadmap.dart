@@ -21,6 +21,8 @@ import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:startupreneur/trial.dart';
 
+import '../ProfilePage/ProfilePageLoader.dart';
+
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
   final String title;
@@ -35,7 +37,7 @@ class _TimelinePageState extends State<TimelinePage> {
   Firestore db = Firestore.instance;
   SharedPreferences sharedPreferences;
   bool _isPlaying = false;
-  int gems = 1000;
+  int gems = 0;
   VideoPlayerController controller;
   BuildContext context;
   List<int> completedCourse = [];
@@ -43,9 +45,10 @@ class _TimelinePageState extends State<TimelinePage> {
   String value = "";
   String uid = "";
   var val = 1;
+  static String name = "User";
 
   String _url =
-      "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350";
+      "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
 
   Widget lockUnlock(int i, List<int> id) {
     final doodle = doodles[i];
@@ -84,15 +87,19 @@ class _TimelinePageState extends State<TimelinePage> {
       ));
     }
 // <<<<<<< HEAD
-//     await db
-//         .collection("user")
-//         .where("uid", isEqualTo: uid)
-//         .getDocuments()
-//         .then((document) {
-//       document.documents.forEach((value) {
-//         setState(() {
-//           gems = value["points"];
-//         });
+    await db
+        .collection("user")
+        .where("uid", isEqualTo: uid)
+        .getDocuments()
+        .then((document) {
+      document.documents.forEach((value) {
+        setState(() {
+          gems = value["points"];
+          name = value["name"];
+          _url = value["profile"];
+        });
+      }
+      );});
 // =======
 //    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
 //     document.documents.forEach((value){
@@ -179,7 +186,7 @@ class _TimelinePageState extends State<TimelinePage> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountEmail: Text(value),
-                accountName: Text("Subramanya c"),
+                accountName: Text(name),
                 currentAccountPicture: CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(_url),
@@ -199,7 +206,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => Trial(),
+                      builder: (context) => ProfileLoading(uid:uid),
                     ),
                   );
                 },
