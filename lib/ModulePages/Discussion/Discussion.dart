@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../socialize/socialize.dart';
@@ -57,13 +58,13 @@ class _DiscussionPageState extends State<DiscussionPage> {
               Padding(
                 padding:
                     EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
-                child: Text(
+                child: AutoSizeText(
                   data,
                   textAlign: TextAlign.center,
                   style: TextStyle(
 
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

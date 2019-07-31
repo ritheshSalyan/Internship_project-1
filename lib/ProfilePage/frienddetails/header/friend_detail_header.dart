@@ -174,7 +174,7 @@ class FriendDetailHeader extends StatelessWidget {
                     fontSize: 20,
                     letterSpacing: 2,
                     fontFamily: "Open Sans",
-                    color: Colors.green)),
+                    color: Colors.white)),
           ),
            ],
          ),

@@ -170,7 +170,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
         home: new Scaffold(
             body: LiquidSwipe(
       pages: pages,
-      fullTransitionValue: 500,
+      fullTransitionValue: 3,
       enableSlideIcon: true,
     )));
   }

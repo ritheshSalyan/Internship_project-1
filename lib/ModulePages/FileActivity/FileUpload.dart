@@ -31,7 +31,11 @@ class FileUploadState extends State<FileUpload> {
   Widget renderDoneBtn() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
+      child:OutlineButton(
+        onPressed: (){
+          getFilePath();
+        },
+        child:  Row(
         children: <Widget>[
           Text(
             "Upload",
@@ -40,6 +44,7 @@ class FileUploadState extends State<FileUpload> {
           Icon(Icons.file_upload)
         ],
       ),
+      )
     );
   }
 
@@ -63,11 +68,16 @@ class FileUploadState extends State<FileUpload> {
           title: item.headding,
           maxLineTitle: 4,
           styleTitle: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
           ),
           description: body,
+          styleDescription: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+            // fontWeight: FontWeight.,
+          ),
           //  pathImage: "images/photo_eraser.png",
           backgroundColor: Colors.green,
         ),

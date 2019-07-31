@@ -252,7 +252,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
 
-                      builder: (context) => (SummaryPage()),
+                      builder: (context) => (ChatHome()),
 
                     ),
                   );

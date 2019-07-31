@@ -90,7 +90,7 @@ class BluePainter extends CustomPainter {
     // Close line to reset it back
     ovalPath.close();
 
-    paint.color = Colors.black;
+    paint.color = Colors.green;
     canvas.drawPath(ovalPath, paint);
   }
 

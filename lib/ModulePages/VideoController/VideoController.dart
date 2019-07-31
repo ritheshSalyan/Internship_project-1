@@ -41,7 +41,7 @@ class _VideoPlayState extends State<VideoPlay> {
         bufferedColor: Colors.black,
         handleColor: Colors.blue,
       ),
-      aspectRatio: 9 / 5,
+      aspectRatio: 16/9,
       autoPlay: false,
       looping: true,
       errorBuilder: (context, errorMessage) {
