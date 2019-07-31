@@ -13,6 +13,8 @@ import '../ModulePages/Socialize/socialize.dart';
 import '../timeline/MainRoadmap.dart';
 import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum Type {
   quote,
@@ -32,13 +34,27 @@ enum Type {
 
 class orderManagement {
   static List<Type> order = [];
+  static List<dynamic> complete = [];
   static int currentIndex = 0;
+  static String  userid = "";
   List<dynamic> arguments = [];
-  static void moveNextIndex(BuildContext context, arguments) {
+  static Firestore db = Firestore.instance;
+  static SharedPreferences sharedPreferences;
+  static void moveNextIndex(BuildContext context, arguments) async {
     currentIndex = arguments[1];
     print("Arguments ${arguments}");
     print("currentIndex ${currentIndex}");
+    sharedPreferences = await SharedPreferences.getInstance();
+    userid = sharedPreferences.getString("UserId");
     if (currentIndex == order.length) {
+      await db.collection("user").document(userid).get().then((document){
+        complete = document.data["completed"];
+        print("complete $complete");
+      });
+      complete.add(arguments[0]);
+      var data = Map<String,dynamic>();
+      data["completed"] =complete;
+     await db.collection("user").document(userid).setData(data , merge: true);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => TimelinePage(

@@ -17,7 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../Trial/trial.dart';
-
 import '../ModuleOrderController/Types.dart';
 import 'package:startupreneur/trial.dart';
 
@@ -101,15 +100,6 @@ class _TimelinePageState extends State<TimelinePage> {
         });
       }
       );});
-
-// =======
-//    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
-//     document.documents.forEach((value){
-//       setState(() {
-//         gems = value["points"]; 
-// >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
-       });
-     });
 
     await db
         .collection("user")
