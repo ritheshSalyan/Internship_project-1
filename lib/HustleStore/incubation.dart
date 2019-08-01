@@ -4,34 +4,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Internships {
   String name;
   String description;
-  String role;
+//  String role;
   String logo;
-  dynamic compensation;
-  String duration;
+  dynamic sector;
+//  String duration;
   String location;
-  String type;
+//  String type;
 
   Internships({
     this.name,
     this.description,
-    this.role,
-    this.duration,
+//    this.role,
+//    this.duration,
     this.logo,
-    this.compensation,
+    this.sector,
     this.location,
-    this.type,
+//    this.type,
   });
 }
 
-class ListingData extends StatefulWidget {
-  ListingData({Key key, this.title,this.index}) : super(key: key);
+class Incubation extends StatefulWidget {
+  Incubation({Key key, this.title}) : super(key: key);
   String title;
-  int index;
+
   @override
-  _ListingDataState createState() => _ListingDataState();
+  _IncubationState createState() => _IncubationState();
 }
 
-class _ListingDataState extends State<ListingData> {
+class _IncubationState extends State<Incubation> {
   List<Internships> list = [];
   dynamic dataSnapshot;
   Firestore db = Firestore.instance;
@@ -40,11 +40,6 @@ class _ListingDataState extends State<ListingData> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.index == 1){
-      widget.title = "incubation";
-    }else{
-      widget.title = "Internship";
-    }
   }
 
   List<Widget> listGenerated(
@@ -52,48 +47,39 @@ class _ListingDataState extends State<ListingData> {
 //    print("${lengthVal}");
     List<Widget> listWidget = new List<Widget>();
 
-      listWidget.add(Column(
-        children: <Widget>[
-          ListTile(
-            leading: Text("Name"),
-            title: Text("${list[lengthVal].name}"),
-          ),
-          ListTile(
-            leading: Text("Description"),
-            title: Text("${list[lengthVal].description}"),
-          ),
-          ListTile(
-            leading: Text("Role"),
-            title: Text("${list[lengthVal].role}"),
-          ),
-          ListTile(
-            leading: Text("Type"),
-            title: Text("${list[lengthVal].type}"),
-          ),
-          ListTile(
-            leading: Text("Duration"),
-            title: Text("${list[lengthVal].duration}"),
-          ),
-          ListTile(
-            leading: Text("Location"),
-            title: Text("${list[lengthVal].location}"),
-          ),
-          ListTile(
-            leading: Text("Compensation"),
-            title: Text("${list[lengthVal].compensation}"),
-          ),
-        ],
-      ));
-      listWidget.add(
-          Container(
-        child: OutlineButton(
-          borderSide: BorderSide(color: Colors.green,width: 1.5),
-          onPressed: (){},
-          child: Text(
-            "Apply"
-          ),
+    listWidget.add(Column(
+      children: <Widget>[
+        ListTile(
+          leading: Text("Name"),
+          title: Text("${list[lengthVal].name}"),
         ),
-      ));
+        ListTile(
+          leading: Text("Description"),
+          title: Text("${list[lengthVal].description}"),
+        ),
+        ListTile(
+          leading: Text("Sector"),
+          title: Text("${list[lengthVal].sector}"),
+        ),
+
+
+        ListTile(
+          leading: Text("Location"),
+          title: Text("${list[lengthVal].location}"),
+        ),
+
+      ],
+    ));
+    listWidget.add(
+        Container(
+          child: OutlineButton(
+            borderSide: BorderSide(color: Colors.green,width: 1.5),
+            onPressed: (){},
+            child: Text(
+                "Apply"
+            ),
+          ),
+        ));
 //    print(listWidget);
     return listWidget;
   }
@@ -106,7 +92,7 @@ class _ListingDataState extends State<ListingData> {
       value.add(ExpansionTile(
         leading: CircleAvatar(
           child: Image.asset(
-            list[i].logo
+              list[i].logo
           ),
         ),
         title: Text("${list[i].name}"),
@@ -120,7 +106,7 @@ class _ListingDataState extends State<ListingData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title.replaceAll("\n", " ")),
+        title: Text(widget.title),
       ),
       body: Builder(
         builder: (context) {
@@ -143,7 +129,7 @@ class _ListingDataState extends State<ListingData> {
                 ),
                 StreamBuilder<QuerySnapshot>(
                     stream:
-                        Firestore.instance.collection("Internship").snapshots(),
+                    Firestore.instance.collection("incubation").snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       switch (snapshot.data) {
                         case null:
@@ -156,13 +142,13 @@ class _ListingDataState extends State<ListingData> {
 
                             list.add(new Internships(
                               name: document.data["name"],
-                              description: document.data["description"],
-                              type: document.data["type"],
-                              role: document.data["role"],
+                              description: document.data["about"],
+//                              type: document.data["type"],
+//                              role: document.data["role"],
                               logo: document.data["logo"],
-                              duration: document.data["duration"],
+//                              duration: document.data["duration"],
                               location: document.data["location"],
-                              compensation: document.data["compensation"],
+                              sector: document.data["sector"],
                             ));
                           });
 //                          print(list);

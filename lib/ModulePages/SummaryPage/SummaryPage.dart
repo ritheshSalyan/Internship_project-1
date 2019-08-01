@@ -36,46 +36,72 @@ class _SummaryPageState extends State<SummaryPage>
         body: Builder(
           builder: (context) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+//              mainAxisAlignment: MainAxisAlignment.center;
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2),
-                  child: ColorizeAnimatedTextKit(
-                      onTap: () {
-                        print("Tap Event");
-                      },
-                      text: [
-                        "Congratulations on completing Module 1",
-                      ],
-                      textStyle: TextStyle(
-                        fontSize: 22.0,
-                      ),
-                      colors: [
-                        Colors.purple,
-                        Colors.blue,
-                        Colors.yellow,
-                        Colors.red,
-                      ],
-                      textAlign: TextAlign.center,
-                      alignment:
-                          AlignmentDirectional.topStart // or Alignment.topLeft
-                      ),
+                    top: MediaQuery.of(context).size.height * 0.2,
+                    left: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  child: Image.asset(
+                    "assets/Images/summary.PNG",
+                    height: 150,
+                    width: 150,
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.1,
+                    left: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  child: Baseline(
-                    baseline: animation.value,
-                    baselineType: TextBaseline.ideographic,
-                    child: Image.asset(
-                      "assets/Images/coins.png",
-                      height: 100,
-                      width: 100,
-                    ),
-                    // child: FlutterLogo(size: 50,),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Completed !",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      Text(
+                        "You have successfully completed this module :)",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.1,
+                    left: MediaQuery.of(context).size.height * 0.1,
+                    right: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  child: OutlineButton(
+                    borderSide: BorderSide(color:Colors.green,width: 1.5),
+                    onPressed: (){},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Claim my Points ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Image.asset(
+                          "assets/Images/coins.png",
+                          height: 20,
+                          width: 20,
+                        ),
+                      ],
+                    )
+                  ),
+                )
               ],
             );
           },
