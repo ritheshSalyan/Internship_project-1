@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/IntroPage/IntroPageController.dart';
+import 'package:startupreneur/IntroPage/IntroPageMain.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 
 class homePage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _homePageState extends State<homePage> {
       else{
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => introPage(),
+            builder: (context) => IntroPage(),
           ),
         );
       }

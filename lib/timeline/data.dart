@@ -25,7 +25,7 @@ class Doodle {
 
 List<Doodle> doodles = [
   new Doodle(
-    name: "Starting up",
+    name: "Starting Up",
     time: "Module 1",
     doodle:"assets/Images/ideaIcon.png",
         // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',

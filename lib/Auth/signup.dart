@@ -549,7 +549,7 @@ class _SignupPageState extends State<SignupPage>
                       );
                     },
                     child: Text(
-                      "Accept Terms & Condition",
+                      "Accept Terms & Conditions",
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),

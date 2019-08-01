@@ -98,14 +98,14 @@ class _TimelinePageState extends State<TimelinePage> {
           name = value["name"];
           _url = value["profile"];
         });
-      }
-      );});
+      });
+    });
 
 // =======
 //    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
 //     document.documents.forEach((value){
 //       setState(() {
-//         gems = value["points"]; 
+//         gems = value["points"];
 // >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
     //    });
     //  });
@@ -153,8 +153,10 @@ class _TimelinePageState extends State<TimelinePage> {
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
-          title:Image.asset("assets/Images/Capture.PNG",
-          width: MediaQuery.of(context).size.width*0.57,),
+          title: Image.asset(
+            "assets/Images/Capture.PNG",
+            width: MediaQuery.of(context).size.width * 0.57,
+          ),
           automaticallyImplyLeading: true,
           backgroundColor: Theme.of(context).primaryColorDark,
           elevation: 10.0,
@@ -189,34 +191,36 @@ class _TimelinePageState extends State<TimelinePage> {
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountEmail:  Row(
-              children: <Widget>[
-                // IconButton(
-                //   onPressed: () {},
-                //   icon: Icon(
-                //     FontAwesomeIcons.solidGem,
-                //     color: Colors.green,
-                //     size: 15,
-                //   ),
-                // ),
-                Image.asset(
-                  "assets/Images/coins.png",
-                  height: 20,
-                  width: 20,
+                accountEmail: Row(
+                  children: <Widget>[
+                    // IconButton(
+                    //   onPressed: () {},
+                    //   icon: Icon(
+                    //     FontAwesomeIcons.solidGem,
+                    //     color: Colors.green,
+                    //     size: 15,
+                    //   ),
+                    // ),
+                    Image.asset(
+                      "assets/Images/coins.png",
+                      height: 20,
+                      width: 20,
+                    ),
+                    Text(
+                      " $gems",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20),
+                    ),
+                  ],
                 ),
-                Text(
-                  " $gems",
-                  style: TextStyle(color: Colors.white),
+                accountName: Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 20),
-                ),
-              ],
-            ),
-                accountName: Text(name,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),),
                 currentAccountPicture: CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(_url),
@@ -225,28 +229,28 @@ class _TimelinePageState extends State<TimelinePage> {
                   color: Colors.green,
                 ),
               ),
-               Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  children: <Widget>[
-                    Image.asset("assets/Images/log.png"
-                    ),
-                   
-                  ],
-                )
-              ),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset("assets/Images/log.png"),
+                    ],
+                  )),
               ListTile(
                 leading: Icon(
                   Icons.assignment_ind,
                 ),
                 title: Text(
                   'My Dashboard',
-                  style: TextStyle(color: Colors.green,),
+                  style: TextStyle(
+                    letterSpacing: 0.5,
+                    color: Colors.green,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProfileLoading(uid:uid),
+                      builder: (context) => ProfileLoading(uid: uid),
                     ),
                   );
                 },
@@ -255,8 +259,10 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.book),
                 title: Text(
                   'Startup Dictionary',
-                  style: TextStyle(color: Colors.green,
-                          ),
+                  style: TextStyle(
+                    letterSpacing: 0.5,
+                    color: Colors.green,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -270,7 +276,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.store),
                 title: Text(
                   'Hustle Store',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: Colors.green,letterSpacing: 0.5,),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -284,15 +290,15 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.chat),
                 title: Text(
                   'Discussion Board',
-                  style:
-                      TextStyle(color: Colors.green,),
+                  style: TextStyle(
+                    letterSpacing: 0.5,
+                    color: Colors.green,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-
                       builder: (context) => (ChatHome()),
-
                     ),
                   );
                 },
@@ -301,15 +307,15 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.help),
                 title: Text(
                   'Help and FAQ',
-                  style:
-                      TextStyle(color: Colors.green, ),
+                  style: TextStyle(
+                    letterSpacing: 0.5,
+                    color: Colors.green,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-
                       builder: (context) => (ChatHome()),
-
                     ),
                   );
                 },
@@ -318,15 +324,15 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.info),
                 title: Text(
                   'How to Earn Points',
-                  style:
-                      TextStyle(color: Colors.green,),
+                  style: TextStyle(
+                    letterSpacing: 0.5,
+                    color: Colors.green,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-
                       builder: (context) => (ChatHome()),
-
                     ),
                   );
                 },
@@ -335,7 +341,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.lock_open),
                 title: Text(
                   'Logout',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: Colors.green,letterSpacing: 0.5,),
                 ),
                 onTap: () {
                   _auth.signOut();
@@ -345,14 +351,14 @@ class _TimelinePageState extends State<TimelinePage> {
                 },
               ),
               Divider(),
-             Align(
-               alignment: Alignment.bottomCenter,
-               child:  Text(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
                   "The Startupreneur® All Rights Reserved",
-                  style: TextStyle(
-                      ),//fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+                  style:
+                      TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
                 ),
-             )
+              )
             ],
           ),
         ),
@@ -403,12 +409,11 @@ class _TimelinePageState extends State<TimelinePage> {
             }
           },
           child: Stack(
-          
             alignment: Alignment.center,
             children: <Widget>[
               Container(
                 color: Colors.grey[50],
-                height: 230.0,
+                height: 240.0,
                 width: 145.0,
                 child: Card(
                   color: Colors.grey[100],
@@ -430,8 +435,10 @@ class _TimelinePageState extends State<TimelinePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         // Image.network(doodle.doodle),
-                        Image.asset(doodle.doodle,
-                        height: MediaQuery.of(context).size.height*0.05,),
+                        Image.asset(
+                          doodle.doodle,
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
                         const SizedBox(
                           height: 8.0,
                         ),
@@ -441,11 +448,16 @@ class _TimelinePageState extends State<TimelinePage> {
                         // ),
                         Text(
                           doodle.name,
-                          style: TextStyle(fontSize: 16,
-                          fontWeight: FontWeight.w400
-                          ),
+                          // style: TextStyle(fontSize: 16,
+                          // fontWeight: FontWeight.w400
+                          // ),
+                          style: TextStyle(
+                              fontSize: 16,
+                              
+                              letterSpacing:0.5,
+                              // fontFamily: "Open Sans",
+                              fontWeight: FontWeight.w400),
                           textAlign: TextAlign.center,
-                          
                         ),
                         const SizedBox(
                           height: 8.0,

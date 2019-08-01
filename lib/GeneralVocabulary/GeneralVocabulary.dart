@@ -160,6 +160,7 @@ class _VocabularyState extends State<Vocabulary> {
               background: Image.asset(
                 "assets/Images/vocabulary.png",
                 fit: BoxFit.fitHeight,
+                height: 200,
               ),
             ),
           ),
