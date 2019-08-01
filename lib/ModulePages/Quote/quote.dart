@@ -35,7 +35,7 @@ class _QuoteState extends State<Quote> {
                         child: Text(
                           widget.quote[0],
                           style: TextStyle(
-                            
+                            // fontStyle: FontStyle.italic,
                             letterSpacing: 1.5,
                             fontSize: 25,
                             color: Colors.white,
@@ -73,13 +73,13 @@ class _QuoteState extends State<Quote> {
                               
                               letterSpacing: 1.5,
                               fontSize: 20,
-                              color: Colors.black,
+                              color: Colors.white,
                               // fontWeight: FontWeight.w700
                             ),
                           ),
                           Icon(
                             Icons.navigate_next,
-                            color: Colors.black,
+                            color: Colors.white,
                             size: 40,
                           ),
                         ],

@@ -14,26 +14,27 @@ class FriendDetailBody extends StatelessWidget {
     List<Widget> completed = [];
 
     completed.add(Row(
-      children:<Widget>[ 
+      children: <Widget>[
         SizedBox(
-       width: 15,
-     ),
+          width: 15,
+        ),
         Text(
-        "Completed Modules",
-        style: TextStyle(
-            fontSize: 20,
-            color: Colors.green,
-            fontWeight: FontWeight.w300,
-            letterSpacing: 0.5),
-      ),
+          "Completed Modules",
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.green,
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.5),
+        ),
       ],
     ));
-    completed.add(
-     SizedBox(
-       height: 10,
-     ));
+    completed.add(SizedBox(
+      height: 10,
+    ));
     for (int item in friend.completed) {
-      completed.add(new Card(
+      completed.add(Padding(
+        padding: EdgeInsets.all(10),
+        child: Card(
         child: Row(
           children: <Widget>[
             Padding(
@@ -41,14 +42,125 @@ class FriendDetailBody extends StatelessWidget {
                   EdgeInsets.all(25), //MediaQuery.of(context).size.height * 0.1
               child: Text("Module $item: " + doodles[item - 1].name),
             ),
-            Icon(Icons.done_all,color: Colors.green,)
+            Icon(
+              Icons.done_all,
+              color: Colors.green,
+            )
           ],
         ),
+      )
       ));
     }
     return completed;
   }
 
+  List<Widget> referalCode(BuildContext context) {
+    List<Widget> completed = [];
+
+    completed.add(Row(
+      children: <Widget>[
+        SizedBox(
+          width: 15,
+        ),
+        Text(
+          "Referral Code ",
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.green,
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.5),
+        ),
+      ],
+    ));
+    completed.add(SizedBox(
+      height: 10,
+    ));
+    // for (int item in friend.completed) {
+    completed.add(Padding(
+      padding: EdgeInsets.all(10),
+      child: Card(
+        child: Padding(
+      padding: EdgeInsets.all(1),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(
+                    15), //MediaQuery.of(context).size.height * 0.1
+                child: AutoSizeText(
+                  "Click to copy",
+                  // "Click this code and it automatically gets \ncopied to your clipboard which can be shared \neasily via Whatsapp, E-mail, Text or any \nSocial Media platform. ",
+                  maxLines: 5,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // Icon(
+              //   Icons.done_all,
+              //   color: Colors.green,
+              // )
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, top: 5),
+            child: new Row(
+              children: <Widget>[
+                Icon(Icons.feedback, color: Colors.green),
+                Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  // child: AutoSizeText(
+                  //   friend.uid,
+
+                  //   style: TextStyle(
+                  //       // fontFamily: "Open Sans",
+                  //       color: Colors.black,
+                  //       ),
+
+                  // ),
+                  child: new GestureDetector(
+                    child: new Text(
+                      friend.uid,
+                      style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blue,
+                          decorationThickness: 1),
+                    ),
+                    onTap: () {
+                      ClipboardManager.copyToClipBoard(friend.uid)
+                          .then((result) {
+                        final snackBar = SnackBar(
+                          content: Text('Copied to Clipboard'),
+                          // action: SnackBarAction(
+                          //   //label: 'Undo',
+                          //  // onPressed: () {},
+                          // ),
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          //    SizedBox(
+          //   width: 15,
+          // ),
+          Padding(
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+          )
+        ],
+      ),
+    )),
+    ) );
+    // }
+    return completed;
+  }
   // Widget _buildCompletednfo(TextTheme textTheme) {
   //   return new Column(
   //     children: completedModule(),
@@ -71,24 +183,44 @@ class FriendDetailBody extends StatelessWidget {
   // }
 
   List<Widget> personalDetail(BuildContext context) {
+    double percentage = (friend.completed.length / 12) * 100;
     return <Widget>[
       Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
         child: new Column(
           children: <Widget>[
-             Padding(
-               padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1),
-          child: new LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width*0.8,
-                lineHeight: 14.0,
-                percent: friend.completed.length/12,
-                animation: true,
-                animationDuration: 2500,
-                center: Text("${friend.completed.length}/12"),
-                backgroundColor: Colors.grey,
-                progressColor: Colors.green,
-              ),
-        ),
+            Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Your Progress",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              // fontFamily: "Open Sans",
+                              color: Colors.green,
+                              fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    new LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      lineHeight: 20.0,
+                      percent: friend.completed.length / 12,
+                      animation: true,
+                      animationDuration: 2500,
+                      center: Text("${percentage.toStringAsFixed(0)}%"),
+                      backgroundColor: Colors.white,
+                      progressColor: Colors.green,
+                    ),
+                  ],
+                )),
             Padding(
               padding: EdgeInsets.all(15),
               child: Column(
@@ -129,7 +261,7 @@ class FriendDetailBody extends StatelessWidget {
                       children: <Widget>[
                         Card(
                           child: new Padding(
-                            padding: EdgeInsets.all(3),
+                            padding: EdgeInsets.all(1),
                             child: new Column(
                               children: <Widget>[
                                 Padding(
@@ -225,52 +357,10 @@ class FriendDetailBody extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 10, top: 10),
-                                  child: new Row(
-                                    children: <Widget>[
-                                      Icon(Icons.feedback, color: Colors.green),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 15),
-                                        // child: AutoSizeText(
-                                        //   friend.uid,
-
-                                        //   style: TextStyle(
-                                        //       // fontFamily: "Open Sans",
-                                        //       color: Colors.black,
-                                        //       ),
-
-                                        // ),
-                                        child: new GestureDetector(
-                                          child: new Text(
-                                            friend.uid,
-                                            style: TextStyle(
-                                                color: Colors.blue,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationColor: Colors.blue,
-                                                decorationThickness: 1),
-                                          ),
-                                          onTap: () {
-                                            ClipboardManager.copyToClipBoard(
-                                                    friend.uid)
-                                                .then((result) {
-                                              final snackBar = SnackBar(
-                                                content:
-                                                    Text('Copied to Clipboard'),
-                                                action: SnackBarAction(
-                                                  label: 'Undo',
-                                                  onPressed: () {},
-                                                ),
-                                              );
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackBar);
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.03),
+                                )
                               ],
                             ),
                           ),
@@ -295,12 +385,12 @@ class FriendDetailBody extends StatelessWidget {
     return new Column(
       // crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        
         Column(
           children: personalDetail(context),
         ),
-       
-
+        Column(
+          children: referalCode(context),
+        ),
         Column(
           children: completedModule(context),
         ),

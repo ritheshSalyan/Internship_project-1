@@ -18,6 +18,7 @@ class _QuizPageState extends State<QuizPage> {
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
     color: Colors.white,
+    
   );
   List<dynamic> options = [];
   int selectedRadio = 0;
@@ -82,6 +83,7 @@ class _QuizPageState extends State<QuizPage> {
                                         });
                                         return Text(
                                           question,
+                                          textAlign: TextAlign.left,
                                           style: _questionStyle,
                                         );
                                     }

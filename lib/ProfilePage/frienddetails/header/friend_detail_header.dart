@@ -62,7 +62,6 @@ class FriendDetailHeader extends StatelessWidget {
     }
   }
 
- 
   Future upload() async {
     // FirebaseAuth.instance.currentUser().then((user) {
     //   this.uid = user.uid;
@@ -125,7 +124,7 @@ class FriendDetailHeader extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   Icons.edit,
-                  color: Colors.green,
+                  color: Colors.white,
                   size: 30,
                 ),
                 onPressed: () {
@@ -147,38 +146,48 @@ class FriendDetailHeader extends StatelessWidget {
         //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           //  new Text('90 Following', style: followerStyle),
-         Row(
-           children: <Widget>[
+          Column(
+            children: <Widget>[
               new Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(friend.name,
-                style: TextStyle(
-                    fontSize: 30,
-                    letterSpacing: 2,
-                    fontFamily: "Open Sans",
-                    color: Colors.white)),
+                padding: EdgeInsets.only(left: 10),
+                child: Text(friend.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        letterSpacing: 2,
+                        fontFamily: "Open Sans",
+                        color: Colors.white)),
+              ),
+            ],
           ),
-           ],
-         ),
-       Padding(
-         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05),
-         child:   Row(
-           children: <Widget>[
-             Image.asset("assets/Images/coins.png",
-             width: MediaQuery.of(context).size.width*0.05,
-             ),
-              new Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(friend.points.toString(),
-                style: TextStyle(
-                    fontSize: 20,
-                    letterSpacing: 2,
-                    fontFamily: "Open Sans",
-                    color: Colors.green)),
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
+            child: Padding(
+              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.32),
+              child:
+                Row(
+                  children: <Widget>[
+                    Image.asset(
+                      "assets/Images/coins.png",
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    new Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(friend.points.toString(),
+                      textAlign: TextAlign.center,
+                          style: TextStyle(
+                            
+                              fontSize: 20,
+                              letterSpacing: 2,
+                              fontFamily: "Open Sans",
+                              color: Colors.white)),
+                    ),
+                  ],
+                ),
+             
+            ),
           ),
-           ],
-         ),
-       ),
           // new Text('100 Followers', style: followerStyle),
         ],
       ),
@@ -253,7 +262,7 @@ class FriendDetailHeader extends StatelessWidget {
         new Positioned(
           top: 26.0,
           left: 4.0,
-          child: new BackButton(color: Colors.green),
+          child: new BackButton(color: Colors.black),
         ),
       ],
     );

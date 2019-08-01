@@ -74,8 +74,9 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                             "Swipe Right to Explore",
                           ],
                           textStyle: TextStyle(
-                            fontSize: 42.0,
+                            fontSize: 40.0,
                             letterSpacing: 1.5,
+                            color: Colors.white,
                           ),
                           textAlign: TextAlign.start,
                           alignment: AlignmentDirectional
@@ -122,6 +123,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                                   ),
                                 ),
                               ),
+                              
                             ],
                           )),
                     ),
@@ -137,7 +139,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 15.0,
+                            fontSize: 20.0,
                           ),
                         ),
                       ),
@@ -178,7 +180,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15.0,
+                                    fontSize: 20.0,
                                   ),
                                 ),
                               ),
@@ -198,7 +200,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 15.0,
+                            fontSize: 20.0,
                           ),
                         ),
                       ),

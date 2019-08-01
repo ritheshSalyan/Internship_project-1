@@ -115,6 +115,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
     List<Widget> listWidget = new List<Widget>();
     for (int index = 0; index < list.length; index++) {
       listWidget.add(ExpansionTile(
+        initiallyExpanded:false,
         leading: Icon(Icons.arrow_forward_ios),
         title: Text(
           list[index],
@@ -128,7 +129,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
     ));
     listWidget.add(Container(
       width: MediaQuery.of(context).size.width * 0.5,
-      child: RaisedButton(
+      child: OutlineButton(
+        borderSide: BorderSide(
+          color: Colors.green,
+          width: 1.2,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -140,6 +145,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         child: Icon(
           Icons.navigate_next,
           size: 40.0,
+          color: Colors.green,
         ),
       ),
       )
