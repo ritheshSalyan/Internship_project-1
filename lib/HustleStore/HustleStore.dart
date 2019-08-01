@@ -181,7 +181,7 @@ class _HustleStoreState extends State<HustleStore> {
                     padding: const EdgeInsets.all(16.0),
                     sliver: SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 1,
                         childAspectRatio: width / height,
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,

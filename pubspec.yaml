@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flare_flutter: 1.5.4
   timeline_list: ^0.0.4
+  timeline: ^0.0.1
   firebase_storage: 3.0.3
   firebase_auth: any
   cloud_firestore: 0.12.7

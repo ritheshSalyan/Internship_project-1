@@ -34,10 +34,13 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
 
     return new Scaffold(
         body: SingleChildScrollView(
-      child: CustomPaint(
-        painter: BluePainter(),
+      // child: CustomPaint(
+      //   painter: BluePainter(),
         child: new SingleChildScrollView(
           child: new Container(
+            child: CustomPaint(
+        painter: BluePainter(),
+
             // decoration: linearGradient,
             child: new Column(
               //crossAxisAlignment: CrossAxisAlignment.end,
@@ -56,8 +59,9 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
               ],
             ),
           ),
+          )
         ),
-      ),
+     // ),
     ),);
   }
 }
@@ -71,18 +75,18 @@ class BluePainter extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    paint.color = Colors.grey[300];
+    paint.color = Colors.grey[200];
     canvas.drawPath(mainBackground, paint);
 
     Path ovalPath = new Path();
     // Start paint from 20% height to the left
-    ovalPath.moveTo(0, height * 0.4);
+    ovalPath.moveTo(0, height * 0.35);
 
     // paint a curve from current position to middle of the screen
-    ovalPath.quadraticBezierTo(
-        width * 0.5, height * 0.5, width, height * 0.25);
+    // ovalPath.quadraticBezierTo(
+    //     width * 0.5, height * 0.35, width, height * 0.2);
 
-
+ ovalPath.lineTo(width,height * 0.35);
     // draw remaining line to bottom left side
     ovalPath.lineTo(width, 0);
     ovalPath.lineTo(0, 0);

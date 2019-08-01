@@ -17,7 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../Trial/trial.dart';
-
 import '../ModuleOrderController/Types.dart';
 import 'package:startupreneur/trial.dart';
 
@@ -61,7 +60,7 @@ class _TimelinePageState extends State<TimelinePage> {
       }
     }
     return Padding(
-      padding: EdgeInsets.only(top: 100),
+      padding: EdgeInsets.only(top: 120),
       child: Icon(
         Icons.lock,
         size: 20,
@@ -151,8 +150,11 @@ class _TimelinePageState extends State<TimelinePage> {
 
     return Scaffold(
         extendBody: true,
+        backgroundColor: Colors.grey[50],
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
+          title:Image.asset("assets/Images/Capture.PNG",
+          width: MediaQuery.of(context).size.width*0.57,),
           automaticallyImplyLeading: true,
           backgroundColor: Theme.of(context).primaryColorDark,
           elevation: 10.0,
@@ -187,8 +189,34 @@ class _TimelinePageState extends State<TimelinePage> {
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountEmail: Text(value),
-                accountName: Text(name),
+                accountEmail:  Row(
+              children: <Widget>[
+                // IconButton(
+                //   onPressed: () {},
+                //   icon: Icon(
+                //     FontAwesomeIcons.solidGem,
+                //     color: Colors.green,
+                //     size: 15,
+                //   ),
+                // ),
+                Image.asset(
+                  "assets/Images/coins.png",
+                  height: 20,
+                  width: 20,
+                ),
+                Text(
+                  " $gems",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 20),
+                ),
+              ],
+            ),
+                accountName: Text(name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),),
                 currentAccountPicture: CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(_url),
@@ -197,13 +225,23 @@ class _TimelinePageState extends State<TimelinePage> {
                   color: Colors.green,
                 ),
               ),
+               Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset("assets/Images/log.png"
+                    ),
+                   
+                  ],
+                )
+              ),
               ListTile(
                 leading: Icon(
                   Icons.assignment_ind,
                 ),
                 title: Text(
-                  'Profile',
-                  style: TextStyle(color: Colors.green),
+                  'My Dashboard',
+                  style: TextStyle(color: Colors.green,),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -216,8 +254,9 @@ class _TimelinePageState extends State<TimelinePage> {
               ListTile(
                 leading: Icon(Icons.book),
                 title: Text(
-                  'Vocabulary',
-                  style: TextStyle(color: Colors.green),
+                  'Startup Dictionary',
+                  style: TextStyle(color: Colors.green,
+                          ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -242,11 +281,45 @@ class _TimelinePageState extends State<TimelinePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.chat),
                 title: Text(
-                  'Settings',
+                  'Discussion Board',
                   style:
-                      TextStyle(color: Colors.green, fontFamily: "Slabo_27px"),
+                      TextStyle(color: Colors.green,),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+
+                      builder: (context) => (ChatHome()),
+
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.help),
+                title: Text(
+                  'Help and FAQ',
+                  style:
+                      TextStyle(color: Colors.green, ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+
+                      builder: (context) => (ChatHome()),
+
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text(
+                  'How to Earn Points',
+                  style:
+                      TextStyle(color: Colors.green,),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -272,14 +345,14 @@ class _TimelinePageState extends State<TimelinePage> {
                 },
               ),
               Divider(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  "All right reserved at thestartupreneur.co",
+             Align(
+               alignment: Alignment.bottomCenter,
+               child:  Text(
+                  "The Startupreneur® All Rights Reserved",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                      ),//fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
                 ),
-              )
+             )
             ],
           ),
         ),
@@ -330,11 +403,25 @@ class _TimelinePageState extends State<TimelinePage> {
             }
           },
           child: Stack(
+          
+            alignment: Alignment.center,
             children: <Widget>[
               Container(
-                height: 200.0,
-                width: 200.0,
+                color: Colors.grey[50],
+                height: 230.0,
+                width: 145.0,
                 child: Card(
+                  color: Colors.grey[100],
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.green,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  // shape:Border.all(width: 3,
+                  // color: Colors.green),
                   margin: EdgeInsets.symmetric(vertical: 16.0),
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
@@ -343,17 +430,22 @@ class _TimelinePageState extends State<TimelinePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         // Image.network(doodle.doodle),
+                        Image.asset(doodle.doodle,
+                        height: MediaQuery.of(context).size.height*0.05,),
                         const SizedBox(
                           height: 8.0,
                         ),
-                        Text(doodle.time, style: textTheme.caption),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
+                        // Text(doodle.time, style: textTheme.caption),
+                        // const SizedBox(
+                        //   height: 8.0,
+                        // ),
                         Text(
                           doodle.name,
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 16,
+                          fontWeight: FontWeight.w400
+                          ),
                           textAlign: TextAlign.center,
+                          
                         ),
                         const SizedBox(
                           height: 8.0,
@@ -372,8 +464,9 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               Container(
-                width: 200.0,
-                height: 150.0,
+                // color: Colors.grey[50],
+                width: 240.0,
+                // height: 170.0,
                 child: Opacity(
                   opacity: 1.0,
                   child: lockUnlock(i, completedCourse),

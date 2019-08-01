@@ -35,7 +35,7 @@ class _QuoteState extends State<Quote> {
                         child: Text(
                           widget.quote[0],
                           style: TextStyle(
-                            
+                            // fontStyle: FontStyle.italic,
                             letterSpacing: 1.5,
                             fontSize: 25,
                             color: Colors.white,
