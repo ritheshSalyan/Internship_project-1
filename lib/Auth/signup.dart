@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,7 +49,7 @@ class _SignupPageState extends State<SignupPage>
   static var _password = "";
   static var _confirmPassword = "";
   static var institutionOrCompany = "";
-  static var typeOfOccupations = "";
+  static var typeOfOccupations = null;
   static var referalCodeFromFriend = "", userid = "";
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -71,7 +72,6 @@ class _SignupPageState extends State<SignupPage>
     try {
       progressDialog.show();
 
-      
       user = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: _password,
@@ -85,28 +85,31 @@ class _SignupPageState extends State<SignupPage>
       _preferences(userid);
       print("its is $user");
       if (referalCodeFromFriend.isNotEmpty) {
-         await db.collection("user").where("uid",isEqualTo:referalCodeFromFriend).getDocuments().then((onValue){
-            onValue.documents.forEach((document){
-                referePoint = document.data["points"];
-
-            });
-
+        await db
+            .collection("user")
+            .where("uid", isEqualTo: referalCodeFromFriend)
+            .getDocuments()
+            .then((onValue) {
+          onValue.documents.forEach((document) {
+            referePoint = document.data["points"];
           });
+        });
 
-         var dataMap = new Map<String, dynamic>();
-          dataMap['points'] = 5000+referePoint;
-        db.collection("user")
+        var dataMap = new Map<String, dynamic>();
+        dataMap['points'] = 5000 + referePoint;
+        db
+            .collection("user")
             .document(referalCodeFromFriend)
-            .setData(dataMap,merge:true); 
-         
-          // dataMap['uid'] = userid;
-          // db
-          //     .collection("user")
-          //     .document(userid)
-          //     .setData(dataMap, merge: true)
-          //     .catchError((e) {
-          //   print(e);
-          // });
+            .setData(dataMap, merge: true);
+
+        // dataMap['uid'] = userid;
+        // db
+        //     .collection("user")
+        //     .document(userid)
+        //     .setData(dataMap, merge: true)
+        //     .catchError((e) {
+        //   print(e);
+        // });
         // });
       }
       createNote();
@@ -134,7 +137,8 @@ class _SignupPageState extends State<SignupPage>
     dataMap['uid'] = userid;
     dataMap['points'] = 0;
     dataMap['completed'] = [1];
-    dataMap['profile'] = "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
+    dataMap['profile'] =
+        "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
     db
         .collection("user")
@@ -186,9 +190,9 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
           hintText: "eg. Bob Marley",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Full Name *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
           //   borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -208,9 +212,9 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.email, color: Colors.green),
           hintText: "you@example.com",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Email Address *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -237,10 +241,10 @@ class _SignupPageState extends State<SignupPage>
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.phone_android, color: Colors.green),
-          hintText: "9485621288",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          hintText: "",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Mobile Number *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -259,10 +263,10 @@ class _SignupPageState extends State<SignupPage>
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.business, color: Colors.green),
-          hintText: "bob school of AI",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          hintText: "Bob School of AI",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Institution/Company",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -271,27 +275,29 @@ class _SignupPageState extends State<SignupPage>
         ),
       );
 
-  Widget occupation(BuildContext context) => TextFormField(
-        controller: textEditingController5,
-        onSaved: (value) {
-          setState(() {
-            typeOfOccupations = value;
-          });
-        },
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          prefixIcon: Icon(Icons.work, color: Colors.green),
-          hintText: "eg Student,business etc",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-          labelText: "Occupation *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+  // Widget occupation(BuildContext context) => TextFormField(
+  //       controller: textEditingController5,
+  //       onSaved: (value) {
+  //         setState(() {
+  //           typeOfOccupations = value;
+  //         });
+  //       },
+  //       keyboardType: TextInputType.text,
+  //       decoration: InputDecoration(
+  //         prefixIcon: Icon(Icons.work, color: Colors.green),
+  //         hintText: "eg Student,business etc",
+  //         hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+  //         labelText: "Occupation *",
+  //         labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
-          // focusedBorder: OutlineInputBorder(
-          //   borderRadius: BorderRadius.circular(10),
-          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-          // ),
-        ),
-      );
+  //         // focusedBorder: OutlineInputBorder(
+  //         //   borderRadius: BorderRadius.circular(10),
+  //         //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+  //         // ),
+  //       ),
+  //     );
+
+  Widget occupation =  Text(" ");
 
   Widget referalCode(BuildContext context) => TextFormField(
         controller: textEditingController6,
@@ -311,11 +317,11 @@ class _SignupPageState extends State<SignupPage>
           prefixIcon: Icon(Icons.cloud_circle, color: Colors.green),
           hintText: "Ax875b",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-          helperText: "6 DIGIT CODE FROM YOUR FRIEND",
+          helperText: "CODE FROM YOUR FRIEND",
           helperStyle:
-              TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
-          labelText: "Referal code",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+              TextStyle(color: Colors.grey, fontStyle: FontStyle.italic,letterSpacing: 0.5),
+          labelText: "Referral Code",
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -345,9 +351,9 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.lock, color: Colors.green),
           hintText: "password",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Password *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -398,7 +404,7 @@ class _SignupPageState extends State<SignupPage>
           },
           child: Text(
             "Sign Up",
-            style: TextStyle(color: Colors.black, fontSize: 12),
+            style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -482,7 +488,7 @@ class _SignupPageState extends State<SignupPage>
                 onSaved: (value) => gender = value,
                 decoration: InputDecoration(
                   prefixIcon: Icon(
-                    Icons.help_outline,
+                    FontAwesomeIcons.genderless,
                     color: Colors.green,
                   ),
                   // focusedBorder: OutlineInputBorder(
@@ -491,8 +497,8 @@ class _SignupPageState extends State<SignupPage>
                   // ),
                 ),
                 hint: Text(
-                  "Select Your gender",
-                  style: TextStyle(color: Colors.black, fontSize: 12),
+                  "Gender",
+                  style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -513,7 +519,79 @@ class _SignupPageState extends State<SignupPage>
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              occupation(context),
+              DropdownButtonFormField<String>(
+                value: typeOfOccupations,
+                validator: (value) =>
+                    value.isEmpty ? "Occupation cannot be empty" : null,
+                onSaved: (value) => typeOfOccupations = value,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.work,
+                    color: Colors.green,
+                  ),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(10),
+                  //   borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  // ),
+                ),
+                hint: Text(
+                  "Select Your Occupation *",
+                  style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    typeOfOccupations = value;
+                    if (typeOfOccupations == "Others") {
+                      occupation = TextFormField(
+                        
+                        controller: textEditingController5,
+                        onSaved: (value) {
+                          setState(() {
+                            typeOfOccupations = value;
+                          });
+                        },
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.work, color: Colors.green),
+                          hintText: "eg Student,business etc",
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+                          labelText: "Occupation *",
+                          labelStyle:
+                              TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+
+                          // focusedBorder: OutlineInputBorder(
+                          //   borderRadius: BorderRadius.circular(10),
+                          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+                          // ),
+                        ),
+                      );
+                    }
+                    print("$typeOfOccupations");
+                  });
+                },
+                items: [
+                  "Student",
+                  "Employed",
+                  "Entrepreneur",
+                  "Unemployed",
+                  "Others"
+                ].map((String value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(fontSize: 12, color: Colors.black,letterSpacing: 0.5),
+                    ),
+                  );
+                }).toList(),
+              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 20),
+              // ),
+
+              occupation,
+
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
@@ -549,8 +627,8 @@ class _SignupPageState extends State<SignupPage>
                       );
                     },
                     child: Text(
-                      "Accept Terms & Condition",
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      "Accept Terms & Conditions",
+                      style: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
                     ),
                   ),
                 ],

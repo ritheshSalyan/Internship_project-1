@@ -161,20 +161,20 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         slivers: <Widget>[
           SliverAppBar(
             iconTheme: IconThemeData(color: Colors.white),
-            expandedHeight: 200,
+            expandedHeight: 50,
             // backgroundColor: Theme.of(context).primaryColorDark,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.green,
             pinned: true,
             title: Text(
               "Course Overview",
               style: TextStyle(color: Colors.white),
             ),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/Images/${widget.modNum}.png",
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+            // flexibleSpace: FlexibleSpaceBar(
+            //   background: Image.asset(
+            //     "assets/Images/${widget.modNum}.png",
+            //     fit: BoxFit.fitHeight,
+            //   ),
+            // ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(

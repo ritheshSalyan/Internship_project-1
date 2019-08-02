@@ -6,9 +6,15 @@ import '../../ModuleOrderController/Types.dart';
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
-      {Key key, this.content, this.button, this.modNum, this.title, this.index,this.image})
+      {Key key,
+      this.content,
+      this.button,
+      this.modNum,
+      this.title,
+      this.index,
+      this.image})
       : super(key: key);
-  String content, button, title,image;
+  String content, button, title, image;
   int modNum, index;
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
@@ -24,14 +30,16 @@ class _DiscussionPageState extends State<DiscussionPage> {
   _onSubmit() {
     setState(() {
       item;
-      if (item <= data.split(". ").length ) {
-        print("data.split(" ").length = "+data.split(". ").length.toString()+data.split(". ").toString());
+      if (item <= data.split(". ").length) {
+        print("data.split(" ").length = " +
+            data.split(". ").length.toString() +
+            data.split(". ").toString());
         // for (var item in ) {
-          if(data.split(".")[item].length>3){ 
-        _listViewData.add(data.split(". ")[item]+".");
-          }
-          item++;
-       
+        if (data.split(".")[item].length > 3) {
+          _listViewData.add(data.split(". ")[item] + ".");
+        }
+        item++;
+
         // }
 
       }
@@ -62,7 +70,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                   data,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-
+                    letterSpacing: 0.5,
+                    // fontFamily: "Open Sans",
                     color: Colors.black,
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
@@ -75,13 +84,12 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
     if (item < data.split(". ").length) {
       list.add(Center(
-        child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04),
-          child: OutlineButton(
-            highlightedBorderColor: Colors.greenAccent,
-          borderSide: BorderSide(
-            color: Colors.green
-          ),
+          child: Padding(
+        padding:
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
+        child: OutlineButton(
+          highlightedBorderColor: Colors.greenAccent,
+          borderSide: BorderSide(color: Colors.green),
           onPressed: _onSubmit,
           child: Text(
             'Tap here to Continue',
@@ -95,8 +103,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
           ),
           color: Colors.white,
         ),
-        )
-      ));
+      )));
     } else {
       list.add(Center(
         child: FlatButton(
@@ -151,7 +158,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                             widget.title,
                             //"Startup or Job",
                             style: TextStyle(
-                              fontFamily: "sans-serif",
+                                fontFamily: "sans-serif",
                                 color: Colors.white,
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.w700),
@@ -168,7 +175,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     children: <Widget>[
                       Image.asset(
                         widget.image,
-                       // "assets/Images/photo.png",
+                        // "assets/Images/photo.png",
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.75,
                         alignment: Alignment.center,
@@ -185,7 +192,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                         //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
                         //           style: TextStyle(
                         //             fontSize: 18.0,
-                        //             
+                        //
                         //             fontWeight: FontWeight.w500,
                         //           ),
                         //         ),

@@ -65,23 +65,32 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                     color: Colors.green,
                     child: SizedBox(
                       width: 250.0,
-                      child: TypewriterAnimatedTextKit(
-                          onTap: () {
-                            print("Tap Event");
-                          },
-                          text: [
-                            "Startup Dictionary",
-                            "Swipe Right to Explore",
-                          ],
-                          textStyle: TextStyle(
-                            fontSize: 40.0,
-                            letterSpacing: 1.5,
-                            color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/Images/vocabulary.png",
+                            fit: BoxFit.fitHeight,
+                            height: 200,
                           ),
-                          textAlign: TextAlign.start,
-                          alignment: AlignmentDirectional
-                              .topStart // or Alignment.topLeft
-                          ),
+                          TypewriterAnimatedTextKit(
+                              onTap: () {
+                                print("Tap Event");
+                              },
+                              text: [
+                                "Startup Dictionary",
+                                "Swipe Right to Explore",
+                              ],
+                              textStyle: TextStyle(
+                                fontSize: 40.0,
+                                letterSpacing: 1.5,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.start,
+                              alignment: AlignmentDirectional
+                                  .topStart // or Alignment.topLeft
+                              ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -123,7 +132,6 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                                   ),
                                 ),
                               ),
-                              
                             ],
                           )),
                     ),

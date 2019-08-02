@@ -4,9 +4,10 @@ import '../ModulePages/Activity/Activity.dart';
 import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
-  IntroScreen_Liquid({Key key, this.dialogue,this.modNum,this.index}) : super(key: key);
+  IntroScreen_Liquid({Key key, this.dialogue, this.modNum, this.index})
+      : super(key: key);
   final List<String> dialogue;
-  int modNum,index;
+  int modNum, index;
 
   @override
   IntroScreenState createState() => new IntroScreenState();
@@ -44,46 +45,38 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                     children: <Widget>[
                       new Text(
                         item,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 18,
-                            
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
                 ),
-                
-             
-
-              
-
-                    Image.asset(
+                Image.asset(
                   'assets/Images/character.png',
                   fit: BoxFit.cover,
                   width: 200,
                   height: 400,
                 ),
-                     new RaisedButton(child: Icon(Icons.done,
-                      color: Colors.white,),
-                        onPressed: (){
-
-                     List<dynamic> arguments = [widget.modNum,widget.index];
-          orderManagement.moveNextIndex(context, arguments);
-                        },
-
-                        color: Colors.green,
-                      ),
-                 
-               
-                
+                new RaisedButton(
+                  child: Icon(
+                    Icons.done,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    List<dynamic> arguments = [widget.modNum, widget.index];
+                    orderManagement.moveNextIndex(context, arguments);
+                  },
+                  color: Colors.green,
+                ),
               ],
             ),
           ),
         ));
-      }
-      else if (i % 2 == 1) {
+      } else if (i % 2 == 1) {
         print("odd i = $i");
         pages.add(Container(
           alignment: Alignment.center,
@@ -102,10 +95,9 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                     children: <Widget>[
                       new Text(
                         item,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 18,
-                            
-                            fontWeight: FontWeight.w600),
+                            fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -120,8 +112,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
             ),
           ),
         ));
-      }
-      else if (i % 2 == 0) {
+      } else if (i % 2 == 0) {
         print("even i = $i");
         pages.add(Container(
           alignment: Alignment.center,
@@ -140,10 +131,9 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                     children: <Widget>[
                       new Text(
                         item,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 18,
-                            
-                            fontWeight: FontWeight.w600),
+                            fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -159,19 +149,18 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
           ),
         ));
       }
-      
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         home: new Scaffold(
             body: LiquidSwipe(
-      pages: pages,
-      fullTransitionValue: 3,
-      enableSlideIcon: true,
-    )));
+          pages: pages,
+          fullTransitionValue: 150,
+          enableSlideIcon: true,
+        )));
   }
 }

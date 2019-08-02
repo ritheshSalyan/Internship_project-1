@@ -27,8 +27,8 @@ class _QuoteState extends State<Quote> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Material(
                         color: Colors.black.withOpacity(0),
@@ -46,7 +46,7 @@ class _QuoteState extends State<Quote> {
                         color: Colors.black.withOpacity(0),
                         child: Padding(
                           padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.05),
+                              top: MediaQuery.of(context).size.height * 0.03),
                           child: Text(
                             widget.quote[1],
                             style: TextStyle(
