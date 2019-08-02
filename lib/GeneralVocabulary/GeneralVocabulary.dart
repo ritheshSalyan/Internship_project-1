@@ -152,18 +152,18 @@ class _VocabularyState extends State<Vocabulary> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 300,
+            expandedHeight: MediaQuery.of(context).size.height * 0.05,
             iconTheme:IconThemeData(color: Colors.black),
             title: Text("Start-up Glossary",style: TextStyle(color: Colors.green)),
             pinned: true,
             backgroundColor: Colors.green,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/Images/vocabulary3.png",
-                fit: BoxFit.fitHeight,
-                // height: 200,
-              ),
-            ),
+//            flexibleSpace: FlexibleSpaceBar(
+////              background: Image.asset(
+////                "assets/Images/vocabulary3.png",
+////                fit: BoxFit.fitHeight,
+////                // height: 200,
+////              ),
+//            ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
