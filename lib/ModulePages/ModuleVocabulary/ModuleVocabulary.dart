@@ -70,7 +70,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           Image.asset(
                             "assets/Images/vocabulary.png",
                             fit: BoxFit.fitHeight,
-                            height: 200,
+//                            height: 200,
                           ),
                           TypewriterAnimatedTextKit(
                               onTap: () {
