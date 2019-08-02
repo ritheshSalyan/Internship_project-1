@@ -6,6 +6,7 @@ import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
 import '../ModulePages/SummaryPage/SummaryPage.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
@@ -19,7 +20,7 @@ import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:startupreneur/trial.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -68,6 +69,15 @@ class _TimelinePageState extends State<TimelinePage> {
     );
   }
 
+  launcher(String urlLink) async {
+    String url = urlLink;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   void initState() {
     super.initState();
     preferences(context);
@@ -85,7 +95,6 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-// <<<<<<< HEAD
 
     await db
         .collection("user")
@@ -127,7 +136,7 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 
   bool check(int i) {
-    print("Completed course"+completedCourse.toString());
+    print("Completed course" + completedCourse.toString());
     for (int k = 0; k < completedCourse.length; k++) {
       if (completedCourse[k] == i + 1) {
         val = completedCourse[k];
@@ -174,12 +183,12 @@ class _TimelinePageState extends State<TimelinePage> {
                 // ),
                 Image.asset(
                   "assets/Images/coins.png",
-                  height: 20,
-                  width: 20,
+                  height: 15,
+                  width: 15,
                 ),
                 Text(
                   " $gems",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 20),
@@ -277,7 +286,10 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.store),
                 title: Text(
                   'Hustle Store',
-                  style: TextStyle(color: Colors.green,letterSpacing: 0.5,),
+                  style: TextStyle(
+                    color: Colors.green,
+                    letterSpacing: 0.5,
+                  ),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -342,7 +354,10 @@ class _TimelinePageState extends State<TimelinePage> {
                 leading: Icon(Icons.lock_open),
                 title: Text(
                   'Logout',
-                  style: TextStyle(color: Colors.green,letterSpacing: 0.5,),
+                  style: TextStyle(
+                    color: Colors.green,
+                    letterSpacing: 0.5,
+                  ),
                 ),
                 onTap: () {
                   _auth.signOut();
@@ -353,13 +368,74 @@ class _TimelinePageState extends State<TimelinePage> {
               ),
               Divider(),
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomLeft * 0.4,
                 child: Text(
                   "The Startupreneur® All Rights Reserved",
                   style:
                       TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
                 ),
-              )
+              ),
+              Row(
+                children: <Widget>[
+//                  SizedBox(
+//                    width: MediaQuery.of(context).size.width * 0.05,
+//                  ),
+                  IconButton(
+                    onPressed: () {
+                      launcher(
+                          "https://www.facebook.com/thestartupreneurofficial/");
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.facebook,
+                      color: Colors.green,
+                      size: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      launcher(
+                          "https://www.linkedin.com/company/startupreneur/");
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.linkedinIn,
+                      color: Colors.green,
+                      size: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      launcher("https://twitter.com/TStartupreneur");
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.twitter,
+                      color: Colors.green,
+                      size: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      launcher("http://bit.ly/2Kp153P");
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.medium,
+                      color: Colors.green,
+                      size: 18,
+                    ),
+                  ),
+                ],
+              ),
+//              SizedBox(
+////                height: MediaQuery.of(context).size.height * 0.01,
+////              ),
             ],
           ),
         ),
@@ -397,24 +473,21 @@ class _TimelinePageState extends State<TimelinePage> {
               print(" true $i");
               // val = completedCourse[k];
               print("val is $val");
-              if(i != 12){ 
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => QuoteLoading(modNum: i + 1),
+              if (i != 12) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => QuoteLoading(modNum: i + 1),
                   ),
-                   );
-                  // builder: (context)=>Vocabulary(),
-              }
-              else{
-                 Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (HustleStoreLoader()),
-                    ),
-                  );
+                );
+                // builder: (context)=>Vocabulary(),
+              } else {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (HustleStoreLoader()),
+                  ),
+                );
               }
 
-                
-             
               // break;
               // }
             } else {
@@ -426,10 +499,14 @@ class _TimelinePageState extends State<TimelinePage> {
             children: <Widget>[
               Container(
                 color: Colors.grey[50],
-                height: 240.0,
-                width: 145.0,
-                child: Card(
-                  color: Colors.grey[100],
+                height: MediaQuery.of(context).size.height*0.37,
+//              height: 210.0,
+//                width: 145.0,
+              width: MediaQuery.of(context).size.width*0.43,
+                child: GradientCard(
+                  gradient: LinearGradient(colors: doodle.colors),
+//                    color: doodle.color,
+                  margin: EdgeInsets.all(0),
                   elevation: 10,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
@@ -440,7 +517,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                   // shape:Border.all(width: 3,
                   // color: Colors.green),
-                  margin: EdgeInsets.symmetric(vertical: 16.0),
+//                    margin: EdgeInsets.symmetric(vertical: 16.0),
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -450,7 +527,7 @@ class _TimelinePageState extends State<TimelinePage> {
                         // Image.network(doodle.doodle),
                         Image.asset(
                           doodle.doodle,
-                          height: MediaQuery.of(context).size.height * 0.05,
+                          height: MediaQuery.of(context).size.height * 0.09,
                         ),
                         const SizedBox(
                           height: 8.0,
@@ -459,19 +536,20 @@ class _TimelinePageState extends State<TimelinePage> {
                         // const SizedBox(
                         //   height: 8.0,
                         // ),
-                        Text(
-                          doodle.name,
-                          // style: TextStyle(fontSize: 16,
-                          // fontWeight: FontWeight.w400
-                          // ),
-                          style: TextStyle(
-                              fontSize: 16,
-                              
-                              letterSpacing:0.5,
-                              // fontFamily: "Open Sans",
-                              fontWeight: FontWeight.w400),
-                          textAlign: TextAlign.center,
-                        ),
+                        doodle.name,
+//                        Text(
+//                          doodle.name,
+////                           style: TextStyle(fontSize: 16,),
+//                          // fontWeight: FontWeight.w400
+//                          // ),
+//                          style: TextStyle(
+////                            color: Colors.white,
+//                              fontSize: 16,
+//                              letterSpacing: 0.5,
+//                              // fontFamily: "Open Sans",
+//                              fontWeight: FontWeight.w400),
+//                          textAlign: TextAlign.center,
+//                        ),
                         const SizedBox(
                           height: 8.0,
                         ),
@@ -487,11 +565,12 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                 ),
+//                )
               ),
               Container(
                 // color: Colors.grey[50],
                 width: 240.0,
-                // height: 170.0,
+                height: 100.0,
                 child: Opacity(
                   opacity: 1.0,
                   child: lockUnlock(i, completedCourse),
