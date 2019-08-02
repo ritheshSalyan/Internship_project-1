@@ -127,6 +127,7 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 
   bool check(int i) {
+    print("Completed course"+completedCourse.toString());
     for (int k = 0; k < completedCourse.length; k++) {
       if (completedCourse[k] == i + 1) {
         val = completedCourse[k];
@@ -396,12 +397,24 @@ class _TimelinePageState extends State<TimelinePage> {
               print(" true $i");
               // val = completedCourse[k];
               print("val is $val");
+              if(i != 12){ 
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => QuoteLoading(modNum: i + 1),
+                  ),
+                   );
                   // builder: (context)=>Vocabulary(),
-                ),
-              );
+              }
+              else{
+                 Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (HustleStoreLoader()),
+                    ),
+                  );
+              }
+
+                
+             
               // break;
               // }
             } else {

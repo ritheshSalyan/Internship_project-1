@@ -287,4 +287,28 @@ List<Doodle> doodles = [
       "100",
     ),
   ),
+
+  Doodle(
+    name: "Store",//Business plan and 
+    time: "Module 13",
+    doodle:"assets/Images/hustel.png",
+        // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
+    icon: Icon(
+      Icons.store,
+      size: 24,
+      // Icons.
+      color: Colors.white,
+      
+      
+    ),
+    iconBackground: Colors.green,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 0,
+      width: 0,
+    ),
+    points: Text(
+      " ",
+    ),
+  ),
 ];

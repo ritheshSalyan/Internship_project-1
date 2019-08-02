@@ -68,7 +68,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                       child: Column(
                         children: <Widget>[
                           Image.asset(
-                            "assets/Images/log.png",
+                            "assets/Images/vocabulary.png",
                             fit: BoxFit.fitHeight,
                             height: 200,
                           ),
