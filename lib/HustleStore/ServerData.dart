@@ -23,7 +23,7 @@ class Component {
 
 List<Component> itemList = [
   Component(
-    description: "Internships\n & \nProjects  ",
+    description: "Internships & Projects  ",
     product: "This pack grants you access to listing of high quality internships with curated startups. You can browse through the available opportunities and apply to them. Working at a startup can give you valuable professional experience along with understanding the nuances of building a startup. Think about interning if you are planning to startup after a while or want to experience the startup atmosphere before becoming an entrepreneur. Submit your uploaded CV/Resume to the required company. Apply Here. Good luck with your application!",
     claimIt: OutlineButton(
       borderSide: BorderSide(color: Colors.green,width: 1.2),
@@ -41,7 +41,7 @@ List<Component> itemList = [
         "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "Startup \nIncubation  ",
+    description: "Startup Incubation  ",
     product: "This pack grants you access to listing of high potential incubation opportunities with some of the top startup incubators in India. You can browse through the available opportunities and apply to them. Incubators provide a great platform to develop, support and move your startup to the next level. Think about incubating if you want to startup right away and kickstart your entrepreneurial journey. Submit your Business Model Canvas to the required Incubator. Apply Here. Good luck with your application!",
     claimIt: OutlineButton(
       borderSide: BorderSide(color: Colors.green,width: 1.2),
@@ -79,7 +79,7 @@ List<Component> itemList = [
         "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "Startup \nHacks ",
+    description: "Startup Hacks ",
     product: "This pack contains all the tricks to get your startup going. Right from growth hacking to international principles to manage your startup resources. Go ahead, get yourself on the road to becoming a Startupreneur.",
     claimIt: OutlineButton(
       borderSide: BorderSide(color: Colors.green,width: 1.2),
@@ -97,7 +97,7 @@ List<Component> itemList = [
         "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
   ),
   Component(
-    description: "Payment\n Gateway",
+    description: "Payment Gateway\n Benefits",
     product: "This pack grants you access to a zero initial cost payment gateway option from PayU. Being a member of The Startupreneur community will get you benefits from PayU such as discounted merchant rates for payment collection and much more! Apply Here.",
     claimIt: OutlineButton(
       borderSide: BorderSide(color: Colors.green,width: 1.2),

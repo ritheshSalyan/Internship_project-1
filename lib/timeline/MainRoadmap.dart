@@ -499,6 +499,7 @@ class _TimelinePageState extends State<TimelinePage> {
             children: <Widget>[
               Container(
                 color: Colors.grey[50],
+
                 height: MediaQuery.of(context).size.height*0.37,
 //              height: 210.0,
 //                width: 145.0,
@@ -508,10 +509,12 @@ class _TimelinePageState extends State<TimelinePage> {
 //                    color: doodle.color,
                   margin: EdgeInsets.all(0),
                   elevation: 10,
+
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       color: Colors.green,
-                      width: 3,
+                      // width: 3,
+                      width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
