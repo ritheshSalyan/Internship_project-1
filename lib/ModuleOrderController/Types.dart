@@ -51,10 +51,10 @@ class orderManagement {
     userid = sharedPreferences.getString("UserId");
     if (currentIndex == order.length) {
       await db.collection("user").document(userid).get().then((document) {
-        complete = document.data["completed"];
+        complete = new List<dynamic>.from(document.data["completed"]);
         print("complete $complete");
       });
-      complete.add(arguments[0]);
+      complete.add(arguments[0]+1);
       var data = Map<String, dynamic>();
       data["completed"] = complete;
       await db.collection("user").document(userid).setData(data, merge: true);
