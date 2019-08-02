@@ -6,8 +6,9 @@ import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+
 import 'package:gradient_widgets/gradient_widgets.dart';
-import '../ModulePages/SummaryPage/SummaryPage.dart';
+import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
@@ -311,7 +312,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (ChatHome()),
+                      builder: (context) => (SummaryPageLoader(modNum:2,index: 30,)),
                     ),
                   );
                 },

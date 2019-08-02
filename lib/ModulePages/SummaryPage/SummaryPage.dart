@@ -36,7 +36,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
             data.split(". ").length.toString() +
             data.split(". ").toString());
         // for (var item in ) {
-        if (data.split(".")[item].length > 3) {
+        if (data.split(". ")[item].length > 3) {
           _listViewData.add(data.split(". ")[item] );
         }
         item++;
@@ -107,26 +107,51 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
           )));
     } else {
       list.add(Center(
-        child: FlatButton(
-          onPressed: () {
-            // Navigator.of(context).pushReplacement(
-            //   MaterialPageRoute(
-            //     builder: (context)=>SocializeTask(),
-            //   )
-            // );
-            List<dynamic> arguments = [widget.modNum, widget.index + 1];
-            orderManagement.moveNextIndex(context, arguments);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(widget.button,
-                  style: TextStyle(fontWeight: FontWeight.w700)),
-              Icon(Icons.navigate_next),
-            ],
-          ),
-        ),
-      ));
+          child: Padding(
+            padding:
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
+            child: OutlineButton(
+              highlightedBorderColor: Colors.greenAccent,
+              borderSide: BorderSide(color: Colors.green),
+              onPressed: (){
+                List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                orderManagement.moveNextIndex(context, arguments);
+              },
+              child: Text(
+                widget.button,
+                style: TextStyle(
+                  // letterSpacing: 1.5,
+                  // fontFamily: "Open Sans",
+                  color: Colors.green,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              color: Colors.white,
+            ),
+          )));
+//      list.add(Center(
+//        child: OutlineButton(
+//          borderSide: BorderSide(color: Colors.green),
+//          onPressed: () {
+//            // Navigator.of(context).pushReplacement(
+//            //   MaterialPageRoute(
+//            //     builder: (context)=>SocializeTask(),
+//            //   )
+//            // );
+//            List<dynamic> arguments = [widget.modNum, widget.index + 1];
+//            orderManagement.moveNextIndex(context, arguments);
+//          },
+//          child: Row(
+//            mainAxisAlignment: MainAxisAlignment.end,
+//            children: <Widget>[
+//              Text(widget.button,
+//                  style: TextStyle(fontWeight: FontWeight.w700)),
+//              Icon(Icons.navigate_next),
+//            ],
+//          ),
+//        ),
+//      ));
     }
 
     return list;
