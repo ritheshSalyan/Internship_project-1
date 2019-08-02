@@ -153,14 +153,15 @@ class _VocabularyState extends State<Vocabulary> {
         slivers: <Widget>[
           SliverAppBar(
             expandedHeight: 300,
-            title: Text("Start-up Glossary"),
+            iconTheme:IconThemeData(color: Colors.black),
+            title: Text("Start-up Glossary",style: TextStyle(color: Colors.green)),
             pinned: true,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.green,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                "assets/Images/vocabulary.png",
+                "assets/Images/vocabulary3.png",
                 fit: BoxFit.fitHeight,
-                height: 200,
+                // height: 200,
               ),
             ),
           ),
