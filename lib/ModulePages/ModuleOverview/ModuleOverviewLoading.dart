@@ -116,6 +116,11 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
           print("summary");
           break;
 
+          case "Type.decisionGameText":
+          typeList.add(Type.decisionGameText);
+          print("decisionGameText");
+          break;
+
         case "Type.discussion":
           typeList.add(Type.discussion);
           print("summary");

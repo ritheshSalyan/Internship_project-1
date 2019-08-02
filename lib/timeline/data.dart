@@ -109,31 +109,9 @@ List<Doodle> doodles = [
       "100",
     ),
   ),
-  Doodle(
-    name: "Pricing",
-    time: "Module 5",
-    doodle:"assets/Images/pricing.png",
-        // "https://www.google.com/logos/doodles/2018/ibn-sinas-1038th-birthday-5768556863029248.2-2x.png",
-   icon: Icon(
-      FontAwesomeIcons.circle,
-      // Icons.
-      color: Colors.green,
-      
-      
-    ),
-    iconBackground: Colors.grey[50],
-    pointsIcon: Image.asset(
-      "assets/Images/coins.png",
-      height: 20,
-      width: 20,
-    ),
-    points: Text(
-      "100",
-    ),
-  ),
-  Doodle(
+   Doodle(
     name: "Business Model",
-    time: "Module 6",
+    time: "Module 5",
     doodle:"assets/Images/marketAnalyaisIcon.png",
         // "https://lh3.googleusercontent.com/vk5ODrDXkJXCJ9z2lMnQdMb9m5-HKxDvn_Q67J8PBKPT9n67iCQFj37tB62ARaQQKnKwig-CcBT9NODmzoqdM56_UTUKZRELLYoz1lVU=s800",
    icon: Icon(
@@ -153,6 +131,29 @@ List<Doodle> doodles = [
       "100",
     ),
   ),
+  Doodle(
+    name: "Pricing",
+    time: "Module 6",
+    doodle:"assets/Images/6.png",
+        // "https://www.google.com/logos/doodles/2018/ibn-sinas-1038th-birthday-5768556863029248.2-2x.png",
+   icon: Icon(
+      FontAwesomeIcons.circle,
+      // Icons.
+      color: Colors.green,
+      
+      
+    ),
+    iconBackground: Colors.grey[50],
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "100",
+    ),
+  ),
+ 
   Doodle(
     name: "Legal and Compliance",
     time: "Module 7",

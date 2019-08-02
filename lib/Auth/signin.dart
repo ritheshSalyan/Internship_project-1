@@ -90,16 +90,20 @@ class _SigninPageState extends State<SigninPage> {
     }
   }
 
-  Widget createAccountLink(BuildContext context) => FlatButton(
+  Widget createAccountLink(BuildContext context) => OutlineButton(
+        borderSide: BorderSide(
+          color: Colors.green,
+        ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => SignupPage(),
           ));
         },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Text("New User? Register",
-            style: TextStyle(
-              color: Colors.green,
-            )),
+            style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600)),
       );
 
   final emailField = TextFormField(
@@ -128,9 +132,11 @@ class _SigninPageState extends State<SigninPage> {
       //   borderSide: BorderSide(color: Colors.green, width: 2.0),
       // ),
       hintText: "you@example.com",
-      labelText: "Email address",
-      labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12, color: Colors.black),
+      labelText: "Email Address",
+      labelStyle:
+          TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
+      hintStyle:
+          TextStyle(fontSize: 12, color: Colors.black, letterSpacing: 0.5),
     ),
   );
 
@@ -162,8 +168,10 @@ class _SigninPageState extends State<SigninPage> {
       // ),
       hintText: "Passowrd",
       labelText: "Password",
-      labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-      hintStyle: TextStyle(fontSize: 12, color: Colors.black),
+      labelStyle:
+          TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
+      hintStyle:
+          TextStyle(fontSize: 12, color: Colors.black, letterSpacing: 0.5),
     ),
   );
 
@@ -179,7 +187,7 @@ class _SigninPageState extends State<SigninPage> {
           },
           child: Text(
             "Login",
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(letterSpacing: 0.5),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -250,7 +258,7 @@ class _SigninPageState extends State<SigninPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            backgroundColor: Color.fromRGBO(52, 52, 52, 1),
+                            backgroundColor: Colors.white,
                             title: Text(
                               "Forget Password",
                             ),
@@ -275,7 +283,7 @@ class _SigninPageState extends State<SigninPage> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.email,
-                                                      color: Colors.black),
+                                                      color: Colors.green),
                                                   hintText:
                                                       "Enter email address",
                                                   hintStyle: TextStyle(
@@ -284,6 +292,7 @@ class _SigninPageState extends State<SigninPage> {
                                                   labelText: "Email Address",
                                                   labelStyle: TextStyle(
                                                       color: Colors.green,
+                                                      letterSpacing: 0.5,
                                                       fontSize: 12),
                                                   enabledBorder: OutlineInputBorder(
                                                       borderRadius: BorderRadius
@@ -311,8 +320,9 @@ class _SigninPageState extends State<SigninPage> {
                                             child: OutlineButton(
                                                 onPressed: otpValidation,
                                                 child: Text(
-                                                  "Send OTP",
+                                                  "Send Email",
                                                   style: TextStyle(
+                                                    letterSpacing: 0.5,
                                                       color: Colors.green,
                                                       fontSize: 12),
                                                 ),
@@ -331,9 +341,9 @@ class _SigninPageState extends State<SigninPage> {
                         });
                   },
                   child: Text(
-                    "Forgot password ?",
+                    "Forgot Password ?",
                     textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12,letterSpacing: 0.5),
                   ),
                 ),
                 Padding(

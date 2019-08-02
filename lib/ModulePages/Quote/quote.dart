@@ -27,8 +27,8 @@ class _QuoteState extends State<Quote> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Material(
                         color: Colors.black.withOpacity(0),

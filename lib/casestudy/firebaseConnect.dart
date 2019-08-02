@@ -43,7 +43,7 @@ eventsQuery.documents.forEach((document) {
 
       for(String item in dlist){
         print("singleLine ==>"+item);
-        for (var i in item.split(".")) {
+        for (var i in item.split(". ")) {
            print("singleLine i ==>"+i);
            if(i.isNotEmpty || i == " "){
            single.add(i);

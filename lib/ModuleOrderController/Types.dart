@@ -15,6 +15,7 @@ import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 
 enum Type {
   quote,
@@ -29,6 +30,7 @@ enum Type {
   discussion,
   socialize,
   summary,
+  decisionGameText,
   uploadActivity
 }
 
@@ -36,7 +38,7 @@ class orderManagement {
   static List<Type> order = [];
   static List<dynamic> complete = [];
   static int currentIndex = 0;
-  static String  userid = "";
+  static String userid = "";
   List<dynamic> arguments = [];
   static Firestore db = Firestore.instance;
   static SharedPreferences sharedPreferences;
@@ -47,14 +49,14 @@ class orderManagement {
     sharedPreferences = await SharedPreferences.getInstance();
     userid = sharedPreferences.getString("UserId");
     if (currentIndex == order.length) {
-      await db.collection("user").document(userid).get().then((document){
+      await db.collection("user").document(userid).get().then((document) {
         complete = document.data["completed"];
         print("complete $complete");
       });
       complete.add(arguments[0]);
-      var data = Map<String,dynamic>();
-      data["completed"] =complete;
-     await db.collection("user").document(userid).setData(data , merge: true);
+      var data = Map<String, dynamic>();
+      data["completed"] = complete;
+      await db.collection("user").document(userid).setData(data, merge: true);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => TimelinePage(
@@ -117,7 +119,15 @@ class orderManagement {
             ),
           );
           break;
-
+        case Type.decisionGameText:
+          print("decisionGameText");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DecisionGameTextLoading(
+                  modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
         case Type.caseStudy:
           print("caseStudy");
           Navigator.of(context).push(MaterialPageRoute(

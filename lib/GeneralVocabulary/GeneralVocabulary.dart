@@ -158,7 +158,7 @@ class _VocabularyState extends State<Vocabulary> {
             backgroundColor: Colors.black,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                "assets/Images/vocabulary.png",
+                "assets/Images/mindmap.png",
                 fit: BoxFit.fitHeight,
                 height: 200,
               ),

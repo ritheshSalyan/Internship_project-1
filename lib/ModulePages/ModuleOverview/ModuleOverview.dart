@@ -167,12 +167,12 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             pinned: true,
             title: Text(
               "Course Overview",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.green),
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
                 "assets/Images/${widget.modNum}.png",
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fitHeight,
               ),
             ),
           ),

@@ -53,7 +53,7 @@ class _introPageState extends State<introPage> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          // PageStarter1State(),
+          PageStarter1State(),
         ],
       ),
     );
