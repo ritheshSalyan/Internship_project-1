@@ -430,11 +430,12 @@ class _TimelinePageState extends State<TimelinePage> {
                 width: 145.0,
                 child: Card(
                   color: Colors.grey[100],
-                  elevation: 10,
+                  elevation: 20,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       color: Colors.green,
-                      width: 3,
+                      // width: 3,
+                      width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
