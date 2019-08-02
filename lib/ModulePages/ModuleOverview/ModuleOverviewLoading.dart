@@ -123,7 +123,7 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
 
         case "Type.discussion":
           typeList.add(Type.discussion);
-          print("summary");
+          print("discussion");
           break;
 
         default:

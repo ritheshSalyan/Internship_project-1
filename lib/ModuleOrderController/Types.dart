@@ -16,6 +16,7 @@ import '../ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
+import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
 
 enum Type {
   quote,
@@ -162,6 +163,12 @@ class orderManagement {
 
         case Type.summary:
           print("summary");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  SummaryPageLoader(modNum: arguments[0], index: currentIndex),
+            ),
+          );
           break;
 
         case Type.discussion:
