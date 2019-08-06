@@ -4,19 +4,19 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
-
 class SummaryTheoryPage extends StatefulWidget {
   SummaryTheoryPage(
       {Key key,
-        this.content,
-        this.button,
-        this.modNum,
-        this.title,
-        this.index,
-        this.image})
+      this.content,
+      this.button,
+      this.modNum,
+      this.title,
+      this.index,
+      this.image})
       : super(key: key);
   String content, button, title, image;
   int modNum, index;
+
   @override
   _SummaryTheoryPageState createState() => _SummaryTheoryPageState();
 }
@@ -28,6 +28,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+
   _onSubmit() {
     setState(() {
       item;
@@ -37,7 +38,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
             data.split(". ").toString());
         // for (var item in ) {
         if (data.split(". ")[item].length > 3) {
-          _listViewData.add(data.split(". ")[item] );
+          _listViewData.add(data.split(". ")[item]);
         }
         item++;
 
@@ -66,7 +67,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
             children: <Widget>[
               Padding(
                 padding:
-                EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
                 child: AutoSizeText(
                   data,
                   textAlign: TextAlign.center,
@@ -86,50 +87,50 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     if (item < data.split(". ").length) {
       list.add(Center(
           child: Padding(
-            padding:
+        padding:
             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
-            child: OutlineButton(
-              highlightedBorderColor: Colors.greenAccent,
-              borderSide: BorderSide(color: Colors.green),
-              onPressed: _onSubmit,
-              child: Text(
-                'Tap here to Continue',
-                style: TextStyle(
-                  // letterSpacing: 1.5,
-                  // fontFamily: "Open Sans",
-                  color: Colors.green,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              color: Colors.white,
+        child: OutlineButton(
+          highlightedBorderColor: Colors.greenAccent,
+          borderSide: BorderSide(color: Colors.green),
+          onPressed: _onSubmit,
+          child: Text(
+            'Tap here to Continue',
+            style: TextStyle(
+              // letterSpacing: 1.5,
+              // fontFamily: "Open Sans",
+              color: Colors.green,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
-          )));
+          ),
+          color: Colors.white,
+        ),
+      )));
     } else {
       list.add(Center(
           child: Padding(
-            padding:
+        padding:
             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
-            child: OutlineButton(
-              highlightedBorderColor: Colors.greenAccent,
-              borderSide: BorderSide(color: Colors.green),
-              onPressed: (){
-                List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                orderManagement.moveNextIndex(context, arguments);
-              },
-              child: Text(
-                widget.button,
-                style: TextStyle(
-                  // letterSpacing: 1.5,
-                  // fontFamily: "Open Sans",
-                  color: Colors.green,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              color: Colors.white,
+        child: OutlineButton(
+          highlightedBorderColor: Colors.greenAccent,
+          borderSide: BorderSide(color: Colors.green),
+          onPressed: () {
+            List<dynamic> arguments = [widget.modNum, widget.index + 1];
+            orderManagement.moveNextIndex(context, arguments);
+          },
+          child: Text(
+            widget.button,
+            style: TextStyle(
+              // letterSpacing: 1.5,
+              // fontFamily: "Open Sans",
+              color: Colors.green,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
-          )));
+          ),
+          color: Colors.white,
+        ),
+      )));
 //      list.add(Center(
 //        child: OutlineButton(
 //          borderSide: BorderSide(color: Colors.green),
@@ -196,15 +197,21 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2),
+                    top: MediaQuery.of(context).size.height * 0.2,
+                  ),
                   child: Column(
                     children: <Widget>[
-                      Image.asset(
-                        widget.image,
-                        // "assets/Images/photo.png",
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.75,
-                        alignment: Alignment.center,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width*0.04,
+                        ),
+                        child: Image.asset(
+                          widget.image,
+                          // "assets/Images/photo.png",
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          alignment: Alignment.center,
+                        ),
                       ),
                       Column(
                         // children: <Widget>[

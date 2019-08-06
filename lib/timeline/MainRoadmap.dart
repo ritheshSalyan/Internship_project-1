@@ -70,6 +70,14 @@ class _TimelinePageState extends State<TimelinePage> {
     );
   }
 
+  void _Sharedpreference(BuildContext context) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => SigninPage(),
+    ));
+  }
+
   launcher(String urlLink) async {
     String url = urlLink;
     if (await canLaunch(url)) {
@@ -312,7 +320,10 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (SummaryPageLoader(modNum:2,index: 30,)),
+                      builder: (context) => (SummaryPageLoader(
+                        modNum: 2,
+                        index: 30,
+                      )),
                     ),
                   );
                 },
@@ -362,9 +373,10 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
                 onTap: () {
                   _auth.signOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SigninPage(),
-                  ));
+                  _Sharedpreference(context);
+//                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+//                    builder: (context) => SigninPage(),
+//                  ));
                 },
               ),
               Divider(),
@@ -501,10 +513,10 @@ class _TimelinePageState extends State<TimelinePage> {
               Container(
                 color: Colors.grey[50],
 
-                height: MediaQuery.of(context).size.height*0.37,
+                height: MediaQuery.of(context).size.height * 0.37,
 //              height: 210.0,
 //                width: 145.0,
-              width: MediaQuery.of(context).size.width*0.43,
+                width: MediaQuery.of(context).size.width * 0.43,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
 //                    color: doodle.color,

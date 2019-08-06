@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/home.dart';
-import 'package:startupreneur/timeline/MainRoadmap.dart';
+import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
@@ -54,10 +54,13 @@ class _SignupPageState extends State<SignupPage>
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static dynamic referePoint = 0;
+
+
   static _pdfworks() async {
     print("hello world");
     doc = await PDFDocument.fromAsset('assets/pdf/t_and_c.pdf');
   }
+
 
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -66,6 +69,7 @@ class _SignupPageState extends State<SignupPage>
   }
 
   static void signUpInwithEmail(BuildContext context) async {
+
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
 
@@ -84,6 +88,8 @@ class _SignupPageState extends State<SignupPage>
       userid = user.uid;
       _preferences(userid);
       print("its is $user");
+
+
       if (referalCodeFromFriend.isNotEmpty) {
         await db
             .collection("user")
@@ -101,20 +107,11 @@ class _SignupPageState extends State<SignupPage>
             .collection("user")
             .document(referalCodeFromFriend)
             .setData(dataMap, merge: true);
-
-        // dataMap['uid'] = userid;
-        // db
-        //     .collection("user")
-        //     .document(userid)
-        //     .setData(dataMap, merge: true)
-        //     .catchError((e) {
-        //   print(e);
-        // });
-        // });
       }
+
       createNote();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new TimelinePage(title: "Time line"),
+        builder: (context) => new RoadmapLoader(),
       ));
     } catch (e) {
       progressDialog.hide();
@@ -126,6 +123,7 @@ class _SignupPageState extends State<SignupPage>
   }
 
   static void createNote() async {
+
     var dataMap = new Map<String, dynamic>();
     dataMap['name'] = fname;
     dataMap['email'] = email;
@@ -137,6 +135,7 @@ class _SignupPageState extends State<SignupPage>
     dataMap['uid'] = userid;
     dataMap['points'] = 0;
     dataMap['completed'] = [1];
+    dataMap["payment"] = false;
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
@@ -152,7 +151,7 @@ class _SignupPageState extends State<SignupPage>
   static bool isValide() {
     final _form = _formkey.currentState;
 
-    if (_form.validate()) {
+    if (isChecked && _form.validate()) {
       _form.save();
       return true;
     }
@@ -215,7 +214,6 @@ class _SignupPageState extends State<SignupPage>
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
           labelText: "Email Address *",
           labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
-
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
           //   borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -471,9 +469,9 @@ class _SignupPageState extends State<SignupPage>
               ),
               password(context),
 //              Padding(
-//                padding: EdgeInsets.only(top: 20),
-//              ),
-//              confirmPassword,
+////                padding: EdgeInsets.only(top: 20),
+////              ),
+////              confirmPassword,
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
@@ -620,11 +618,9 @@ class _SignupPageState extends State<SignupPage>
                     onPressed: () {
                       print("hello");
                       _pdfworks();
-                      AlertDialog(
-                        content: PDFViewer(
+                          PDFViewer(
                           document: doc,
-                        ),
-                      );
+                        );
                     },
                     child: Text(
                       "Accept Terms & Conditions",

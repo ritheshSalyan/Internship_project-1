@@ -67,6 +67,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                       width: 250.0,
                       child: Column(
                         children: <Widget>[
+                          SizedBox(height: MediaQuery.of(context).size.height*0.2),
                           Image.asset(
                             "assets/Images/vocabulary.png",
                             fit: BoxFit.fitHeight,
