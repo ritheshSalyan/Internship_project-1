@@ -11,8 +11,7 @@ class PaymentGatewayPage extends StatefulWidget {
   _PaymentGatewayPageState createState() => _PaymentGatewayPageState();
 }
 
-class _PaymentGatewayPageState extends State<PaymentGatewayPage>
-    with ChangeNotifier {
+class _PaymentGatewayPageState extends State<PaymentGatewayPage> with AutomaticKeepAliveClientMixin{
   static const platform = const MethodChannel('pay');
 
   SharedPreferences _sharedPreferences;
@@ -33,11 +32,16 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage>
     preference();
   }
 
+
   @override
-  void dispose() {
-    super.dispose();
-//    _razorpay.clear();
-  }
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
+//  @override
+//  void dispose() {
+//    super.dispose();
+//   _razorpay.clear();
+//  }
 
   void preference() async {
     _sharedPreferences = await SharedPreferences.getInstance();
@@ -82,7 +86,10 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage>
 
   Future<Null> _payment() async {
      bool result =  await platform.invokeMethod('payment');
-     print("result is $result");
+     print("Message from PaymentGateway.dart RESULT IS VAL IS  $result");
+     var data = Map<String,dynamic>();
+     data["payment"]=true;
+     await db.collection("user").document(userId).setData(data);
   }
 
   @override
@@ -97,8 +104,6 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage>
         ),
         body: PageStorage(
           bucket: bucket,
-
-
           child: Column(
             children: <Widget>[
               Card(
@@ -114,11 +119,11 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage>
                           _payment();
                         },
                         child: Text("Pay"),
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

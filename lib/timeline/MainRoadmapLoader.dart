@@ -48,7 +48,8 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
               builder: (context) => PaymentGatewayPage(),
             ),
           );
-        } else {
+        }
+        else {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => TimelinePage(
@@ -56,8 +57,8 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
               ),
             ),
           );
-        }
-      },
+      };
+    }
     );
     return Scaffold(
       body: CircularProgressIndicator(),
