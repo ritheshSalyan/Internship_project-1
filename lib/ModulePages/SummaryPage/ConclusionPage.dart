@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import '../../timeline/MainRoadmapLoader.dart';
 
 class SummaryPage extends StatefulWidget {
   @override
@@ -86,7 +87,14 @@ class _SummaryPageState extends State<SummaryPage>
                   ),
                   child: OutlineButton(
                     borderSide: BorderSide(color:Colors.green,width: 1.5),
-                    onPressed: (){},
+                    onPressed: (){
+
+                      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => RoadmapLoader(),
+          ),
+        );
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
