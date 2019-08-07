@@ -18,8 +18,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
 
   private static final String CHANNEL = "pay";
   ProgressDialog dialog;
-
-
+  boolean val = false;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,8 +30,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
 
     new MethodChannel(getFlutterView(),CHANNEL).setMethodCallHandler((methodCall, result) -> {
       if(methodCall.method.equals("payment")){
-        boolean val = startPayment();
-        result.success(val);
+        startPayment();
         Toast.makeText(getApplicationContext(),"Flutter toast",Toast.LENGTH_SHORT).show();
       }else{
         result.notImplemented();
@@ -41,7 +39,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   }
 
 
-  public boolean startPayment(){
+  public void startPayment(){
     Checkout checkout = new Checkout();
     checkout.setImage(com.razorpay.razorpay_flutter.R.drawable.rzp_logo);
     final Activity activity = this;
@@ -52,13 +50,11 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
       options.put("contact","8618992869");
       options.put("email","subramanyarao4@gmail.com");
       checkout.open(activity,options);
-
-
+//      checkout.onSuccess();
 
     }catch (Exception e){
       Toast.makeText(getApplicationContext(),"Error"+e,Toast.LENGTH_SHORT).show();
     }
-    return true;
   }
 
 
@@ -66,7 +62,6 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   public void onPaymentSuccess(String s) {
     Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
   }
-
 
   @Override
   public void onPaymentError(int i, String s) {

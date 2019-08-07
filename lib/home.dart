@@ -3,7 +3,7 @@ import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/IntroPage/IntroPageController.dart';
-import 'package:startupreneur/timeline/MainRoadmap.dart';
+import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 
 class homePage extends StatefulWidget {
   @override
@@ -34,12 +34,12 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
      firstLogin().then((s) {
-      print("home page$s");
+      print("home page $s");
       if (s==true) {
         print("home hello");
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => TimelinePage(title: "Road Map",),
+            builder: (context) => RoadmapLoader(),
           ),
         );
       }

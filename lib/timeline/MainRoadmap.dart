@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
 import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
-import 'package:startupreneur/trial.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import '../Trial/AnimationTrial.dart';
@@ -155,11 +154,11 @@ class _TimelinePageState extends State<TimelinePage> {
     }
     return false;
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+//
+//  @override
+//  void dispose() {
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -523,7 +522,6 @@ class _TimelinePageState extends State<TimelinePage> {
 //                    color: doodle.color,
                   margin: EdgeInsets.all(0),
                   elevation: 10,
-
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       color: Colors.green,
