@@ -35,10 +35,10 @@ class _SummaryPageLoaderState extends State<SummaryPageLoader> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('discussion');
+    CollectionReference ref = Firestore.instance.collection('summary');
     QuerySnapshot eventsQuery =
     await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+       .getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];

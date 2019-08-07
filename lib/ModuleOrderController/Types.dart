@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../ModulePages/quiz/quizLoader.dart';
-import '../ModulePages/quiz/quiz_page.dart';
+import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import '../ModulePages/VideoController/VideoController.dart';
 import '../ModulePages/VideoController/VideoControllerLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
@@ -60,8 +60,8 @@ class orderManagement {
       await db.collection("user").document(userid).setData(data, merge: true);
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => TimelinePage(
-            title: "Road Map",
+          builder: (context) => SummaryPage(
+
           ),
         ),
       );

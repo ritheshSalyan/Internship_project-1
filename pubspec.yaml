@@ -59,6 +59,11 @@ dependencies:
   file_picker: ^1.1.1
   image_picker: ^0.6.0+20
   clipboard_manager: ^0.0.4
+  razorpay_flutter: 1.1.0
+  provider: ^2.0.0+1
+  rxdart: ^0.21.0
+  razorpay_plugin: ^0.2.9
+
 
 
 

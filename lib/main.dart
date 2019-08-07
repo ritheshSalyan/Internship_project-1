@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
+import 'PaymentGateway/PaymentGateway.dart';
 import 'HustleStore/HustleStore.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+//  ChangeNotifierProvider(
+//    builder: (context) => PaymentGatewayPage(),
+//    child: MyApp(),
+//  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
