@@ -115,6 +115,12 @@ class _QuizPageState extends State<QuizPage> {
                                           correctAns =
                                               document["answer"].toString();
                                           reason = document["reason"];
+                                          if(reason.isEmpty){
+                                             reason = "";
+                                          }
+                                          else{
+                                            reason = "Reason : "+reason;
+                                          }
                                           // print(correctAns);
                                           for (dynamic i
                                               in document["option"]) {
@@ -168,7 +174,7 @@ class _QuizPageState extends State<QuizPage> {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                         content: Text(
-                                          "Hurray ! You got it right\n Lets move on !",
+                                          "Hurray ! You got it right\n Lets move on !\n"+reason,
                                           style: TextStyle(
                                               color: Colors.white,
                                               

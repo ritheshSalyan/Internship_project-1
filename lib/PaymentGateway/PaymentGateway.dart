@@ -85,8 +85,8 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage> with AutomaticK
   }
 
   Future<Null> _payment() async {
-     bool result =  await platform.invokeMethod('payment');
-     print("Message from PaymentGateway.dart RESULT IS VAL IS  $result");
+     await platform.invokeMethod('payment');
+    //  print("Message from PaymentGateway.dart RESULT IS VAL IS  $result");
      var data = Map<String,dynamic>();
      data["payment"]=true;
      await db.collection("user").document(userId).setData(data);

@@ -22,6 +22,7 @@ import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
+import '../Trial/AnimationTrial.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -339,7 +340,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (ChatHome()),
+                      builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
                     ),
                   );
                 },
