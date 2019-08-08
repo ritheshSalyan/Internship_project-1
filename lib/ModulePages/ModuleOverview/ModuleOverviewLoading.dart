@@ -110,7 +110,10 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
           print("theory");
           typeList.add(Type.theory);
           break;
-
+       case "Type.hustelTip":
+          print("theory");
+          typeList.add(Type.hustelTip);
+          break;
         case "Type.summary":
           typeList.add(Type.summary);
           print("summary");

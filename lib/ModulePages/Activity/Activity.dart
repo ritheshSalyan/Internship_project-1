@@ -5,9 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ActivityPage extends StatefulWidget {
-  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle,this.index}):super(key:key);
+  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle,this.index,this.hint}):super(key:key);
   final int modNum,index;
-  final String question,buttonTitle;
+  final String question,buttonTitle,hint;
   @override
   _ActivityPageState createState() => _ActivityPageState();
 }
@@ -40,7 +40,7 @@ class _ActivityPageState extends State<ActivityPage> {
               color: Colors.green,
             ),
             hintText: "ABZ startup",
-            labelText: "Category ${i + 1}",
+            labelText: "${widget.hint} ${i + 1}",
             labelStyle: TextStyle(
               color: Colors.black,
               fontSize: 12,

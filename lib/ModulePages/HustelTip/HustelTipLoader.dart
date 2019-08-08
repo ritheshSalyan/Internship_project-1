@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Activity.dart';
+import 'HustelTip.dart';
 import '../../ModuleOrderController/Types.dart';
 
-class ActivityLoading extends StatefulWidget {
-  ActivityLoading({Key key, this.modNum,this.index}) : super(key: key);
-  int modNum,index;
+class HustelTipLoading extends StatefulWidget {
+  HustelTipLoading({Key key, this.modNum,this.index}) : super(key: key);
+  final int modNum,index;
   @override
-  _ActivityLoading createState() => _ActivityLoading();
+  _HustelTipLoading createState() => _HustelTipLoading();
 }
 
-class _ActivityLoading extends State<ActivityLoading> {
+class _HustelTipLoading extends State<HustelTipLoading> {
   @override
   void initState() {
     // TODO: implement initState
@@ -22,35 +22,39 @@ class _ActivityLoading extends State<ActivityLoading> {
   @override
   Widget build(BuildContext context) {
     getEventsFromFirestore(widget.modNum).then((title) {
-      print("Title is " + title.toString());
+      print("HustelTip is " + title.toString());
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => ActivityPage( 
+          builder: (context) => HustelTipPage(
+           index:widget.index,
             modNum: widget.modNum,
-            question: title[0],
-              buttonTitle: title[1],
-              hint: title[2],
-            index:widget.index+1
+            title: title[0],
+           
           ),
         ),
       );
     });
-    return Scaffold();
+    return Scaffold(
+      body: CircularProgressIndicator(),
+    );
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('module');
+    CollectionReference ref = Firestore.instance.collection('hustelTip');
     QuerySnapshot eventsQuery =
-        await ref.where("id", isEqualTo: modNum).getDocuments();
+        await ref.where("module", isEqualTo: modNum)
+        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.documents.forEach((document) {
-      print("Activity " +
-         modNum.toString());
+      print("HustelTip " +
+          document.toString());
 
-      title = convert(document["order${orderManagement.currentIndex}"]);
+      title = convert(document["content"]);
+      // title.add(document["image"].toString());
     });
+
     return title;
   }
   
@@ -62,6 +66,7 @@ class _ActivityLoading extends State<ActivityLoading> {
        list.add(item.toString());
        print(item.toString());
     }
+    //list.add("assets/Images/think.png");
     return list;
   }
 }
