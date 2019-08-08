@@ -125,7 +125,10 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
           typeList.add(Type.discussion);
           print("discussion");
           break;
-
+        case "Type.heading":
+          print("heading");
+          typeList.add(Type.heading);
+          break;
         default:
           print("Default");
       }

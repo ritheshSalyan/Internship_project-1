@@ -1,8 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Doodle {
-  final Text name;
+  final AutoSizeText name;
   final String time;
   final String content;
   final String doodle;
@@ -31,18 +32,18 @@ class Doodle {
 List<Doodle> doodles = [
   new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Starting Up",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
     time: "Module 1",
-    doodle: "assets/Images/ideaIcon.png",
+    doodle: "assets/Images/StaringUpIcon.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
       Icons.flag,
@@ -61,18 +62,18 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Idea and Market Research",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 10,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
     time: "Module 2",
-    doodle: "assets/Images/bulb.png",
+    doodle: "assets/Images/ideaIcon2.png",
     // "https://www.google.com/logos/doodles/2015/abu-al-wafa-al-buzjanis-1075th-birthday-5436382608621568-hp2x.jpg",
     icon: Icon(
       FontAwesomeIcons.circle,
@@ -92,11 +93,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Ethical Foundations",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -123,11 +124,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Product",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -154,11 +155,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Business Model",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -185,11 +186,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Pricing",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -217,11 +218,11 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
 
-    name: Text(
+    name: AutoSizeText(
       "Legal and Compliance",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -248,11 +249,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Branding and Marketing",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -279,11 +280,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Team",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -310,11 +311,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Technology",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -341,11 +342,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Funding and Financing",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -372,11 +373,11 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-    name: Text(
+    name: AutoSizeText(
       "Go to Market",
       style: TextStyle(
 //                            color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
@@ -407,11 +408,11 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Color.fromRGBO(222, 30, 89, 1), Color.fromRGBO(59, 40, 127, 1)],
 
-    name: Text(
+    name: AutoSizeText(
       "Store",
       style: TextStyle(
           color: Colors.white,
-          fontSize: 16,
+          // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),

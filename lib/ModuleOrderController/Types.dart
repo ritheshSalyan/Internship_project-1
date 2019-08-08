@@ -17,8 +17,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
+import '../ModulePages/TopicHeading/TopicHeadingLoader.dart';
 
 enum Type {
+  heading,
   quote,
   quiz,
   vocabulary,
@@ -180,7 +182,15 @@ class orderManagement {
             ),
           );
           break;
-
+        case Type.heading:
+          print("heading");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  TopicHeadingLoading(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
         default:
           print("Default");
       }

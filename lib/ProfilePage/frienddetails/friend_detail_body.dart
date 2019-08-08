@@ -39,19 +39,23 @@ class FriendDetailBody extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding:
-                  EdgeInsets.all(25), //MediaQuery.of(context).size.height * 0.1
+                  EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), //MediaQuery.of(context).size.height * 0.1
 //              child: Text("Module $item: " + doodles[item - 1].name),
             child: Row(
               children: <Widget>[
                 Text("Module $item: "),
                 doodles[item-1].name,
-              ],
-            ),
-            ),
-            Icon(
+                SizedBox(
+                  width: 0.1,
+                ),
+                 Icon(
               Icons.done_all,
               color: Colors.green,
             )
+              ],
+            ),
+            ),
+           
           ],
         ),
       )
