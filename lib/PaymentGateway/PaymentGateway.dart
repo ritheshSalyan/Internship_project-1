@@ -84,13 +84,21 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage> with AutomaticK
     );
   }
 
+
+
   Future<Null> _payment() async {
-     bool result =  await platform.invokeMethod('payment');
-     print("Message from PaymentGateway.dart RESULT IS VAL IS  $result");
-     var data = Map<String,dynamic>();
-     data["payment"]=true;
-     await db.collection("user").document(userId).setData(data);
+     bool result = await platform.invokeMethod('payment');
+     print("Message from PaymentGateway.dart RESULT IS VAL IS $result");
+//     if(result){
+//       var data = Map<String,dynamic>();
+//       data["payment"]=true;
+//       await db.collection("user").document(userId).setData(data);
+//     }
+//     else{
+//        print("hey from payment gateway");
+//     }
   }
+
 
   @override
   Widget build(BuildContext context) {
