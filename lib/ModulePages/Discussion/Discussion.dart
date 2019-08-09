@@ -2,7 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../socialize/socialize.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
+import 'package:extended_image/extended_image.dart';
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
@@ -16,6 +20,7 @@ class DiscussionPage extends StatefulWidget {
       : super(key: key);
   String content, button, title, image;
   int modNum, index;
+
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
 }
@@ -27,6 +32,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+
   _onSubmit() {
     setState(() {
       item;
@@ -173,13 +179,42 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       top: MediaQuery.of(context).size.height * 0.2),
                   child: Column(
                     children: <Widget>[
-                      Image.asset(
-                        widget.image,
-                        // "assets/Images/photo.png",
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.75,
-                        alignment: Alignment.center,
+//                      Image.asset(
+//                        widget.image,
+//                        // "assets/Images/photo.png",
+//                        height: MediaQuery.of(context).size.height * 0.15,
+//                        width: MediaQuery.of(context).size.width * 0.75,
+//                        alignment: Alignment.center,
+//                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          ExtendedImage.asset(
+                            widget.image,
+                            // "assets/Images/photo.png",
+                            enableLoadState: true,
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.5,
+//                            alignment: Alignment.center,
+                            mode: ExtendedImageMode.Gesture,
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.zoom_out_map,
+                              color: Colors.green,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ImageViewer(image: widget.image),
+                                fullscreenDialog: true,
+                              ));
+                            },
+                          ),
+                        ],
                       ),
+
                       Column(
                         // children: <Widget>[
 

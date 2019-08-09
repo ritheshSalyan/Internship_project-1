@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
+import 'package:photo_view/photo_view.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../ProfilePageLoader.dart';
@@ -115,7 +116,8 @@ class FriendDetailHeader extends StatelessWidget {
       child: new Hero(
         tag: 1,
         child: new CircleAvatar(
-          backgroundImage: new NetworkImage(friend.avatar),
+//          backgroundImage: new NetworkImage(friend.avatar),
+            backgroundImage: NetworkImage(friend.avatar),
           radius: 65.0,
           child: Padding(
               padding: EdgeInsets.only(

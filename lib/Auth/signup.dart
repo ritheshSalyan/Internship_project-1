@@ -6,6 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import 'PdfReader.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
@@ -18,10 +22,10 @@ class _SignupPageState extends State<SignupPage>
     with AutomaticKeepAliveClientMixin {
   static var _value = null;
   static FirebaseUser user;
-  static PDFDocument doc;
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
+
   // static final _fieldKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   static TextEditingController textEditingController1 =
@@ -54,13 +58,9 @@ class _SignupPageState extends State<SignupPage>
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static dynamic referePoint = 0;
+  PDFDocument doc;
 
-
-  static _pdfworks() async {
-    print("hello world");
-    doc = await PDFDocument.fromAsset('assets/pdf/t_and_c.pdf');
-  }
-
+  String _documentPath = 'assets/pdf/t_and_c.pdf';
 
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -69,7 +69,6 @@ class _SignupPageState extends State<SignupPage>
   }
 
   static void signUpInwithEmail(BuildContext context) async {
-
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
 
@@ -88,7 +87,6 @@ class _SignupPageState extends State<SignupPage>
       userid = user.uid;
       _preferences(userid);
       print("its is $user");
-
 
       if (referalCodeFromFriend.isNotEmpty) {
         await db
@@ -123,7 +121,6 @@ class _SignupPageState extends State<SignupPage>
   }
 
   static void createNote() async {
-
     var dataMap = new Map<String, dynamic>();
     dataMap['name'] = fname;
     dataMap['email'] = email;
@@ -170,6 +167,7 @@ class _SignupPageState extends State<SignupPage>
   @override
   void initState() {
     super.initState();
+    prepareTestPdf();
     // textEditingController.addListener((){
 
     //   print(textEditingController.text);
@@ -189,9 +187,11 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
           hintText: "eg. Bob Marley",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+          hintStyle:
+              TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
           labelText: "Full Name *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
           //   borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -211,9 +211,11 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.email, color: Colors.green),
           hintText: "you@example.com",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+          hintStyle:
+              TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
           labelText: "Email Address *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
           //   borderSide: BorderSide(color: Colors.green, width: 2.0),
@@ -240,9 +242,11 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.phone_android, color: Colors.green),
           hintText: "",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+          hintStyle:
+              TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
           labelText: "Mobile Number *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -262,9 +266,11 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.business, color: Colors.green),
           hintText: "Bob School of AI",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+          hintStyle:
+              TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
           labelText: "Institution/Company",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -295,7 +301,7 @@ class _SignupPageState extends State<SignupPage>
   //       ),
   //     );
 
-  Widget occupation =  Text(" ");
+  Widget occupation = Text(" ");
 
   Widget referalCode(BuildContext context) => TextFormField(
         controller: textEditingController6,
@@ -316,10 +322,13 @@ class _SignupPageState extends State<SignupPage>
           hintText: "Ax875b",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
           helperText: "CODE FROM YOUR FRIEND",
-          helperStyle:
-              TextStyle(color: Colors.grey, fontStyle: FontStyle.italic,letterSpacing: 0.5),
+          helperStyle: TextStyle(
+              color: Colors.grey,
+              fontStyle: FontStyle.italic,
+              letterSpacing: 0.5),
           labelText: "Referral Code",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -349,9 +358,11 @@ class _SignupPageState extends State<SignupPage>
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.lock, color: Colors.green),
           hintText: "password",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+          hintStyle:
+              TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
           labelText: "Password *",
-          labelStyle: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+          labelStyle:
+              TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),
 
           // focusedBorder: OutlineInputBorder(
           //   borderRadius: BorderRadius.circular(10),
@@ -388,6 +399,9 @@ class _SignupPageState extends State<SignupPage>
 //      // ),
 //    ),
 //  );
+  void prepareTestPdf() async {
+    doc = await PDFDocument.fromAsset(_documentPath);
+  }
 
   Widget signUpButton(BuildContext context) => ButtonTheme(
         minWidth: 300,
@@ -402,7 +416,8 @@ class _SignupPageState extends State<SignupPage>
           },
           child: Text(
             "Sign Up",
-            style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+            style: TextStyle(
+                color: Colors.black, fontSize: 12, letterSpacing: 0.5),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -496,7 +511,8 @@ class _SignupPageState extends State<SignupPage>
                 ),
                 hint: Text(
                   "Gender",
-                  style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 12, letterSpacing: 0.5),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -534,14 +550,14 @@ class _SignupPageState extends State<SignupPage>
                 ),
                 hint: Text(
                   "Select Your Occupation *",
-                  style: TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 12, letterSpacing: 0.5),
                 ),
                 onChanged: (value) {
                   setState(() {
                     typeOfOccupations = value;
                     if (typeOfOccupations == "Others") {
                       occupation = TextFormField(
-                        
                         controller: textEditingController5,
                         onSaved: (value) {
                           setState(() {
@@ -552,11 +568,15 @@ class _SignupPageState extends State<SignupPage>
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.work, color: Colors.green),
                           hintText: "eg Student,business etc",
-                          hintStyle:
-                              TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+                          hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              letterSpacing: 0.5),
                           labelText: "Occupation *",
-                          labelStyle:
-                              TextStyle(color: Colors.black, fontSize: 12,letterSpacing: 0.5),
+                          labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              letterSpacing: 0.5),
 
                           // focusedBorder: OutlineInputBorder(
                           //   borderRadius: BorderRadius.circular(10),
@@ -579,7 +599,10 @@ class _SignupPageState extends State<SignupPage>
                     value: value,
                     child: Text(
                       value,
-                      style: TextStyle(fontSize: 12, color: Colors.black,letterSpacing: 0.5),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          letterSpacing: 0.5),
                     ),
                   );
                 }).toList(),
@@ -616,15 +639,18 @@ class _SignupPageState extends State<SignupPage>
                   ),
                   FlatButton(
                     onPressed: () {
-                      print("hello");
-                      _pdfworks();
-                          PDFViewer(
-                          document: doc,
-                        );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PdfReader(doc, "Terms and Conditions"),
+                            fullscreenDialog: true),
+                      );
                     },
                     child: Text(
                       "Accept Terms & Conditions",
-                      style: TextStyle(color: Colors.grey, fontSize: 12,letterSpacing: 0.5),
+                      style: TextStyle(
+                          color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
                     ),
                   ),
                 ],
