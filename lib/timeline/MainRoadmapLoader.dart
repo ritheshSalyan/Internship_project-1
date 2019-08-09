@@ -57,7 +57,7 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
               ),
             ),
           );
-      };
+      }
     }
     );
     return Scaffold(

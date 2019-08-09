@@ -19,7 +19,7 @@ import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverview.dart';
+import 'package:startupreneur/ModulePages/ChatBoardRoom/ChatBoardRoom.dart';
 import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -156,6 +156,7 @@ class _TimelinePageState extends State<TimelinePage> {
     }
     return false;
   }
+
 //
 //  @override
 //  void dispose() {
@@ -176,10 +177,15 @@ class _TimelinePageState extends State<TimelinePage> {
           iconTheme: IconThemeData(color: Colors.black),
           title: Image.asset(
             "assets/Images/Capture.PNG",
-            width: MediaQuery.of(context).size.width * 0.57,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.57,
           ),
           automaticallyImplyLeading: true,
-          backgroundColor: Theme.of(context).primaryColorDark,
+          backgroundColor: Theme
+              .of(context)
+              .primaryColorDark,
           elevation: 10.0,
           actions: <Widget>[
             Row(
@@ -320,21 +326,12 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => (SummaryPageLoader(
-                  //       modNum: 2,
-                  //       index: 30,
-                  //     )),
-                  //   ),
-                  // );
-                   Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => MyHomePage1(
-
-          ),
-        ),
-      );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                      (ChatBoardRoom()),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -394,7 +391,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 child: Text(
                   "The Startupreneur® All Rights Reserved",
                   style:
-                      TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+                  TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
                 ),
               ),
               Row(
@@ -414,7 +411,10 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -428,7 +428,10 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -441,7 +444,10 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -470,7 +476,8 @@ class _TimelinePageState extends State<TimelinePage> {
         ));
   }
 
-  timelineModel(TimelinePosition position) => Timeline.builder(
+  timelineModel(TimelinePosition position) =>
+      Timeline.builder(
         itemBuilder: centerTimelineBuilder,
         itemCount: doodles.length,
         lineColor: Colors.green,
@@ -480,7 +487,9 @@ class _TimelinePageState extends State<TimelinePage> {
 
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
 
     int k;
     var val = 1;
@@ -522,10 +531,16 @@ class _TimelinePageState extends State<TimelinePage> {
               Container(
                 color: Colors.grey[50],
 
-                height: MediaQuery.of(context).size.height * 0.37,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.37,
 //              height: 210.0,
 //                width: 145.0,
-                width: MediaQuery.of(context).size.width * 0.43,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.43,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
 //                    color: doodle.color,
@@ -551,7 +566,10 @@ class _TimelinePageState extends State<TimelinePage> {
                         // Image.network(doodle.doodle),
                         Image.asset(
                           doodle.doodle,
-                          height: MediaQuery.of(context).size.height * 0.09,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.09,
                         ),
                         const SizedBox(
                           height: 8.0,
@@ -604,7 +622,7 @@ class _TimelinePageState extends State<TimelinePage> {
           ),
         ),
         position:
-            i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
+        i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
         isFirst: i == 0,
         isLast: i == doodles.length,
         iconBackground: doodle.iconBackground,
