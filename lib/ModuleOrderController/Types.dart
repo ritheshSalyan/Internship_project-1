@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
 import '../ModulePages/TopicHeading/TopicHeadingLoader.dart';
+import '../ModulePages/HustelTip/HustelTipLoader.dart';
 
 enum Type {
   heading,
@@ -34,7 +35,8 @@ enum Type {
   socialize,
   summary,
   decisionGameText,
-  uploadActivity
+  uploadActivity,
+  hustelTip,
 }
 
 class orderManagement {
@@ -113,6 +115,15 @@ class orderManagement {
                 modNum: arguments[0], index: currentIndex),
           ));
           break;
+
+         case Type.hustelTip:
+          print("hustelTip");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => HustelTipLoading(
+                modNum: arguments[0], index: currentIndex),
+          ));
+          break;
+
         case Type.decisionGame:
           print("decisionGame");
           Navigator.of(context).push(

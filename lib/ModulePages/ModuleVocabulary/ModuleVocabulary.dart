@@ -70,6 +70,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           SizedBox(height: MediaQuery.of(context).size.height*0.2),
                           Image.asset(
                             "assets/Images/vocabulary.png",
+                            height: MediaQuery.of(context).size.height*0.3,
                             fit: BoxFit.fitHeight,
 //                            height: 200,
                           ),

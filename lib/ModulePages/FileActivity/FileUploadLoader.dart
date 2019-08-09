@@ -51,7 +51,7 @@ class _FileUploadLoading extends State<FileUploadLoading> {
         .getDocuments()
         .then((document) {
       document.documents.forEach((value) {
-        print("fileuplload"+value["content"].toString());
+        print("fileupload"+value["content"].toString());
         words.clear();
         meanings.clear();
         for (String i in value["content"]) {
