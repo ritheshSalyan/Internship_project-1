@@ -48,16 +48,23 @@ class orderManagement {
   static Firestore db = Firestore.instance;
   static SharedPreferences sharedPreferences;
   static void moveNextIndex(BuildContext context, arguments) async {
+
+
     currentIndex = arguments[1];
     print("Arguments ${arguments}");
     print("currentIndex ${currentIndex}");
     sharedPreferences = await SharedPreferences.getInstance();
     userid = sharedPreferences.getString("UserId");
+
+
+
     if (currentIndex == order.length) {
       await db.collection("user").document(userid).get().then((document) {
         complete = new List<dynamic>.from(document.data["completed"]);
         print("complete $complete");
       });
+
+      
       complete.add(arguments[0]+1);
       var data = Map<String, dynamic>();
       data["completed"] = complete;
