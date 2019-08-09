@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'ani.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import '../../timeline/MainRoadmapLoader.dart';
 
 class SummaryPage extends StatefulWidget {
@@ -50,6 +52,7 @@ class _SummaryPageState extends State<SummaryPage>
                     height: 150,
                     width: 150,
                   ),
+                  // child: FlareActor('assets/arrow.flr', animation: 'activate'),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -86,29 +89,33 @@ class _SummaryPageState extends State<SummaryPage>
                     right: MediaQuery.of(context).size.height * 0.1,
                   ),
                   child: OutlineButton(
-                    borderSide: BorderSide(color:Colors.green,width: 1.5),
-                    onPressed: (){
-
-                      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => RoadmapLoader(),
-          ),
-        );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Claim my Points ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Image.asset(
-                          "assets/Images/coins.png",
-                          height: 20,
-                          width: 20,
-                        ),
-                      ],
-                    )
-                  ),
+                      borderSide: BorderSide(color: Colors.green, width: 1.5),
+                      onPressed: () {
+                        // Navigator.of(context).pushReplacement(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => RoadmapLoader(),
+                        //   ),
+                        // );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => MyHomePage1(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Claim my Points ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Image.asset(
+                            "assets/Images/coins.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                        ],
+                      )),
                 )
               ],
             );

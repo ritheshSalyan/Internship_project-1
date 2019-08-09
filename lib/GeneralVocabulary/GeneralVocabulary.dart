@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flip_card/flip_card.dart';
 import 'package:folding_cell/folding_cell.dart';
+import 'package:flip_card/flip_card.dart';
 
 class ItemList {
   List<String> list = [];
@@ -113,16 +115,78 @@ class _VocabularyState extends State<Vocabulary> {
       builder: (context) {
         return Container(
           alignment: Alignment.center,
-          child: SimpleFoldingCell(
-            key: _foldingCellKey,
-            cellSize: Size(MediaQuery.of(context).size.width, 250),
-            padding: EdgeInsets.all(15),
-            animationDuration: Duration(milliseconds: 300),
-            borderRadius: 10,
-            frontWidget: _buildFrontWidget(word),
-            innerTopWidget: _buildInnerTopWidget(word),
-            innerBottomWidget: _buildBottomWidget(word, meaning),
-          ),
+          // child: SimpleFoldingCell(
+          //   key: _foldingCellKey,
+          //   cellSize: Size(MediaQuery.of(context).size.width, 250),
+          //   padding: EdgeInsets.all(15),
+          //   animationDuration: Duration(milliseconds: 300),
+          //   borderRadius: 10,
+          //   frontWidget: _buildFrontWidget(word),
+          //   innerTopWidget: _buildInnerTopWidget(word),
+          //   innerBottomWidget: _buildBottomWidget(word, meaning),
+          // ),
+          child: FlipCard(
+                    direction: FlipDirection.HORIZONTAL, // default
+                    front: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width*0.75,
+                      height: MediaQuery.of(context).size.height*0.6,
+                      color: Colors.green,
+                      child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.1),
+                                child: Text(
+                                  word,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28.0,
+                                 ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.1),
+                                child: Text(
+                                  "Tap to Learn!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                    back: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width*0.75,
+                      height: MediaQuery.of(context).size.height*0.6,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.all(17),
+                        child: AutoSizeText(
+                          meaning.replaceAll(".", ".\n\n"),
+                          minFontSize: 12,
+                          maxFontSize: 20,
+                          maxLines: 20,
+                        
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            // fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
         );
       },
     );

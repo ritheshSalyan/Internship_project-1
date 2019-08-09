@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
+import 'package:startupreneur/ModulePages/SummaryPage/ani.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-
+import '../ModulePages/SummaryPage/ani.dart';
+import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGame.dart';
