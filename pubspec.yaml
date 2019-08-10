@@ -68,6 +68,7 @@ dependencies:
   flutter_full_pdf_viewer: ^1.0.4
   path_provider: ^1.1.0
   flare_splash_screen: ^2.0.1+2
+  flushbar: ^1.8.2
 
 
 

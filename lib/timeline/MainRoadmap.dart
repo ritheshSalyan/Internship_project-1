@@ -25,6 +25,8 @@ import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import '../Trial/AnimationTrial.dart';
+import'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import'../Auth/PdfReader.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -49,7 +51,7 @@ class _TimelinePageState extends State<TimelinePage> {
   String uid = "";
   var val = 1;
   static String name = "User";
-
+  PDFDocument doc;
   String _url =
       "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
 
@@ -75,6 +77,7 @@ class _TimelinePageState extends State<TimelinePage> {
   void _Sharedpreference(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
+
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => SigninPage(),
     ));
@@ -95,6 +98,7 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 
   void preferences(BuildContext context) async {
+    doc = await PDFDocument.fromAsset("assets/pdf/how_to_earn.pdf");
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       value = sharedPreferences.getString("UserEmail");
@@ -363,7 +367,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (ChatHome()),
+                      builder: (context) => (PdfReader(doc,"How to Earn points")),fullscreenDialog: true,
                     ),
                   );
                 },
