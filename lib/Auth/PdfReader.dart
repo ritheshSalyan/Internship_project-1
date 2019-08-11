@@ -27,7 +27,7 @@ class _PdfReaderState extends State<PdfReader> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: PDFViewer(document: widget.path),
+      body: PDFViewer(document: widget.path,showIndicator: true,showPicker: false,),
     );
   }
 }

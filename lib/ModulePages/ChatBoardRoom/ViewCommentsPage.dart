@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,8 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
       "Racana de nobilis fermium, resuscitabo acipenser,Racana de nobilis fermium, resuscitabo acipenser, resuscitabo acipenser  resuscit acipenser ?";
   SharedPreferences sharedPreferences;
   Firestore db;
-
+  Flushbar<List<String>> flush;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String userId;
 
   @override
@@ -35,6 +37,24 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
           ],
         ),
       );
+
+  TextFormField getFormField(String text) {
+    return TextFormField(
+      style: TextStyle(color: Colors.white),
+      maxLength: 300,
+      maxLines: 3,
+      maxLengthEnforced: true,
+      decoration: InputDecoration(
+        fillColor: Colors.white10,
+        filled: true,
+        border: UnderlineInputBorder(),
+        helperText: "Share Opinion",
+        helperStyle: TextStyle(color: Colors.green),
+        hintText: text,
+        hintStyle: TextStyle(color: Colors.green),
+      ),
+    );
+  }
 
   Widget buildInput(BuildContext context) {
     return Container(
@@ -87,10 +107,10 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
       appBar: AppBar(
         title: Text("View Comments"),
       ),
-      body: Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            Column(
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -140,6 +160,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                 ),
                 ListView.separated(
                   shrinkWrap: true,
+                  primary: true,
                   padding: const EdgeInsets.all(8.0),
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
@@ -154,53 +175,51 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),
                 ),
-//            buildInput(context),
               ],
             ),
-          ),
-          buildInput(context),
-        ],
+          ],
+        ),
       ),
-//          floatingActionButton: FloatingActionButton(
-//            onPressed: () {},
-//            child: Icon(
-//              FontAwesomeIcons.comment,
-//            ),
-//            backgroundColor: Colors.green,
-//            tooltip: "Reply to discussion",
-//          ),
-//          bottomSheet: BottomSheet(
-//              onClosing: () {},
-//              builder: (context) {
-//                return Container(
-//                  padding: const EdgeInsets.only(left: 20, right: 5),
-//                  width: MediaQuery.of(context).size.width * .85,
-//                  decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(20),
-//                    color: Colors.white,
-//                  ),
-//                  child: new Row(
-//                    children: <Widget>[
-//                      new Flexible(
-//                        child: new TextField(
-//                          decoration: new InputDecoration.collapsed(
-//                            hintText: "Ask a question",
-//                          ),
-//                        ),
-//                      ),
-//                      new Container(
-//                        child: new IconButton(
-//                          icon: new Icon(
-//                            Icons.send,
-//                            color: Color(0xff2139b1),
-//                          ),
-//                          onPressed: () {},
-//                        ),
-//                      )
-//                    ],
-//                  ),
-//                );
-//              }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+//          flushBar(context);
+          print("hello");
+          flush = Flushbar<List<String>>(
+            userInputForm: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  getFormField("Share thoughts"),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: OutlineButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(color: Colors.black, width: 10.0,),),
+                        textColor: Colors.black,
+                        child: Text("Reply"),
+                        onPressed: () {
+                          print("hello");
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            isDismissible: false,
+            backgroundColor: Colors.grey[200],
+          )..show(context);
+        },
+        child: Icon(
+          FontAwesomeIcons.comment,
+        ),
+        backgroundColor: Colors.green,
+        tooltip: "Reply to discussion",
+      ),
     );
   }
 }

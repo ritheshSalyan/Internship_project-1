@@ -129,8 +129,8 @@ class _VocabularyState extends State<Vocabulary> {
                     direction: FlipDirection.HORIZONTAL, // default
                     front: Container(
                       alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width*0.75,
-                      height: MediaQuery.of(context).size.height*0.6,
+                      width: MediaQuery.of(context).size.width*0.8,
+                      height: MediaQuery.of(context).size.height*0.8,
                       color: Colors.green,
                       child: Padding(
                           padding: EdgeInsets.all(20),
@@ -140,25 +140,31 @@ class _VocabularyState extends State<Vocabulary> {
                                 padding: EdgeInsets.only(
                                     top: MediaQuery.of(context).size.height *
                                         0.1),
-                                child: Text(
-                                  word,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 28.0,
-                                 ),
+                                child: Material(
+                                  child: Text(
+                                    word,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 28.0,
+                                    ),
+                                  ),
+                                  color: Colors.transparent,
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: MediaQuery.of(context).size.height *
                                         0.1),
-                                child: Text(
-                                  "Tap to Learn!",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: Text(
+                                    "Tap to Learn!",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -167,23 +173,25 @@ class _VocabularyState extends State<Vocabulary> {
                     ),
                     back: Container(
                       alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width*0.75,
-                      height: MediaQuery.of(context).size.height*0.6,
+                      width: MediaQuery.of(context).size.width*0.8,
+                      height: MediaQuery.of(context).size.height*0.8,
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.all(17),
-                        child: AutoSizeText(
-                          meaning.replaceAll(".", ".\n\n"),
-                          minFontSize: 12,
-                          maxFontSize: 20,
-                          maxLines: 20,
-                        
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            // fontSize: 18.0,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: AutoSizeText(
+                            meaning.replaceAll(".", ".\n\n"),
+                            minFontSize: 12,
+                            maxFontSize: 20,
+                            maxLines: 20,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              // fontSize: 18.0,
+                            ),
                           ),
-                        ),
+                        )
                       ),
                     ),
                   ),

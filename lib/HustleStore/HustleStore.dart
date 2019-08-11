@@ -65,86 +65,6 @@ class _HustleStoreState extends State<HustleStore> {
     });
   }
 
-  // Widget _buildCategoryItem(BuildContext context, int index) {
-  //   final component = itemList[index];
-  //   return MaterialButton(
-  //     elevation: 1.0,
-  //     highlightElevation: 1.0,
-  //     onPressed: () {},
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(10.0),
-  //     ),
-  //     color: Colors.grey.shade800,
-  //     textColor: Colors.white70,
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: <Widget>[
-  //         Container(
-  //           child: Image.asset(
-  //             component.logo,
-  //             fit: BoxFit.contain,
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget _buildCategoryItem2(BuildContext context, int index) {
-    final component = itemList[index];
-    print(component.logo);
-    return GestureDetector(
-      onTap: () {
-        print("You tapped $index");
-        setState(() {
-          if (widget.points >= component.price) {
-            widget.points = widget.points - component.price;
-            var point = new Map<String, dynamic>();
-            point["points"] = widget.points;
-            db.collection("user").document(userId).setData(point, merge: true);
-          } else {}
-        });
-      },
-      child: Container(
-          color: Colors.green,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            child: Column(
-              children: <Widget>[
-                Image.network(
-                  component.logo,
-                  fit: BoxFit.fitHeight,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.02,
-                      left: MediaQuery.of(context).size.width * 0.20),
-                  child: Row(
-                    children: <Widget>[
-                      component.gemIcon,
-                      Text(
-                        ' ${component.price}',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05),
-                  child: AutoSizeText(
-                    component.description,
-                  ),
-                )
-              ],
-            ),
-          )),
-    );
-  }
-
   Widget planetThumbnail(BuildContext context) => new Container(
 //      height: MediaQuery.of(context).size.height * 0.3,
 //    margin: new EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.1),
@@ -163,85 +83,85 @@ class _HustleStoreState extends State<HustleStore> {
           Image gemIcon, int price, OutlineButton button) =>
       new Container(
 //    color: Colors.black12,
-          height: MediaQuery.of(context).size.height * 0.7,
-          margin: new EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.02),
-          decoration: new BoxDecoration(
-            color: Colors.black12,
-            shape: BoxShape.rectangle,
-            borderRadius: new BorderRadius.circular(8.0),
-            boxShadow: <BoxShadow>[
-              new BoxShadow(
-                color: Colors.black12,
-                blurRadius: 30.0,
-                offset: new Offset(0.0, 10.0),
-              ),
-            ],
-          ),
-          child: Material(
-            type: MaterialType.card,
-            color: Colors.grey[300],
-            child: GradientCard(
-//          shape: Border.all(width: 10),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              gradient: LinearGradient(colors: color),
-              elevation: 12.0,
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(
-                      MediaQuery.of(context).size.width * 0.04,
-                    ),
-                    child: planetThumbnail(context),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.04),
-                    child: Padding(
-                      padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Center(
-                            child: AutoSizeText(
-                              "$description",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              maxLines: 4,
-                              wrapWords: false,
-                              group: AutoSizeGroup(),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-//                    ),
-                          Row(
-                            children: <Widget>[
-                              gemIcon,
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.05),
-                              ),
-                              Text(
-                                ' $price',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-//                    button,
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+        height: MediaQuery.of(context).size.height * 0.7,
+        margin:
+            new EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+        decoration: new BoxDecoration(
+          color: Colors.black12,
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(8.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.black12,
+              blurRadius: 30.0,
+              offset: new Offset(0.0, 10.0),
             ),
-          ));
+          ],
+        ),
+        child: Material(
+          type: MaterialType.card,
+          color: Colors.grey[300],
+          child: GradientCard(
+//          shape: Border.all(width: 10),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            gradient: LinearGradient(colors: color),
+            elevation: 12.0,
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.04,
+                  ),
+                  child: planetThumbnail(context),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.04),
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Center(
+                          child: AutoSizeText(
+                            "$description",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            maxLines: 4,
+                            wrapWords: false,
+                            group: AutoSizeGroup(),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+//                    ),
+                        Row(
+                          children: <Widget>[
+                            gemIcon,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.05),
+                            ),
+                            Text(
+                              ' $price',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -249,32 +169,6 @@ class _HustleStoreState extends State<HustleStore> {
     height = MediaQuery.of(context).size.height * 0.4;
     return Scaffold(
       backgroundColor: Colors.grey[300],
-//      appBar: AppBar(
-//        title: Text("Hustle Store"),
-//        elevation: 0.0,
-//        actions: <Widget>[
-//          Row(
-//            children: <Widget>[
-//              IconButton(
-//                onPressed: () {},
-//                icon: Icon(
-//                  FontAwesomeIcons.solidGem,
-//                  color: Colors.white,
-//                  size: 15,
-//                ),
-//              ),
-//              Text(
-//                "${widget.points}",
-//                style:
-//                    TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.only(right: 20),
-//              ),
-//            ],
-//          )
-//        ],
-//      ),
       body: Builder(
         builder: (context) {
           return Stack(
@@ -433,10 +327,6 @@ class _HustleStoreState extends State<HustleStore> {
                               );
                             },
                             child: Container(
-//                              margin: const EdgeInsets.symmetric(
-//                                vertical: 16.0,
-//                                horizontal: 24.0,
-//                              ),
                               child: new Stack(
                                 children: <Widget>[
                                   planetCard(
@@ -447,58 +337,9 @@ class _HustleStoreState extends State<HustleStore> {
                                     component.price,
                                     component.claimIt,
                                   ),
-//                                  planetThumbnail(context),
                                 ],
                               ),
                             ),
-//                            child: Container(
-//                              color: Colors.green,
-//                              child: Card(
-//                                shape: RoundedRectangleBorder(
-//                                  borderRadius: BorderRadius.circular(20.0),
-//                                ),
-//                                child: Column(
-//                                  children: <Widget>[
-//                                    Image.network(
-//                                      component.logo,
-//                                      fit: BoxFit.fitHeight,
-//                                    ),
-//                                    Padding(
-//                                      padding: EdgeInsets.only(
-//                                          top: MediaQuery.of(context)
-//                                                  .size
-//                                                  .height *
-//                                              0.02,
-//                                          left: MediaQuery.of(context)
-//                                                  .size
-//                                                  .width *
-//                                              0.12),
-//                                      child: Center(
-//                                        child: Row(
-//                                          children: <Widget>[
-//                                            component.gemIcon,
-//                                            Text(
-//                                              ' ${component.price}',
-//                                            ),
-//                                          ],
-//                                        ),
-//                                      ),
-//                                    ),
-//                                    Padding(
-//                                      padding: EdgeInsets.only(
-//                                          top: MediaQuery.of(context)
-//                                                  .size
-//                                                  .height *
-//                                              0.045),
-//                                      child: AutoSizeText(
-//                                        component.description,
-//                                        textAlign: TextAlign.center,
-//                                      ),
-//                                    )
-//                                  ],
-//                                ),
-//                              ),
-//                            ),
                           );
                         },
                         childCount: i,
