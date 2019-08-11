@@ -43,5 +43,6 @@
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_zyVFFaPyKcWVP9"
             />
+
     </application>
 </manifest>

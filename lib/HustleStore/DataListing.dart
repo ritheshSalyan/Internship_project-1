@@ -4,7 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import '../progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flushbar/flushbar.dart';
 
 
 class Internships {
@@ -16,6 +19,7 @@ class Internships {
   String duration;
   String location;
   String type;
+  String email;
 
   Internships({
     this.name,
@@ -26,6 +30,7 @@ class Internships {
     this.compensation,
     this.location,
     this.type,
+    this.email,
   });
 }
 
@@ -51,6 +56,7 @@ class _ListingDataState extends State<ListingData> {
   StorageReference storageReference;
    Directory tempDir;
    File file;
+   ProgressDialog progressDialog ;
 
   @override
   void initState() {
@@ -67,43 +73,61 @@ class _ListingDataState extends State<ListingData> {
   void preferences() async{
     sharedPreferences = await SharedPreferences.getInstance();
     UserId = sharedPreferences.getString("UserId");
+    final dir = (await getExternalStorageDirectory()).path;
+    print("File path ${dir}");
 //    doc = await PDFDocument.fromAsset("S:\\Flutter_projects\\startupreneur\\assets\\pdf\\t_and_c.pdf");
-
-    await db.collection("user").document(UserId).get().then((document){
-        resumeDownload  = document.data["resume"];
-        print(resumeDownload);
-    });
-    String uri = Uri.decodeFull(resumeDownload);
-    final RegExp regex = RegExp('([^?/]*\.(pdf))');
-    fileName = regex.stringMatch(uri);
-    tempDir = Directory.systemTemp;
-    file = File('${tempDir.path}/$fileName');
-    print("File path ${tempDir.absolute}");
-    storageReference = FirebaseStorage.instance.ref().child(UserId).child(fileName);
-    storageReference.getDownloadURL().then((link){
-      print(link);
-    });
-    final StorageFileDownloadTask downloadTask = storageReference.writeToFile(file);
-    print(downloadTask);
-    final int byteNumber = (await downloadTask.future).totalByteCount;
-    print(byteNumber);
   }
 
-  _launchURL(String toMailId, String subject, String body,File file) async {
 
+  _launchURL(String toMailId, String subject, String body,File file,BuildContext context) async {
+
+    progressDialog = ProgressDialog(context,ProgressDialogType.Normal);
+    progressDialog.setMessage("Please wait");
     try{
-      await platform.invokeMethod("sendEmail",{"toMail":toMailId,"subject":subject,"body":body,"attachment":file.path});
+      progressDialog.show();
+      await db.collection("user").document(UserId).get().then((document){
+        resumeDownload  = document.data["resume"];
+        print(resumeDownload);
+      });
+      if(resumeDownload == ""){
+        progressDialog.hide();
+        return Flushbar(
+          isDismissible: true,
+          duration: Duration(seconds:3),
+          title: "Warning!",
+          message: "Seems like you have not uploaded your Resume`! Please upload your resume to continue.",
+        )..show(context);
+      }
+      String uri = Uri.decodeFull(resumeDownload);
+      final RegExp regex = RegExp('([^?/]*\.(pdf))');
+      fileName = regex.stringMatch(uri);
+//      progressDialog.update(message: "Loading Resume`");
+      tempDir = Directory.systemTemp;
+      file = File('${tempDir.path}/$fileName');
+
+      storageReference = FirebaseStorage.instance.ref().child(UserId).child(fileName);
+      storageReference.getData(1000000).then((link){
+        print(link);
+      });
+      progressDialog.update(message: "Preparing Mail Server");
+      final StorageFileDownloadTask downloadTask = storageReference.writeToFile(file);
+      final int byteNumber = (await downloadTask.future).totalByteCount;
+      print(byteNumber);
+      print("done");
+      progressDialog.hide();
+      await platform.invokeMethod("sendEmail",{"toMail":toMailId,"subject":subject,"body":body,"attachment":resumeDownload,"filename":fileName});
     }
     on PlatformException catch(e){
       print(e);
     }
   }
 
+
+
   List<Widget> listGenerated(
-      var lengthVal, AsyncSnapshot<QuerySnapshot> snapshot) {
+      var lengthVal, AsyncSnapshot<QuerySnapshot> snapshot,BuildContext context) {
 //    print("${lengthVal}");
     List<Widget> listWidget = new List<Widget>();
-
     listWidget.add(Column(
       children: <Widget>[
         ListTile(
@@ -134,6 +158,10 @@ class _ListingDataState extends State<ListingData> {
           leading: Text("Compensation"),
           title: Text("${list[lengthVal].compensation}"),
         ),
+        ListTile(
+          leading: Text("Email"),
+          title: Text("${list[lengthVal].email}"),
+        ),
       ],
     ));
     listWidget.add(Row(
@@ -146,7 +174,7 @@ class _ListingDataState extends State<ListingData> {
             ),
             borderSide: BorderSide(color: Colors.green, width: 1.5),
             onPressed: () {
-              _launchURL("subramanyarao4@gmail.com","Simple mail","Jobless",file);
+              _launchURL(list[lengthVal].email,"Trial mail","Trial Mail",file,context);
             },
             child: Text("Apply"),
           ),
@@ -170,21 +198,23 @@ class _ListingDataState extends State<ListingData> {
     return listWidget;
   }
 
-  List<Widget> expansionGeneration(AsyncSnapshot<QuerySnapshot> snapshot) {
+
+
+  List<Widget> expansionGeneration(AsyncSnapshot<QuerySnapshot> snapshot,BuildContext context) {
     List<Widget> value = [];
     print("value of list ${list.length}");
-
     for (int i = 0; i < list.length; i++) {
       value.add(ExpansionTile(
         leading: CircleAvatar(
           child: Image.asset(list[i].logo),
         ),
         title: Text("${list[i].name}"),
-        children: listGenerated(i, snapshot),
+        children: listGenerated(i, snapshot,context),
       ));
     }
     return value;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -223,13 +253,13 @@ class _ListingDataState extends State<ListingData> {
                           list.clear();
                           snapshot.data.documents.forEach((document) {
                             dataSnapshot = document;
-
                             list.add(new Internships(
                               name: document.data["name"],
                               description: document.data["description"],
                               type: document.data["type"],
                               role: document.data["role"],
                               logo: document.data["logo"],
+                              email: document.data["email"],
                               duration: document.data["duration"],
                               location: document.data["location"],
                               compensation: document.data["compensation"],
@@ -237,10 +267,10 @@ class _ListingDataState extends State<ListingData> {
                           });
 //                          print(list);
                           return Column(
-                            children: expansionGeneration(snapshot),
+                            children: expansionGeneration(snapshot,context),
                           );
                       }
-                    })
+                    }),
               ],
             ),
           );
