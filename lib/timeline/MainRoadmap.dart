@@ -348,11 +348,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
+                  //   ),
+                  // );
                 },
               ),
               ListTile(
