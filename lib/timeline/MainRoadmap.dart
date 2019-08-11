@@ -535,16 +535,19 @@ class _TimelinePageState extends State<TimelinePage> {
               Container(
                 color: Colors.grey[50],
 
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.37,
-//              height: 210.0,
-//                width: 145.0,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.43,
+//                height: MediaQuery
+//                    .of(context)
+//                    .size
+//                    .height * 0.37,
+                height: 210.0,
+                width: 145.0,
+//                width: MediaQuery
+//                    .of(context)
+//                    .size
+//                    .width * 0.43,width: MediaQuery
+////                    .of(context)
+////                    .size
+////                    .width * 0.43,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
 //                    color: doodle.color,

@@ -4,11 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Internships {
   String name;
   String description;
+
 //  String role;
   String logo;
   dynamic sector;
+
 //  String duration;
   String location;
+
 //  String type;
 
   Internships({
@@ -61,25 +64,40 @@ class _IncubationState extends State<Incubation> {
           leading: Text("Sector"),
           title: Text("${list[lengthVal].sector}"),
         ),
-
-
         ListTile(
           leading: Text("Location"),
           title: Text("${list[lengthVal].location}"),
         ),
-
       ],
     ));
     listWidget.add(
-        Container(
-          child: OutlineButton(
-            borderSide: BorderSide(color: Colors.green,width: 1.5),
-            onPressed: (){},
-            child: Text(
-                "Apply"
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            child: OutlineButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              borderSide: BorderSide(color: Colors.green, width: 1.5),
+              onPressed: () {},
+              child: Text("Apply"),
             ),
           ),
-        ));
+          SizedBox(width: 20,),
+          Container(
+            child: OutlineButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              borderSide: BorderSide(color: Colors.green, width: 1.5),
+              onPressed: () {},
+              child: Text("View docs"),
+            ),
+          ),
+        ],
+      ),
+    );
 //    print(listWidget);
     return listWidget;
   }
@@ -91,9 +109,7 @@ class _IncubationState extends State<Incubation> {
     for (int i = 0; i < list.length; i++) {
       value.add(ExpansionTile(
         leading: CircleAvatar(
-          child: Image.asset(
-              list[i].logo
-          ),
+          child: Image.asset(list[i].logo),
         ),
         title: Text("${list[i].name}"),
         children: listGenerated(i, snapshot),
@@ -129,7 +145,7 @@ class _IncubationState extends State<Incubation> {
                 ),
                 StreamBuilder<QuerySnapshot>(
                     stream:
-                    Firestore.instance.collection("incubation").snapshots(),
+                        Firestore.instance.collection("incubation").snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       switch (snapshot.data) {
                         case null:

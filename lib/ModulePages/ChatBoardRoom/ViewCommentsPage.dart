@@ -49,9 +49,9 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
         filled: true,
         border: UnderlineInputBorder(),
         helperText: "Share Opinion",
-        helperStyle: TextStyle(color: Colors.white),
+        helperStyle: TextStyle(color: Colors.green),
         hintText: text,
-        hintStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.green),
       ),
     );
   }
@@ -198,8 +198,8 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                       child: OutlineButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.black, width: 5.0)),
-                        textColor: Colors.white,
+                            side: BorderSide(color: Colors.black, width: 10.0,),),
+                        textColor: Colors.black,
                         child: Text("Reply"),
                         onPressed: () {
                           print("hello");
@@ -211,7 +211,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
               ),
             ),
             isDismissible: false,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.grey[200],
           )..show(context);
         },
         child: Icon(

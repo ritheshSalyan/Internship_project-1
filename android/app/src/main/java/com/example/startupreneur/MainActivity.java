@@ -3,12 +3,17 @@ package com.example.startupreneur;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import org.json.JSONObject;
+
+import java.io.File;
+
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
@@ -32,12 +37,36 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
       if(methodCall.method.equals("payment")){
         startPayment(result);
         Toast.makeText(getApplicationContext(),"Flutter toast",Toast.LENGTH_SHORT).show();
-      }else{
+      }
+      else{
+        result.notImplemented();
+      }
+    });
+
+    new MethodChannel(getFlutterView(),"email").setMethodCallHandler((methodCall, result) -> {
+      if(methodCall.method.equals("sendEmail")){
+        String uriFile = methodCall.argument("attachment").toString();
+        String toMail = methodCall.argument("toMail");
+        String subject = methodCall.argument("subject");
+        String body = methodCall.argument("body");
+//        FileProvider fileProvider =
+        sendEmail(toMail,subject,body, Uri.fromFile(new File(uriFile)));
+        result.success("done");
+      }
+      else{
         result.notImplemented();
       }
     });
   }
 
+  private void sendEmail(String toMail,String subject,String body,Uri file) {
+    Intent intent = new Intent(Intent.ACTION_SEND);
+    intent.setType("application/pdf");
+    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{toMail});
+    intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+    intent.putExtra(Intent.EXTRA_STREAM, file);
+    startActivityForResult(Intent.createChooser(intent,"Send Email.."),200);
+  }
 
   public void startPayment(Result result){
     Checkout checkout = new Checkout();
