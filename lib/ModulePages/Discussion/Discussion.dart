@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../socialize/socialize.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:extended_image/extended_image.dart';
