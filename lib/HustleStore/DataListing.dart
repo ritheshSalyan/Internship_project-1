@@ -73,8 +73,7 @@ class _ListingDataState extends State<ListingData> {
   void preferences() async{
     sharedPreferences = await SharedPreferences.getInstance();
     UserId = sharedPreferences.getString("UserId");
-    final dir = (await getExternalStorageDirectory()).path;
-    print("File path ${dir}");
+
 //    doc = await PDFDocument.fromAsset("S:\\Flutter_projects\\startupreneur\\assets\\pdf\\t_and_c.pdf");
   }
 
@@ -103,8 +102,10 @@ class _ListingDataState extends State<ListingData> {
       fileName = regex.stringMatch(uri);
 //      progressDialog.update(message: "Loading Resume`");
       tempDir = Directory.systemTemp;
-      file = File('${tempDir.path}/$fileName');
-
+      final dir = (await getExternalStorageDirectory()).path;
+      print("File path $dir");
+      file = File('$dir/$fileName');
+      print(file.path);
       storageReference = FirebaseStorage.instance.ref().child(UserId).child(fileName);
       storageReference.getData(1000000).then((link){
         print(link);
@@ -115,7 +116,7 @@ class _ListingDataState extends State<ListingData> {
       print(byteNumber);
       print("done");
       progressDialog.hide();
-      await platform.invokeMethod("sendEmail",{"toMail":toMailId,"subject":subject,"body":body,"attachment":resumeDownload,"filename":fileName});
+      await platform.invokeMethod("sendEmail",{"toMail":toMailId,"subject":subject,"body":body,"attachment":file.path,"filename":fileName});
     }
     on PlatformException catch(e){
       print(e);
