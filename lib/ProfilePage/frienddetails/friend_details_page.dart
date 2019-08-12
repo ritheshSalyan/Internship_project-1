@@ -80,13 +80,13 @@ class BluePainter extends CustomPainter {
 
     Path ovalPath = new Path();
     // Start paint from 20% height to the left
-    ovalPath.moveTo(0, height * 0.27);
+    ovalPath.moveTo(0, 350);
 
     // paint a curve from current position to middle of the screen
     // ovalPath.quadraticBezierTo(
     //     width * 0.5, height * 0.35, width, height * 0.2);
 
- ovalPath.lineTo(width,height * 0.27);
+ ovalPath.lineTo(width,350);
     // draw remaining line to bottom left side
     ovalPath.lineTo(width, 0);
     ovalPath.lineTo(0, 0);

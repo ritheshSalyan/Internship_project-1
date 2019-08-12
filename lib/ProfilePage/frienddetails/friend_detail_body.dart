@@ -222,7 +222,7 @@ class FriendDetailBody extends StatelessWidget {
                     new LinearPercentIndicator(
                       width: MediaQuery.of(context).size.width * 0.8,
                       lineHeight: 20.0,
-                      percent: friend.completed.length / 12,
+                      percent: friend.completed.length / 13,
                       animation: true,
                       animationDuration: 2500,
                       center: Text("${percentage.toStringAsFixed(0)}%"),

@@ -12,7 +12,7 @@ import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../ProfilePageLoader.dart';
 
-class FriendDetailHeader extends StatelessWidget {
+class FriendDetailHeader extends StatelessWidget  {
   static const BACKGROUND_IMAGE = 'assets/Images/profile_header_background.png';
 
   FriendDetailHeader({
@@ -41,12 +41,15 @@ class FriendDetailHeader extends StatelessWidget {
   void getFilePath(BuildContext context) async {
     //  String _filePath;
     try {
-      // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
-      var file1 = await ImagePicker.pickImage(source: ImageSource.gallery);
-      progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+     
+       print("Before File picked ");
+      var file1 = await FilePicker.getFile(type: FileType.IMAGE);
+      // var file1 = await ImagePicker.pickImage(source: ImageSource.gallery);
+      
+      print("File picked successfully");
+       progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
       progressDialog.setMessage("Uploading....");
       progressDialog.show();
-      print("File picked successfully");
       if (file1 == null) {
         progressDialog.hide();
         return;
@@ -58,8 +61,8 @@ class FriendDetailHeader extends StatelessWidget {
       // });
       upload();
     } catch (e) {
-      progressDialog.hide();
       print("Error while picking the file: " + e.toString());
+      progressDialog.hide();
     }
   }
 
