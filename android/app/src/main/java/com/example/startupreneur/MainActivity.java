@@ -18,6 +18,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
@@ -34,7 +38,8 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
-    getWindow().addFlags(LayoutParams.FLAG_SECURE);
+    // getWindow().addFlags(LayoutParams.FLAG_SECURE);
+    AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
     context = this;
     Checkout.preload(getApplicationContext());
     dialog = new ProgressDialog(this);

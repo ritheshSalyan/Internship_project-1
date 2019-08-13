@@ -9,6 +9,17 @@ class MyHomePage1 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage1> {
+
+
+  
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return new FlareActor("assets/animation/Cup3.flr",

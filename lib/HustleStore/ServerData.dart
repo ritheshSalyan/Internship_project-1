@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'DataListing.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Component {
   final String description;
@@ -21,6 +22,27 @@ class Component {
       this.decision});
 }
 
+ List<Component> item = [];
+
+void generate(BuildContext context) async {
+  StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection("storeDetail").snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+        snapshot.data.documents.forEach((document){
+        item = [
+               Component(
+                description: document.data["name"],
+                logo: document.data["image"],
+                price: document.data["point"],
+              )
+          ];
+        });
+      }
+  );
+}
+
+
+
 List<Component> itemList = [
   Component(
     description: "Internships & Projects  ",
@@ -38,7 +60,7 @@ List<Component> itemList = [
     price: 20000,
     decision: true,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+        "assets/Images/air-hostess.png",
   ),
   Component(
     description: "Startup Incubation  ",
@@ -58,7 +80,7 @@ List<Component> itemList = [
     price: 20000,
     decision: true,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+        "assets/Images/hustle/incubation.png",
   ),
   Component(
     description: "Google Cloud Credits\n Worth \$3000",
@@ -76,7 +98,7 @@ List<Component> itemList = [
     product: "This pack grants you and opportunity to access \$3000 worth of Google Cloud Credits. Note that unlocking this pack does not grant you automatic credits worth \$3000 but definitely puts you ahead of the line. The granting of clouds is subject to certain conditions and is purely at the discretion of Google once you submit your application. Please read the conditions here. Google Clouds are a valuable resource if you are planning to build a technology based startup and also if you want to scale up your product online. Apply Here. Good luck with your application! ",
     decision: false,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+        "assets/Images/hustle/cloud.png"
   ),
   Component(
     description: "Startup Hacks ",
@@ -94,7 +116,7 @@ List<Component> itemList = [
     price: 4000,
     decision: false,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+        "assets/Images/hustle/hacks.png"
   ),
   Component(
     description: "Payment Gateway\n Benefits",
@@ -112,7 +134,7 @@ List<Component> itemList = [
     price: 10000,
     decision: false,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+       "assets/Images/hustle/payment_gateway.png"
   ),
   // Component(
   //   description: "Secrets to Fundraising Pack",
@@ -146,7 +168,7 @@ List<Component> itemList = [
     price: 6000,
     decision: false,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+       "assets/Images/hustle/document.png"
   ),
   Component(
     description: "Seed Funding\n Grant",
@@ -164,6 +186,6 @@ List<Component> itemList = [
     price: 100000,
     decision: false,
     logo:
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+       "assets/Images/hustle/funding.png"
   )
 ];

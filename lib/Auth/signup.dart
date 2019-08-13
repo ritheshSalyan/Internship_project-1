@@ -132,7 +132,7 @@ class _SignupPageState extends State<SignupPage>
     dataMap['uid'] = userid;
     dataMap['points'] = 1000;
     dataMap['completed'] = [1];
-    dataMap["payment"] = false;
+    dataMap["payment"] = true;
     dataMap["resume"]="";
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";

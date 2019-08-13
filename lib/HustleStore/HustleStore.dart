@@ -31,12 +31,13 @@ class _HustleStoreState extends State<HustleStore> {
     Color.fromRGBO(222, 30, 89, 1),
     Color.fromRGBO(59, 40, 127, 1)
   ];
+  Component component = new Component();
 
   @override
   initState() {
     super.initState();
     sharedPrefereneData();
-    widget.points = 60000;
+    
   }
 
   Future<void> sharedPrefereneData() async {
@@ -65,22 +66,22 @@ class _HustleStoreState extends State<HustleStore> {
     });
   }
 
-  Widget planetThumbnail(BuildContext context) => new Container(
+  Widget planetThumbnail(BuildContext context,String logo) => new Container(
 //      height: MediaQuery.of(context).size.height * 0.3,
 //    margin: new EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.1),
       alignment: FractionalOffset.centerLeft,
       child: CircleAvatar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
         radius: 35,
         child: new Image(
-          image: new AssetImage("assets/Images/air-hostess.png"),
-          height: 50.0,
-          width: 50.0,
+          image: new AssetImage(logo),
+          height: 60.0,
+          width: 60.0,
         ),
       ));
 
   Widget planetCard(BuildContext context, int index, String description,
-          Image gemIcon, int price, OutlineButton button) =>
+          Image gemIcon, int price, OutlineButton button, String logo) =>
       new Container(
 //    color: Colors.black12,
         height: MediaQuery.of(context).size.height * 0.7,
@@ -113,7 +114,7 @@ class _HustleStoreState extends State<HustleStore> {
                   padding: EdgeInsets.all(
                     MediaQuery.of(context).size.width * 0.04,
                   ),
-                  child: planetThumbnail(context),
+                  child: planetThumbnail(context,logo),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -336,6 +337,7 @@ class _HustleStoreState extends State<HustleStore> {
                                     component.gemIcon,
                                     component.price,
                                     component.claimIt,
+                                    component.logo,
                                   ),
                                 ],
                               ),
