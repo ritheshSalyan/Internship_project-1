@@ -348,11 +348,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
                   //   ),
                   // );
-                  getFile().then((onValue){
-print("******************After calling Picking file*****************");
-                    
-                  });
-                   
+
                 },
               ),
               ListTile(

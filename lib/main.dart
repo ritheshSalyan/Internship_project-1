@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green,
         brightness: Brightness.light,
         primaryColorDark: Colors.white,
-        primaryColorLight: Color(0x484848),
         buttonColor: Color(0x009423),
         accentColor: Color(0x009423),
         scaffoldBackgroundColor: Colors.white,
