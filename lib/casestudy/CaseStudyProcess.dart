@@ -56,10 +56,10 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/character.png',
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 400,
+                  'assets/Images/Explain.png',
+                  fit: BoxFit.fitHeight,
+                  // width: 200,
+                  height: 350,
                 ),
                 new RaisedButton(
                   child: Icon(
@@ -103,10 +103,10 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/character.png',
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 400,
+                  'assets/Images/Explain.png',
+                  fit: BoxFit.fitHeight,
+                  // width: 200,
+                  height: 350,
                 ),
               ],
             ),
@@ -139,10 +139,10 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/character.png',
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 400,
+                  'assets/Images/Explain.png',
+                  fit: BoxFit.fitHeight,
+                  // width: 200,
+                  height: 350,
                 ),
               ],
             ),
@@ -159,7 +159,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
         home: new Scaffold(
             body: LiquidSwipe(
           pages: pages,
-          fullTransitionValue: 150,
+          fullTransitionValue: 200,
           enableSlideIcon: true,
         )));
   }

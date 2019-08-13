@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
@@ -25,8 +26,8 @@ import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import '../Trial/AnimationTrial.dart';
-import'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import'../Auth/PdfReader.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import '../Auth/PdfReader.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -181,15 +182,10 @@ class _TimelinePageState extends State<TimelinePage> {
           iconTheme: IconThemeData(color: Colors.black),
           title: Image.asset(
             "assets/Images/Capture.PNG",
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.57,
+            width: MediaQuery.of(context).size.width * 0.57,
           ),
           automaticallyImplyLeading: true,
-          backgroundColor: Theme
-              .of(context)
-              .primaryColorDark,
+          backgroundColor: Theme.of(context).primaryColorDark,
           elevation: 10.0,
           actions: <Widget>[
             Row(
@@ -332,8 +328,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                      (ChatBoardRoom()),
+                      builder: (context) => (ChatBoardRoom()),
                     ),
                   );
                 },
@@ -353,6 +348,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
                   //   ),
                   // );
+
                 },
               ),
               ListTile(
@@ -367,7 +363,9 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (PdfReader(doc,"How to Earn points")),fullscreenDialog: true,
+                      builder: (context) =>
+                          (PdfReader(doc, "How to Earn points")),
+                      fullscreenDialog: true,
                     ),
                   );
                 },
@@ -384,9 +382,9 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   _auth.signOut();
                   _Sharedpreference(context);
-//                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-//                    builder: (context) => SigninPage(),
-//                  ));
+                  //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //                    builder: (context) => SigninPage(),
+                  //                  ));
                 },
               ),
               Divider(),
@@ -395,14 +393,14 @@ class _TimelinePageState extends State<TimelinePage> {
                 child: Text(
                   "The Startupreneur® All Rights Reserved",
                   style:
-                  TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+                      TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
                 ),
               ),
               Row(
                 children: <Widget>[
-//                  SizedBox(
-//                    width: MediaQuery.of(context).size.width * 0.05,
-//                  ),
+                  //                  SizedBox(
+                  //                    width: MediaQuery.of(context).size.width * 0.05,
+                  //                  ),
                   IconButton(
                     onPressed: () {
                       launcher(
@@ -415,10 +413,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -432,10 +427,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -448,10 +440,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.05,
                   ),
                   IconButton(
                     onPressed: () {
@@ -465,9 +454,9 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ],
               ),
-//              SizedBox(
-////                height: MediaQuery.of(context).size.height * 0.01,
-////              ),
+              //              SizedBox(
+              ////                height: MediaQuery.of(context).size.height * 0.01,
+              ////              ),
             ],
           ),
         ),
@@ -480,8 +469,7 @@ class _TimelinePageState extends State<TimelinePage> {
         ));
   }
 
-  timelineModel(TimelinePosition position) =>
-      Timeline.builder(
+  timelineModel(TimelinePosition position) => Timeline.builder(
         itemBuilder: centerTimelineBuilder,
         itemCount: doodles.length,
         lineColor: Colors.green,
@@ -491,9 +479,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final textTheme = Theme.of(context).textTheme;
 
     int k;
     var val = 1;
@@ -535,22 +521,22 @@ class _TimelinePageState extends State<TimelinePage> {
               Container(
                 color: Colors.grey[50],
 
-//                height: MediaQuery
-//                    .of(context)
-//                    .size
-//                    .height * 0.37,
+                //                height: MediaQuery
+                //                    .of(context)
+                //                    .size
+                //                    .height * 0.37,
                 height: 210.0,
                 width: 145.0,
-//                width: MediaQuery
-//                    .of(context)
-//                    .size
-//                    .width * 0.43,width: MediaQuery
-////                    .of(context)
-////                    .size
-////                    .width * 0.43,
+                //                width: MediaQuery
+                //                    .of(context)
+                //                    .size
+                //                    .width * 0.43,width: MediaQuery
+                ////                    .of(context)
+                ////                    .size
+                ////                    .width * 0.43,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
-//                    color: doodle.color,
+                  //                    color: doodle.color,
                   margin: EdgeInsets.all(0),
                   elevation: 10,
                   shape: RoundedRectangleBorder(
@@ -563,7 +549,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                   // shape:Border.all(width: 3,
                   // color: Colors.green),
-//                    margin: EdgeInsets.symmetric(vertical: 16.0),
+                  //                    margin: EdgeInsets.symmetric(vertical: 16.0),
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -573,10 +559,7 @@ class _TimelinePageState extends State<TimelinePage> {
                         // Image.network(doodle.doodle),
                         Image.asset(
                           doodle.doodle,
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.09,
+                          height: MediaQuery.of(context).size.height * 0.09,
                         ),
                         const SizedBox(
                           height: 8.0,
@@ -586,19 +569,19 @@ class _TimelinePageState extends State<TimelinePage> {
                         //   height: 8.0,
                         // ),
                         doodle.name,
-//                        Text(
-//                          doodle.name,
-////                           style: TextStyle(fontSize: 16,),
-//                          // fontWeight: FontWeight.w400
-//                          // ),
-//                          style: TextStyle(
-////                            color: Colors.white,
-//                              fontSize: 16,
-//                              letterSpacing: 0.5,
-//                              // fontFamily: "Open Sans",
-//                              fontWeight: FontWeight.w400),
-//                          textAlign: TextAlign.center,
-//                        ),
+                        //                        Text(
+                        //                          doodle.name,
+                        ////                           style: TextStyle(fontSize: 16,),
+                        //                          // fontWeight: FontWeight.w400
+                        //                          // ),
+                        //                          style: TextStyle(
+                        ////                            color: Colors.white,
+                        //                              fontSize: 16,
+                        //                              letterSpacing: 0.5,
+                        //                              // fontFamily: "Open Sans",
+                        //                              fontWeight: FontWeight.w400),
+                        //                          textAlign: TextAlign.center,
+                        //                        ),
                         const SizedBox(
                           height: 8.0,
                         ),
@@ -614,7 +597,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                 ),
-//                )
+                //                )
               ),
               Container(
                 // color: Colors.grey[50],
@@ -629,10 +612,20 @@ class _TimelinePageState extends State<TimelinePage> {
           ),
         ),
         position:
-        i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
+            i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
         isFirst: i == 0,
         isLast: i == doodles.length,
         iconBackground: doodle.iconBackground,
         icon: doodle.icon);
+  }
+
+  Future<dynamic> getFile() async {
+    print("Before Picking File");
+   var file = await FilePicker.getFile(type: FileType.ANY).then((file) {
+      print("After inside Picking file");
+    }).catchError((e) {
+      print("ERROR!!!!!!!!!!!" + e.toString());
+    });
+    return file;
   }
 }

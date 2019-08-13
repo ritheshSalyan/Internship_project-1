@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intro_slider/dot_animation_enum.dart';
+// import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'Page.dart';
@@ -90,6 +90,7 @@ class FileUploadState extends State<FileUpload> {
     //  String _filePath;
     try {
       // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
+      print("Before File picked ");
       File file1 = await FilePicker.getFile(type: FileType.ANY);
        progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Uploading....");
@@ -104,8 +105,9 @@ class FileUploadState extends State<FileUpload> {
       });
       upload();
     } catch (e) {
-      progressDialog.hide();
       print("Error while picking the file: " + e.toString());
+      progressDialog.hide();
+      
     }
   }
 
