@@ -8,6 +8,7 @@ import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
+import '../filetrial.dart';
 import '../ModulePages/SummaryPage/ani.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -342,17 +343,17 @@ class _TimelinePageState extends State<TimelinePage> {
                     color: Colors.green,
                   ),
                 ),
-                onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
-                  //   ),
-                  // );
-                  getFile().then((onValue){
-print("******************After calling Picking file*****************");
+                onTap: () async{
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ( FileTest()),
+                    ),
+                  );
+//                   await getFile().then((onValue){
+// print("******************After calling Picking file*****************");
                     
-                  });
-                   
+//                   });
+//                    print("******************After calling Picking file*****************");
                 },
               ),
               ListTile(
@@ -625,11 +626,15 @@ print("******************After calling Picking file*****************");
 
   Future<dynamic> getFile() async {
     print("Before Picking File");
-   var file = await FilePicker.getFile(type: FileType.ANY).then((file) {
+   var file = await FilePicker.getFilePath(type: FileType.ANY).then((file) {
       print("After inside Picking file");
+       return file;
     }).catchError((e) {
       print("ERROR!!!!!!!!!!!" + e.toString());
+    }).timeout(Duration(seconds: 10) ,onTimeout:
+     (){
+        print("Timeout*************************");
     });
-    return file;
+   
   }
 }
