@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'ServerData.dart';
 import 'FullScreenDialog.dart';
 import 'DataListing.dart';
@@ -9,6 +7,8 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
+
 
 class HustleStore extends StatefulWidget {
   HustleStore({Key key, this.points, this.overall}) : super(key: key);
@@ -32,6 +32,8 @@ class _HustleStoreState extends State<HustleStore> {
     Color.fromRGBO(59, 40, 127, 1)
   ];
   Component component = new Component();
+
+
 
   @override
   initState() {

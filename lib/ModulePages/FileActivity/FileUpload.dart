@@ -91,7 +91,9 @@ class FileUploadState extends State<FileUpload> {
     try {
       // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
       print("Before File picked ");
-      File file1 = await FilePicker.getFile(type: FileType.ANY);
+      // File file1 = await FilePicker.getFilePath(type: FileType.ANY);
+      String file1 = await FilePicker.getFilePath(type: FileType.ANY);
+
        progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Uploading....");
     progressDialog.show();
@@ -99,9 +101,11 @@ class FileUploadState extends State<FileUpload> {
       if (file1 == null) {
         return;
       }
-      print("File path: " + p.basename(file1.path));
+      // print("File path: " + p.basename(file1.path));
+      print("File path: $file");
+
       setState(() {
-        file = file1;
+        // file = file1;
       });
       upload();
     } catch (e) {

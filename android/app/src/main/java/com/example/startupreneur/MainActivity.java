@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
 
     new MethodChannel(getFlutterView(),"email").setMethodCallHandler((methodCall, result) -> {
       if(methodCall.method.equals("sendEmail")){
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         String uriFile = methodCall.argument("attachment").toString();
         String toMail = methodCall.argument("toMail");
         String subject = methodCall.argument("subject");

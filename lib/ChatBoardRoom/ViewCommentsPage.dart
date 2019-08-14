@@ -6,6 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewCommentPage extends StatefulWidget {
+  ViewCommentPage({Key key, this.question, this.answers}) : super(key: key);
+  String question;
+  List<dynamic> answers;
   @override
   _ViewCommentPageState createState() => _ViewCommentPageState();
 }
@@ -15,14 +18,51 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
       "Racana de nobilis fermium, resuscitabo acipenser,Racana de nobilis fermium, resuscitabo acipenser, resuscitabo acipenser  resuscit acipenser ?";
   SharedPreferences sharedPreferences;
   Firestore db;
+  String documentId;
   Flushbar<List<String>> flush;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String userId;
+  List<String> list = [];
+  String text = "";
 
   @override
   void initState() {
     super.initState();
     preferences();
+    print("${widget.question}");
+    print("${widget.answers.length}");
+  }
+
+  bool _validate() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void validateForm(BuildContext context) {
+    if (_validate()) {
+      saveData();
+    }
+  }
+
+  void saveData() async{
+    db = Firestore.instance;
+    await db.collection("chat").where("question",isEqualTo:widget.question).getDocuments().then((document){
+        document.documents.forEach((id){
+            documentId = id.documentID;
+        });
+    });
+    for(dynamic i in widget.answers){
+      list.add(i);
+    }
+    list.add(text);
+    var data = Map<String,dynamic>();
+    data["answers"] = list;
+    await db.collection("chat").document(documentId).setData(data,merge: true);
+
   }
 
   void preferences() async {
@@ -30,17 +70,21 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
     userId = sharedPreferences.getString("UserId");
   }
 
-  Widget snackbar(BuildContext context) => SnackBar(
-        content: Row(
-          children: <Widget>[
-            Text("hello"),
-          ],
-        ),
-      );
-
   TextFormField getFormField(String text) {
     return TextFormField(
-      style: TextStyle(color: Colors.white),
+      autovalidate: true,
+      validator: (value) {
+        if (value.isEmpty) {
+          return "Field cannot be empty";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        setState(() {
+          text = value;
+        });
+      },
+      style: TextStyle(color: Colors.black),
       maxLength: 300,
       maxLines: 3,
       maxLengthEnforced: true,
@@ -53,51 +97,6 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
         hintText: text,
         hintStyle: TextStyle(color: Colors.green),
       ),
-    );
-  }
-
-  Widget buildInput(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Row(
-        children: <Widget>[
-          // Button send image
-          // Edit text
-          Flexible(
-            child: Container(
-              child: TextField(
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 15.0),
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
-                  hintStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Button send message
-          Material(
-            child: new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 8.0),
-              child: new IconButton(
-                icon: new Icon(Icons.send),
-                onPressed: () {},
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            color: Colors.white,
-          ),
-        ],
-      ),
-      width: double.infinity,
-      height: 50.0,
-      decoration: new BoxDecoration(
-          border: new Border(
-              top: new BorderSide(
-                  color: Theme.of(context).primaryColor, width: 0.5)),
-          color: Colors.white),
     );
   }
 
@@ -143,7 +142,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                                 child: Wrap(
                                   children: <Widget>[
                                     AutoSizeText(
-                                      hello,
+                                      widget.question,
                                       maxLines: 50,
                                       textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
@@ -163,15 +162,17 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                   shrinkWrap: true,
                   primary: true,
                   padding: const EdgeInsets.all(8.0),
-                  itemCount: 5,
+                  itemCount: widget.answers.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.green,
-                      ),
-                      title: Text(hello),
-                    );
+                    return (widget.answers[index] == "")
+                        ? Container()
+                        : ListTile(
+                            leading: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.green,
+                            ),
+                            title: Text(widget.answers[index]),
+                          );
                   },
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),
@@ -187,23 +188,54 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
           print("hello");
           flush = Flushbar<List<String>>(
             userInputForm: Form(
+              autovalidate: true,
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  getFormField("Share thoughts"),
+                  TextFormField(
+                    autovalidate: true,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Field cannot be empty";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        text = value;
+                      });
+                    },
+                    style: TextStyle(color: Colors.black),
+                    maxLength: 300,
+                    maxLines: 3,
+                    maxLengthEnforced: true,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white10,
+                      filled: true,
+                      border: UnderlineInputBorder(),
+                      helperText: "Share Opinion",
+                      helperStyle: TextStyle(color: Colors.green),
+                      hintText: "Share thoughts",
+                      hintStyle: TextStyle(color: Colors.green),
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: OutlineButton(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.black, width: 10.0,),),
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 10.0,
+                          ),
+                        ),
                         textColor: Colors.black,
                         child: Text("Reply"),
                         onPressed: () {
-                          print("hello");
+                          validateForm(context);
                         },
                       ),
                     ),

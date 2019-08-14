@@ -20,7 +20,7 @@ import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ModulePages/ChatBoardRoom/ChatBoardRoom.dart';
+import '../ChatBoardRoom/ChatBoardRoom.dart';
 import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,6 +28,7 @@ import '../ProfilePage/ProfilePageLoader.dart';
 import '../Trial/AnimationTrial.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import '../Auth/PdfReader.dart';
+import 'package:startupreneur/how_to_earn/how_to_earn.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
@@ -364,7 +365,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          (PdfReader(doc, "How to Earn points")),
+                          (HowToEarn()),
                       fullscreenDialog: true,
                     ),
                   );

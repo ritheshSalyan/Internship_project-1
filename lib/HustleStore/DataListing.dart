@@ -106,10 +106,8 @@ class _ListingDataState extends State<ListingData> {
       print("File path $dir");
       file = File('$dir/$fileName');
       print(file.path);
+       print(UserId);
       storageReference = FirebaseStorage.instance.ref().child(UserId).child(fileName);
-      storageReference.getData(1000000).then((link){
-        print(link);
-      });
       progressDialog.update(message: "Preparing Mail Server");
       final StorageFileDownloadTask downloadTask = storageReference.writeToFile(file);
       final int byteNumber = (await downloadTask.future).totalByteCount;
@@ -160,7 +158,7 @@ class _ListingDataState extends State<ListingData> {
           title: Text("${list[lengthVal].compensation}"),
         ),
         ListTile(
-          leading: Text("Email"),
+          leading: Text("contactEmail"),
           title: Text("${list[lengthVal].email}"),
         ),
       ],
@@ -260,7 +258,7 @@ class _ListingDataState extends State<ListingData> {
                               type: document.data["type"],
                               role: document.data["role"],
                               logo: document.data["logo"],
-                              email: document.data["email"],
+                              email: document.data["contactEmail"],
                               duration: document.data["duration"],
                               location: document.data["location"],
                               compensation: document.data["compensation"],

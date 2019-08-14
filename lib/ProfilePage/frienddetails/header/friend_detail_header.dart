@@ -43,7 +43,7 @@ class FriendDetailHeader extends StatelessWidget  {
     try {
      
        print("Before File picked ");
-      var file1 = await FilePicker.getFile(type: FileType.IMAGE);
+      var file1 = await FilePicker.getFile(type: FileType.IMAGE).timeout(Duration(seconds: 10),onTimeout: (){print("hello timeput");});
       // var file1 = await ImagePicker.pickImage(source: ImageSource.gallery);
       
       print("File picked successfully");

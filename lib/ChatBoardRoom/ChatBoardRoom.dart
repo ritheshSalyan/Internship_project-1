@@ -6,6 +6,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
+class ChatRoom {
+  String question;
+  String tag;
+  dynamic upvote;
+  List<dynamic> answer;
+
+  ChatRoom({
+    this.answer,
+    this.question,
+    this.tag,
+    this.upvote,
+  });
+}
+
 class ChatBoardRoom extends StatefulWidget {
   @override
   _ChatBoardRoomState createState() => _ChatBoardRoomState();
@@ -16,19 +30,63 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       "Racana de nobilis fermium, resuscitabo acipenser,Racana de nobilis fermium, resuscitabo acipenser, resuscitabo acipenser  resuscit acipenser ?";
   String tag = "Module 1";
   Firestore db;
+  String documentId;
   SharedPreferences sharedPreferences;
   String userId;
+  int upvote;
+  List<ChatRoom> chatroom = [];
 
   @override
   void initState() {
     super.initState();
     db = Firestore.instance;
     preference();
+    fetchingValue();
   }
 
   void preference() async {
     sharedPreferences = await SharedPreferences.getInstance();
     userId = sharedPreferences.getString("UserId");
+  }
+
+  void fetchingValue() async {
+    chatroom.clear();
+    db = Firestore.instance;
+    await db.collection("chat").getDocuments().then((document) {
+      document.documents.forEach((value) {
+        chatroom.add(new ChatRoom(
+          question: value.data["question"],
+          answer: value.data["answers"],
+          tag: value.data["tag"],
+          upvote: value.data["upvote"],
+        ));
+      });
+    });
+    print(chatroom.length);
+  }
+
+  void increaseUpvote(int index) async {
+       upvote = chatroom[index].upvote;
+    print("upvote is $upvote");
+    var data = Map<String,dynamic>();
+    data["upvote"] =  chatroom[index].upvote+1;
+     await db
+        .collection("chat")
+        .where("question", isEqualTo: chatroom[index].question)
+        .getDocuments()
+        .then((document) {
+      document.documents.forEach((vl) {
+        documentId = vl.documentID;
+      });
+    }).then((val){
+      print("done fetching");
+    });
+    print("${documentId}");
+    print("${upvote}");
+   await db.collection("chat").document(documentId).setData(data,merge: true).then((val){
+     print("Done adding");
+   });
+   fetchingValue();
   }
 
   @override
@@ -39,13 +97,16 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       ),
       body: ListView.builder(
         shrinkWrap: true,
-        itemCount: 5,
+        itemCount: chatroom.length,
         itemBuilder: (context, int index) {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ViewCommentPage(),
+                  builder: (context) => ViewCommentPage(
+                    question:chatroom[index].question,
+                    answers:chatroom[index].answer,
+                  ),
                   fullscreenDialog: true,
                 ),
               );
@@ -81,7 +142,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                             child: Wrap(
                               children: <Widget>[
                                 AutoSizeText(
-                                  hello,
+                                  chatroom[index].question,
                                   maxLines: 50,
                                   textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
@@ -102,22 +163,24 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                           FontAwesomeIcons.comment,
                           color: Colors.green,
                         ),
-                        Text(" ${100}"),
+                        Text(" ${chatroom[index].answer.length}"),
                         SizedBox(
                           width: 25,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            increaseUpvote(index);
+                          },
                           icon: Icon(FontAwesomeIcons.thumbsUp),
                           color: Colors.green,
                         ),
-                        Text(" ${100}"),
+                        Text(" ${chatroom[index].upvote}"),
                         SizedBox(
                           width: 25,
                         ),
                         ActionChip(
                           label: Text(
-                            "$tag",
+                            "${chatroom[index].tag}",
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {},

@@ -71,6 +71,7 @@ dependencies:
   flare_splash_screen: ^2.0.1+2
   flushbar: ^1.8.2
   flutter_mailer: ^0.4.1+1
+  flutter_tags: ^0.4.3
 
 
 

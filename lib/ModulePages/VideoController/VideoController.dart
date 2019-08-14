@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 // import '../SummaryPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:video_player/video_player.dart';
 import '../../casestudy/CaseStudyEntry.dart';
@@ -33,7 +34,7 @@ class _VideoPlayState extends State<VideoPlay> {
     );
     _chewieController = ChewieController(
       autoInitialize: true,
-      isLive: false,
+      allowedScreenSleep: false,
       videoPlayerController: _videoPlayerController1,
       materialProgressColors: ChewieProgressColors(
         backgroundColor: Colors.green,
@@ -59,9 +60,18 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   void dispose() {
+     super.dispose();
     _videoPlayerController1.dispose();
     _chewieController.dispose();
-    super.dispose();
+   
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    _videoPlayerController1.pause();
+    _chewieController.setVolume(0);
   }
 
   @override
