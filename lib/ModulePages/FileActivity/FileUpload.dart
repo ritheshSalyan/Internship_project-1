@@ -186,6 +186,7 @@ print("On downloadUrl task"+downloadUrl);
       slides: this.slides,
 
       onDonePress: getFilePath, //this.onDonePress,
+      renderSkipBtn: Text(" "),
       renderDoneBtn: this.renderDoneBtn(),
       sizeDot: 0,
     );

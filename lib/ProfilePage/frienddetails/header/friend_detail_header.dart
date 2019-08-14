@@ -22,21 +22,7 @@ class FriendDetailHeader extends StatelessWidget  {
   File file;
   final Friend friend;
   final BuildContext context;
-  // final Object avatarTag;
-
-  // Widget _buildDiagonalImageBackground(BuildContext context) {
-  //   var screenWidth = MediaQuery.of(context).size.width;
-
-  //   return new DiagonallyCutColoredImage(
-  //     new Image.asset(
-  //       BACKGROUND_IMAGE,
-  //       width: screenWidth,
-  //       height: 280.0,
-  //       fit: BoxFit.cover,
-  //     ),
-  //     color: const Color(0xBB8338f4),
-  //   );
-  // }
+ 
   static ProgressDialog progressDialog;
   void getFilePath(BuildContext context) async {
     //  String _filePath;
@@ -95,20 +81,13 @@ class FriendDetailHeader extends StatelessWidget  {
       progressDialog.hide();
       print(e);
     });
-    //  }
-    // if (taskSnapshot.) {
-    //   print("On downloadUrl task"+downloadUrl);
-    // }
-    // if (task.isCanceled) {
-    //   print("On isCanceled task");
-    // }
+    
     print("Hai");
     progressDialog.hide();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => new ProfileLoading(uid: friend.uid),
     ));
-    //  List<dynamic> arguments = [widget.modNum, widget.index + 1];
-    //         orderManagement.moveNextIndex(context, arguments);
+       
   }
 
   Widget _buildAvatar() {
@@ -199,51 +178,7 @@ class FriendDetailHeader extends StatelessWidget  {
     );
   }
 
-  // Widget _buildActionButtons(ThemeData theme) {
-  //   return new Padding(
-  //     padding: const EdgeInsets.only(
-  //       top: 16.0,
-  //       left: 16.0,
-  //       right: 16.0,
-  //     ),
-  //     child: new Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //       children: <Widget>[
-  //         // _createPillButton(
-  //         //   'HIRE ME',
-  //         //   backgroundColor: theme.accentColor,
-  //         // ),
-  //         // new DecoratedBox(
-  //         //   decoration: new BoxDecoration(
-  //         //     border: new Border.all(color: Colors.white30),
-  //         //     borderRadius: new BorderRadius.circular(30.0),
-  //         //   ),
-  //         //   child: _createPillButton(
-  //         //     'FOLLOW',
-  //         //     textColor: Colors.white70,
-  //         //   ),
-  //         // ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
-  // Widget _createPillButton(
-  //   String text, {
-  //   Color backgroundColor = Colors.transparent,
-  //   Color textColor = Colors.white70,
-  // }) {
-  //   return new ClipRRect(
-  //     borderRadius: new BorderRadius.circular(30.0),
-  //     child: new MaterialButton(
-  //       minWidth: 140.0,
-  //       color: backgroundColor,
-  //       textColor: textColor,
-  //       onPressed: () {},
-  //       child: new Text(text),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +195,6 @@ class FriendDetailHeader extends StatelessWidget  {
             children: <Widget>[
               _buildAvatar(),
               _buildFollowerInfo(textTheme),
-              // _buildActionButtons(theme),
             ],
           ),
         ),
