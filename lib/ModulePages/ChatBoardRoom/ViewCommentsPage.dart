@@ -159,6 +159,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                   ),
                 ),
                 ListView.separated(
+                  physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   primary: true,
                   padding: const EdgeInsets.all(8.0),

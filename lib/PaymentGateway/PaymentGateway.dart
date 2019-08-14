@@ -92,10 +92,11 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage> with AutomaticK
     //  print("Message from PaymentGateway.dart RESULT IS VAL IS  $result");
      var data = Map<String,dynamic>();
      data["payment"]=true;
-     await db.collection("user").document(userId).setData(data);
+     await db.collection("user").document(userId).setData(data,merge: true);
   }
 
 
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

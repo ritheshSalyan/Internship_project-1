@@ -42,40 +42,64 @@ enum Type {
 class orderManagement {
   static List<Type> order = [];
   static List<dynamic> complete = [];
+  static dynamic points ;
+  static dynamic modulePoint;
   static int currentIndex = 0;
   static String userid = "";
   List<dynamic> arguments = [];
   static Firestore db = Firestore.instance;
   static SharedPreferences sharedPreferences;
+
+
   static void moveNextIndex(BuildContext context, arguments) async {
-
-
     currentIndex = arguments[1];
     print("Arguments ${arguments}");
     print("currentIndex ${currentIndex}");
     sharedPreferences = await SharedPreferences.getInstance();
     userid = sharedPreferences.getString("UserId");
 
-
-
     if (currentIndex == order.length) {
       await db.collection("user").document(userid).get().then((document) {
         complete = new List<dynamic>.from(document.data["completed"]);
+        points = document.data["points"];
         print("complete $complete");
       });
+      await db.collection("points").where("module",isEqualTo:arguments[0] + 1).getDocuments().then((document){
+        document.documents.forEach((val){
+          modulePoint  =  val.data["point"];
+        });
+      });
 
-      
-      complete.add(arguments[0]+1);
-      var data = Map<String, dynamic>();
-      data["completed"] = complete;
-      await db.collection("user").document(userid).setData(data, merge: true);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => SummaryPage(
-
+      // if((arguments[0] + 1)==1){
+      //   var data = Map<String, dynamic>();
+      //   data["completed"] = complete;
+      //   data["points"] = points+modulePoint;
+      //   await db.collection("user").document(userid).setData(data, merge: true);
+      //   Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //       builder: (context) => SummaryPage(),
+      //     ),
+      //   );
+      // }
+      if (complete.contains(arguments[0] + 1)) {
+        print("already there");
+         Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SummaryPage(),
           ),
-        ),
-      );
+        );
+      } else {
+        complete.add(arguments[0] + 1);
+        var data = Map<String, dynamic>();
+        data["completed"] = complete;
+        data["points"] = points+modulePoint;
+        await db.collection("user").document(userid).setData(data, merge: true);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SummaryPage(),
+          ),
+        );
+      }
     } else {
       switch (order[currentIndex]) {
         case Type.quote:
@@ -123,11 +147,11 @@ class orderManagement {
           ));
           break;
 
-         case Type.hustelTip:
+        case Type.hustelTip:
           print("hustelTip");
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => HustelTipLoading(
-                modNum: arguments[0], index: currentIndex),
+            builder: (context) =>
+                HustelTipLoading(modNum: arguments[0], index: currentIndex),
           ));
           break;
 
@@ -204,8 +228,8 @@ class orderManagement {
           print("heading");
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) =>
-                  TopicHeadingLoading(modNum: arguments[0], index: currentIndex),
+              builder: (context) => TopicHeadingLoading(
+                  modNum: arguments[0], index: currentIndex),
             ),
           );
           break;

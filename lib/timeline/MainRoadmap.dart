@@ -343,17 +343,13 @@ class _TimelinePageState extends State<TimelinePage> {
                     color: Colors.green,
                   ),
                 ),
-                onTap: () async{
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ( FileTest()),
-                    ),
-                  );
-//                   await getFile().then((onValue){
-// print("******************After calling Picking file*****************");
-                    
-//                   });
-//                    print("******************After calling Picking file*****************");
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
+                  //   ),
+                  // );
+
                 },
               ),
               ListTile(

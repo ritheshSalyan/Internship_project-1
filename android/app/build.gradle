@@ -60,6 +60,9 @@ dependencies {
     // testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-core:17.0.0'
 //    implementation 'com.payumoney.sdkui:plug-n-play:1.5.0'
+    def appCenterSdkVersion = '2.2.0'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
     implementation 'com.google.firebase:firebase-storage:11.6.2'
     implementation 'com.google.firebase:firebase-firestore:11.6.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
