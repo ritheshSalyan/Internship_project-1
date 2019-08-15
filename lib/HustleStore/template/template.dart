@@ -6,10 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
-import '../progress_dialog/progress_dialog.dart';
+import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 
 class TemplateDownload extends StatefulWidget {
+
+TemplateDownload({Key key,this.files,this.lengthList}):super(key:key);
+
+List<dynamic> files;
+int lengthList;
+
   @override
   _TemplateDownloadState createState() => _TemplateDownloadState();
 }
@@ -22,7 +28,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
   String fileName;
   File file;
   String folder = "downloads";
-  List<dynamic> files = [];
+  // List<dynamic> files = [];
   StorageReference storageReference;
   ProgressDialog progressDialog;
 
@@ -38,17 +44,17 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     userId = sharedPreferences.getString("UserId");
     print(userId);
 
-    db = Firestore.instance;
-    await db.collection("template").getDocuments().then((document) {
-      document.documents.forEach((file) {
-        files = file.data["files"];
-      });
-    });
-    print(files.length);
+    // db = Firestore.instance;
+    // await db.collection("template").getDocuments().then((document) {
+    //   document.documents.forEach((file) {
+    //     files = file.data["files"];
+    //   });
+    // });
+    // print(files.length);
   }
 
   String fileNameRetriver(int index) {
-    String uri = Uri.decodeFull(files[index]);
+    String uri = Uri.decodeFull(widget.files[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String file = regex.stringMatch(uri);
     return file;
@@ -61,7 +67,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     }).catchError((e) {
       Directory('/storage/emulated/0/Startupreneur').create();
     });
-    String uri = Uri.decodeFull(files[index]);
+    String uri = Uri.decodeFull(widget.files[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String fileName = regex.stringMatch(uri);
     final dir = ('/storage/emulated/0/Startupreneur');
@@ -74,7 +80,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     progressDialog.show();
     HttpClient client = new HttpClient();
     await client
-        .getUrl(Uri.parse(files[index]))
+        .getUrl(Uri.parse(widget.files[index]))
         .then((HttpClientRequest request) {
       print("nop");
       return request.close();
@@ -110,7 +116,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       body: GridView.builder(
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: width / height),
-        itemCount: files.length,
+        itemCount: widget.lengthList,
         itemBuilder: (context, int index) {
           fileName = fileNameRetriver(index);
           return Card(

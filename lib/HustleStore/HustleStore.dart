@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/HustleStore/template.dart';
+import 'package:startupreneur/HustleStore/template/templateLoader.dart';
 import 'ServerData.dart';
 import 'FullScreenDialog.dart';
 import 'DataListing.dart';
@@ -266,7 +266,7 @@ class _HustleStoreState extends State<HustleStore> {
                                    else if(index == 5){
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => TemplateDownload(
+                                      builder: (context) => TemplateLoader(
                                       
                                       ),
                                     ));
