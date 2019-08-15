@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/HustleStore/template.dart';
 import 'ServerData.dart';
 import 'FullScreenDialog.dart';
 import 'DataListing.dart';
@@ -249,7 +250,7 @@ class _HustleStoreState extends State<HustleStore> {
                                 () {
                                   if (index == 1) {
                                     Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
+                                        .push(MaterialPageRoute(
                                       builder: (context) => Incubation(
                                         title: "Incubation",
                                       ),
@@ -261,7 +262,16 @@ class _HustleStoreState extends State<HustleStore> {
                                           title: component.description,
                                           index: index),
                                     ));
-                                  } else {
+                                  }
+                                   else if(index == 5){
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => TemplateDownload(
+                                      
+                                      ),
+                                    ));
+                                  }
+                                  else {
                                     if (widget.points >= component.price) {
                                       Navigator.of(context).push(
                                         new MaterialPageRoute<Null>(
