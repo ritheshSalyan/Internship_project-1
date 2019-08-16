@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flip_card/flip_card.dart';
-import 'package:folding_cell/folding_cell.dart';
+// import 'package:folding_cell/folding_cell.dart';
 import 'package:flip_card/flip_card.dart';
 
 class ItemList {
@@ -18,7 +18,7 @@ class _VocabularyState extends State<Vocabulary> {
   Firestore db = Firestore.instance;
   List<String> listGiven = [];
   List<String> listMeaning = [];
-  final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
+  // final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -26,86 +26,86 @@ class _VocabularyState extends State<Vocabulary> {
     // dataRetrieve();
   }
 
-  Widget _buildFrontWidget(String word) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
-        color: Colors.grey,
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              word,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10),
-            ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-              child: Text(
-                "Check for meaning",
-              ),
-              textColor: Colors.white,
-              color: Colors.green,
-              splashColor: Colors.white.withOpacity(0.5),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildFrontWidget(String word) {
+  //   return Material(
+  //     type: MaterialType.transparency,
+  //     child: Container(
+  //       height: MediaQuery.of(context).size.height * 0.5,
+  //       color: Colors.grey,
+  //       alignment: Alignment.center,
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Text(
+  //             word,
+  //             style: TextStyle(
+  //                 color: Colors.white,
+  //                 fontSize: 12.0,
+  //                 fontWeight: FontWeight.bold),
+  //           ),
+  //           Padding(
+  //             padding: EdgeInsets.only(top: 10),
+  //           ),
+  //           RaisedButton(
+  //             shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(10.0)),
+  //             onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+  //             child: Text(
+  //               "Check for meaning",
+  //             ),
+  //             textColor: Colors.white,
+  //             color: Colors.green,
+  //             splashColor: Colors.white.withOpacity(0.5),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildInnerTopWidget(String word) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        color: Colors.grey,
-        alignment: Alignment.center,
-        child: Text(
-          word,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildInnerTopWidget(String word) {
+  //   return Material(
+  //     type: MaterialType.transparency,
+  //     child: Container(
+  //       color: Colors.grey,
+  //       alignment: Alignment.center,
+  //       child: Text(
+  //         word,
+  //         style: TextStyle(
+  //           color: Colors.white,
+  //           fontFamily: 'OpenSans',
+  //           fontSize: 16.0,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildBottomWidget(String word, String meaning) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      color: Color(0xFFecf2f9),
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 10),
-        child: Material(
-          type: MaterialType.canvas,
-          child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  meaning,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  ),
-                ),
-              )),
-        ),
-      ),
-    );
-  }
+  // Widget _buildBottomWidget(String word, String meaning) {
+  //   return Container(
+  //     height: MediaQuery.of(context).size.height * 0.5,
+  //     color: Color(0xFFecf2f9),
+  //     alignment: Alignment.bottomCenter,
+  //     child: Padding(
+  //       padding: EdgeInsets.only(bottom: 10),
+  //       child: Material(
+  //         type: MaterialType.canvas,
+  //         child: SingleChildScrollView(
+  //             physics: BouncingScrollPhysics(),
+  //             child: Padding(
+  //               padding: EdgeInsets.all(20.0),
+  //               child: Text(
+  //                 meaning,
+  //                 style: TextStyle(
+  //                   fontSize: 16.0,
+  //                 ),
+  //               ),
+  //             )),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   void popDialog(BuildContext context, String word, String meaning) {
     print("$meaning");

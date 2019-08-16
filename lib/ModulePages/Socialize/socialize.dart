@@ -62,6 +62,7 @@ class _SocializeTaskState extends State<SocializeTask> {
               children: <Widget>[
                 Container(
                   child: Form(
+                    autovalidate: true,
                     key: _formkey,
                     child: ListView(
                       shrinkWrap: true,
@@ -202,6 +203,7 @@ class _SocializeTaskState extends State<SocializeTask> {
               children: <Widget>[
                 Container(
                   child: Form(
+                    autovalidate: true,
                     key: _formkey,
                     child: ListView(
                       shrinkWrap: true,
@@ -229,6 +231,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                           ),
                         ),
                         TextFormField(
+                          
                           validator: (value) =>
                               value.isEmpty ? "Cannot be empty" : null,
                           keyboardType: TextInputType.text,
@@ -240,6 +243,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                           ),
                         ),
                         TextFormField(
+                          autovalidate: true,
                           validator: (value) =>
                               value.isEmpty ? "Cannot be empty" : null,
                           keyboardType: TextInputType.text,
@@ -454,7 +458,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                             width: 1.0,
                           ),
                           onPressed: () {
-                            if (_job == false && _startup == false) {
+                            if (_job && _startup) {
                               Scaffold.of(context).showSnackBar(
                                 SnackBar(
                                   duration: Duration(seconds: 2),

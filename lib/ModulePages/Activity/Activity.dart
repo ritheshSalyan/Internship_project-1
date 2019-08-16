@@ -31,6 +31,7 @@ class _ActivityPageState extends State<ActivityPage> {
     for (int i = 0; i < 4; i++) {
       itemInside.add(
         TextFormField(
+          autovalidate: true,
           obscureText: false,
           keyboardType: TextInputType.text,
           maxLines: 1,

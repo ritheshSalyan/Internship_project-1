@@ -92,6 +92,7 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
                           shrinkWrap: true,
                           children: <Widget>[
                             TextFormField(
+                              autovalidate: true,
                               validator: (value) =>
                                   value.isEmpty ? "Cannot be empty" : null,
                               keyboardType: TextInputType.text,

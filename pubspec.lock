@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2+1"
-  awesome_package:
-    dependency: "direct main"
-    description:
-      name: awesome_package
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -92,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-  cookie_jar:
-    dependency: transitive
-    description:
-      name: cookie_jar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   crypto:
     dependency: transitive
     description:
@@ -120,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0+2"
-  dio:
-    dependency: "direct main"
-    description:
-      name: dio
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.13"
   eventify:
     dependency: transitive
     description:
@@ -251,13 +230,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  flutter_mailer:
+  flutter_offline:
     dependency: "direct main"
     description:
-      name: flutter_mailer
+      name: flutter_offline
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1+1"
+    version: "0.2.4+1"
   flutter_plugin_pdf_viewer:
     dependency: "direct main"
     description:
@@ -265,13 +244,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.7"
-  flutter_simple_video_player:
-    dependency: "direct main"
-    description:
-      name: flutter_simple_video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.9"
   flutter_svg:
     dependency: transitive
     description:
@@ -291,13 +263,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  folding_cell:
-    dependency: "direct main"
-    description:
-      name: folding_cell
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -382,13 +347,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
-  modal_progress_hud:
-    dependency: "direct main"
-    description:
-      name: modal_progress_hud
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   numberpicker:
     dependency: transitive
     description:
@@ -473,13 +431,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0+1"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1+1"
   quiver:
     dependency: transitive
     description:
@@ -501,15 +452,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.9"
-  rflutter_alert:
-    dependency: "direct main"
-    description:
-      name: rflutter_alert
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   rxdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
@@ -590,13 +534,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.5"
-  timeline:
-    dependency: "direct main"
-    description:
-      name: timeline
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   timeline_list:
     dependency: "direct main"
     description:
@@ -611,13 +548,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
-  transparent_image:
-    dependency: "direct main"
-    description:
-      name: transparent_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:

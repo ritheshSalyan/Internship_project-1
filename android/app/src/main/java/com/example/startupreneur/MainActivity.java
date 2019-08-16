@@ -11,7 +11,7 @@ import android.os.StrictMode;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import androidx.core.content.FileProvider;
+
 
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -35,6 +35,8 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   boolean val = false;
   Result result;
   Context context;
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -42,7 +44,6 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
     // getWindow().addFlags(LayoutParams.FLAG_SECURE);
     AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
     Analytics.trackEvent("My custom event");
-    context = this;
     Checkout.preload(getApplicationContext());
     dialog = new ProgressDialog(this);
     new MethodChannel(getFlutterView(),CHANNEL).setMethodCallHandler((methodCall, result) -> {
@@ -103,22 +104,6 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    // Check which request we're responding to
-    if (requestCode == 200) {
-      // Make sure the request was successful
-      if (resultCode == RESULT_OK) {
-        // The user picked a contact.
-        // The Intent's data Uri identifies which contact was selected.
-        Toast.makeText(getApplicationContext(),"Hey",Toast.LENGTH_SHORT).show();
-        // Do something with the contact here (bigger example below)
-      }
-    }
-  }
-
-
-
-  @Override
   public void onPaymentSuccess(String s) {
     Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
 //    result.success(s);
@@ -127,7 +112,6 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   @Override
   public void onPaymentError(int i, String s) {
     Toast.makeText(getApplicationContext(),"Failure"+i+s,Toast.LENGTH_SHORT).show();
-
 
   }
 }
