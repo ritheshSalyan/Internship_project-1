@@ -230,10 +230,19 @@ class _TimelinePageState extends State<TimelinePage> {
                     //     size: 15,
                     //   ),
                     // ),
-                    Image.asset(
-                      "assets/Images/coins.png",
-                      height: 20,
-                      width: 20,
+                    GestureDetector(
+                      child: Image.asset(
+                        "assets/Images/coins.png",
+                        height: 20,
+                        width: 20,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileLoading(uid: uid),
+                          ),
+                        );
+                      },
                     ),
                     Text(
                       " $gems",
@@ -250,10 +259,20 @@ class _TimelinePageState extends State<TimelinePage> {
                     fontSize: 18,
                   ),
                 ),
-                currentAccountPicture: CircleAvatar(
+                currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(_url),
                 ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileLoading(uid: uid),
+                          ),
+                        );
+                      },
+                    ),
+                    
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -350,7 +369,6 @@ class _TimelinePageState extends State<TimelinePage> {
                   //     builder: (context) => ( MyHomePage(title: 'Flutter Demo Home Page')),
                   //   ),
                   // );
-
                 },
               ),
               ListTile(
@@ -365,8 +383,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          (HowToEarn()),
+                      builder: (context) => (HowToEarn()),
                       fullscreenDialog: true,
                     ),
                   );
@@ -623,15 +640,13 @@ class _TimelinePageState extends State<TimelinePage> {
 
   Future<dynamic> getFile() async {
     print("Before Picking File");
-   var file = await FilePicker.getFilePath(type: FileType.ANY).then((file) {
+    var file = await FilePicker.getFilePath(type: FileType.ANY).then((file) {
       print("After inside Picking file");
-       return file;
+      return file;
     }).catchError((e) {
       print("ERROR!!!!!!!!!!!" + e.toString());
-    }).timeout(Duration(seconds: 10) ,onTimeout:
-     (){
-        print("Timeout*************************");
+    }).timeout(Duration(seconds: 10), onTimeout: () {
+      print("Timeout*************************");
     });
-   
   }
 }
