@@ -188,19 +188,22 @@ class _DiscussionPageState extends State<DiscussionPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ExtendedImage.asset(
-                            widget.image,
-                            // "assets/Images/photo.png",
-                            enableLoadState: true,
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.5,
+                          Padding(
+                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.18),
+                            child: ExtendedImage.asset(
+                              widget.image,
+                              // "assets/Images/photo.png",
+                              enableLoadState: true,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.5,
 //                            alignment: Alignment.center,
-                            mode: ExtendedImageMode.Gesture,
+                              mode: ExtendedImageMode.Gesture,
+                            ),
                           ),
                           IconButton(
                             icon: Icon(
                               Icons.zoom_out_map,
-                              color: Colors.green,
+                              color: Colors.black,
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(

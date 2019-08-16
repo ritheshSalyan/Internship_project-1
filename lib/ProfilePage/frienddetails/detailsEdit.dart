@@ -151,6 +151,7 @@ void getFilePath(BuildContext context) async {
    
     //  String _filePath;
     try {
+      print("Before pickking file");
       // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
       File file1 = await FilePicker.getFile(type: FileType.ANY);
        progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
