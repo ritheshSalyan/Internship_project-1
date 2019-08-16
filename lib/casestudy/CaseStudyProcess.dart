@@ -56,7 +56,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/Explain.png',
+                  'assets/Images/story.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,
@@ -103,7 +103,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/Explain.png',
+                  'assets/Images/story.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,
@@ -139,7 +139,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/Explain.png',
+                  'assets/Images/story.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,
