@@ -193,7 +193,7 @@ class FriendDetailBody extends StatelessWidget {
   // }
 
   List<Widget> personalDetail(BuildContext context) {
-    double percentage = (friend.completed.length / 12) * 100;
+    double percentage = (friend.completed.length / 13) * 100;
     return <Widget>[
       Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),

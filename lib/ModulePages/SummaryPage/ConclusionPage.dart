@@ -48,7 +48,7 @@ class _SummaryPageState extends State<SummaryPage>
                     left: MediaQuery.of(context).size.height * 0.02,
                   ),
                   child: Image.asset(
-                    "assets/Images/summary.PNG",
+                    "assets/Images/summary1.jpg",
                     height: 150,
                     width: 150,
                   ),
@@ -73,7 +73,7 @@ class _SummaryPageState extends State<SummaryPage>
                         height: 35,
                       ),
                       Text(
-                        "You have successfully completed this module :)",
+                        "You have successfully completed this module 😄",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
