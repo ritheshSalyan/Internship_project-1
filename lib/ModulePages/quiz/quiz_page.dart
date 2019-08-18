@@ -119,7 +119,7 @@ class _QuizPageState extends State<QuizPage> {
                                              reason = "";
                                           }
                                           else{
-                                            reason = "Reason : "+reason;
+                                            reason = "\n\n "+reason;
                                           }
                                           // print(correctAns);
                                           for (dynamic i
