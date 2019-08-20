@@ -41,8 +41,8 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
 
 
     // getWindow().addFlags(LayoutParams.FLAG_SECURE);
-    AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
-    Analytics.trackEvent("My custom event");
+    // AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
+    // Analytics.trackEvent("My custom event");
     Checkout.preload(getApplicationContext());
     dialog = new ProgressDialog(this);
     new MethodChannel(getFlutterView(),CHANNEL).setMethodCallHandler((methodCall, result) -> {
@@ -62,7 +62,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
         String subject = methodCall.argument("subject");
         String body = methodCall.argument("body");
         sendEmail(toMail,subject,body,uriFile);
-//        \ sendEmail(toMail,subject,body, Uri.fromFile(new File(uriFile)));
+//         sendEmail(toMail,subject,body, Uri.fromFile(new File(uriFile)));
         result.success("done");
       }
       else{
