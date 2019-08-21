@@ -60,7 +60,10 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
           print("quote");
           typeList.add(Type.quote);
           break;
-
+        case "Type.imagePage":
+          print("imagePage");
+          typeList.add(Type.imagePage);
+          break;
         case "Type.vocabulary":
           print("vocabulary");
           typeList.add(Type.vocabulary);

@@ -19,6 +19,7 @@ import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
 import '../ModulePages/TopicHeading/TopicHeadingLoader.dart';
 import '../ModulePages/HustelTip/HustelTipLoader.dart';
+import '../ModulePages/ImagePage/ImagePageLoader.dart';
 
 enum Type {
   heading,
@@ -37,6 +38,7 @@ enum Type {
   decisionGameText,
   uploadActivity,
   hustelTip,
+  imagePage,
 }
 
 class orderManagement {
@@ -116,6 +118,15 @@ class orderManagement {
           );
           break;
 
+        case Type.imagePage:
+          print("imagePage");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  ImagePageLoading(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
         case Type.uploadActivity:
           print("activity");
           Navigator.of(context).push(MaterialPageRoute(

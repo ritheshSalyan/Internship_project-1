@@ -122,10 +122,11 @@ class _QuizPageState extends State<QuizPage> {
                                           correctAns =
                                               document["answer"].toString();
                                           reason = document["reason"];
-                                          if (reason.isEmpty) {
-                                            reason = "";
-                                          } else {
-                                            reason = "\n\n" + reason;
+                                          if(reason.isEmpty){
+                                             reason = "";
+                                          }
+                                          else{
+                                            reason = "\n\n "+reason;
                                           }
                                           // print(correctAns);
                                           for (dynamic i
