@@ -4,10 +4,6 @@ import 'home.dart';
 import 'HustleStore/HustleStore.dart';
 
 void main() async {
-//  ChangeNotifierProvider(
-//    builder: (context) => PaymentGatewayPage(),
-//    child: MyApp(),
-//  );
   runApp(MyApp());
 }
 

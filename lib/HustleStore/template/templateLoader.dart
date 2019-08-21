@@ -52,10 +52,31 @@ List<dynamic> files=[];
           )
         );
     });
-    return CircularProgressIndicator(
-      strokeWidth: 5,
-      value: null,
-      valueColor: new AlwaysStoppedAnimation(Colors.green),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new CircularProgressIndicator(
+              strokeWidth: 5,
+              value: null,
+              valueColor: new AlwaysStoppedAnimation(Colors.green),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Material(
+              color: Colors.transparent,
+              child: Text(
+                "Loading...",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
