@@ -77,37 +77,7 @@ class _ImagePagePageState extends State<ImagePagePage>
                     height: MediaQuery.of(context).size.height * 0.7,
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     top: MediaQuery.of(context).size.height * 0.1,
-                //     left: MediaQuery.of(context).size.height * 0.01,
-                //   ),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: <Widget>[
-                //       AutoSizeText(
-                //         widget.title,
-                //         textAlign: TextAlign.center,
-                //         style: TextStyle(
-                //           letterSpacing: 0.5,
-                //           color: Colors.green,
-                //           fontSize: 30,
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 35,
-                //       ),
-                //       // Text(
-                //       //   "You have successfully completed this module :)",
-                //       //   textAlign: TextAlign.center,
-                //       //   style: TextStyle(
-                //       //     fontSize: 16,
-                //       //   ),
-                //       // ),
-                //     ],
-                //   ),
-                // ),
+               
                 Padding(
                   padding: EdgeInsets.only(
                     // top: MediaQuery.of(context).size.height * 0.1,
