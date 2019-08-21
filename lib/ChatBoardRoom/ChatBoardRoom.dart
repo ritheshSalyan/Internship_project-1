@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
@@ -21,6 +22,12 @@ class ChatRoom {
 }
 
 class ChatBoardRoom extends StatefulWidget {
+
+  ChatBoardRoom({Key key,this.valueData,this.len}):super(key:key);
+
+   final List<dynamic> valueData;
+   final dynamic len;
+
   @override
   _ChatBoardRoomState createState() => _ChatBoardRoomState();
 }
@@ -41,7 +48,9 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     super.initState();
     db = Firestore.instance;
     preference();
-    fetchingValue();
+
+    print(widget.len);
+    // fetchingValue();
   }
 
   void preference() async {
@@ -49,44 +58,48 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     userId = sharedPreferences.getString("UserId");
   }
 
-  void fetchingValue() async {
-    chatroom.clear();
-    db = Firestore.instance;
-    await db.collection("chat").getDocuments().then((document) {
-      document.documents.forEach((value) {
-        chatroom.add(new ChatRoom(
-          question: value.data["question"],
-          answer: value.data["answers"],
-          tag: value.data["tag"],
-          upvote: value.data["upvote"],
-        ));
-      });
-    });
-    print(chatroom.length);
-  }
+  // void fetchingValue() async {
+  //   chatroom.clear();
+  //   db = Firestore.instance;
+  //   await db.collection("chat").getDocuments().then((document) {
+  //     document.documents.forEach((value) {
+  //       chatroom.add(new ChatRoom(
+  //         question: value.data["question"],
+  //         answer: value.data["answers"],
+  //         tag: value.data["tag"],
+  //         upvote: value.data["upvote"],
+  //       ));
+  //     });
+  //   });
+  //   print(chatroom.length);
+  // }
 
   void increaseUpvote(int index) async {
-       upvote = chatroom[index].upvote;
+    upvote = widget.valueData[index].upvote;
     print("upvote is $upvote");
-    var data = Map<String,dynamic>();
-    data["upvote"] =  chatroom[index].upvote+1;
-     await db
+    var data = Map<String, dynamic>();
+    data["upvote"] = widget.valueData[index].upvote + 1;
+    await db
         .collection("chat")
-        .where("question", isEqualTo: chatroom[index].question)
+        .where("question", isEqualTo: widget.valueData[index].question)
         .getDocuments()
         .then((document) {
       document.documents.forEach((vl) {
         documentId = vl.documentID;
       });
-    }).then((val){
+    }).then((val) {
       print("done fetching");
     });
     print("${documentId}");
     print("${upvote}");
-   await db.collection("chat").document(documentId).setData(data,merge: true).then((val){
-     print("Done adding");
-   });
-   fetchingValue();
+    await db
+        .collection("chat")
+        .document(documentId)
+        .setData(data, merge: true)
+        .then((val) {
+      print("Done adding");
+      initState();
+    });
   }
 
   @override
@@ -97,15 +110,15 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       ),
       body: ListView.builder(
         shrinkWrap: true,
-        itemCount: chatroom.length,
+        itemCount: widget.len,
         itemBuilder: (context, int index) {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ViewCommentPage(
-                    question:chatroom[index].question,
-                    answers:chatroom[index].answer,
+                    question: widget.valueData[index].question,
+                    answers:widget.valueData[index].answer,
                   ),
                   fullscreenDialog: true,
                 ),
@@ -142,7 +155,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                             child: Wrap(
                               children: <Widget>[
                                 AutoSizeText(
-                                  chatroom[index].question,
+                                  widget.valueData[index].question,
                                   maxLines: 50,
                                   textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
@@ -163,7 +176,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                           FontAwesomeIcons.comment,
                           color: Colors.green,
                         ),
-                        Text(" ${chatroom[index].answer.length}"),
+                        Text(" ${widget.valueData[index].answer.length - 1}"),
                         SizedBox(
                           width: 25,
                         ),
@@ -174,13 +187,13 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                           icon: Icon(FontAwesomeIcons.thumbsUp),
                           color: Colors.green,
                         ),
-                        Text(" ${chatroom[index].upvote}"),
+                        Text(" ${widget.valueData[index].upvote}"),
                         SizedBox(
                           width: 25,
                         ),
                         ActionChip(
                           label: Text(
-                            "${chatroom[index].tag}",
+                            "${widget.valueData[index].tag}",
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {},
@@ -197,10 +210,23 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
-                builder: (context) => AddChatBoardRoom(),
-                fullscreenDialog: true),
+              builder: (context) => AddChatBoardRoom(),
+              fullscreenDialog: true,
+            ),
+          )
+              .whenComplete(
+            () {
+              Future.delayed(Duration(seconds: 5)).then(
+                (complete) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => ChatBoardRoom(),
+                  ));
+                },
+              );
+            },
           );
         },
         tooltip: "Click to share thought",

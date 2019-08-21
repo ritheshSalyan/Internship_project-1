@@ -108,7 +108,13 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     switch (snapshot.data) {
                                       case null:
-                                        return Text("No data available");
+                                        return  Center(
+                                          child: CircularProgressIndicator(
+                                          value: null,
+                                          strokeWidth: 3,
+                                          valueColor: AlwaysStoppedAnimation(Colors.green,),
+                                        ),
+                                        );
                                       default:
                                         options.clear();
                                         

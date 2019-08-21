@@ -44,25 +44,37 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
 
   void validateForm(BuildContext context) {
     if (_validate()) {
-      saveData();
+      saveData(context);
     }
   }
 
-  void saveData() async{
+  void saveData(BuildContext context) async {
+    list.clear();
     db = Firestore.instance;
-    await db.collection("chat").where("question",isEqualTo:widget.question).getDocuments().then((document){
-        document.documents.forEach((id){
-            documentId = id.documentID;
-        });
+    await db
+        .collection("chat")
+        .where("question", isEqualTo: widget.question)
+        .getDocuments()
+        .then((document) {
+      document.documents.forEach((id) {
+        documentId = id.documentID;
+      });
     });
-    for(dynamic i in widget.answers){
+    for (dynamic i in widget.answers) {
       list.add(i);
     }
     list.add(text);
-    var data = Map<String,dynamic>();
+    var data = Map<String, dynamic>();
     data["answers"] = list;
-    await db.collection("chat").document(documentId).setData(data,merge: true);
-
+    await db
+        .collection("chat")
+        .document(documentId)
+        .setData(data, merge: true)
+        .then((done) {
+      Navigator.of(context).pop();
+      // initState();
+      setState(() {});
+    });
   }
 
   void preferences() async {

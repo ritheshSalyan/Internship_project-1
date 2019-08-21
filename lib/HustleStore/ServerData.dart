@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'DataListing.dart';
+import 'internship/DataListing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Component {

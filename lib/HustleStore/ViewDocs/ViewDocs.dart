@@ -1,101 +1,72 @@
-import 'dart:async';
 import 'dart:io';
-import 'package:flushbar/flushbar.dart';
-import 'package:flutter_offline/flutter_offline.dart';
-import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/Auth/PdfReader.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
-import '../../Auth/signin.dart';
-import 'package:connectivity/connectivity.dart';
 
-class TemplateDownload extends StatefulWidget {
-  TemplateDownload({Key key, this.files, this.lengthList}) : super(key: key);
+class ViewDocs extends StatefulWidget {
 
-  List<dynamic> files;
-  int lengthList;
+  ViewDocs({Key key, this.lengthList, this.doc}) : super(key: key);
+  dynamic lengthList;
+  List<dynamic> doc;
 
   @override
-  _TemplateDownloadState createState() => _TemplateDownloadState();
+  _ViewDocsState createState() => _ViewDocsState();
+
+
 }
 
-class _TemplateDownloadState extends State<TemplateDownload> {
- 
-  SharedPreferences sharedPreferences;
-  String userId;
-  Firestore db;
-  String downloadUrl;
+
+
+class _ViewDocsState extends State<ViewDocs> {
   String fileName;
-  BuildContext context;
-  File file;
-  String folder = "downloads";
-  // List<dynamic> files = [];
-  StorageReference storageReference;
   ProgressDialog progressDialog;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context = this.context;
-    preferences();
-  }
-
-  
-
- 
-
-  void preferences() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    userId = sharedPreferences.getString("UserId");
-    print(userId);
-
-    // db = Firestore.instance;
-    // await db.collection("template").getDocuments().then((document) {
-    //   document.documents.forEach((file) {
-    //     files = file.data["files"];
-    //   });
-    // });
-    // print(files.length);
-  }
+  File file;
+  PDFDocument document;
 
   String fileNameRetriver(int index) {
-    String uri = Uri.decodeFull(widget.files[index]);
+    String uri = Uri.decodeFull(widget.doc[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String file = regex.stringMatch(uri);
     return file;
   }
 
-  void downloadFile(int index) async {
+
+ void downloadFile(int index,BuildContext context) async {
+
+
+
     progressDialog = ProgressDialog(context, ProgressDialogType.Normal);
-    Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
+    Directory('/storage/emulated/0/Startupreneur/cache').exists().then((yes) {
       if (!yes) {
         print("inside failed loop $yes");
-        Directory('/storage/emulated/0/Startupreneur').create();
+        Directory('/storage/emulated/0/Startupreneur/cache').create();
       }
     }).catchError((e) {
-      Directory('/storage/emulated/0/Startupreneur').create();
+      Directory('/storage/emulated/0/Startupreneur/cache').create();
     });
-    String uri = Uri.decodeFull(widget.files[index]);
+    String uri = Uri.decodeFull(widget.doc[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String fileName = regex.stringMatch(uri);
-    final dir = ('/storage/emulated/0/Startupreneur');
+    final dir = ('/storage/emulated/0/Startupreneur/cache');
     final dir1 = ((await getExternalStorageDirectory()).path);
+
 
     print("File path $dir1");
     file = File('$dir/$fileName');
     print("from download $fileName");
-    print("${file.path}");
+    int size = await file.length();
+    print("Curent directory $size");
 
-    progressDialog.setMessage("Downloading ...");
+
+    progressDialog.setMessage("Opening file  ...");
     progressDialog.show();
     HttpClient client = new HttpClient();
     await client
-        .getUrl(Uri.parse(widget.files[index]))
+        .getUrl(Uri.parse(widget.doc[index]))
         .then((HttpClientRequest request) {
       print("nop");
       return request.close();
@@ -104,7 +75,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       response.pipe((file).openWrite());
       print("done");
       progressDialog.hide();
-      Toast.show("check file in Startupreneur/$fileName in storage", context,
+      Toast.show("check file in Startupreneur/cache/$fileName in storage", context,
           gravity: Toast.BOTTOM, duration: 5);
     }).catchError((e) {
       print("error $e");
@@ -115,22 +86,36 @@ class _TemplateDownloadState extends State<TemplateDownload> {
           backgroundColor: Colors.red,
           textColor: Colors.black);
     });
+    try{
+    
+      document = await PDFDocument.fromAsset("assets/pdf/t_and_c.pdf");
+    }catch(e){
+      print(e);
+    }
+    File("/storage/emulated/0/Startupreneur/cache/$fileName").exists().then((res){
+      if(res){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context)=>PdfReader(document,"View Documents"),
+            fullscreenDialog: true
+          )
+        );
+      }
+    });
 
-    // storageReference = FirebaseStorage.instance.ref().child(userId).child(fileName);
-    // final StorageFileDownloadTask storageFileDownloadTask = storageReference.writeToFile(file);
-    // final int byteNumber = (await storageFileDownloadTask.future).totalByteCount;
-    // print(byteNumber);
+
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     final double width = MediaQuery.of(context).size.width * 0.9;
     final double height = MediaQuery.of(context).size.height * 0.75;
-
     Widget child;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Template Download"),
+        title: Text("View Documents"),
       ),
       body: OfflineBuilder(
         connectivityBuilder:
@@ -145,7 +130,11 @@ class _TemplateDownloadState extends State<TemplateDownload> {
               itemCount: widget.lengthList,
               itemBuilder: (context, int index) {
                 fileName = fileNameRetriver(index);
-                return Card(
+                return GestureDetector(
+                  onTap: (){
+                    downloadFile(index,context);
+                  },
+                  child: Card(
                   elevation: 5.0,
                   child: Stack(
                     fit: StackFit.passthrough,
@@ -156,35 +145,35 @@ class _TemplateDownloadState extends State<TemplateDownload> {
                         ),
                       ),
                       Container(
-                        color: Colors.white,
+                        color: Colors.green,
                         margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.3),
+                          top: MediaQuery.of(context).size.height * 0.32,
+                        ),
                         alignment: Alignment.bottomCenter,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.3,
-                              child: Text("$fileName"),
+                              child: Text(
+                                "$fileName",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
                             ),
                             // SizedBox(width: 40),
-                            IconButton(
-                              alignment: Alignment.bottomRight,
-                              onPressed: () {
-                                downloadFile(index);
-                              },
-                              icon: Icon(Icons.file_download),
-                            )
                           ],
                         ),
                       ),
                     ],
                   ),
+                ),
                 );
               },
             );
           }
-          return(child);
+          return (child);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

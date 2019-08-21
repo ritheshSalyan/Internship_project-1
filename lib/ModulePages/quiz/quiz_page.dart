@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class QuizPage extends StatefulWidget {
-  QuizPage({Key key, this.modNum,this.order,this.index}) : super(key: key);
-  final int modNum,order,index;
+  QuizPage({Key key, this.modNum, this.order, this.index}) : super(key: key);
+  final int modNum, order, index;
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -18,7 +18,6 @@ class _QuizPageState extends State<QuizPage> {
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
     color: Colors.white,
-    
   );
   List<dynamic> options = [];
   int selectedRadio = 0;
@@ -65,7 +64,7 @@ class _QuizPageState extends State<QuizPage> {
                                   stream: Firestore.instance
                                       .collection("quiz")
                                       .where("module", isEqualTo: widget.modNum)
-                                      .where("order",isEqualTo: widget.order)
+                                      .where("order", isEqualTo: widget.order)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -101,13 +100,21 @@ class _QuizPageState extends State<QuizPage> {
                                   stream: db
                                       .collection("quiz")
                                       .where("module", isEqualTo: widget.modNum)
-                                      .where("order",isEqualTo: widget.order)
+                                      .where("order", isEqualTo: widget.order)
                                       .snapshots(),
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     switch (snapshot.data) {
                                       case null:
-                                        return Text("No data available");
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: null,
+                                            strokeWidth: 3,
+                                            valueColor: AlwaysStoppedAnimation(
+                                              Colors.green,
+                                            ),
+                                          ),
+                                        );
                                       default:
                                         options.clear();
                                         snapshot.data.documents
@@ -115,11 +122,10 @@ class _QuizPageState extends State<QuizPage> {
                                           correctAns =
                                               document["answer"].toString();
                                           reason = document["reason"];
-                                          if(reason.isEmpty){
-                                             reason = "";
-                                          }
-                                          else{
-                                            reason = "Reason : "+reason;
+                                          if (reason.isEmpty) {
+                                            reason = "";
+                                          } else {
+                                            reason = "\n\n" + reason;
                                           }
                                           // print(correctAns);
                                           for (dynamic i
@@ -173,44 +179,64 @@ class _QuizPageState extends State<QuizPage> {
                                 if (_answerIs == correctAns) {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text(
-                                          "Hurray ! You got it right\n Lets move on !\n"+reason,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        backgroundColor: Colors.green[600],
-                                        shape: BeveledRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        duration: Duration(seconds: 2)),
+                                      content: Text(
+                                        "Hurray ! You got it right\n Lets move on !\n" +
+                                            reason,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      backgroundColor: Colors.green[600],
+                                      shape: BeveledRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      duration: Duration(hours: 1),
+                                      action: SnackBarAction(
+                                        textColor: Colors.white,
+                                        label: "Ok",
+                                        onPressed: () {
+                                          // homeScaffoldKey.currentState.hideCurrentSnackBar();
+                                          Scaffold.of(context)
+                                              .hideCurrentSnackBar();
+                                          List<dynamic> arguments = [
+                                            widget.modNum,
+                                            widget.index + 1
+                                          ];
+                                          orderManagement.moveNextIndex(
+                                              context, arguments);
+                                        },
+                                      ),
+                                    ),
                                   );
                                   Future.delayed(Duration(seconds: 3))
                                       .then((o) {
-                                    List<dynamic> arguments = [widget.modNum,widget.index];
-                                    print("Inside Quiz"+arguments.toString());
-                                    orderManagement.moveNextIndex(context, arguments);
+                                    // List<dynamic> arguments = [
+                                    //   widget.modNum,
+                                    //   widget.index
+                                    // ];
+                                    // print("Inside Quiz" + arguments.toString());
+                                    // orderManagement.moveNextIndex(
+                                    //     context, arguments);
                                   });
                                 } else {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text(
-                                          "Oops! Wrong answer",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        backgroundColor: Colors.red[600],
-                                        shape: BeveledRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        duration: Duration(seconds: 1)),
+                                      content: Text(
+                                        "Oops! Wrong answer",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      backgroundColor: Colors.red[600],
+                                      shape: BeveledRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      duration: Duration(seconds: 1),
+                                    ),
                                   );
                                 }
                               },

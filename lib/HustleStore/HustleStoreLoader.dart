@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'HustleStore.dart';
+import 'simply.dart';
 
 class HustleStoreLoader extends StatefulWidget {
   @override
@@ -26,15 +26,24 @@ class _HustleStoreLoaderState extends State<HustleStoreLoader> {
       );
     });
     return Scaffold(
-      body: CircularProgressIndicator(),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+          value: null,
+          valueColor: AlwaysStoppedAnimation(
+            Colors.green,
+          ),
+        ),
+      ),
     );
   }
 
   static Future<void> getEventsFromFirestore() async {
+
     sharedPreferences = await SharedPreferences.getInstance();
     userId = sharedPreferences.getString("UserId");
-
-  await  db
+    await db
         .collection("user")
         .where("uid", isEqualTo: userId)
         .getDocuments()

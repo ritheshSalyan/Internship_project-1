@@ -9,12 +9,14 @@ class Component {
   String description;
   String image;
   dynamic points;
+  List<dynamic> claimed;
 
   Component({
     this.points,
     this.description,
     this.image,
     this.name,
+    this.claimed,
   });
 }
 
@@ -109,7 +111,13 @@ class _HustleStoreState extends State<HustleStore> {
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 switch (snapshot.data) {
                   case null:
-                    return Text("on the way");
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: null,
+                        strokeWidth: 3,
+                        valueColor: AlwaysStoppedAnimation(Colors.green),
+                      ),
+                    );
                   default:
                     list.clear();
                     snapshot.data.documents.forEach((document) {
@@ -137,7 +145,8 @@ class _HustleStoreState extends State<HustleStore> {
                             color: Colors.grey[300],
                             child: GradientCard(
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                               gradient: LinearGradient(colors: color),
                               elevation: 12.0,
                               child: Row(
@@ -218,11 +227,11 @@ class _HustleStoreState extends State<HustleStore> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
-                       itemBuilder: (context,int index){
-                         return Column(
+                        itemBuilder: (context, int index) {
+                          return Column(
                             children: list,
-                         );
-                       },
+                          );
+                        },
                       ),
                     );
                 }

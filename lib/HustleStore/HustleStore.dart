@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/HustleStore/template/templateLoader.dart';
 import 'ServerData.dart';
 import 'FullScreenDialog.dart';
-import 'DataListing.dart';
-import 'incubation.dart';
+import 'internship/DataListing.dart';
+import 'incubation/incubation.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,13 +34,10 @@ class _HustleStoreState extends State<HustleStore> {
   ];
   Component component = new Component();
 
-
-
   @override
   initState() {
     super.initState();
     sharedPrefereneData();
-    
   }
 
   Future<void> sharedPrefereneData() async {
@@ -69,19 +66,18 @@ class _HustleStoreState extends State<HustleStore> {
     });
   }
 
-  Widget planetThumbnail(BuildContext context,String logo) => new Container(
-//      height: MediaQuery.of(context).size.height * 0.3,
-//    margin: new EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.1),
-      alignment: FractionalOffset.centerLeft,
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 35,
-        child: new Image(
-          image: new AssetImage(logo),
-          height: 60.0,
-          width: 60.0,
+  Widget planetThumbnail(BuildContext context, String logo) => new Container(
+        alignment: FractionalOffset.centerLeft,
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 35,
+          child: new Image(
+            image: new AssetImage(logo),
+            height: 60.0,
+            width: 60.0,
+          ),
         ),
-      ));
+      );
 
   Widget planetCard(BuildContext context, int index, String description,
           Image gemIcon, int price, OutlineButton button, String logo) =>
@@ -106,7 +102,6 @@ class _HustleStoreState extends State<HustleStore> {
           type: MaterialType.card,
           color: Colors.grey[300],
           child: GradientCard(
-//          shape: Border.all(width: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             gradient: LinearGradient(colors: color),
@@ -117,7 +112,7 @@ class _HustleStoreState extends State<HustleStore> {
                   padding: EdgeInsets.all(
                     MediaQuery.of(context).size.width * 0.04,
                   ),
-                  child: planetThumbnail(context,logo),
+                  child: planetThumbnail(context, logo),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -142,7 +137,6 @@ class _HustleStoreState extends State<HustleStore> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-//                    ),
                         Row(
                           children: <Widget>[
                             gemIcon,
@@ -177,14 +171,12 @@ class _HustleStoreState extends State<HustleStore> {
         builder: (context) {
           return Stack(
             children: <Widget>[
-//
               CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
                     iconTheme: IconThemeData(color: Colors.white),
                     expandedHeight: MediaQuery.of(context).size.height * 0.05,
                     backgroundColor: Theme.of(context).primaryColor,
-//                    backgroundColor: Colors.black,
                     pinned: true,
                     title: Row(
                       children: <Widget>[
@@ -223,12 +215,7 @@ class _HustleStoreState extends State<HustleStore> {
                         )
                       ],
                     ),
-                    flexibleSpace: FlexibleSpaceBar(
-//                      background: Image.asset(
-//                        "assets/Images/${widget.modNum}.png",
-//                        fit: BoxFit.fitWidth,
-//                      ),
-                        ),
+                    flexibleSpace: FlexibleSpaceBar(),
                   ),
                   SliverPadding(
                     padding: const EdgeInsets.all(10.0),
@@ -262,16 +249,12 @@ class _HustleStoreState extends State<HustleStore> {
                                           title: component.description,
                                           index: index),
                                     ));
-                                  }
-                                   else if(index == 5){
+                                  } else if (index == 5) {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => TemplateLoader(
-                                      
-                                      ),
+                                      builder: (context) => TemplateLoader(),
                                     ));
-                                  }
-                                  else {
+                                  } else {
                                     if (widget.points >= component.price) {
                                       Navigator.of(context).push(
                                         new MaterialPageRoute<Null>(

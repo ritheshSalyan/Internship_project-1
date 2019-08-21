@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:startupreneur/ModuleOrderController/Types.dart' ;
+import 'package:startupreneur/ModuleOrderController/Types.dart';
 import '../quiz/quiz_page.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
-  ModulePageIntro({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+  ModulePageIntro({Key key, this.modNum, this.index}) : super(key: key);
+  final int modNum, index;
   @override
   _ModulePageIntroState createState() => _ModulePageIntroState();
 }
@@ -35,48 +35,40 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   //       typeList.add(Type.vocabulary);
   //       break;
 
-
   //      case "Type.quiz":
   //       print("quiz");
   //       typeList.add(Type.quiz);
   //       break;
-
 
   //      case "Type.activity":
   //       print("activity");
   //       typeList.add(Type.activity);
   //       break;
 
-
   //      case "Type.decisionGame":
   //       print("decisionGame");
   //       typeList.add(Type.decisionGame);
   //       break;
-
 
   //      case "Type.caseStudy":
   //       print("caseStudy");
   //       typeList.add(Type.caseStudy);
   //       break;
 
-
   //      case "Type.video":
   //       print("video");
   //      typeList.add(Type.video);
   //       break;
-
 
   //      case "Type.overView":
   //       print("overView");
   //       typeList.add(Type.overView);
   //       break;
 
-
   //       case "Type.theory":
   //       print("theory");
   //       typeList.add(Type.theory);
   //       break;
-
 
   //      case "Type.summary":
   //      typeList.add(Type.summary);
@@ -91,7 +83,6 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   //       default:
   //           print("Default");
 
-        
   //   }
   //     }
   //     return typeList;
@@ -115,7 +106,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
     List<Widget> listWidget = new List<Widget>();
     for (int index = 0; index < list.length; index++) {
       listWidget.add(ExpansionTile(
-        initiallyExpanded:false,
+        initiallyExpanded: false,
         leading: Icon(Icons.arrow_forward_ios),
         title: Text(
           list[index],
@@ -139,7 +130,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         ),
         color: Colors.green,
         onPressed: () {
-          List<dynamic> arguments = [widget.modNum,widget.index+1];
+          List<dynamic> arguments = [widget.modNum, widget.index + 1];
           orderManagement.moveNextIndex(context, arguments);
         },
         child: Icon(
@@ -148,8 +139,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           color: Colors.green,
         ),
       ),
-      )
-    );
+    ));
     print(listWidget);
     return listWidget;
   }
@@ -190,7 +180,15 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                     // }
                     switch (snapshot.data) {
                       case null:
-                        return Text("Loading ...");
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: null,
+                            strokeWidth: 3,
+                            valueColor: AlwaysStoppedAnimation(
+                              Colors.green,
+                            ),
+                          ),
+                        );
                       default:
                         snapshot.data.documents.forEach((document) {
                           dataSnapshot = document;
@@ -199,12 +197,13 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                           for (dynamic i in document.data["overview"]) {
                             list.add(i);
                           }
-                        //   if(orderManagement.order.isEmpty){
-                        //   orderManagement.order = convert(document.data["order"]);
+                          //   if(orderManagement.order.isEmpty){
+                          //   orderManagement.order = convert(document.data["order"]);
 
-                           print("orderManagement.order "+orderManagement.order.toString());
-                        // }
-                           //=
+                          print("orderManagement.order " +
+                              orderManagement.order.toString());
+                          // }
+                          //=
                           // print(
                           //     "orderManagement.order = ${document.data}"); //[Type.overView,Type.quiz,Type.decisionGame];
                         });

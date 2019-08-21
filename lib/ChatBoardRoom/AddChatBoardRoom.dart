@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tags/tag.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 
 class AddChatBoardRoom extends StatefulWidget {
   @override
@@ -54,7 +57,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     userId = sharedPreferences.getString("UserId");
   }
 
-  void addDiscussion() async {
+  void addDiscussion(BuildContext context) async {
     db = Firestore.instance;
     var message = Map<String,dynamic>();
     message["question"]=text;
@@ -62,12 +65,32 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     message["tag"] = tags[0];
     message["answers"] = [""];
     message["uid"]=userId;
-    await db.collection("chat").add(message);
+    await db.collection("chat").add(message).then((done){
+      print(done);
+    }
+    );
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (context)=>ChatBoardRoomLoader()
+    //   )
+    // )
+    
+    Navigator.of(context).pop(
+      MaterialPageRoute(
+        builder: (context)=>ChatBoardRoomLoader()
+      )
+    );
+
+    // Navigator.of(context).push(
+    //      MaterialPageRoute(
+    //     builder: (context)=>ChatBoardRoomLoader()
+    //   )
+    // );
   }
 
   void validate(BuildContext context) {
       if(_validate()){
-        addDiscussion();
+        addDiscussion(context);
       }
     print("text is $text");
   }

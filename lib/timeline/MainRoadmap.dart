@@ -21,7 +21,7 @@ import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../ChatBoardRoom/ChatBoardRoom.dart';
+import '../ChatBoardRoom/ChatBoardRoomLoader.dart';
 import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -323,7 +323,7 @@ class _TimelinePageState extends State<TimelinePage> {
               ListTile(
                 leading: Icon(Icons.store),
                 title: Text(
-                  'Hustle Store',
+                  'The Startupreneur GoldMine',
                   style: TextStyle(
                     color: Colors.green,
                     letterSpacing: 0.5,
@@ -349,7 +349,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => (ChatBoardRoom()),
+                      builder: (context) => (ChatBoardRoomLoader()),
                     ),
                   );
                 },

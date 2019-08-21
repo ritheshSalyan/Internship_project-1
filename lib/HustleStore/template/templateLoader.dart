@@ -52,7 +52,10 @@ List<dynamic> files=[];
           )
         );
     });
-    return Scaffold(
+    return CircularProgressIndicator(
+      strokeWidth: 5,
+      value: null,
+      valueColor: new AlwaysStoppedAnimation(Colors.green),
     );
   }
 }
