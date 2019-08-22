@@ -42,6 +42,8 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
 
   static Future<void> getEventsFromFirestore(int modNum) async {
     print("hello");
+    words.clear();
+    meanings.clear();
     // CollectionReference ref = Firestore.instance.collection("vocabulary");
     // QuerySnapshot eventsQuery =
     //     await ref.where("module", isEqualTo: modNum)

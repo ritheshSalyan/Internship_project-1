@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -65,9 +66,14 @@ class _ImagePagePageState extends State<ImagePagePage>
                     // top: MediaQuery.of(context).size.height,
                     left: MediaQuery.of(context).size.height * 0.02,
                   ),
-                  child: Image.asset(
+                  // child: Image.asset(
+                  //   widget.title,
+                  //   height: MediaQuery.of(context).size.height * 0.7,
+                  // ),
+                  child: ExtendedImage.asset(
                     widget.title,
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    height: MediaQuery.of(context).size.height*0.5,
+                    enableLoadState: true,
                   ),
                 ),
                
