@@ -102,8 +102,10 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+  }
 
-    Future.delayed(Duration(seconds: 15)).then((_){
+  void preferences(BuildContext context) async {
+    await Future.delayed(Duration(seconds: 15)).then((_){
        flush = Flushbar<List<String>>(
         flushbarPosition: FlushbarPosition.TOP,
         title: "Welcome to The Startupeneur",
@@ -114,12 +116,8 @@ class _TimelinePageState extends State<TimelinePage> {
     }).whenComplete((){
       print("done and dusted");
     });
-      
-    
-  }
 
-  void preferences(BuildContext context) async {
-    doc = await PDFDocument.fromAsset("assets/pdf/how_to_earn.pdf");
+    
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       value = sharedPreferences.getString("UserEmail");
@@ -131,7 +129,6 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-
     await db
         .collection("user")
         .where("uid", isEqualTo: uid)
@@ -145,15 +142,6 @@ class _TimelinePageState extends State<TimelinePage> {
         });
       });
     });
-
-// =======
-//    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
-//     document.documents.forEach((value){
-//       setState(() {
-//         gems = value["points"];
-// >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
-    //    });
-    //  });
 
     await db
         .collection("user")
@@ -169,6 +157,7 @@ class _TimelinePageState extends State<TimelinePage> {
         }
       });
     });
+     
   }
 
   bool check(int i) {

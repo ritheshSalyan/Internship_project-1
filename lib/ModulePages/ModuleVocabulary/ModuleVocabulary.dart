@@ -5,6 +5,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
 import '../../ModuleOrderController/Types.dart';
 
+
+
+
 class ModuleVocabulary extends StatefulWidget {
   ModuleVocabulary({Key key, this.modNum, this.index, this.meaning, this.word})
       : super(key: key);

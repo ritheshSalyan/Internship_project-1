@@ -27,13 +27,6 @@ class _ImagePagePageState extends State<ImagePagePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _controller = AnimationController(
-    //     duration: Duration(milliseconds: 3000), vsync: this);
-    // animation = Tween(begin: -500.0, end: 100.0).animate(_controller)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
-    // _controller.forward();
   }
 
   void dispose() {
@@ -53,7 +46,7 @@ class _ImagePagePageState extends State<ImagePagePage>
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
+                    // top: MediaQuery.of(context).size.height * 0.1,
                     bottom: MediaQuery.of(context).size.height * 0.1,
                   ),
                   child: Text(
@@ -69,7 +62,7 @@ class _ImagePagePageState extends State<ImagePagePage>
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
+                    // top: MediaQuery.of(context).size.height,
                     left: MediaQuery.of(context).size.height * 0.02,
                   ),
                   child: Image.asset(

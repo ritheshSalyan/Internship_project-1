@@ -74,7 +74,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
         .then((done) {
       Navigator.of(context).pop();
       // initState();
-      setState(() {});
+      // setState(() {});
     });
   }
 
@@ -256,17 +256,26 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                 ],
               ),
             ),
-            isDismissible: false,
+            // isDismissible: false,
             backgroundColor: Colors.grey[200],
-          )..show(context).whenComplete((){
-          Future.delayed(Duration(seconds: 3)).then(
-                (complete) {
-                  Navigator.of(context).pop(MaterialPageRoute(
-                    builder: (context) => ChatBoardRoomLoader(),
-                  ));
-                },
-              );
-          });
+          )..show(context).whenComplete(() {
+                print("done and dusted - 1");
+                flush = Flushbar<List<String>>(
+                  isDismissible: true,
+                  duration: Duration(seconds: 3),
+                  flushbarPosition: FlushbarPosition.TOP,
+                  title: "Success",
+                  messageText: Column(children: <Widget>[
+                    Text("Successfully added"),
+                  ]),
+                )..show(context)
+              .whenComplete(() {
+                    print("done and dusted - 2");
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => ChatBoardRoomLoader(),
+                    ));
+              });
+            });
         },
         child: Icon(
           FontAwesomeIcons.comment,
