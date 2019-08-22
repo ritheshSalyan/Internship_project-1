@@ -3,14 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
 class ChatBoardRoom extends StatefulWidget {
-  ChatBoardRoom({Key key, this.valueData, this.len}) : super(key: key);
+  ChatBoardRoom({Key key, this.valueData, this.len,this.v}) : super(key: key);
+
 
   final List<dynamic> valueData;
   final dynamic len;
+  final String v;
 
   @override
   _ChatBoardRoomState createState() => _ChatBoardRoomState();
@@ -24,48 +27,51 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   dynamic userId;
   List<dynamic> list = [];
   int upvote;
+  int value;
   bool upvoteDecision = false;
 
   @override
   void initState() {
     super.initState();
     db = Firestore.instance;
-    preference().then((user){
+    print(widget.valueData);
+    list.clear();
+    preference().then((user) {
       setState(() {
-        print("hey user boy $user"); 
+        
         userId = user;
-        print("value is ${userId.toString()}");
-
-    print(widget.valueData[0].upvoters.length);
-    print(widget.len);
-
-    for (var i = 0; i<=widget.len-1;i++){
-      for (var k in  widget.valueData[i].upvoters) {
-        list.add(k);
-      print(" list ${k}");
-
-      }
-      print("hey list ${list[i]}");
-    }
-    print("hey user $userId");
-    for (var j in list) {
-      if (j == userId) {
-        setState(() {
-          upvoteDecision = true;
-        });
-        print(upvoteDecision);
-      }
-    }
+        // print("value is ${userId.toString()}");
+        try{
+          for (var i = 0; i <= widget.len - 1; i++) {
+            if(userId ==widget.valueData[i].uid ){
+                for(var k in widget.valueData[i].upvote){
+                    print(k);
+                }
+            }
+        }
+        print("hey user $userId");
+        for (var j in list) {
+          if (j == userId) {
+            setState(() {
+              upvoteDecision = true;
+            });
+            print(upvoteDecision);
+          }
+        }
+        }catch(e){
+          print(e);
+        }
+        
       });
     });
-    
+
     // fetchingValue();
   }
 
   Future<dynamic> preference() async {
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      userId = sharedPreferences.getString("UserId");      
+      userId = sharedPreferences.getString("UserId");
     });
     print(userId);
     return userId;
@@ -84,8 +90,8 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         print(upvoteDecision);
       }
     }
-    print(list);
-    print("flag is $upvoteDecision");
+    // print(list);
+    // print("flag is $upvoteDecision");
     if (!upvoteDecision) {
       upvote = widget.valueData[index].upvote;
       if (widget.valueData[index].upvoters.length == 0) {
@@ -94,10 +100,10 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         for (var k = 0; k <= widget.valueData[index].upvoters.length - 1; k++) {
           list.add(widget.valueData[index].upvoters[k]);
         }
-         list.add(userId);
+        list.add(userId);
       }
-      print("hello ${widget.valueData[index].upvoters}");
-      print("upvote is $upvote");
+      // print("hello ${widget.valueData[index].upvoters}");
+      // print("upvote is $upvote");
       var data = Map<String, dynamic>();
       data["upvote"] = widget.valueData[index].upvoters.length;
       data["upvoters"] = list;
@@ -116,18 +122,17 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       } catch (e) {
         print(e);
       }
-
-      print("${documentId}");
-      print("${upvote}");
-
       try {
         await db
             .collection("chat")
             .document(documentId)
             .setData(data, merge: true)
             .then((val) {
-          print("Done adding");
-          initState();
+          setState(() {
+            value = widget.valueData[index].upvoters.length;
+            print(value);
+            upvoteDecision = true;
+          });
         });
       } catch (e) {}
     }
@@ -143,6 +148,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         shrinkWrap: true,
         itemCount: widget.len,
         itemBuilder: (context, int index) {
+          print(index);
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(
@@ -186,7 +192,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                             child: Wrap(
                               children: <Widget>[
                                 AutoSizeText(
-                                  widget.valueData[index].question,
+                                  (widget.valueData[index].question==null)?"Loading ...":widget.valueData[index].question,
                                   maxLines: 50,
                                   textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
@@ -220,10 +226,14 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                           },
                           icon: Icon(FontAwesomeIcons.thumbsUp),
                           color: (upvoteDecision == true)
-                              ? Colors.red
+                              ? Colors.grey
                               : Colors.green,
                         ),
-                        Text(" ${widget.valueData[index].upvoters.length}"),
+                        (value != null)
+                            ? Text(
+                                " ${value}",
+                              )
+                            :Text("${0}"),
                         SizedBox(
                           width: 25,
                         ),
@@ -258,7 +268,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
               Future.delayed(Duration(seconds: 5)).then(
                 (complete) {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => ChatBoardRoom(),
+                    builder: (context) => ChatBoardRoomLoader(),
                   ));
                 },
               );

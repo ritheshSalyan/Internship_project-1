@@ -35,14 +35,20 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
 
   @override
   Widget build(BuildContext context) {
-    fetchDataStorage().then((data) {
-      print("in loader ${data[0]}");
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => ChatBoardRoom(
-                valueData: data,
-                len: data.length,
-              )));
-    });
+    fetchDataStorage().then(
+      (data) {
+        print("${data.length}");
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ChatBoardRoom(
+              valueData: data,
+              len: data.length,
+              v:"hello",
+            ),
+          ),
+        );
+      },
+    );
     return Scaffold(
       body: Center(
         child: Column(
@@ -85,7 +91,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
         ));
       });
     });
-    print(list[0].upvoters);
+    // print(list[0].upvoters);
     return list;
   }
 }

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 
 class ViewCommentPage extends StatefulWidget {
   ViewCommentPage({Key key, this.question, this.answers}) : super(key: key);
@@ -257,7 +258,15 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
             ),
             isDismissible: false,
             backgroundColor: Colors.grey[200],
-          )..show(context);
+          )..show(context).whenComplete((){
+          Future.delayed(Duration(seconds: 3)).then(
+                (complete) {
+                  Navigator.of(context).pop(MaterialPageRoute(
+                    builder: (context) => ChatBoardRoomLoader(),
+                  ));
+                },
+              );
+          });
         },
         child: Icon(
           FontAwesomeIcons.comment,

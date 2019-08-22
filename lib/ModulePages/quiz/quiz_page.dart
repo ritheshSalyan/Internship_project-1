@@ -32,225 +32,220 @@ class _QuizPageState extends State<QuizPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          key: _key,
-          body: Builder(
-            builder: (context) {
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Stack(
-                  children: <Widget>[
-                    ClipPath(
-                      clipper: WaveClipperOne(),
-                      child: Container(
-                        decoration: BoxDecoration(color: Colors.green),
-                        height: 200,
-                      ),
+        key: _key,
+        body: Builder(
+          builder: (context) {
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.green),
+                      height: 200,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Row(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            SizedBox(width: 16.0),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.2),
+                            ),
+                            Expanded(
+                              child: StreamBuilder<QuerySnapshot>(
+                                stream: Firestore.instance
+                                    .collection("quiz")
+                                    .where("module", isEqualTo: widget.modNum)
+                                    .where("order", isEqualTo: widget.order)
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  // if(snapshot.error){
+                                  //   print("error");
+                                  // }
+                                  print(snapshot.data);
+                                  switch (snapshot.data) {
+                                    case null:
+                                      return CircularProgressIndicator();
+                                    default:
+                                      snapshot.data.documents
+                                          .forEach((document) {
+                                        question = document["question"];
+                                      });
+                                      return Text(
+                                        question,
+                                        textAlign: TextAlign.left,
+                                        style: _questionStyle,
+                                      );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.0),
+                        Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              SizedBox(width: 16.0),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.2),
-                              ),
-                              Expanded(
-                                child: StreamBuilder<QuerySnapshot>(
-                                  stream: Firestore.instance
-                                      .collection("quiz")
-                                      .where("module", isEqualTo: widget.modNum)
-                                      .where("order", isEqualTo: widget.order)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    // if(snapshot.error){
-                                    //   print("error");
-                                    // }
-                                    print(snapshot.data);
-                                    switch (snapshot.data) {
-                                      case null:
-                                        return CircularProgressIndicator();
-                                      default:
-                                        snapshot.data.documents
-                                            .forEach((document) {
-                                          question = document["question"];
-                                        });
-                                        return Text(
-                                          question,
-                                          textAlign: TextAlign.left,
-                                          style: _questionStyle,
-                                        );
-                                    }
-                                  },
-                                ),
-                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: db
+                                    .collection("quiz")
+                                    .where("module", isEqualTo: widget.modNum)
+                                    .where("order", isEqualTo: widget.order)
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  switch (snapshot.data) {
+                                    case null:
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          value: null,
+                                          strokeWidth: 3,
+                                          valueColor: AlwaysStoppedAnimation(
+                                            Colors.green,
+                                          ),
+                                        ),
+                                      );
+                                    default:
+                                      options.clear();
+                                      snapshot.data.documents
+                                          .forEach((document) {
+                                        correctAns =
+                                            document["answer"].toString();
+                                        reason = document["reason"];
+                                        if (reason.isEmpty) {
+                                          reason = "";
+                                        } else {
+                                          reason = "\n\n " + reason;
+                                        }
+                                        // print(correctAns);
+                                        for (dynamic i in document["option"]) {
+                                          options.add(i);
+                                        }
+                                      });
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: options.length,
+                                        itemBuilder: (context, index) {
+                                          return RadioListTile(
+                                            activeColor: Colors.black,
+                                            title: Text("${options[index]}"),
+                                            groupValue: selectedRadio,
+                                            value: index,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedRadio = value;
+                                                _answerIs = (value).toString();
+                                                // _answers[_currentIndex] = value;
+                                                print("answer $_answerIs");
+                                              });
+                                            },
+                                          );
+                                        },
+                                      );
+                                  }
+                                },
+                              )
                             ],
                           ),
-                          SizedBox(height: 20.0),
-                          Card(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                StreamBuilder<QuerySnapshot>(
-                                  stream: db
-                                      .collection("quiz")
-                                      .where("module", isEqualTo: widget.modNum)
-                                      .where("order", isEqualTo: widget.order)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    switch (snapshot.data) {
-                                      case null:
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: null,
-                                            strokeWidth: 3,
-                                            valueColor: AlwaysStoppedAnimation(
-                                              Colors.green,
-                                            ),
-                                          ),
-                                        );
-                                      default:
-                                        options.clear();
-                                        snapshot.data.documents
-                                            .forEach((document) {
-                                          correctAns =
-                                              document["answer"].toString();
-                                          reason = document["reason"];
-                                          if(reason.isEmpty){
-                                             reason = "";
-                                          }
-                                          else{
-                                            reason = "\n\n "+reason;
-                                          }
-                                          // print(correctAns);
-                                          for (dynamic i
-                                              in document["option"]) {
-                                            options.add(i);
-                                          }
-                                        });
-                                        return ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: options.length,
-                                          itemBuilder: (context, index) {
-                                            return RadioListTile(
-                                              activeColor: Colors.black,
-                                              title: Text("${options[index]}"),
-                                              groupValue: selectedRadio,
-                                              value: index,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedRadio = value;
-                                                  _answerIs =
-                                                      (value).toString();
-                                                  // _answers[_currentIndex] = value;
-                                                  print("answer $_answerIs");
-                                                });
-                                              },
-                                            );
-                                          },
-                                        );
-                                    }
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 20),
-                            alignment: Alignment.bottomCenter,
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              color: Colors.green,
-                              textColor: Colors.white,
-                              child: _answerIs.isNotEmpty
-                                  ? Text("Next")
-                                  : Text("Submit"),
-                              onPressed: () {
-                                print("hello $_answerIs");
-                                if (_answerIs == correctAns) {
-                                  Scaffold.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Hurray ! You got it right\n Lets move on !\n" +
-                                            reason,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      backgroundColor: Colors.green[600],
-                                      shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      duration: Duration(hours: 1),
-                                      action: SnackBarAction(
-                                        textColor: Colors.white,
-                                        label: "Ok",
-                                        onPressed: () {
-                                          // homeScaffoldKey.currentState.hideCurrentSnackBar();
-                                          Scaffold.of(context)
-                                              .hideCurrentSnackBar();
-                                          List<dynamic> arguments = [
-                                            widget.modNum,
-                                            widget.index + 1
-                                          ];
-                                          orderManagement.moveNextIndex(
-                                              context, arguments);
-                                        },
-                                      ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 25),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 20),
+                          alignment: Alignment.bottomCenter,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            color: Colors.green,
+                            textColor: Colors.white,
+                            child: _answerIs.isNotEmpty
+                                ? Text("Next")
+                                : Text("Submit"),
+                            onPressed: () {
+                              print("hello $_answerIs");
+                              if (_answerIs == correctAns) {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "Hurray ! You got it right\n Lets move on !\n" +
+                                          reason,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  );
-                                  Future.delayed(Duration(seconds: 3))
-                                      .then((o) {
-                                    // List<dynamic> arguments = [
-                                    //   widget.modNum,
-                                    //   widget.index
-                                    // ];
-                                    // print("Inside Quiz" + arguments.toString());
-                                    // orderManagement.moveNextIndex(
-                                    //     context, arguments);
-                                  });
-                                } else {
-                                  Scaffold.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Oops! Wrong answer",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      backgroundColor: Colors.red[600],
-                                      shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      duration: Duration(seconds: 1),
+                                    backgroundColor: Colors.green[600],
+                                    shape: BeveledRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
-                                  );
-                                }
-                              },
-                            ),
+                                    duration: Duration(hours: 1),
+                                    action: SnackBarAction(
+                                      textColor: Colors.white,
+                                      label: "Ok",
+                                      onPressed: () {
+                                        // homeScaffoldKey.currentState.hideCurrentSnackBar();
+                                        Scaffold.of(context)
+                                            .hideCurrentSnackBar();
+                                        List<dynamic> arguments = [
+                                          widget.modNum,
+                                          widget.index + 1
+                                        ];
+                                        orderManagement.moveNextIndex(
+                                            context, arguments);
+                                      },
+                                    ),
+                                  ),
+                                );
+                                Future.delayed(Duration(seconds: 3)).then((o) {
+                                  // List<dynamic> arguments = [
+                                  //   widget.modNum,
+                                  //   widget.index
+                                  // ];
+                                  // print("Inside Quiz" + arguments.toString());
+                                  // orderManagement.moveNextIndex(
+                                  //     context, arguments);
+                                });
+                              } else {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "Oops! Wrong answer",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    backgroundColor: Colors.red[600],
+                                    shape: BeveledRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              }
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            },
-          )),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 

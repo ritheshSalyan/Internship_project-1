@@ -59,39 +59,25 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
 
   void addDiscussion(BuildContext context) async {
     db = Firestore.instance;
-    var message = Map<String,dynamic>();
-    message["question"]=text;
+    var message = Map<String, dynamic>();
+    message["question"] = text;
     message["upvote"] = 0;
     message["tag"] = tags[0];
     message["answers"] = [""];
-    message["uid"]=userId;
-    await db.collection("chat").add(message).then((done){
+    message["uid"] = userId;
+    message["upvoters"] = [];
+    await db.collection("chat").add(message).then((done) {
       print(done);
-    }
-    );
-    // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(
-    //     builder: (context)=>ChatBoardRoomLoader()
-    //   )
-    // )
-    
-    Navigator.of(context).pop(
-      MaterialPageRoute(
-        builder: (context)=>ChatBoardRoomLoader()
-      )
-    );
-
-    // Navigator.of(context).push(
-    //      MaterialPageRoute(
-    //     builder: (context)=>ChatBoardRoomLoader()
-    //   )
-    // );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => ChatBoardRoomLoader(),
+      ));
+    });
   }
 
   void validate(BuildContext context) {
-      if(_validate()){
-        addDiscussion(context);
-      }
+    if (_validate()) {
+      addDiscussion(context);
+    }
     print("text is $text");
   }
 
@@ -193,35 +179,35 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.5,
-                                child:Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                     OutlineButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    side: BorderSide(
-                                      color: Colors.green,
-                                      width: 3,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    validate(context);
-                                  },
-                                  child: Row(
-                                    children: <Widget>[
-//                        Icon(FontAwesomeIcons.comment),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "Share thoughts",
-                                        style: TextStyle(
+                                    OutlineButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        side: BorderSide(
                                           color: Colors.green,
+                                          width: 3,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                      onPressed: () {
+                                        validate(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+//                        Icon(FontAwesomeIcons.comment),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Share thoughts",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

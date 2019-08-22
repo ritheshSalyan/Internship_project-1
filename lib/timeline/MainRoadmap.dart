@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/ModulePages/SummaryPage/ani.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
@@ -56,6 +58,7 @@ class _TimelinePageState extends State<TimelinePage> {
   var val = 1;
   static String name = "User";
   PDFDocument doc;
+  Flushbar<List<String>> flush;
   String _url =
       "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
 
@@ -99,6 +102,20 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+
+    Future.delayed(Duration(seconds: 15)).then((_){
+       flush = Flushbar<List<String>>(
+        flushbarPosition: FlushbarPosition.TOP,
+        title: "Welcome to The Startupeneur",
+        messageText: Column(children: <Widget>[
+          Text("Hello welcome"),
+        ]),
+      )..show(context);
+    }).whenComplete((){
+      print("done and dusted");
+    });
+      
+    
   }
 
   void preferences(BuildContext context) async {
@@ -261,19 +278,18 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 ),
                 currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(_url),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(_url),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileLoading(uid: uid),
+                      ),
+                    );
+                  },
                 ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileLoading(uid: uid),
-                          ),
-                        );
-                      },
-                    ),
-                    
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -367,7 +383,8 @@ class _TimelinePageState extends State<TimelinePage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ( ImagePageLoading(modNum: 8, index:22)),
+                      builder: (context) =>
+                          (ImagePageLoading(modNum: 8, index: 22)),
                     ),
                   );
                 },
@@ -514,7 +531,14 @@ class _TimelinePageState extends State<TimelinePage> {
               print(" true $i");
               // val = completedCourse[k];
               print("val is $val");
-              if (i != 12) {
+              if (i == 11) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ModuleOverviewLoading(modNum: i + 1),
+                  ),
+                );
+                // builder: (context)=>Vocabulary(),
+              } else if (i != 12) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => QuoteLoading(modNum: i + 1),
