@@ -22,7 +22,7 @@ class _QuizPageState extends State<QuizPage> {
   List<dynamic> options = [];
   int selectedRadio = 0;
   String reason = "";
-  String correctAns = "";
+  List<String> correctAns;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
@@ -120,7 +120,7 @@ class _QuizPageState extends State<QuizPage> {
                                       snapshot.data.documents
                                           .forEach((document) {
                                         correctAns =
-                                            document["answer"].toString();
+                                            document["answer"].toString().split(",");
                                         reason = document["reason"];
                                         if (reason.isEmpty) {
                                           reason = "";
@@ -175,7 +175,8 @@ class _QuizPageState extends State<QuizPage> {
                                 : Text("Submit"),
                             onPressed: () {
                               print("hello $_answerIs");
-                              if (_answerIs == correctAns) {
+                              // if (_answerIs == correctAns) {
+                                if (correctAns.contains(_answerIs)) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
