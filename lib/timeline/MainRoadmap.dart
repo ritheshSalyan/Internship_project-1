@@ -5,32 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
-import 'package:startupreneur/ModulePages/SummaryPage/ani.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import '../filetrial.dart';
-import '../ModulePages/SummaryPage/ani.dart';
-import '../ModulePages/SummaryPage/ConclusionPage.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
-import '../ModulePages/DecisionGame/DecisionGame.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
-import '../ModulePages/FileActivity/FileUploadLoader.dart';
-import 'package:startupreneur/HustleStore/HustleStore.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ChatBoardRoom/ChatBoardRoomLoader.dart';
-import '../Trial/trial.dart';
 import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
-import '../Trial/AnimationTrial.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import '../Auth/PdfReader.dart';
 import 'package:startupreneur/how_to_earn/how_to_earn.dart';
 import '../ModulePages/ImagePage/ImagePageLoader.dart';
 
@@ -55,6 +45,7 @@ class _TimelinePageState extends State<TimelinePage> {
   FirebaseUser user;
   String value = "";
   String uid = "";
+  bool position = true;
   var val = 1;
   static String name = "User";
   PDFDocument doc;
@@ -102,24 +93,25 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+  }
 
-    Future.delayed(Duration(seconds: 15)).then((_){
-       flush = Flushbar<List<String>>(
-        flushbarPosition: FlushbarPosition.TOP,
-        title: "Welcome to The Startupeneur",
-        messageText: Column(children: <Widget>[
-          Text("Hello welcome"),
-        ]),
-      )..show(context);
-    }).whenComplete((){
-      print("done and dusted");
-    });
-      
-    
+  void done(BuildContext context) {
+    Flushbar(
+      duration: Duration(
+        seconds: 5,
+      ),
+      showProgressIndicator: true,
+      flushbarPosition: FlushbarPosition.TOP,
+      title: "Welcome to The Startupeneur",
+      messageText: Column(children: <Widget>[
+        Text("Hello welcome"),
+      ]),
+    )..show(context).whenComplete(() {
+        print("done and dusted");
+      });
   }
 
   void preferences(BuildContext context) async {
-    doc = await PDFDocument.fromAsset("assets/pdf/how_to_earn.pdf");
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       value = sharedPreferences.getString("UserEmail");
@@ -131,7 +123,6 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-
     await db
         .collection("user")
         .where("uid", isEqualTo: uid)
@@ -145,15 +136,6 @@ class _TimelinePageState extends State<TimelinePage> {
         });
       });
     });
-
-// =======
-//    db.collection("user").where("uid",isEqualTo: uid).getDocuments().then((document){
-//     document.documents.forEach((value){
-//       setState(() {
-//         gems = value["points"];
-// >>>>>>> 9fe17a210442af7b76d825121f04c163997c1107
-    //    });
-    //  });
 
     await db
         .collection("user")
@@ -182,12 +164,6 @@ class _TimelinePageState extends State<TimelinePage> {
     return false;
   }
 
-//
-//  @override
-//  void dispose() {
-//    super.dispose();
-//  }
-
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
@@ -195,122 +171,96 @@ class _TimelinePageState extends State<TimelinePage> {
     ];
     orderManagement.currentIndex = 0;
 
+    // LiquidPullToRefresh(
+    //   onRefresh: () {}, // refresh callback
+    //   child: ListView(), 
+    // ); // scroll view
     return Scaffold(
-        extendBody: true,
-        backgroundColor: Colors.grey[50],
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Image.asset(
-            "assets/Images/Capture.PNG",
-            width: MediaQuery.of(context).size.width * 0.57,
-          ),
-          automaticallyImplyLeading: true,
-          backgroundColor: Theme.of(context).primaryColorDark,
-          elevation: 10.0,
-          actions: <Widget>[
-            Row(
-              children: <Widget>[
-                // IconButton(
-                //   onPressed: () {},
-                //   icon: Icon(
-                //     FontAwesomeIcons.solidGem,
-                //     color: Colors.green,
-                //     size: 15,
-                //   ),
-                // ),
-                Image.asset(
-                  "assets/Images/coins.png",
-                  height: 15,
-                  width: 15,
-                ),
-                Text(
-                  " $gems",
-                  style: TextStyle(color: Colors.black, fontSize: 12),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 20),
-                ),
-              ],
-            )
-          ],
+      extendBody: true,
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Image.asset(
+          "assets/Images/Capture.PNG",
+          width: MediaQuery.of(context).size.width * 0.57,
         ),
-        drawer: Drawer(
-          child: ListView(
+        automaticallyImplyLeading: true,
+        backgroundColor: Theme.of(context).primaryColorDark,
+        elevation: 10.0,
+        actions: <Widget>[
+          Row(
             children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountEmail: Row(
-                  children: <Widget>[
-                    // IconButton(
-                    //   onPressed: () {},
-                    //   icon: Icon(
-                    //     FontAwesomeIcons.solidGem,
-                    //     color: Colors.green,
-                    //     size: 15,
-                    //   ),
-                    // ),
-                    GestureDetector(
-                      child: Image.asset(
-                        "assets/Images/coins.png",
-                        height: 20,
-                        width: 20,
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileLoading(uid: uid),
-                          ),
-                        );
-                      },
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: Icon(
+              //     FontAwesomeIcons.solidGem,
+              //     color: Colors.green,
+              //     size: 15,
+              //   ),
+              // ),
+              Image.asset(
+                "assets/Images/coins.png",
+                height: 15,
+                width: 15,
+              ),
+              Text(
+                " $gems",
+                style: TextStyle(color: Colors.black, fontSize: 12),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 20),
+              ),
+            ],
+          )
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountEmail: Row(
+                children: <Widget>[
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: Icon(
+                  //     FontAwesomeIcons.solidGem,
+                  //     color: Colors.green,
+                  //     size: 15,
+                  //   ),
+                  // ),
+                  GestureDetector(
+                    child: Image.asset(
+                      "assets/Images/coins.png",
+                      height: 20,
+                      width: 20,
                     ),
-                    Text(
-                      " $gems",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                    ),
-                  ],
-                ),
-                accountName: Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 18,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfileLoading(uid: uid),
+                        ),
+                      );
+                    },
                   ),
-                ),
-                currentAccountPicture: GestureDetector(
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(_url),
+                  Text(
+                    " $gems",
+                    style: TextStyle(color: Colors.white),
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProfileLoading(uid: uid),
-                      ),
-                    );
-                  },
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.green,
+                  Padding(
+                    padding: EdgeInsets.only(right: 20),
+                  ),
+                ],
+              ),
+              accountName: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 18,
                 ),
               ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset("assets/Images/log.png"),
-                    ],
-                  )),
-              ListTile(
-                leading: Icon(
-                  Icons.assignment_ind,
-                ),
-                title: Text(
-                  'My Dashboard',
-                  style: TextStyle(
-                    letterSpacing: 0.5,
-                    color: Colors.green,
-                  ),
+              currentAccountPicture: GestureDetector(
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(_url),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -320,190 +270,222 @@ class _TimelinePageState extends State<TimelinePage> {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.book),
-                title: Text(
-                  'Startup Dictionary',
-                  style: TextStyle(
-                    letterSpacing: 0.5,
-                    color: Colors.green,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (Vocabulary()),
-                    ),
-                  );
-                },
+              decoration: BoxDecoration(
+                color: Colors.green,
               ),
-              ListTile(
-                leading: Icon(Icons.store),
-                title: Text(
-                  'The Startupreneur GoldMine',
-                  style: TextStyle(
-                    color: Colors.green,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (HustleStoreLoader()),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.chat),
-                title: Text(
-                  'Discussion Board',
-                  style: TextStyle(
-                    letterSpacing: 0.5,
-                    color: Colors.green,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (ChatBoardRoomLoader()),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.help),
-                title: Text(
-                  'Help and FAQ',
-                  style: TextStyle(
-                    letterSpacing: 0.5,
-                    color: Colors.green,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          (ImagePageLoading(modNum: 8, index: 22)),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text(
-                  'How to Earn Points',
-                  style: TextStyle(
-                    letterSpacing: 0.5,
-                    color: Colors.green,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (HowToEarn()),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.lock_open),
-                title: Text(
-                  'Logout',
-                  style: TextStyle(
-                    color: Colors.green,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                onTap: () {
-                  _auth.signOut();
-                  _Sharedpreference(context);
-                  //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //                    builder: (context) => SigninPage(),
-                  //                  ));
-                },
-              ),
-              Divider(),
-              Align(
-                alignment: Alignment.bottomLeft * 0.4,
-                child: Text(
-                  "The Startupreneur® All Rights Reserved",
-                  style:
-                      TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  //                  SizedBox(
-                  //                    width: MediaQuery.of(context).size.width * 0.05,
-                  //                  ),
-                  IconButton(
-                    onPressed: () {
-                      launcher(
-                          "https://www.facebook.com/thestartupreneurofficial/");
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.facebook,
-                      color: Colors.green,
-                      size: 18,
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      launcher(
-                          "https://www.linkedin.com/company/startupreneur/");
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.linkedinIn,
-                      color: Colors.green,
-                      size: 18,
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      launcher("https://twitter.com/TStartupreneur");
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.twitter,
-                      color: Colors.green,
-                      size: 18,
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      launcher("http://bit.ly/2Kp153P");
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.medium,
-                      color: Colors.green,
-                      size: 18,
-                    ),
-                  ),
-                ],
-              ),
-              //              SizedBox(
-              ////                height: MediaQuery.of(context).size.height * 0.01,
-              ////              ),
-            ],
-          ),
-        ),
-        body: Stack(
-          children: <Widget>[
-            PageView(
-              children: pages,
             ),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset("assets/Images/log.png"),
+                  ],
+                )),
+            ListTile(
+              leading: Icon(
+                Icons.assignment_ind,
+              ),
+              title: Text(
+                'My Dashboard',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProfileLoading(uid: uid),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.book,
+              ),
+              title: Text(
+                'Startup Dictionary',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (Vocabulary()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.store),
+              title: Text(
+                'The Startupreneur GoldMine',
+                style: TextStyle(
+                  color: Colors.green,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (HustleStoreLoader()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.chat),
+              title: Text(
+                'Discussion Board',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (ChatBoardRoomLoader()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text(
+                'Help and FAQ',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        (ImagePageLoading(modNum: 8, index: 22)),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text(
+                'How to Earn Points',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (HowToEarn()),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lock_open),
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.green,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              onTap: () {
+                _auth.signOut();
+                _Sharedpreference(context);
+                //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //                    builder: (context) => SigninPage(),
+                //                  ));
+              },
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.bottomLeft * 0.4,
+              child: Text(
+                "The Startupreneur® All Rights Reserved",
+                style:
+                    TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                //                  SizedBox(
+                //                    width: MediaQuery.of(context).size.width * 0.05,
+                //                  ),
+                IconButton(
+                  onPressed: () {
+                    launcher(
+                        "https://www.facebook.com/thestartupreneurofficial/");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.facebook,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("https://www.linkedin.com/company/startupreneur/");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.linkedinIn,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("https://twitter.com/TStartupreneur");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.twitter,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("http://bit.ly/2Kp153P");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.medium,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+            //              SizedBox(
+            ////                height: MediaQuery.of(context).size.height * 0.01,
+            ////              ),
           ],
-        ));
+        ),
+      ),
+      body: Stack(
+        children: <Widget>[
+          PageView(
+            children: pages,
+          ),
+        ],
+      ),
+    );
   }
 
   timelineModel(TimelinePosition position) => Timeline.builder(

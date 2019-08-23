@@ -50,7 +50,7 @@ class _HustelTipPageState extends State<HustelTipPage>
           builder: (context) {
             var padding2 = Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
+                    top: MediaQuery.of(context).size.height*0.1 ,
                     left: MediaQuery.of(context).size.height * 0.01,
                   ),
                   child: Column(
@@ -62,9 +62,11 @@ class _HustelTipPageState extends State<HustelTipPage>
                         style: TextStyle(
                           letterSpacing: 0.5,
                           color: Colors.green,
-                          fontSize: 30,
+                          // fontSize: 10,//30
                           fontWeight: FontWeight.bold,
                         ),
+                        minFontSize: 18,
+                        maxLines: 10,
                       ),
                       SizedBox(
                         height: 35,

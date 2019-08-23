@@ -133,6 +133,7 @@ class _QuizPageState extends State<QuizPage> {
                                         }
                                       });
                                       return ListView.builder(
+                                        physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
                                         itemCount: options.length,
                                         itemBuilder: (context, index) {

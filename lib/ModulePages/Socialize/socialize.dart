@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../QuestionFinalPage/QuestionFinalPage.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class SocializeTask extends StatefulWidget {
@@ -15,6 +14,9 @@ class _SocializeTaskState extends State<SocializeTask> {
   var _job = false;
   var _startup = false;
 
+  
+
+  
   bool _validate() {
     final form = _formkey.currentState;
 
@@ -30,6 +32,7 @@ class _SocializeTaskState extends State<SocializeTask> {
       setState(() {
         _job = true;
         print(_job);
+        Navigator.of(context).pop();
       });
     }
   }
@@ -48,6 +51,7 @@ class _SocializeTaskState extends State<SocializeTask> {
     if (_validateStartup()) {
       setState(() {
         _startup = true;
+        Navigator.of(context).pop();
       });
     }
   }
@@ -473,7 +477,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                                   //     builder: (context) => QuestionFinalPage(),
                                   //   ),
                                   // );
-                                    List<dynamic> arguments = [widget.modNum,widget.index+1];
+                                    List<dynamic> arguments = [widget.modNum,7+1];
           orderManagement.moveNextIndex(context, arguments);
                                 },
                               );

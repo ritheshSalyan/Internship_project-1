@@ -64,6 +64,7 @@ dependencies:
   flushbar: ^1.8.2
   flutter_tags: ^0.4.3
   flutter_offline: ^0.2.4
+  liquid_pull_to_refresh: ^1.1.1
 
 
 dev_dependencies:

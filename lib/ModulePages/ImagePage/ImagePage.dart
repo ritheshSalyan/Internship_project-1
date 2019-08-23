@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -27,13 +28,6 @@ class _ImagePagePageState extends State<ImagePagePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _controller = AnimationController(
-    //     duration: Duration(milliseconds: 3000), vsync: this);
-    // animation = Tween(begin: -500.0, end: 100.0).animate(_controller)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
-    // _controller.forward();
   }
 
   void dispose() {
@@ -74,7 +68,11 @@ class _ImagePagePageState extends State<ImagePagePage>
                     // top: MediaQuery.of(context).size.height * 0.1,
                     // left: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  child: Image.asset(
+                  // child: Image.asset(
+                  //   widget.title,
+                  //   height: MediaQuery.of(context).size.height * 0.7,
+                  // ),
+                  child: ExtendedImage.asset(
                     widget.title,
                     width: MediaQuery.of(context).size.width * 0.97,
                   ),

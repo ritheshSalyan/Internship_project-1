@@ -72,7 +72,7 @@ class _QuoteState extends State<Quote> {
            Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.4,
-                      left: MediaQuery.of(context).size.width * 0.66),
+                      left: MediaQuery.of(context).size.width * 0.64),
                   child: FlatButton(
                     child: Row(
                       children: <Widget>[
