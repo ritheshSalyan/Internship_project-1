@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'HustleStore.dart';
+import 'simply.dart';
 
 class HustleStoreLoader extends StatefulWidget {
   @override
@@ -21,15 +21,12 @@ class _HustleStoreLoaderState extends State<HustleStoreLoader> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => HustleStore(
-              points: gems,
+              point: gems,
             ),
           ),
         );
       },
     );
-
-
-    
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -49,7 +46,7 @@ class _HustleStoreLoaderState extends State<HustleStoreLoader> {
               child: Text(
                 "Loading...",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
