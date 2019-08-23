@@ -50,8 +50,7 @@ class _DiscussionLoading extends State<DiscussionLoading> {
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.documents.forEach((document) {
-      print("Discussion " +
-          document.toString());
+      print("Discussion " +document["order"].toString()+document["image"].toString()+document["content"].toString());
 
       title = convert(document["content"]);
       title.add(document["image"].toString());

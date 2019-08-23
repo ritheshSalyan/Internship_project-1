@@ -48,22 +48,7 @@ class _HustelTipPageState extends State<HustelTipPage>
         backgroundColor: Colors.white,
         body: Builder(
           builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.2,
-                    left: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  child: Image.asset(
-                    "assets/Images/HustelTip.jpg",
-                    height: 150,
-                    width: 150,
-                  ),
-                ),
-                Padding(
+            var padding2 = Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.1,
                     left: MediaQuery.of(context).size.height * 0.01,
@@ -93,7 +78,23 @@ class _HustelTipPageState extends State<HustelTipPage>
                       // ),
                     ],
                   ),
+                );
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.2,
+                    left: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  child: Image.asset(
+                    "assets/Images/HustelTip.jpg",
+                    height: 150,
+                    width: 150,
+                  ),
                 ),
+                padding2,
                 Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.1,

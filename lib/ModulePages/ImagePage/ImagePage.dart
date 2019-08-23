@@ -43,6 +43,7 @@ class _ImagePagePageState extends State<ImagePagePage>
 
   @override
   Widget build(BuildContext context) {
+    print("Heading in ImagePage is "+widget.headding);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Builder(
@@ -53,7 +54,7 @@ class _ImagePagePageState extends State<ImagePagePage>
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
+                    // top: MediaQuery.of(context).size.height * 0.1,
                     bottom: MediaQuery.of(context).size.height * 0.1,
                   ),
                   child: Text(
@@ -61,26 +62,27 @@ class _ImagePagePageState extends State<ImagePagePage>
                     //"Startup or Job",
                     style: TextStyle(
                         fontFamily: "sans-serif",
-                        color: Colors.white,
+                        color: Colors.green,
                         fontSize: 25.0,
-                        fontWeight: FontWeight.w700),
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
 
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
-                    left: MediaQuery.of(context).size.height * 0.02,
+                    // top: MediaQuery.of(context).size.height * 0.1,
+                    // left: MediaQuery.of(context).size.height * 0.01,
                   ),
                   child: Image.asset(
                     widget.title,
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.97,
                   ),
                 ),
                
                 Padding(
                   padding: EdgeInsets.only(
-                    // top: MediaQuery.of(context).size.height * 0.1,
+                    top: MediaQuery.of(context).size.height * 0.05,
                     left: MediaQuery.of(context).size.height * 0.1,
                     right: MediaQuery.of(context).size.height * 0.1,
                   ),

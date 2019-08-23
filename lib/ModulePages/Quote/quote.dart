@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../ModuleOverview/ModuleOverviewLoading.dart';
+import '../../ModuleOrderController/Types.dart';
 
 class Quote extends StatefulWidget {
   Quote({Key key, this.modNum, this.quote}) : super(key: key);
@@ -13,6 +14,7 @@ class Quote extends StatefulWidget {
 class _QuoteState extends State<Quote> {
   @override
   Widget build(BuildContext context) {
+    String text = (widget.modNum==12)?"Oh Yes!":"Start";
     return PageView(
       children: <Widget>[
         Container(
@@ -75,7 +77,7 @@ class _QuoteState extends State<Quote> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          "Start",
+                         text,
                           style: TextStyle(
                             letterSpacing: 1.5,
                             fontSize: 20,
@@ -91,6 +93,7 @@ class _QuoteState extends State<Quote> {
                       ],
                     ),
                     onPressed: () {
+                      if(widget.modNum!=12){ 
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
@@ -98,6 +101,10 @@ class _QuoteState extends State<Quote> {
                           // builder: (context)=>Vocabulary(),
                         ),
                       );
+                      }
+                      else{
+                        orderManagement.moveNextIndex(context,[12,24]);
+                      }
                     },
                   ),
                 )
