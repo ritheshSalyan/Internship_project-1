@@ -5,14 +5,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ActivityPage extends StatefulWidget {
-  ActivityPage({Key key,this.modNum,this.question,this.buttonTitle,this.index,this.hint}):super(key:key);
-  final int modNum,index;
-  final String question,buttonTitle,hint;
+  ActivityPage(
+      {Key key,
+      this.modNum,
+      this.question,
+      this.buttonTitle,
+      this.index,
+      this.hint})
+      : super(key: key);
+  final int modNum, index;
+  final String question, buttonTitle, hint;
   @override
   _ActivityPageState createState() => _ActivityPageState();
 }
 
 class _ActivityPageState extends State<ActivityPage> {
+  static final _formkey = GlobalKey<FormState>();
+
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
     itemInside.add(
@@ -31,6 +40,7 @@ class _ActivityPageState extends State<ActivityPage> {
     for (int i = 0; i < 4; i++) {
       itemInside.add(
         TextFormField(
+          validator: (value) => value.isEmpty ? "Cannot be empty" : null,
           autovalidate: true,
           obscureText: false,
           keyboardType: TextInputType.text,
@@ -54,16 +64,15 @@ class _ActivityPageState extends State<ActivityPage> {
         ),
       );
     }
-     itemInside.add(
+    itemInside.add(
       SizedBox(
         height: 20,
         width: MediaQuery.of(context).size.width,
       ),
     );
-    itemInside.add(
-      Container(
-        width: MediaQuery.of(context).size.width*0.5,
-        child: OutlineButton(
+    itemInside.add(Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: OutlineButton(
         splashColor: Colors.green,
         borderSide: BorderSide(
           color: Colors.green,
@@ -75,21 +84,19 @@ class _ActivityPageState extends State<ActivityPage> {
           //     builder: (context) => DiscussionPage(),
           //   ),
           // );
-           List<dynamic> arguments = [widget.modNum,widget.index];
-                                    orderManagement.moveNextIndex(context, arguments);
+          List<dynamic> arguments = [widget.modNum, widget.index];
+          orderManagement.moveNextIndex(context, arguments);
         },
         textColor: Colors.green,
         highlightedBorderColor: Colors.green,
         child: Text(widget.buttonTitle),
-        shape:RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      )
-    );
+    ));
     return itemInside;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +135,6 @@ class _ActivityPageState extends State<ActivityPage> {
                                   // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
                                   style: TextStyle(
                                     fontSize: 16.0,
-                                    
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -145,50 +151,11 @@ class _ActivityPageState extends State<ActivityPage> {
                         child: Column(
                           children: <Widget>[
                             Form(
+                              autovalidate: true,
+                              key: _formkey,
                               child: ListView(
+                                physics: ClampingScrollPhysics(),
                                 shrinkWrap: true,
-                                // children: <Widget>[
-                                //   Center(
-                                //     child: Text(
-                                //       "Please fill it",
-                                //     ),
-                                //   ),
-                                //   SizedBox(
-                                //     height: 10,
-                                //     width: MediaQuery.of(context).size.width,
-                                //   ),
-
-                                //   // categoryOne(context),
-                                //   // categoryTwo(context),
-                                //   // categoryThree(context),
-                                //   // categoryFour(context),
-                                //   // categoryFive(context),
-                                //   SizedBox(
-                                //     height: 20,
-                                //     width: MediaQuery.of(context).size.width,
-                                //   ),
-                                //   OutlineButton(
-                                //     splashColor: Colors.green,
-                                //     borderSide: BorderSide(
-                                //       color: Colors.green,
-                                //       width: 1.5,
-                                //     ),
-                                //     onPressed: () {
-                                //       Navigator.of(context).pushReplacement(
-                                //         MaterialPageRoute(
-                                //           builder: (context) =>
-                                //               DiscussionPage(),
-                                //         ),
-                                //       );
-                                //     },
-                                //     textColor: Colors.green,
-                                //     highlightedBorderColor: Colors.green,
-                                //     child: Text("Let's discuss"),
-                                //     shape: BeveledRectangleBorder(
-                                //       borderRadius: BorderRadius.circular(10.0),
-                                //     ),
-                                //   ),
-                                // ],
                                 children: formList(context),
                               ),
                             ),

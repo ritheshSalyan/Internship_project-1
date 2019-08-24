@@ -13,7 +13,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   Firestore db = Firestore.instance;
-
+ static final _formkey = GlobalKey<FormState>();
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
@@ -125,7 +125,7 @@ class _QuizPageState extends State<QuizPage> {
                                         if (reason.isEmpty) {
                                           reason = "";
                                         } else {
-                                          reason = "\n\n " + reason;
+                                          reason = reason;
                                         }
                                         // print(correctAns);
                                         for (dynamic i in document["option"]) {
@@ -180,7 +180,7 @@ class _QuizPageState extends State<QuizPage> {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "Hurray ! You got it right\n Lets move on !\n" +
+                                      "Well Done!\n\n" +
                                           reason,
                                       style: TextStyle(
                                           color: Colors.white,

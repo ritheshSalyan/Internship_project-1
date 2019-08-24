@@ -37,8 +37,31 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
         ),
       );
     });
-    return Scaffold(
-      body: CircularProgressIndicator(),
+     return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new CircularProgressIndicator(
+              strokeWidth: 5,
+              value: null,
+              valueColor: new AlwaysStoppedAnimation(Colors.green),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Material(
+              color: Colors.transparent,
+              child: Text(
+                "Loading...",
+                style: TextStyle(
+                 color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

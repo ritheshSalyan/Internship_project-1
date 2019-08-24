@@ -360,10 +360,11 @@ class _SocializeTaskState extends State<SocializeTask> {
                       padding: EdgeInsets.only(
                          top: MediaQuery.of(context).size.height * 0.05),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
                             "Time for Socialize",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
