@@ -85,7 +85,8 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                 ),
     );
 
-    for(var i=0;i<numb-2;i++){
+    for(var i=0;i<numb-1;i++){
+      print("from vocabulary "+widget.word[i]);
         val.add(
           Center(
                   child: FlipCard(
@@ -270,7 +271,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
             indicatorSpace: 10.0,
             indicatorSelectorColor: Colors.black,
             shape: IndicatorShape.roundRectangleShape(size: Size(30, 10)),
-            length: widget.word.length,
+            length: widget.word.length+1,
             pageView: PageView(
               physics: BouncingScrollPhysics(),
               controller: controller,

@@ -35,11 +35,11 @@ class _DiscussionPageState extends State<DiscussionPage> {
     setState(() {
       item;
       if (item <= data.split(". ").length) {
-        print("data.split(" ").length = " +
+        print("data.split(', ').length = " +
             data.split(". ").length.toString() +
             data.split(". ").toString());
         // for (var item in ) {
-        if (data.split(".")[item].length > 3) {
+        if (data.split(". ")[item].length > 3) {
           _listViewData.add(data.split(". ")[item] + ".");
         }
         item++;
