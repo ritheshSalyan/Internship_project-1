@@ -160,12 +160,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
                         children: <Widget>[
                           Text(
                             widget.title,
+                            textAlign: TextAlign.center,
                             //"Startup or Job",
                             style: TextStyle(
-                                fontFamily: "sans-serif",
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.w700),
+                              fontFamily: "sans-serif",
+                              color: Colors.white,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ],
                       ),
@@ -177,19 +179,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       top: MediaQuery.of(context).size.height * 0.2),
                   child: Column(
                     children: <Widget>[
-//                      Image.asset(
-//                        widget.image,
-//                        // "assets/Images/photo.png",
-//                        height: MediaQuery.of(context).size.height * 0.15,
-//                        width: MediaQuery.of(context).size.width * 0.75,
-//                        alignment: Alignment.center,
-//                      ),
+                    
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.18),
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.14),
                             child: ExtendedImage.asset(
                               widget.image,
                               // "assets/Images/photo.png",

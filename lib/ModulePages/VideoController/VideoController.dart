@@ -35,7 +35,15 @@ class _VideoPlayState extends State<VideoPlay> {
     _chewieController = ChewieController(
       autoInitialize: true,
       allowedScreenSleep: false,
+      deviceOrientationsAfterFullScreen: const[DeviceOrientation.portraitUp],
       videoPlayerController: _videoPlayerController1,
+      placeholder:Center(
+        child:  CircularProgressIndicator(
+        value: null,
+        valueColor: AlwaysStoppedAnimation(Colors.green),
+        strokeWidth: 5.0,
+      ),
+      ),
       materialProgressColors: ChewieProgressColors(
         backgroundColor: Colors.green,
         playedColor: Colors.red,
@@ -117,7 +125,7 @@ class _VideoPlayState extends State<VideoPlay> {
                 right: MediaQuery.of(context).size.width * 0.1,
               ),
               child:  Center(
-            child: Text("Wait and watch the above video to get started!",
+            child: Text("* Wait and watch the above video to get started!",
             style: TextStyle(fontSize: 18),),
                    
             ),

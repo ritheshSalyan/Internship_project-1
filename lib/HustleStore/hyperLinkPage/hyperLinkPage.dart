@@ -1,11 +1,13 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-// import 'HustleStore.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../HustleStoreLoader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AddEntryDialog extends StatefulWidget {
-  AddEntryDialog({
+class AddEntryDialogHyperLink extends StatefulWidget {
+  AddEntryDialogHyperLink({
     Key key,
     this.points,
     this.available,
@@ -17,6 +19,7 @@ class AddEntryDialog extends StatefulWidget {
     // this.decision,
     this.len,
     this.type,
+    this.link,
   }) : super(key: key);
   int points;
   int available;
@@ -24,6 +27,7 @@ class AddEntryDialog extends StatefulWidget {
   String image;
   String title;
   String type;
+  String link;
   List<dynamic> claimedUser =[];
   String userid;
   // bool decision;
@@ -32,7 +36,7 @@ class AddEntryDialog extends StatefulWidget {
   AddEntryDialogState createState() => new AddEntryDialogState();
 }
 
-class AddEntryDialogState extends State<AddEntryDialog> {
+class AddEntryDialogState extends State<AddEntryDialogHyperLink> {
   Firestore db = Firestore.instance;
 
   @override
@@ -40,12 +44,30 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     // TODO: implement initState
     super.initState();
     print("init ${widget.claimedUser}");
+    // SchedulerBinding.instance.addPostFrameCallback((_){
+    //     Flushbar(
+    //       isDismissible: true,
+    //       title: "Hello world",
+    //       message: "hey manh ",
+    //     )..show(context);
+    //   });
   }
 
+  launcher(String urlLink) async {
+    String url = urlLink;
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
+
+    
     return new Scaffold(
       appBar: new AppBar(
         title: Text(
@@ -91,27 +113,28 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           onPressed: () {
                             setState(() {
                               if (widget.len == 12) {
-                                widget.claimedUser.add(widget.userid);
-                                widget.available =
-                                    widget.available - widget.points;
-                                var dataSet = Map<String, dynamic>();
-                                dataSet["points"] = widget.available;
-                                 var data = Map<String, dynamic>();
-                                data["claimed"] = widget.claimedUser;
-                                db
-                                    .collection("user")
-                                    .document(widget.userid)
-                                    .setData(dataSet, merge: true);
-                                db.collection("storeDetails").where("type",isEqualTo: widget.type).getDocuments().then((doc){
-                                  doc.documents.forEach((val){
-                                    db.collection("storeDetails").document(val.documentID).setData(data,merge: true);
-                                  });
-                                });
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HustleStoreLoader()));
-                                print("done");
+                                  launcher(widget.link);
+                                // widget.claimedUser.add(widget.userid);
+                                // widget.available =
+                                //     widget.available - widget.points;
+                                // var dataSet = Map<String, dynamic>();
+                                // dataSet["points"] = widget.available;
+                                //  var data = Map<String, dynamic>();
+                                // data["claimed"] = widget.claimedUser;
+                                // db
+                                //     .collection("user")
+                                //     .document(widget.userid)
+                                //     .setData(dataSet, merge: true);
+                                // db.collection("storeDetails").where("type",isEqualTo: widget.type).getDocuments().then((doc){
+                                //   doc.documents.forEach((val){
+                                //     db.collection("storeDetails").document(val.documentID).setData(data,merge: true);
+                                //   });
+                                // });
+                                // Navigator.of(context).pushReplacement(
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             HustleStoreLoader()));
+                                // print("done");
                               } else {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(

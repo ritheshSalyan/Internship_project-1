@@ -67,7 +67,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
               child: Text(
                 "Loading...",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),

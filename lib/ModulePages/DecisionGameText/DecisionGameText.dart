@@ -27,6 +27,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+  static final _formkey = GlobalKey<FormState>();
   _onSubmit() {
     setState(() {
       item;
@@ -48,13 +49,12 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     });
   }
 
- 
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
     itemInside.add(
       Center(
           child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0),
         child: Padding(
           padding: EdgeInsets.all(15),
           child: Text(
@@ -78,34 +78,39 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     );
     // for (int i = 0; i < 4; i++) {
     itemInside.add(
-    Padding(
-      padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-      child:   TextFormField(
-        
-        minLines: 3,
-        maxLength: 500,
-        maxLines: 100,
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        // maxLines: 1,
-        decoration: InputDecoration(
-          // prefixIcon: Icon(
-          //   FontAwesomeIcons.building,
-          //   color: Colors.green,
-          // ),
-          hintText: "Your Decision",
-          labelText: "Your Decision",
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
+      Padding(
+        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
+        child: Form(
+          key: _formkey,
+          autovalidate: true,
+          child: TextFormField(
+            validator: (value) => value.isEmpty ? "Cannot be empty" : null,
+            autovalidate: true,
+            minLines: 3,
+            maxLength: 500,
+            maxLines: 100,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+            // maxLines: 1,
+            decoration: InputDecoration(
+              // prefixIcon: Icon(
+              //   FontAwesomeIcons.building,
+              //   color: Colors.green,
+              // ),
+              hintText: "Your Decision",
+              labelText: "Your Decision",
+              labelStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+              hintStyle: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
           ),
         ),
       ),
-    )
     );
     // }
     itemInside.add(
@@ -199,7 +204,6 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                       top: MediaQuery.of(context).size.height * 0.05),
                   child: Column(
                     children: formList(context),
-                   
                   ),
                 ),
               ],

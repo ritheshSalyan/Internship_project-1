@@ -12,6 +12,7 @@ import 'paymentGateway/paymentGatewayLoader.dart';
 import 'seedFunding/seedFundingLoader.dart';
 import 'template/templateLoader.dart';
 import 'internship/DataListingLoader.dart';
+import'hyperLinkPage/hyperLinkPage.dart';
 
 class Component {
   String name;
@@ -85,7 +86,7 @@ class _HustleStoreState extends State<HustleStore> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: AutoSizeText(
-          "The Startupreneur GoldMine",
+          "GoldMine",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -243,6 +244,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       fullscreenDialog: true,
                                     ),
                                   );
+                                  break;
                                 } else {
                                   print("inside else");
                                   for (var i in list[index].claimed) {
@@ -279,6 +281,7 @@ class _HustleStoreState extends State<HustleStore> {
                                         type: list[index].type,
                                       ),
                                       fullscreenDialog: true,
+                                      maintainState: true,
                                     ),
                                   );
                                 }
@@ -354,7 +357,7 @@ class _HustleStoreState extends State<HustleStore> {
                                   print("inisde if");
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
+                                      builder: (context) => AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -364,6 +367,7 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
+                                        link: "https://register.payumoney.com/Startupreneur_Incubator",
                                       ),
                                       fullscreenDialog: true,
                                     ),
@@ -392,7 +396,7 @@ class _HustleStoreState extends State<HustleStore> {
                                 } else {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
+                                      builder: (context) => AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -402,6 +406,7 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
+                                        link: "https://register.payumoney.com/Startupreneur_Incubator",
                                       ),
                                       fullscreenDialog: true,
                                     ),
@@ -477,7 +482,7 @@ class _HustleStoreState extends State<HustleStore> {
                                   print("inisde if");
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
+                                      builder: (context) => AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -487,6 +492,7 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
+                                        link: "https://cloud.google.com/developers/startups/",
                                       ),
                                       fullscreenDialog: true,
                                     ),
@@ -515,7 +521,7 @@ class _HustleStoreState extends State<HustleStore> {
                                 } else {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
+                                      builder: (context) => AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -525,6 +531,7 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
+                                        link: "https://cloud.google.com/developers/startups/",
                                       ),
                                       fullscreenDialog: true,
                                     ),
