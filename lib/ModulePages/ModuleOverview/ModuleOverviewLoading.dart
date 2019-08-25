@@ -47,9 +47,9 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading...",
+                "Loading... Please Wait !",
                 style: TextStyle(
-                 color: Colors.black,
+                  color: Colors.black,
                 ),
               ),
             ),

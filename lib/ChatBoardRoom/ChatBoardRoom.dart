@@ -213,7 +213,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                           FontAwesomeIcons.comment,
                           color: Colors.green,
                         ),
-                        Text(" ${widget.valueData[index].answer.length - 1}"),
+                        Text(" ${widget.valueData[index].answer.length }"),
                         SizedBox(
                           width: 25,
                         ),

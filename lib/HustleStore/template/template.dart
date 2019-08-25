@@ -12,6 +12,8 @@ import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import '../../Auth/signin.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:permission/permission.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class TemplateDownload extends StatefulWidget {
   TemplateDownload({Key key, this.files, this.lengthList}) : super(key: key);
@@ -24,7 +26,6 @@ class TemplateDownload extends StatefulWidget {
 }
 
 class _TemplateDownloadState extends State<TemplateDownload> {
- 
   SharedPreferences sharedPreferences;
   String userId;
   Firestore db;
@@ -36,31 +37,32 @@ class _TemplateDownloadState extends State<TemplateDownload> {
   // List<dynamic> files = [];
   StorageReference storageReference;
   ProgressDialog progressDialog;
+  FirebaseMessaging _messaging = FirebaseMessaging();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context = this.context;
+
+    _messaging.getToken().then((token){
+      print(token);
+    });
     preferences();
+    request();
   }
 
-  
-
- 
+  void request() async {
+    List<PermissionName> list = [PermissionName.Storage];
+    var permission = await Permission.requestPermissions(list);
+    var status  = await Permission.getPermissionsStatus(list);
+  }
 
   void preferences() async {
     sharedPreferences = await SharedPreferences.getInstance();
     userId = sharedPreferences.getString("UserId");
     print(userId);
-
-    // db = Firestore.instance;
-    // await db.collection("template").getDocuments().then((document) {
-    //   document.documents.forEach((file) {
-    //     files = file.data["files"];
-    //   });
-    // });
-    // print(files.length);
+    String platfrom;
   }
 
   String fileNameRetriver(int index) {
@@ -70,8 +72,9 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     return file;
   }
 
-  void downloadFile(int index) async {
+  void downloadFile(int index, BuildContext context) async {
     progressDialog = ProgressDialog(context, ProgressDialogType.Normal);
+
     Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
       if (!yes) {
         print("inside failed loop $yes");
@@ -130,7 +133,9 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     Widget child;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Template Download"),
+        title: Text(
+          "Template Download",
+        ),
       ),
       body: OfflineBuilder(
         connectivityBuilder:
@@ -171,7 +176,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
                             IconButton(
                               alignment: Alignment.bottomRight,
                               onPressed: () {
-                                downloadFile(index);
+                                downloadFile(index, context);
                               },
                               icon: Icon(Icons.file_download),
                             )
@@ -184,7 +189,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
               },
             );
           }
-          return(child);
+          return (child);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

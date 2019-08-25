@@ -12,6 +12,8 @@ import 'PdfReader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 class SignupPage extends StatefulWidget {
   @override
@@ -25,7 +27,7 @@ class _SignupPageState extends State<SignupPage>
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
-
+  FirebaseMessaging _messaging = FirebaseMessaging();
   // static final _fieldKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   static TextEditingController textEditingController1 =
@@ -59,8 +61,10 @@ class _SignupPageState extends State<SignupPage>
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static dynamic referePoint = 0;
   PDFDocument doc;
-
+  bool status = false;
   String _documentPath = 'assets/pdf/t_and_c.pdf';
+
+    
 
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -68,7 +72,7 @@ class _SignupPageState extends State<SignupPage>
     sharedPreferences.setString("UserEmail", email);
   }
 
-  static void signUpInwithEmail(BuildContext context) async {
+   void signUpInwithEmail(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
 
@@ -108,8 +112,13 @@ class _SignupPageState extends State<SignupPage>
       }
 
       createNote();
+      setState(() {
+       status = true; 
+      });
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new RoadmapLoader(),
+        builder: (context) => new RoadmapLoader(
+          status:status,
+        ),
       ));
     } catch (e) {
       progressDialog.hide();
@@ -157,7 +166,7 @@ class _SignupPageState extends State<SignupPage>
     return false;
   }
 
-  static validateAndSubmit(BuildContext context) async {
+   validateAndSubmit(BuildContext context) async {
     if (isValide()) {
       signUpInwithEmail(context);
     }
@@ -170,11 +179,10 @@ class _SignupPageState extends State<SignupPage>
   void initState() {
     super.initState();
     prepareTestPdf();
-    // textEditingController.addListener((){
+    _messaging.getToken().then((token){
+      print(token);
 
-    //   print(textEditingController.text);
-
-    // });
+    });
   }
 
   Widget fullName(BuildContext context) => TextFormField(

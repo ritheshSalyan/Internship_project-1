@@ -63,7 +63,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
         String toMail = methodCall.argument("toMail");
         String subject = methodCall.argument("subject");
         String body = methodCall.argument("body");
-        sendEmail(toMail,subject,body,uriFile);
+        sendEmail(toMail,subject,body,Uri.fromFile(new File(uriFile)));
 //         sendEmail(toMail,subject,body, Uri.fromFile(new File(uriFile)));
         result.success("done");
       }
@@ -73,14 +73,14 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
     });
   }
 
-  private void sendEmail(String toMail,String subject,String body,String file) {
+  private void sendEmail(String toMail,String subject,String body,Uri file) {
 //    context.grantUriPermission("com.example.startupreneur",file,Intent.FLAG_GRANT_READ_URI_PERMISSION |Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 //    context.revokeUriPermission(file, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent.setType("application/pdf");
     intent.putExtra(Intent.EXTRA_EMAIL, new String[]{toMail});
     intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-    intent.putExtra(Intent.EXTRA_TEXT,body+"\n"+file);
+    intent.putExtra(Intent.EXTRA_TEXT,body);
     intent.putExtra(Intent.EXTRA_STREAM, file);
     startActivityForResult(Intent.createChooser(intent,"Send Email.."),200);
   }

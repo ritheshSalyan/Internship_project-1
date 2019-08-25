@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
@@ -7,6 +8,8 @@ import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import 'signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 class SigninPage extends StatefulWidget {
   @override
@@ -17,18 +20,33 @@ class _SigninPageState extends State<SigninPage> {
   static final _formkey = GlobalKey<FormState>();
   static final _popupformkey = GlobalKey<FormState>();
   static ProgressDialog progressDialog;
-
+  FirebaseMessaging _messaging = FirebaseMessaging();
   static String _email = "";
   static String _password = "";
   static String _otpEmail = "";
+  static String tokenId = "";
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static SharedPreferences sharedPreferences;
+  static Firestore db = Firestore.instance;
+
+  @override
+  void initState(){
+    super.initState();
+     _messaging.getToken().then((token){
+        setState(() {
+         tokenId = token; 
+        });
+    });
+  }
 
   static preferences(String userId, String _email) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userId);
     sharedPreferences.setString("UserEmail", _email);
     print(sharedPreferences.getString("UserId"));
+    var data = Map<String,dynamic>();
+    data["mobToken"] = tokenId;
+    await db.collection("pushToken").add(data);
   }
 
   static void signUpInwithEmail(BuildContext context) async {

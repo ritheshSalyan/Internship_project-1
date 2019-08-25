@@ -49,6 +49,7 @@ class _IncubationState extends State<Incubation> {
   StorageReference storageReference;
   Directory tempDir;
   File file;
+  bool status = false;
   ProgressDialog progressDialog;
 
   @override
@@ -56,6 +57,7 @@ class _IncubationState extends State<Incubation> {
     // TODO: implement initState
     super.initState();
     preferences();
+    status = false;
   }
 
   void preferences() async {
@@ -169,14 +171,11 @@ class _IncubationState extends State<Incubation> {
               ),
               borderSide: BorderSide(color: Colors.green, width: 1.5),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context)=>ViewDocs(
-                      lengthList: list[lengthVal].doc.length,
-                      doc: list[lengthVal].doc,
-                    )
-                  )
-                );
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ViewDocs(
+                          lengthList: list[lengthVal].doc.length,
+                          doc: list[lengthVal].doc,
+                        )));
               },
               child: Text("View docs"),
             ),
@@ -206,6 +205,47 @@ class _IncubationState extends State<Incubation> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!status) {
+      Flushbar(
+        title: "Note: ",
+        backgroundColor: Colors.green,
+        messageText: Column(
+          children: <Widget>[
+            Text(
+              "More Incubators coming soon! Stay Tuned",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            OutlineButton(
+              color: Colors.black,
+              onPressed: () {
+                setState(() {
+                 status = true; 
+                });
+                Navigator.of(context).pop();
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        // duration: Duration(seconds: 5),
+      )..show(context);
+      // setState(() {
+      //   widget.status = false;
+      // });
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

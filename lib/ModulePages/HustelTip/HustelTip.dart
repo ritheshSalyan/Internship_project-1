@@ -4,16 +4,14 @@ import '../../ModuleOrderController/Types.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HustelTipPage extends StatefulWidget {
-   HustelTipPage(
-      {Key key,
-     
-      this.modNum,
-      this.title,
-      this.index,
-      })
-      : super(key: key);
-  String  title;
-  int modNum,index;
+  HustelTipPage({
+    Key key,
+    this.modNum,
+    this.title,
+    this.index,
+  }) : super(key: key);
+  String title;
+  int modNum, index;
 
   @override
   _HustelTipPageState createState() => _HustelTipPageState();
@@ -49,45 +47,60 @@ class _HustelTipPageState extends State<HustelTipPage>
         body: Builder(
           builder: (context) {
             var padding2 = Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height*0.1 ,
-                    left: MediaQuery.of(context).size.height * 0.01,
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.1,
+                left: MediaQuery.of(context).size.height * 0.01,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    widget.title,
+                    // "hello",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      letterSpacing: 0.5,
+                      color: Colors.green,
+                      // fontSize: 10,//30
+                      fontWeight: FontWeight.bold,
+                    ),
+                    minFontSize: 12,
+                    maxLines: 10,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      AutoSizeText(
-                        widget.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          letterSpacing: 0.5,
-                          color: Colors.green,
-                          // fontSize: 10,//30
-                          fontWeight: FontWeight.bold,
-                        ),
-                        minFontSize: 18,
-                        maxLines: 10,
-                      ),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      // Text(
-                      //   "You have successfully completed this module :)",
-                      //   textAlign: TextAlign.center,
-                      //   style: TextStyle(
-                      //     fontSize: 16,
-                      //   ),
-                      // ),
-                    ],
+                  SizedBox(
+                    height: 35,
                   ),
-                );
+                  // Text(
+                  //   "You have successfully completed this module :)",
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     fontSize: 16,
+                  //   ),
+                  // ),
+                ],
+              ),
+            );
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.2,
+                    top: MediaQuery.of(context).size.height * 0.1,
+                    left: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  child: Text(
+                    "Hustle Tip",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.12,
                     left: MediaQuery.of(context).size.height * 0.02,
                   ),
                   child: Image.asset(
@@ -99,31 +112,33 @@ class _HustelTipPageState extends State<HustelTipPage>
                 padding2,
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
+                    top: MediaQuery.of(context).size.height * 0.05,
                     left: MediaQuery.of(context).size.height * 0.1,
                     right: MediaQuery.of(context).size.height * 0.1,
                   ),
                   child: OutlineButton(
-                    borderSide: BorderSide(color:Colors.green,width: 1.5),
-                    onPressed: (){
-  List<dynamic> arguments = [widget.modNum, widget.index + 1];
-            orderManagement.moveNextIndex(context, arguments);
-
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Next",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        // Image.asset(
-                        //   "assets/Images/coins.png",
-                        //   height: 20,
-                        //   width: 20,
-                        // ),
-                      ],
-                    )
-                  ),
+                      borderSide: BorderSide(color: Colors.green, width: 1.5),
+                      onPressed: () {
+                        List<dynamic> arguments = [
+                          widget.modNum,
+                          widget.index + 1
+                        ];
+                        orderManagement.moveNextIndex(context, arguments);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Next",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          // Image.asset(
+                          //   "assets/Images/coins.png",
+                          //   height: 20,
+                          //   width: 20,
+                          // ),
+                        ],
+                      )),
                 )
               ],
             );

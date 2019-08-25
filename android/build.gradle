@@ -20,6 +20,10 @@ buildscript {
                         && !details.requested.name.contains('androidx') ) {
                     details.useVersion "1.0.1"
                 }
+                if (details.requested.group == 'androidx.localbroadcastmanager' &&
+                    !details.requested.name.contains('androidx')) {
+                details.useVersion "1.0.0"
+            }
             }
         }
     }

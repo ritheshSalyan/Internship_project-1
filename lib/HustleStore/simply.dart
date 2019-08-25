@@ -326,7 +326,7 @@ class _HustleStoreState extends State<HustleStore> {
                                 if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => Incubation(),
+                                      builder: (context) => Incubation(title: "Incubation",),
                                     ),
                                   );
                                 } else {
