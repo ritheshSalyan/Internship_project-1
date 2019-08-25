@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:page_indicator/page_indicator.dart';
 import 'package:permission/permission.dart';
 import 'package:startupreneur/Auth/PdfReader.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
@@ -115,8 +116,6 @@ class _ViewDocsState extends State<ViewDocs> {
         );
       }
     });
-
-
   }
 
   @override
@@ -147,9 +146,12 @@ class _ViewDocsState extends State<ViewDocs> {
                     downloadFile(index,context);
                   },
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   elevation: 5.0,
                   child: Stack(
-                    fit: StackFit.passthrough,
+                    fit: StackFit.expand,
                     children: <Widget>[
                       Card(
                         child: Image.asset(
@@ -161,7 +163,7 @@ class _ViewDocsState extends State<ViewDocs> {
                         margin: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.32,
                         ),
-                        alignment: Alignment.bottomCenter,
+                        alignment: Alignment.center,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[

@@ -187,7 +187,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           Padding(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.14),
-                            child: ExtendedImage.asset(
+                            child:(widget.image!="")?ExtendedImage.asset(
                               widget.image,
                               // "assets/Images/photo.png",
                               enableLoadState: true,
@@ -195,9 +195,10 @@ class _DiscussionPageState extends State<DiscussionPage> {
                               width: MediaQuery.of(context).size.width * 0.5,
 //                            alignment: Alignment.center,
                               mode: ExtendedImageMode.Gesture,
-                            ),
+                            ):SizedBox(height: MediaQuery.of(context).size.height * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.5,),
                           ),
-                          IconButton(
+                          (widget.image!="")?IconButton(
                             icon: Icon(
                               Icons.zoom_out_map,
                               color: Colors.black,
@@ -209,7 +210,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                                 fullscreenDialog: true,
                               ));
                             },
-                          ),
+                          ):SizedBox(),
                         ],
                       ),
 
