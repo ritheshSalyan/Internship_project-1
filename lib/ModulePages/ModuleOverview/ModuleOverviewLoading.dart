@@ -73,8 +73,6 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
       print("orderManagement.order " + orderManagement.order.toString());
       //  }
     });
-
-    // QuerySnapshot snapshot = await ref.
   }
 
   static List<Type> convert(List<dynamic> list) {
