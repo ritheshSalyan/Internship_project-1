@@ -23,11 +23,14 @@ import '../ProfilePage/ProfilePageLoader.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:startupreneur/how_to_earn/how_to_earn.dart';
 import '../ModulePages/ImagePage/ImagePageLoader.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class TimelinePage extends StatefulWidget {
-  TimelinePage({Key key, this.title, this.userEmail}) : super(key: key);
+  TimelinePage({Key key, this.title, this.userEmail, this.status})
+      : super(key: key);
   final String title;
   final String userEmail;
+  bool status;
 
   @override
   _TimelinePageState createState() => _TimelinePageState();
@@ -50,6 +53,7 @@ class _TimelinePageState extends State<TimelinePage> {
   static String name = "User";
   PDFDocument doc;
   Flushbar<List<String>> flush;
+  FirebaseMessaging _messaging = FirebaseMessaging();
   String _url =
       "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
 
@@ -93,6 +97,10 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+    widget.status = true;
+    _messaging.getToken().then((token){
+      print(token);
+    });
   }
 
   void done(BuildContext context) {
@@ -166,6 +174,61 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.status) {
+        Flushbar(
+          title: "Welcome to Startupreneur",
+          backgroundColor: Colors.green,
+          messageText: Column(
+            children: <Widget>[
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                    text: "You have received bonous of",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " 1000 ",
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "for signing up\n Keep Learning!",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ]),
+              ),
+              OutlineButton(
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // duration: Duration(seconds: 5),
+        )..show(context);
+        setState(() {
+          widget.status = false;
+        });
+      }
+    });
     List<Widget> pages = [
       timelineModel(TimelinePosition.Center),
     ];
@@ -173,7 +236,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
     // LiquidPullToRefresh(
     //   onRefresh: () {}, // refresh callback
-    //   child: ListView(), 
+    //   child: ListView(),
     // ); // scroll view
     return Scaffold(
       extendBody: true,

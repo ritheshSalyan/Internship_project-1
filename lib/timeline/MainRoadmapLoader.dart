@@ -5,6 +5,9 @@ import 'MainRoadmap.dart';
 import '../PaymentGateway/PaymentGateway.dart';
 
 class RoadmapLoader extends StatefulWidget {
+RoadmapLoader({Key key,this.status}):super(key:key);
+bool status;
+
   @override
   _RoadmapLoaderState createState() => _RoadmapLoaderState();
 }
@@ -18,12 +21,10 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
   dynamic decision;
   BuildContext context;
 
-
   @override
   void initState() {
     super.initState();
   }
-
 
   Future<dynamic> preferences() async {
     _sharedPreferences = await SharedPreferences.getInstance();
@@ -54,6 +55,7 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
             MaterialPageRoute(
               builder: (context) => TimelinePage(
                 title: "RoadMap",
+                status: widget.status,
               ),
             ),
           );

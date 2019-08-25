@@ -70,7 +70,7 @@ List<dynamic> files=[];
               child: Text(
                 "Loading...",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),

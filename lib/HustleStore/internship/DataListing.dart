@@ -58,12 +58,14 @@ class _ListingDataState extends State<ListingData> {
   StorageReference storageReference;
   Directory tempDir;
   File file;
+  bool status = false;
   ProgressDialog progressDialog;
 
   @override
   void initState() {
     super.initState();
     preferences();
+    status = false;
     if (widget.index == 1) {
       widget.title = "incubation";
     } else {
@@ -232,9 +234,47 @@ class _ListingDataState extends State<ListingData> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!status) {
+      Flushbar(
+        title: "Note: ",
+        backgroundColor: Colors.green,
+        messageText: Column(
+          children: <Widget>[
+            Text(
+              "More Internships and Projects coming soon! Stay Tuned",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,),
+            ),
+            OutlineButton(
+              color: Colors.black,
+              onPressed: () {
+                setState(() {
+                 status = true; 
+                });
+                Navigator.of(context).pop();
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        // duration: Duration(seconds: 5),
+      )..show(context);
+      // setState(() {
+      //   widget.status = false;
+      // });
+      }
+    });
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title.replaceAll("\n", " ")),
+        title: Text("Internships"),
       ),
       body: Builder(
         builder: (context) {

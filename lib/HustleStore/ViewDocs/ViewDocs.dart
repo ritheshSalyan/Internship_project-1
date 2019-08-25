@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:permission/permission.dart';
 import 'package:startupreneur/Auth/PdfReader.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +27,18 @@ class _ViewDocsState extends State<ViewDocs> {
   ProgressDialog progressDialog;
   File file;
   PDFDocument document;
+
+  
+    @override
+    void initState(){
+      request();
+    }
+    
+    request() async{
+      await Permission.requestPermissions([PermissionName.Storage]);
+    }
+
+  
 
   String fileNameRetriver(int index) {
     String uri = Uri.decodeFull(widget.doc[index]);
@@ -102,7 +115,6 @@ class _ViewDocsState extends State<ViewDocs> {
         );
       }
     });
-
 
 
   }
