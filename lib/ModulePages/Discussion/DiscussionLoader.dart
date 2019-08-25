@@ -52,9 +52,9 @@ class _DiscussionLoading extends State<DiscussionLoading> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading...",
+                "Loading... Please Wait !",
                 style: TextStyle(
-                 color: Colors.black,
+                  color: Colors.black,
                 ),
               ),
             ),

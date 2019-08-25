@@ -24,9 +24,9 @@ class _seedFundingLoaderState extends State<seedFundingLoader> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading...",
+                "Loading... Please Wait !",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),

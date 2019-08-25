@@ -46,10 +46,10 @@ class _TheoryLoading extends State<TheoryLoading> {
             ),
             Material(
               color: Colors.transparent,
-              child: Text(
-                "Loading...",
+             child: Text(
+                "Loading... Please Wait !",
                 style: TextStyle(
-                 color: Colors.black,
+                  color: Colors.black,
                 ),
               ),
             ),

@@ -103,21 +103,7 @@ class _TimelinePageState extends State<TimelinePage> {
     });
   }
 
-  void done(BuildContext context) {
-    Flushbar(
-      duration: Duration(
-        seconds: 5,
-      ),
-      showProgressIndicator: true,
-      flushbarPosition: FlushbarPosition.TOP,
-      title: "Welcome to The Startupeneur",
-      messageText: Column(children: <Widget>[
-        Text("Hello welcome"),
-      ]),
-    )..show(context).whenComplete(() {
-        print("done and dusted");
-      });
-  }
+
 
   void preferences(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -184,7 +170,7 @@ class _TimelinePageState extends State<TimelinePage> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "You have received bonous of",
+                    text: "Congratulations! You have received",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -198,7 +184,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                   ),
                   TextSpan(
-                    text: "for signing up\n Keep Learning!",
+                    text: "points as a registration bonus :) \n Keep Learning!",
                     style: TextStyle(
                       color: Colors.white,
                     ),

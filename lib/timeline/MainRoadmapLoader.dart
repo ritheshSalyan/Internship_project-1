@@ -78,7 +78,7 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading...",
+                "Loading... Please Wait !",
                 style: TextStyle(
                  color: Colors.black,
                 ),

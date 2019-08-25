@@ -67,8 +67,8 @@ List<dynamic> files=[];
             ),
             Material(
               color: Colors.transparent,
-              child: Text(
-                "Loading...",
+             child: Text(
+                "Loading... Please Wait !",
                 style: TextStyle(
                   color: Colors.black,
                 ),

@@ -261,11 +261,13 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
           )..show(context).whenComplete(() {
                 print("done and dusted - 1");
                 flush = Flushbar<List<String>>(
+                  backgroundColor: Colors.green,
                   isDismissible: true,
                   duration: Duration(seconds: 3),
                   flushbarPosition: FlushbarPosition.TOP,
-                  title: "Success",
-                  messageText: Column(children: <Widget>[
+                  title: "Reply has been sent",
+                  messageText: Column(
+                    children: <Widget>[
                     Text("Successfully added"),
                   ]),
                 )..show(context)

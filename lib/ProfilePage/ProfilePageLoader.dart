@@ -53,7 +53,7 @@ class _ProfileLoading extends State<ProfileLoading> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading...",
+                "Loading... Please Wait !",
                 style: TextStyle(
                  color: Colors.black,
                 ),
