@@ -24,6 +24,7 @@ import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:startupreneur/how_to_earn/how_to_earn.dart';
 import '../ModulePages/ImagePage/ImagePageLoader.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import '../ModulePages/FileActivity/FileUploadLoader.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail, this.status})
@@ -415,7 +416,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        (ImagePageLoading(modNum: 8, index: 22)),
+                        (FileUploadLoading(modNum: 8, index: 22)),
                   ),
                 );
               },

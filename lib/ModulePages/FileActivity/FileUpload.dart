@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import '../../ModuleOrderController/Types.dart';
 //import 'package:intro_slider_example/home.dart';
+import 'package:toast/toast.dart';
 
 class FileUpload extends StatefulWidget {
   FileUpload({Key key, this.modNum, this.index, this.pages}) : super(key: key);
@@ -22,7 +23,7 @@ class FileUpload extends StatefulWidget {
 
 //------------------ Default config ------------------
 class FileUploadState extends State<FileUpload> {
-  List<Slide> slides = new List();
+  List<Container> slides = new List();
 
   File file;
   String uid;
@@ -30,63 +31,158 @@ class FileUploadState extends State<FileUpload> {
   StorageUploadTask task;
   Widget renderDoneBtn() {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child:OutlineButton(
-        onPressed: (){
-          getFilePath();
-        },
-        child:  Row(
-        children: <Widget>[
-          Text(
-            "Upload",
-            style: TextStyle(color: Colors.white),
+        scrollDirection: Axis.horizontal,
+        child: OutlineButton(
+          focusColor: Colors.black,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: Colors.black)),
+          onPressed: () {
+            getFilePath();
+          },
+          child: Row(
+            children: <Widget>[
+              Text(
+                "Upload",
+                style: TextStyle(color: Colors.white),
+              ),
+             Padding(
+               padding: EdgeInsets.only(left: 1),
+               child: Icon(Icons.file_upload,color: Colors.white,),
+             )
+            ],
           ),
-          Icon(Icons.file_upload)
-        ],
-      ),
-      )
-    );
+        )
+        );
   }
 
   @override
   void initState() {
     super.initState();
 
-    List<Page> page = null;
-    page = widget.pages;
+   
+  }
+  void getSlides(){
+     List<Page> page = widget.pages;
 
     print("Length of pages" + page.length.toString());
 
-    for (var item in page) {
+    for (var i = 0; i < page.length - 1; i++) {
+      var item = page[i];
       String body = "";
       for (var line in item.body.split(". ")) {
         body += line + "\n\n";
       }
       //  print("body = "+body);
       slides.add(
-        new Slide(
-          title: item.headding,
-          maxLineTitle: 4,
-          styleTitle: TextStyle(
-            color: Colors.white,
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-          ),
-          description: body,
-          styleDescription: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-            // fontWeight: FontWeight.,
-          ),
-          //  pathImage: "images/photo_eraser.png",
-          backgroundColor: Colors.green,
-        ),
+        new Container(
+          alignment: Alignment.center,
+            color: Colors.green,
+            child:SingleChildScrollView(
+              child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.05),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      item.headding,
+                      maxLines: 4,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+               Padding(
+                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
+                 child:  Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    body,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      // fontWeight: FontWeight.,
+                    ),
+                  ),
+                ),
+               ),
+                Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Swipe for Next",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        // fontWeight: FontWeight.,
+                      ),
+                    )),
+                //  pathImage: "images/photo_eraser.png",
+              ],
+            ),
+            ),),
       );
     }
+    var item = page[page.length - 1];
+    String body = "";
+    for (var line in item.body.split(". ")) {
+      body += line + "\n\n";
+    }
+    slides.add(
+      new Container(
+        alignment: Alignment.center,
+            color: Colors.green,
+            child:SingleChildScrollView(
+              child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.05),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      item.headding,
+                      maxLines: 4,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+               Padding(
+                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
+                 child:  Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    body,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      // fontWeight: FontWeight.,
+                    ),
+                  ),
+                ),
+               ),
+               renderDoneBtn()
+                //  pathImage: "images/photo_eraser.png",
+              ],
+            ),
+            ),
+      ),
+    );
   }
 
   void getFilePath() async {
-   
     //  String _filePath;
     try {
       // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
@@ -94,11 +190,11 @@ class FileUploadState extends State<FileUpload> {
       // File file1 = await FilePicker.getFilePath(type: FileType.ANY);
       var file1 = await FilePicker.getFile(type: FileType.ANY);
 
-       progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
-    progressDialog.setMessage("Uploading....");
-    progressDialog.show();
+      progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+      progressDialog.setMessage("Uploading....");
+      progressDialog.show();
       print("File picked successfully");
-       
+
       if (file1 == null) {
         progressDialog.hide();
         return;
@@ -107,29 +203,30 @@ class FileUploadState extends State<FileUpload> {
       print("File path: ${file1.path}");
 
       setState(() {
-         file = file1;
+        file = file1;
       });
       upload();
     } catch (e) {
+      Toast.show("Upload failed, please try again", context,
+          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       print("Error while picking the file: " + e.toString());
       progressDialog.hide();
-      
     }
   }
 
-  Future onDonePress() async {
-    //  File file1  = await FilePicker.getFile(type: FileType.ANY);
-    // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
-    //  print("File picked successfully"+filePath);
-    //  setState(() {
-    //   //file = file1;
-    //   //print("File Picker File name inside = "+p.basename(file.path));
-    //  });
-    //print("File Picker File name = "+p.basename(file.path));
-    // Do what you want
-  }
+  // Future onDonePress() async {
+  //   //  File file1  = await FilePicker.getFile(type: FileType.ANY);
+  //   // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
+  //   //  print("File picked successfully"+filePath);
+  //   //  setState(() {
+  //   //   //file = file1;
+  //   //   //print("File Picker File name inside = "+p.basename(file.path));
+  //   //  });
+  //   //print("File Picker File name = "+p.basename(file.path));
+  //   // Do what you want
+  // }
 
-  Future upload() async{
+  Future upload() async {
     FirebaseAuth.instance.currentUser().then((user) {
       this.uid = user.uid;
     });
@@ -143,9 +240,11 @@ class FileUploadState extends State<FileUpload> {
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-StorageTaskSnapshot taskSnapshot = await task.onComplete;
-String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-print("On downloadUrl task"+downloadUrl);
+    StorageTaskSnapshot taskSnapshot = await task.onComplete;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    Toast.show("Your Activity Uploaded Successfully", context,
+        gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+    print("On downloadUrl task" + downloadUrl);
     //  }
     // if (taskSnapshot.) {
     //   print("On downloadUrl task"+downloadUrl);
@@ -155,9 +254,8 @@ print("On downloadUrl task"+downloadUrl);
     // }
     print("Hai");
     progressDialog.hide();
-     List<dynamic> arguments = [widget.modNum, widget.index + 1];
-            orderManagement.moveNextIndex(context, arguments);
-
+    List<dynamic> arguments = [widget.modNum, widget.index + 1];
+    orderManagement.moveNextIndex(context, arguments);
   }
 
   Future<String> get status async {
@@ -184,14 +282,17 @@ print("On downloadUrl task"+downloadUrl);
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
-      slides: this.slides,
+    // return new IntroSlider(
+    //   slides: this.slides,
 
-      onDonePress: getFilePath, //this.onDonePress,
-      renderSkipBtn: Text(" "),
-      renderDoneBtn: this.renderDoneBtn(),
-      sizeDot: 0,
+    //   onDonePress: getFilePath, //this.onDonePress,
+    //   renderSkipBtn: Text(" "),
+    //   renderDoneBtn: this.renderDoneBtn(),
+    //   sizeDot: 0,
+    // );
+    getSlides();
+    return PageView(
+      children: this.slides,
     );
   }
 }
-

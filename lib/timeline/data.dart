@@ -283,7 +283,7 @@ List<Doodle> doodles = [
     name: AutoSizeText(
       "Team",
       style: TextStyle(
-//                            color: Colors.white,
+//           color: Colors.white,
           // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",

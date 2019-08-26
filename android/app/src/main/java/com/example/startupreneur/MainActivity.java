@@ -39,7 +39,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
 
-    getWindow().addFlags(LayoutParams.FLAG_SECURE);
+   // getWindow().addFlags(LayoutParams.FLAG_SECURE);
 
 
     // getWindow().addFlags(LayoutParams.FLAG_SECURE);

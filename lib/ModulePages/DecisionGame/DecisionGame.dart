@@ -175,7 +175,12 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                 print("hello $_answerIs");
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(
+                                    content: Column(
+                                      
+                                      children: <Widget>[
+                                        Image.asset('assets/Images/dec.png',
+                                        height: MediaQuery.of(context).size.height*0.3,),
+                                        Text(
                                       answers[_answerIs],
                                       style: TextStyle(
                                           color: Colors.white,
@@ -183,6 +188,8 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
                                           
+                                    ),
+                                      ],
                                     ),
                                     duration: Duration(hours: 1),
                                     backgroundColor: Colors.green[600],
