@@ -47,7 +47,6 @@ class _SigninPageState extends State<SigninPage> {
     var data = Map<String,dynamic>();
     data["mobToken"] = tokenId;
     await db.collection("pushToken").document(userId).setData(data);
-    
   }
 
   static void signUpInwithEmail(BuildContext context) async {
