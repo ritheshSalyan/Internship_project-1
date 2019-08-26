@@ -107,7 +107,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       response.pipe((file).openWrite());
       print("done");
       progressDialog.hide();
-      Toast.show("check file in Startupreneur/$fileName in storage", context,
+      Toast.show("Check the file in your Internal Storage in the folder The Startupreneur/$fileName", context,
           gravity: Toast.BOTTOM, duration: 5);
     }).catchError((e) {
       print("error $e");

@@ -188,7 +188,7 @@ class _SigninPageState extends State<SigninPage> {
       //   borderRadius: BorderRadius.circular(10),
       //   borderSide: BorderSide(color: Colors.green, width: 2.0),
       // ),
-      hintText: "Passowrd",
+      hintText: "Password",
       labelText: "Password",
       labelStyle:
           TextStyle(color: Colors.black, fontSize: 12, letterSpacing: 0.5),

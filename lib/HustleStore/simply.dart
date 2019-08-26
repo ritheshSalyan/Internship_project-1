@@ -123,7 +123,7 @@ class _HustleStoreState extends State<HustleStore> {
         child: Column(
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("storeDetails").snapshots(),
+              stream: Firestore.instance.collection("storeDetails").orderBy("id").snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 switch (snapshot.data) {
                   case null:

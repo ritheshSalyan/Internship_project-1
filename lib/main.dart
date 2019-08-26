@@ -1,11 +1,15 @@
+// flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // import 'HustleStore/HustleStore.dart';
 
 void main() async {
-  
+  Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runApp(MyApp());
 }
 
@@ -30,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
   }
 
-  
+
   
   @override
   Widget build(BuildContext context) {

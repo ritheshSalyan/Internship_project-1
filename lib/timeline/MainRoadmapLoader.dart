@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/Auth/signin.dart';
 import 'MainRoadmap.dart';
 import '../PaymentGateway/PaymentGateway.dart';
 
@@ -50,7 +51,7 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
             ),
           );
         }
-        else {
+        else {  
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => TimelinePage(
@@ -59,6 +60,12 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
               ),
             ),
           );
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //     builder: (context) => SigninPage(
+          //     ),
+          //   ),
+          // );
       }
     }
     );

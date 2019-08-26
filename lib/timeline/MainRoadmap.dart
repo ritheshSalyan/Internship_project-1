@@ -98,13 +98,11 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
-    widget.status = true;
-    _messaging.getToken().then((token){
+    // widget.status = true;
+    _messaging.getToken().then((token) {
       print(token);
     });
   }
-
-
 
   void preferences(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -164,7 +162,14 @@ class _TimelinePageState extends State<TimelinePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.status) {
         Flushbar(
-          title: "Welcome to Startupreneur",
+          titleText: Text(
+            "Welcome to Startupreneur",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
           backgroundColor: Colors.green,
           messageText: Column(
             children: <Widget>[
@@ -174,6 +179,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     text: "Congratulations! You have received",
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
                     ),
                   ),
                   TextSpan(
@@ -188,6 +194,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     text: "points as a registration bonus :) \n Keep Learning!",
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
                     ),
                   ),
                 ]),
@@ -201,7 +208,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  "OK",
+                  "Yay!",
                   style: TextStyle(
                     color: Colors.white,
                   ),
