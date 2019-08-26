@@ -61,6 +61,7 @@ class _SignupPageState extends State<SignupPage>
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static dynamic referePoint = 0;
   PDFDocument doc;
+  static String tokenId = "";
   bool status = false;
   String _documentPath = 'assets/pdf/t_and_c.pdf';
 
@@ -143,7 +144,7 @@ class _SignupPageState extends State<SignupPage>
     dataMap['completed'] = [1];
     dataMap["payment"] = true;
     dataMap["resume"]="";
-    dataMap["hustle"]=[""];
+    dataMap["hustle"]=[];
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
@@ -154,6 +155,15 @@ class _SignupPageState extends State<SignupPage>
         .catchError((e) {
       print(e);
     });
+
+    var data = Map<String,dynamic>();
+    data["mobToken"] = tokenId;
+    db.collection("pushToken").document(userid).setData(data).catchError((e){
+      print(e);
+    });
+    // db.collection("pushToken").document(userid).add(data).catchError((e){
+    //   print(e);
+    // });
   }
 
   static bool isValide() {
@@ -180,8 +190,10 @@ class _SignupPageState extends State<SignupPage>
     super.initState();
     prepareTestPdf();
     _messaging.getToken().then((token){
-      print(token);
-
+      // print(token);
+      setState(() {
+        tokenId = token;
+      });
     });
   }
 

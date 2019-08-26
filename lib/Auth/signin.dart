@@ -46,7 +46,8 @@ class _SigninPageState extends State<SigninPage> {
     print(sharedPreferences.getString("UserId"));
     var data = Map<String,dynamic>();
     data["mobToken"] = tokenId;
-    await db.collection("pushToken").add(data);
+    await db.collection("pushToken").document(userId).setData(data);
+    
   }
 
   static void signUpInwithEmail(BuildContext context) async {

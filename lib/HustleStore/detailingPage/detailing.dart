@@ -24,7 +24,7 @@ class AddEntryDialog extends StatefulWidget {
   String image;
   String title;
   String type;
-  List<dynamic> claimedUser =[];
+  List<dynamic> claimedUser = [];
   String userid;
   // bool decision;
   int len;
@@ -42,15 +42,11 @@ class AddEntryDialogState extends State<AddEntryDialog> {
     print("init ${widget.claimedUser}");
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: Text(
-          "Know More"
-        ),
+        title: Text("Know More"),
       ),
       body: Builder(builder: (context) {
         return SingleChildScrollView(
@@ -90,27 +86,36 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                           color: Colors.green,
                           onPressed: () {
                             setState(() {
-                              if (widget.len == 12) {
+                              if (widget.len == 12 &&
+                                  widget.available >= widget.points) {
                                 widget.claimedUser.add(widget.userid);
                                 widget.available =
                                     widget.available - widget.points;
                                 var dataSet = Map<String, dynamic>();
                                 dataSet["points"] = widget.available;
-                                 var data = Map<String, dynamic>();
+                                var data = Map<String, dynamic>();
                                 data["claimed"] = widget.claimedUser;
                                 db
                                     .collection("user")
                                     .document(widget.userid)
                                     .setData(dataSet, merge: true);
-                                db.collection("storeDetails").where("type",isEqualTo: widget.type).getDocuments().then((doc){
-                                  doc.documents.forEach((val){
-                                    db.collection("storeDetails").document(val.documentID).setData(data,merge: true);
+                                db
+                                    .collection("storeDetails")
+                                    .where("type", isEqualTo: widget.type)
+                                    .getDocuments()
+                                    .then((doc) {
+                                  doc.documents.forEach((val) {
+                                    db
+                                        .collection("storeDetails")
+                                        .document(val.documentID)
+                                        .setData(data, merge: true);
                                   });
                                 });
                                 Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HustleStoreLoader()));
+                                  MaterialPageRoute(
+                                    builder: (context) => HustleStoreLoader(),
+                                  ),
+                                );
                                 print("done");
                               } else {
                                 Scaffold.of(context).showSnackBar(

@@ -66,7 +66,7 @@ class orderManagement {
         points = document.data["points"];
         print("complete $complete");
       });
-      await db.collection("points").where("module",isEqualTo:arguments[0] + 1).getDocuments().then((document){
+      await db.collection("points").where("module",isEqualTo:arguments[0]).getDocuments().then((document){
         document.documents.forEach((val){
           modulePoint  =  val.data["point"];
         });

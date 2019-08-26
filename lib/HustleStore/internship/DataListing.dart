@@ -105,7 +105,7 @@ class _ListingDataState extends State<ListingData> {
       tempDir = Directory.systemTemp;
       final dir = (await getExternalStorageDirectory()).path;
       print("File path $dir");
-      file = File('$dir/$fileName');
+      file = File('/storage/emulated/0/Startupreneur/$fileName');
       print(file.path);
       print(UserId);
       storageReference =

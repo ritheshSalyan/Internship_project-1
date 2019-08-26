@@ -14,6 +14,7 @@ import 'template/templateLoader.dart';
 import 'internship/DataListingLoader.dart';
 import'hyperLinkPage/hyperLinkPage.dart';
 
+
 class Component {
   String name;
   String description;
@@ -196,8 +197,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => seedFundingLoader(),
@@ -221,6 +221,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               case "template":
                                 print("Template");
@@ -259,8 +261,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>TemplateLoader(),
@@ -285,6 +286,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               case "incubation":
                                 print("incubation");
@@ -322,8 +325,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => Incubation(title: "Incubation",),
@@ -347,6 +349,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                                 
                               case "gateway":
@@ -386,8 +390,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => paymentGatewayLoader(),
@@ -412,6 +415,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               case "internship":
                                 claimedUser.clear();
@@ -448,8 +453,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => DataListingLoader(),
@@ -473,6 +477,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               case "credits":
                                 print("google credits");
@@ -511,8 +517,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => googleCloudLoader(),
@@ -537,6 +542,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               case "hacks":
                                 print("Hacks");
@@ -574,8 +581,7 @@ class _HustleStoreState extends State<HustleStore> {
                                       continue;
                                     }
                                   }
-                                }
-                                if (flag) {
+                                  if (flag) {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => startupHacksLoader(),
@@ -599,6 +605,8 @@ class _HustleStoreState extends State<HustleStore> {
                                     ),
                                   );
                                 }
+                                }
+                                
                                 break;
                               default:
                                 print("none");

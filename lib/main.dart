@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
+import 'package:permission_handler/permission_handler.dart';
 // import 'HustleStore/HustleStore.dart';
 
 void main() async {
+  
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  // static const platform = MethodChannel("permission");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    request();
+  }
+
+
+  void request() async {
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  }
+
+  
+  
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setPreferredOrientations([

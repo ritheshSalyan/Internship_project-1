@@ -1,16 +1,19 @@
 package com.example.startupreneur;
 
-
+// import android.Manifest; 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+// import androidx.core.app.ActivityCompat;
+// import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.view.WindowManager.LayoutParams;
+import android.content.pm.PackageManager; 
 import android.widget.Toast;
 
-// import androidx.core.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -33,6 +36,9 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   Result result;
   Context context;
 
+   private static final int STORAGE_PERMISSION_CODE = 101;
+
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +46,9 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
     GeneratedPluginRegistrant.registerWith(this);
 
     getWindow().addFlags(LayoutParams.FLAG_SECURE);
-
-
-    // getWindow().addFlags(LayoutParams.FLAG_SECURE);
-    // AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
-    // Analytics.trackEvent("My custom event");
+   
+    
+    
     Checkout.preload(getApplicationContext());
     dialog = new ProgressDialog(this);
     new MethodChannel(getFlutterView(),CHANNEL).setMethodCallHandler((methodCall, result) -> {
@@ -60,6 +64,10 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
     new MethodChannel(getFlutterView(),"email").setMethodCallHandler((methodCall, result) -> {
       if(methodCall.method.equals("sendEmail")){
         String uriFile = methodCall.argument("attachment").toString();
+        // Uri imageUri = FileProvider.getUriForFile(
+        //     MainActivity.this,
+        //     "com.example.startupreneur", //(use your app signature + ".provider" )
+        //     uriFile);
         String toMail = methodCall.argument("toMail");
         String subject = methodCall.argument("subject");
         String body = methodCall.argument("body");
@@ -71,7 +79,36 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
         result.notImplemented();
       }
     });
+
+    // new MethodChannel(getFlutterView(),"permission").setMethodCallHandler((methodCall, result) -> {
+    //   if(methodCall.method.equals("per")){
+    //     checkPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE,STORAGE_PERMISSION_CODE); 
+    //     result.success("done");
+    //   }
+    //   else{
+    //     result.notImplemented();
+    //   }
+    // });
+
   }
+
+  // public void checkPermission(String permission, int requestCode) 
+  //   { 
+  //       if (ContextCompat.checkSelfPermission(MainActivity.this, permission) 
+  //           == PackageManager.PERMISSION_DENIED) { 
+  
+  //           // Requesting the permission 
+  //           ActivityCompat.requestPermissions(MainActivity.this, 
+  //                                             new String[] { permission }, 
+  //                                             requestCode); 
+  //       } 
+  //       else { 
+  //           Toast.makeText(MainActivity.this, 
+  //                          "Permission already granted", 
+  //                          Toast.LENGTH_SHORT) 
+  //               .show(); 
+  //       } 
+  //   } 
 
   private void sendEmail(String toMail,String subject,String body,Uri file) {
 //    context.grantUriPermission("com.example.startupreneur",file,Intent.FLAG_GRANT_READ_URI_PERMISSION |Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -117,6 +154,48 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   //     }
   //   }
   // }
+
+  //  @Override
+  //   public void onRequestPermissionsResult(int requestCode, 
+  //                                          @NonNull String[] permissions, 
+  //                                          @NonNull int[] grantResults) 
+  //   { 
+  //       super
+  //           .onRequestPermissionsResult(requestCode, 
+  //                                       permissions, 
+  //                                       grantResults); 
+  
+  //       if (requestCode == STORAGE_PERMISSION_CODE) { 
+  //           if (grantResults.length > 0
+  //               && grantResults[0] == PackageManager.PERMISSION_GRANTED) { 
+  //               Toast.makeText(MainActivity.this, 
+  //                              "Storage Permission Granted", 
+  //                              Toast.LENGTH_SHORT) 
+  //                   .show(); 
+  //           } 
+  //           else { 
+  //               Toast.makeText(MainActivity.this, 
+  //                              "Storage Permission Granted", 
+  //                              Toast.LENGTH_SHORT) 
+  //                   .show(); 
+  //           } 
+  //       } 
+  //       else if (requestCode == STORAGE_PERMISSION_CODE) { 
+  //           if (grantResults.length > 0
+  //               && grantResults[0] == PackageManager.PERMISSION_GRANTED) { 
+  //               Toast.makeText(MainActivity.this, 
+  //                              "Storage Permission Granted", 
+  //                              Toast.LENGTH_SHORT) 
+  //                   .show(); 
+  //           } 
+  //           else { 
+  //               Toast.makeText(MainActivity.this, 
+  //                              "Storage Permission Denied", 
+  //                              Toast.LENGTH_SHORT) 
+  //                   .show(); 
+  //           } 
+  //       } 
+  //   } 
 
 
 
