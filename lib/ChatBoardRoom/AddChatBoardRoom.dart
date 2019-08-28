@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +15,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   String text = "";
   String userId;
   Firestore db;
+  DateTime now = DateTime.now();
   bool _isTapped1 = false;
   bool _isTapped2 = false;
   bool _isTapped3 = false;
@@ -40,6 +39,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     super.initState();
     preference();
     tags.clear();
+    print(now.millisecondsSinceEpoch);
   }
 
   static bool _validate() {
@@ -66,7 +66,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     message["answers"] = [""];
     message["uid"] = userId;
     message["upvoters"] = [];
-    await db.collection("chat").add(message).then((done) {
+    message["timestamp"] = now.millisecondsSinceEpoch;
+        await db.collection("chat").add(message).then((done) {
       print(done);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => ChatBoardRoomLoader(),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flushbar/flushbar.dart';
@@ -51,6 +53,7 @@ class _TimelinePageState extends State<TimelinePage> {
   String uid = "";
   bool position = true;
   var val = 1;
+  bool timeSet = false;
   static String name = "User";
   PDFDocument doc;
   Flushbar<List<String>> flush;
@@ -98,10 +101,22 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+    Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
+      if (!yes) {
+        print("inside failed loop $yes");
+        Directory('/storage/emulated/0/Startupreneur').create();
+      }else{
+        print("im here");
+         Directory('/storage/emulated/0/Startupreneur/templates').create();
+      }
+    }).catchError((e) {
+      Directory('/storage/emulated/0/Startupreneur/templates').create();
+    });
     // widget.status = true;
     _messaging.getToken().then((token) {
       print(token);
     });
+
   }
 
   void preferences(BuildContext context) async {
@@ -227,11 +242,6 @@ class _TimelinePageState extends State<TimelinePage> {
       timelineModel(TimelinePosition.Center),
     ];
     orderManagement.currentIndex = 0;
-
-    // LiquidPullToRefresh(
-    //   onRefresh: () {}, // refresh callback
-    //   child: ListView(),
-    // ); // scroll view
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.grey[50],
@@ -247,14 +257,6 @@ class _TimelinePageState extends State<TimelinePage> {
         actions: <Widget>[
           Row(
             children: <Widget>[
-              // IconButton(
-              //   onPressed: () {},
-              //   icon: Icon(
-              //     FontAwesomeIcons.solidGem,
-              //     color: Colors.green,
-              //     size: 15,
-              //   ),
-              // ),
               Image.asset(
                 "assets/Images/coins.png",
                 height: 15,
@@ -262,7 +264,7 @@ class _TimelinePageState extends State<TimelinePage> {
               ),
               Text(
                 " $gems",
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(color: Colors.black, fontSize: 12,),
               ),
               Padding(
                 padding: EdgeInsets.only(right: 20),

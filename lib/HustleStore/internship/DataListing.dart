@@ -102,11 +102,11 @@ class _ListingDataState extends State<ListingData> {
       final RegExp regex = RegExp('([^?/]*\.(pdf))');
       fileName = regex.stringMatch(uri);
 //      progressDialog.update(message: "Loading Resume`");
-      tempDir = Directory.systemTemp;
+      // tempDir = Directory.systemTemp;
       final dir = (await getExternalStorageDirectory()).path;
       print("File path $dir");
-      file = File('/storage/emulated/0/Startupreneur/$fileName');
-      print(file.path);
+      file = File('$dir/$fileName');
+      print("hello world ${file.path}");
       print(UserId);
       storageReference =
           FirebaseStorage.instance.ref().child(UserId).child(fileName);

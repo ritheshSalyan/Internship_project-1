@@ -80,7 +80,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
   Future<List<dynamic>> fetchDataStorage() async {
     db = Firestore.instance;
     list.clear();
-    await db.collection("chat").getDocuments().then((document) {
+    await db.collection("chat").orderBy("timestamp").getDocuments().then((document) {
       document.documents.forEach((value) {
         list.add(new ChatRoom(
           answer: value.data["answers"],

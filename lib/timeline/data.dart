@@ -36,10 +36,11 @@ List<Doodle> doodles = [
       "Starting Up",
       style: TextStyle(
 //                            color: Colors.white,
-          // fontSize: 16,
-          letterSpacing: 0.5,
-          // fontFamily: "Open Sans",
-          fontWeight: FontWeight.w400),
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
       textAlign: TextAlign.center,
     ),
     time: "Module 1",
@@ -394,7 +395,7 @@ List<Doodle> doodles = [
     //   // Icons.
     //   color: Colors.white,
     // ),
-     icon: Icon(
+    icon: Icon(
       FontAwesomeIcons.trophy,
       size: 24,
       // Icons.
@@ -428,13 +429,12 @@ List<Doodle> doodles = [
     time: "Module 13",
     doodle: "assets/Images/hustel.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
-   icon: Icon(
-     Icons.store,
-     size: 24,
-     // Icons.
-     color: Colors.white,
-
-   ),
+    icon: Icon(
+      Icons.store,
+      size: 24,
+      // Icons.
+      color: Colors.white,
+    ),
     // icon: Icon(
     //   FontAwesomeIcons.trophy,
     //   size: 24,
