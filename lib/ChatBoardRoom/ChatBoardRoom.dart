@@ -260,20 +260,20 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
               .push(
             MaterialPageRoute(
               builder: (context) => AddChatBoardRoom(),
-              fullscreenDialog: true,
+              fullscreenDialog: false,
             ),
-          )
-              .whenComplete(
-            () {
-              Future.delayed(Duration(seconds: 5)).then(
-                (complete) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => ChatBoardRoomLoader(),
-                  ));
-                },
-              );
-            },
           );
+          // .whenComplete(
+          //   () {
+          //     Future.delayed(Duration(seconds: 5)).then(
+          //       (complete) {
+          //         Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //           builder: (context) => ChatBoardRoomLoader(),
+          //         ));
+          //       },
+          //     );
+          //   },
+          // );
         },
         tooltip: "Click to share thought",
         child: Icon(Icons.add),

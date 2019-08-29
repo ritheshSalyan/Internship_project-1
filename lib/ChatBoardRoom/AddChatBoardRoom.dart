@@ -63,15 +63,15 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     message["question"] = text;
     message["upvote"] = 0;
     message["tag"] = tags[0];
-    message["answers"] = [""];
+    message["answers"] = [];
     message["uid"] = userId;
     message["upvoters"] = [];
     message["timestamp"] = now.millisecondsSinceEpoch;
         await db.collection("chat").add(message).then((done) {
       print(done);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => ChatBoardRoomLoader(),
-      ));
+      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //   builder: (context) => ChatBoardRoomLoader(),
+      // ));
     });
   }
 
