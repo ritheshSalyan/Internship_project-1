@@ -72,10 +72,11 @@ class _HustleStoreState extends State<HustleStore> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 35,
-        child: new Image(
-          image: new AssetImage(logo),
+        child: new ExtendedImage.asset(
+          logo,
           height: 60.0,
           width: 60.0,
+          enableLoadState: true,
         ),
       ),
     );
