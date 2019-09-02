@@ -6,6 +6,7 @@ class ChatRoom {
   String question;
   String tag;
   dynamic upvote;
+  dynamic timestamp;
   List<dynamic> answer;
   List<dynamic> upvoters;
 
@@ -15,6 +16,7 @@ class ChatRoom {
     this.tag,
     this.upvote,
     this.upvoters,
+    this.timestamp,
   });
 }
 
@@ -88,6 +90,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
           tag: value.data["tag"],
           question: value.data["question"],
           upvoters: value.data["upvoters"],
+          timestamp: value.data["timestamp"],
         ));
       });
     });

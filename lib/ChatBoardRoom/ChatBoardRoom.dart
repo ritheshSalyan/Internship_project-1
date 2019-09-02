@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:toast/toast.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
@@ -26,45 +26,28 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   String documentId;
   SharedPreferences sharedPreferences;
   dynamic userId;
-  List<dynamic> list = [];
+  List<dynamic> upvoters = [];
   int upvote;
   int value;
-  bool upvoteDecision = false;
+  List<bool> upvoteDecision = [];
 
   @override
   void initState() {
     super.initState();
     db = Firestore.instance;
     print(widget.valueData);
-    list.clear();
+    upvoters.clear();
     preference().then((user) {
       setState(() {
         userId = user;
-        // print("value is ${userId.toString()}");
-        try {
-          for (var i = 0; i <= widget.len - 1; i++) {
-            if (userId == widget.valueData[i].uid) {
-              for (var k in widget.valueData[i].upvote) {
-                print(k);
-              }
-            }
+        if (widget.len != 0) {
+          for (var i = 0; i < widget.len; i++) {
+            upvoteDecision.add(false);
+            print(upvoteDecision[i]);
           }
-          print("hey user $userId");
-          for (var j in list) {
-            if (j == userId) {
-              setState(() {
-                upvoteDecision = true;
-              });
-              print(upvoteDecision);
-            }
-          }
-        } catch (e) {
-          print(e);
         }
       });
     });
-
-    // fetchingValue();
   }
 
   Future<dynamic> preference() async {
@@ -77,50 +60,32 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   }
 
   void increaseUpvote(int index) async {
-    list.clear();
-    for (var k = 0; k <= widget.valueData[index].upvoters.length - 1; k++) {
-      list.add(widget.valueData[index].upvoters[k]);
-    }
-    for (var j in list) {
-      if (j == userId) {
-        setState(() {
-          upvoteDecision = true;
+    upvoters.clear();
+    print("from increase $index");
+    try {
+      await db
+          .collection("chat")
+          .where("timestamp", isEqualTo: widget.valueData[index].timestamp)
+          .getDocuments()
+          .then((document) {
+        document.documents.forEach((vl) {
+          documentId = vl.documentID;
         });
-        print(upvoteDecision);
-      }
+      }).then((val) {
+        print("$documentId");
+      });
+    } catch (e) {
+      print(e);
     }
-    // print(list);
-    // print("flag is $upvoteDecision");
-    if (!upvoteDecision) {
-      upvote = widget.valueData[index].upvote;
-      if (widget.valueData[index].upvoters.length == 0) {
-        list.add(userId);
-      } else {
-        for (var k = 0; k <= widget.valueData[index].upvoters.length - 1; k++) {
-          list.add(widget.valueData[index].upvoters[k]);
+    var data = Map<String, dynamic>();
+    //if not null then read the complete array of upvoters and add their userid to it
+    if (widget.valueData[index].upvoters.length != 0) {
+        for (var j in widget.valueData[index].upvoters) {
+          upvoters.add(j);
         }
-        list.add(userId);
-      }
-      // print("hello ${widget.valueData[index].upvoters}");
-      // print("upvote is $upvote");
-      var data = Map<String, dynamic>();
+      upvoters.add(userId);
       data["upvote"] = widget.valueData[index].upvoters.length;
-      data["upvoters"] = list;
-      try {
-        await db
-            .collection("chat")
-            .where("question", isEqualTo: widget.valueData[index].question)
-            .getDocuments()
-            .then((document) {
-          document.documents.forEach((vl) {
-            documentId = vl.documentID;
-          });
-        }).then((val) {
-          print("done fetching");
-        });
-      } catch (e) {
-        print(e);
-      }
+      data["upvoters"] = upvoters;
       try {
         await db
             .collection("chat")
@@ -129,12 +94,30 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
             .then((val) {
           setState(() {
             value = widget.valueData[index].upvoters.length;
-            print(value);
-            upvoteDecision = true;
+            upvoteDecision[index] = true;
+          });
+        });
+      } catch (e) {}
+    } else {      //if null then just add their user account to upvoters list
+      print("imhere");
+      upvoters.add(userId);
+      data["upvote"] = widget.valueData[index].upvoters.length + 1;
+      data["upvoters"] = upvoters;
+      try {
+        await db
+            .collection("chat")
+            .document(documentId)
+            .setData(data, merge: true)
+            .then((val) {
+          setState(() {
+            value = widget.valueData[index].upvoters.length;
+            upvoteDecision[index] = true;
           });
         });
       } catch (e) {}
     }
+
+    // print(widget.valueData[index].upvoters[index]);
   }
 
   @override
@@ -153,6 +136,22 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
               itemCount: widget.len,
               itemBuilder: (context, int index) {
                 print(index);
+
+                //to check if the user already given the upvote or not
+                if (widget.valueData[index].upvoters.length != 0) {
+                  for (var i = 0;
+                      i < widget.valueData[index].upvoters.length;
+                      i++) {
+                        value = widget.valueData[index].upvoters.length;
+                    for (var j in widget.valueData[index].upvoters) {
+                      if (j == userId) {
+                        upvoteDecision[index] = true;
+                        break;
+                      }
+                    }
+                  }
+                }
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
@@ -203,7 +202,6 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                             : widget.valueData[index].question,
                                         maxLines: 50,
                                         textAlign: TextAlign.center,
-//                                overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
@@ -227,19 +225,21 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  if (upvoteDecision) {
+                                  if (upvoteDecision[index]) {
+                                    //do nothing
+                                   Toast.show("Already upvoted !", context);
                                   } else {
                                     increaseUpvote(index);
                                   }
                                 },
                                 icon: Icon(FontAwesomeIcons.thumbsUp),
-                                color: (upvoteDecision == true)
+                                color: (upvoteDecision[index] == true)
                                     ? Colors.grey
                                     : Colors.green,
                               ),
                               (value != null)
                                   ? Text(
-                                      " ${value}",
+                                      " ${widget.valueData[index].upvoters.length}",
                                     )
                                   : Text("${0}"),
                               SizedBox(
