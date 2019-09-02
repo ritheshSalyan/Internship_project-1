@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
 class ChatBoardRoom extends StatefulWidget {
-  ChatBoardRoom({Key key, this.valueData, this.len,this.v}) : super(key: key);
-
+  ChatBoardRoom({Key key, this.valueData, this.len, this.v}) : super(key: key);
 
   final List<dynamic> valueData;
   final dynamic len;
@@ -38,30 +39,28 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     list.clear();
     preference().then((user) {
       setState(() {
-        
         userId = user;
         // print("value is ${userId.toString()}");
-        try{
+        try {
           for (var i = 0; i <= widget.len - 1; i++) {
-            if(userId ==widget.valueData[i].uid ){
-                for(var k in widget.valueData[i].upvote){
-                    print(k);
-                }
+            if (userId == widget.valueData[i].uid) {
+              for (var k in widget.valueData[i].upvote) {
+                print(k);
+              }
             }
-        }
-        print("hey user $userId");
-        for (var j in list) {
-          if (j == userId) {
-            setState(() {
-              upvoteDecision = true;
-            });
-            print(upvoteDecision);
           }
-        }
-        }catch(e){
+          print("hey user $userId");
+          for (var j in list) {
+            if (j == userId) {
+              setState(() {
+                upvoteDecision = true;
+              });
+              print(upvoteDecision);
+            }
+          }
+        } catch (e) {
           print(e);
         }
-        
       });
     });
 
@@ -140,145 +139,158 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Discussion Board"),
-      ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.len,
-        itemBuilder: (context, int index) {
-          print(index);
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ViewCommentPage(
-                    question: widget.valueData[index].question,
-                    answers: widget.valueData[index].answer,
-                  ),
-                  fullscreenDialog: true,
-                ),
-              );
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: Colors.grey),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 25,
+    return OfflineBuilder(
+      connectivityBuilder:
+          (context, ConnectivityResult connectivity, Widget child) {
+        final connected = connectivity != ConnectivityResult.none;
+        if (connected) {
+          child = Scaffold(
+            appBar: AppBar(
+              title: Text("Discussion Board"),
+            ),
+            body: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.len,
+              itemBuilder: (context, int index) {
+                print(index);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ViewCommentPage(
+                          question: widget.valueData[index].question,
+                          answers: widget.valueData[index].answer,
                         ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.green,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Wrap(
-                              children: <Widget>[
-                                AutoSizeText(
-                                  (widget.valueData[index].question==null)?"Loading ...":widget.valueData[index].question,
-                                  maxLines: 50,
-                                  textAlign: TextAlign.center,
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.grey),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 25,
+                              ),
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.green,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      AutoSizeText(
+                                        (widget.valueData[index].question ==
+                                                null)
+                                            ? "Loading ..."
+                                            : widget.valueData[index].question,
+                                        maxLines: 50,
+                                        textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.comment,
-                          color: Colors.green,
-                        ),
-                        Text(" ${widget.valueData[index].answer.length }"),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (upvoteDecision) {
-                            } else {
-                              increaseUpvote(index);
-                            }
-                          },
-                          icon: Icon(FontAwesomeIcons.thumbsUp),
-                          color: (upvoteDecision == true)
-                              ? Colors.grey
-                              : Colors.green,
-                        ),
-                        (value != null)
-                            ? Text(
-                                " ${value}",
-                              )
-                            :Text("${0}"),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        ActionChip(
-                          label: Text(
-                            "${widget.valueData[index].tag}",
-                            style: TextStyle(color: Colors.white),
+                          SizedBox(
+                            height: 20,
                           ),
-                          onPressed: () {},
-                          backgroundColor: Colors.green,
-                        ),
-                      ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.comment,
+                                color: Colors.green,
+                              ),
+                              Text(" ${widget.valueData[index].answer.length}"),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  if (upvoteDecision) {
+                                  } else {
+                                    increaseUpvote(index);
+                                  }
+                                },
+                                icon: Icon(FontAwesomeIcons.thumbsUp),
+                                color: (upvoteDecision == true)
+                                    ? Colors.grey
+                                    : Colors.green,
+                              ),
+                              (value != null)
+                                  ? Text(
+                                      " ${value}",
+                                    )
+                                  : Text("${0}"),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              ActionChip(
+                                label: Text(
+                                  "${widget.valueData[index].tag}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {},
+                                backgroundColor: Colors.green,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AddChatBoardRoom(),
+                    fullscreenDialog: false,
+                  ),
+                );
+                // .whenComplete(
+                //   () {
+                //     Future.delayed(Duration(seconds: 5)).then(
+                //       (complete) {
+                //         Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //           builder: (context) => ChatBoardRoomLoader(),
+                //         ));
+                //       },
+                //     );
+                //   },
+                // );
+              },
+              tooltip: "Click to share thought",
+              child: Icon(Icons.add),
+              backgroundColor: Colors.green,
             ),
           );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(
-            MaterialPageRoute(
-              builder: (context) => AddChatBoardRoom(),
-              fullscreenDialog: false,
-            ),
-          );
-          // .whenComplete(
-          //   () {
-          //     Future.delayed(Duration(seconds: 5)).then(
-          //       (complete) {
-          //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //           builder: (context) => ChatBoardRoomLoader(),
-          //         ));
-          //       },
-          //     );
-          //   },
-          // );
-        },
-        tooltip: "Click to share thought",
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
-      ),
+        }
+        return child;
+      },
+      child: NoNetPage(),
     );
   }
 }

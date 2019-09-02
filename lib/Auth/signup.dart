@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 
 class SignupPage extends StatefulWidget {
   @override
@@ -65,15 +66,13 @@ class _SignupPageState extends State<SignupPage>
   bool status = false;
   String _documentPath = 'assets/pdf/t_and_c.pdf';
 
-    
-
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
     sharedPreferences.setString("UserEmail", email);
   }
 
-   void signUpInwithEmail(BuildContext context) async {
+  void signUpInwithEmail(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
 
@@ -114,11 +113,11 @@ class _SignupPageState extends State<SignupPage>
 
       createNote();
       setState(() {
-       status = true; 
+        status = true;
       });
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => new RoadmapLoader(
-          status:status,
+          status: status,
         ),
       ));
     } catch (e) {
@@ -143,8 +142,8 @@ class _SignupPageState extends State<SignupPage>
     dataMap['points'] = 1000;
     dataMap['completed'] = [1];
     dataMap["payment"] = true;
-    dataMap["resume"]="";
-    dataMap["hustle"]=[];
+    dataMap["resume"] = "";
+    dataMap["hustle"] = [];
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
@@ -156,9 +155,9 @@ class _SignupPageState extends State<SignupPage>
       print(e);
     });
 
-    var data = Map<String,dynamic>();
+    var data = Map<String, dynamic>();
     data["mobToken"] = tokenId;
-    db.collection("pushToken").document(userid).setData(data).catchError((e){
+    db.collection("pushToken").document(userid).setData(data).catchError((e) {
       print(e);
     });
     // db.collection("pushToken").document(userid).add(data).catchError((e){
@@ -176,7 +175,7 @@ class _SignupPageState extends State<SignupPage>
     return false;
   }
 
-   validateAndSubmit(BuildContext context) async {
+  validateAndSubmit(BuildContext context) async {
     if (isValide()) {
       signUpInwithEmail(context);
     }
@@ -189,7 +188,7 @@ class _SignupPageState extends State<SignupPage>
   void initState() {
     super.initState();
     prepareTestPdf();
-    _messaging.getToken().then((token){
+    _messaging.getToken().then((token) {
       // print(token);
       setState(() {
         tokenId = token;
@@ -469,224 +468,244 @@ class _SignupPageState extends State<SignupPage>
         ),
         backgroundColor: Theme.of(context).primaryColorDark,
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        width: 600,
-        height: double.infinity,
-        // child: SingleChildScrollView(
-        child: Form(
-          key: _formkey,
-          child: ListView(
-            children: <Widget>[
-              Text(
-                "SIGN UP",
-                style: TextStyle(
-                    fontSize: 20, letterSpacing: 2, fontFamily: "Open Sans"),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 200),
-              ),
-              Text(
-                "           ",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.green,
-                    decorationThickness: 5),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              fullName(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              emailAddress(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              password(context),
+//       body:
+      body: OfflineBuilder(
+        connectivityBuilder:
+            (context, ConnectivityResult connectivity, Widget child) {
+          final connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            child = Container(
+              padding: EdgeInsets.all(20),
+              width: 600,
+              height: double.infinity,
+              // child: SingleChildScrollView(
+              child: Form(
+                key: _formkey,
+                child: ListView(
+                  children: <Widget>[
+                    Text(
+                      "SIGN UP",
+                      style: TextStyle(
+                          fontSize: 20,
+                          letterSpacing: 2,
+                          fontFamily: "Open Sans"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 200),
+                    ),
+                    Text(
+                      "           ",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.green,
+                          decorationThickness: 5),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    fullName(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    emailAddress(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    password(context),
 //              Padding(
 ////                padding: EdgeInsets.only(top: 20),
 ////              ),
 ////              confirmPassword,
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              mobileNumber(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              DropdownButtonFormField<String>(
-                value: gender,
-                validator: (value) =>
-                    value.isEmpty ? "Gender cannot be empty" : null,
-                onSaved: (value) => gender = value,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    FontAwesomeIcons.genderless,
-                    color: Colors.green,
-                  ),
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   borderSide: BorderSide(color: Colors.white, width: 2.0),
-                  // ),
-                ),
-                hint: Text(
-                  "Gender",
-                  style: TextStyle(
-                      color: Colors.black, fontSize: 12, letterSpacing: 0.5),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    gender = value;
-                    print("$gender");
-                  });
-                },
-                items: ['Male', 'Female', 'Others'].map((String value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
                     ),
-                  );
-                }).toList(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              DropdownButtonFormField<String>(
-                value: typeOfOccupations,
-                validator: (value) =>
-                    value.isEmpty ? "Occupation cannot be empty" : null,
-                onSaved: (value) => typeOfOccupations = value,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.work,
-                    color: Colors.green,
-                  ),
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   borderSide: BorderSide(color: Colors.white, width: 2.0),
-                  // ),
-                ),
-                hint: Text(
-                  "Select Your Occupation *",
-                  style: TextStyle(
-                      color: Colors.black, fontSize: 12, letterSpacing: 0.5),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    typeOfOccupations = value;
-                    if (typeOfOccupations == "Others") {
-                      occupation = TextFormField(
-                        controller: textEditingController5,
-                        onSaved: (value) {
-                          setState(() {
-                            typeOfOccupations = value;
-                          });
-                        },
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.work, color: Colors.green),
-                          hintText: "eg Student,business etc",
-                          hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              letterSpacing: 0.5),
-                          labelText: "Occupation *",
-                          labelStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              letterSpacing: 0.5),
-
-                          // focusedBorder: OutlineInputBorder(
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   borderSide: BorderSide(color: Colors.green, width: 2.0),
-                          // ),
+                    mobileNumber(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: gender,
+                      validator: (value) =>
+                          value.isEmpty ? "Gender cannot be empty" : null,
+                      onSaved: (value) => gender = value,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.genderless,
+                          color: Colors.green,
                         ),
-                      );
-                    }
-                    print("$typeOfOccupations");
-                  });
-                },
-                items: [
-                  "Student",
-                  "Employed",
-                  "Entrepreneur",
-                  "Unemployed",
-                  "Others"
-                ].map((String value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          letterSpacing: 0.5),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   borderSide: BorderSide(color: Colors.white, width: 2.0),
+                        // ),
+                      ),
+                      hint: Text(
+                        "Gender",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            letterSpacing: 0.5),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          gender = value;
+                          print("$gender");
+                        });
+                      },
+                      items: ['Male', 'Female', 'Others'].map((String value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                  );
-                }).toList(),
-              ),
-              // Padding(
-              //   padding: EdgeInsets.only(top: 20),
-              // ),
-
-              occupation,
-
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              institution_or_company(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              referalCode(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Checkbox(
-                    checkColor: Colors.green,
-                    activeColor: Colors.black,
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value;
-                        print("$isChecked");
-                      });
-                    },
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                PdfReader(doc, "Terms and Conditions"),
-                            fullscreenDialog: true),
-                      );
-                    },
-                    child: Text(
-                      "Accept Terms & Conditions",
-                      style: TextStyle(
-                          color: Colors.grey, fontSize: 12, letterSpacing: 0.5),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
                     ),
-                  ),
-                ],
+                    DropdownButtonFormField<String>(
+                      value: typeOfOccupations,
+                      validator: (value) =>
+                          value.isEmpty ? "Occupation cannot be empty" : null,
+                      onSaved: (value) => typeOfOccupations = value,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.work,
+                          color: Colors.green,
+                        ),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   borderSide: BorderSide(color: Colors.white, width: 2.0),
+                        // ),
+                      ),
+                      hint: Text(
+                        "Select Your Occupation *",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            letterSpacing: 0.5),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          typeOfOccupations = value;
+                          if (typeOfOccupations == "Others") {
+                            occupation = TextFormField(
+                              controller: textEditingController5,
+                              onSaved: (value) {
+                                setState(() {
+                                  typeOfOccupations = value;
+                                });
+                              },
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                prefixIcon:
+                                    Icon(Icons.work, color: Colors.green),
+                                hintText: "eg Student,business etc",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+                                labelText: "Occupation *",
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+
+                                // focusedBorder: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(10),
+                                //   borderSide: BorderSide(color: Colors.green, width: 2.0),
+                                // ),
+                              ),
+                            );
+                          }
+                          print("$typeOfOccupations");
+                        });
+                      },
+                      items: [
+                        "Student",
+                        "Employed",
+                        "Entrepreneur",
+                        "Unemployed",
+                        "Others"
+                      ].map((String value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                letterSpacing: 0.5),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 20),
+                    // ),
+
+                    occupation,
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    institution_or_company(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    referalCode(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Checkbox(
+                          checkColor: Colors.green,
+                          activeColor: Colors.black,
+                          value: isChecked,
+                          onChanged: (value) {
+                            setState(() {
+                              isChecked = value;
+                              print("$isChecked");
+                            });
+                          },
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PdfReader(doc, "Terms and Conditions"),
+                                  fullscreenDialog: true),
+                            );
+                          },
+                          child: Text(
+                            "Accept Terms & Conditions",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                letterSpacing: 0.5),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    signUpButton(context),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              signUpButton(context),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          ),
-        ),
+            );
+          }
+          return child;
+        },
+        child: NoNetPage(),
       ),
     );
   }

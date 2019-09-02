@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import '../../Auth/signin.dart';
@@ -218,17 +219,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
           }
           return (child);
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'There are no bottons to push :)',
-            ),
-            new Text(
-              'Just turn off your internet.',
-            ),
-          ],
-        ),
+        child: NoNetPage(),
       ),
     );
   }
