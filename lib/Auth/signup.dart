@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/Auth/emailVerification.dart';
+import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 
 class SignupPage extends StatefulWidget {
   @override
@@ -65,17 +66,15 @@ class _SignupPageState extends State<SignupPage>
   bool status = false;
   String _documentPath = 'assets/pdf/t_and_c.pdf';
 
-    
-
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
     sharedPreferences.setString("UserEmail", email);
   }
 
-   void signUpInwithEmail(BuildContext context) async {
+  void signUpInwithEmail(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
-    progressDialog.setMessage("Saving data..");
+    progressDialog.setMessage("Creating Account..");
 
     try {
       progressDialog.show();
@@ -84,15 +83,19 @@ class _SignupPageState extends State<SignupPage>
         email: email,
         password: _password,
       );
-      progressDialog.hide();
-      user = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: _password,
-      );
-      userid = user.uid;
-      _preferences(userid);
-      print("its is $user");
+      print("Email Verification");
+      progressDialog.setMessage("Please Verify Email");
+      await user.sendEmailVerification();
 
+      // user = await _auth.signInWithEmailAndPassword(
+      //   email: email,
+      //   password: _password,
+      // );
+      userid = user.uid;
+     // _preferences(userid);
+      print("its is $user");
+      Toast.show("Please Verify your Email id and sign In", context,
+          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       if (referalCodeFromFriend.isNotEmpty) {
         await db
             .collection("user")
@@ -114,15 +117,27 @@ class _SignupPageState extends State<SignupPage>
 
       createNote();
       setState(() {
-       status = true; 
+        status = true;
       });
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new RoadmapLoader(
-          status:status,
-        ),
-      ));
+      // print("An error occured while trying to send email verification");
+      // print(e.message);
+
+      // if(user.isEmailVerified){
+         progressDialog.hide();
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => new EmailVerification(user:user,
+              status:status,
+            ),
+            ),
+      );
+      // }
+      // else{
+      //   Toast.show("Please Verify Your Mail", context,duration: 2);
+      // }
     } catch (e) {
-      progressDialog.hide();
+      print("ERROR IN SIGNUP:"+e.toString());
+      //progressDialog.hide();
       Toast.show("Sign up failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     } finally {
@@ -143,8 +158,8 @@ class _SignupPageState extends State<SignupPage>
     dataMap['points'] = 1000;
     dataMap['completed'] = [1];
     dataMap["payment"] = true;
-    dataMap["resume"]="";
-    dataMap["hustle"]=[];
+    dataMap["resume"] = "";
+    dataMap["hustle"] = [];
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
@@ -156,9 +171,9 @@ class _SignupPageState extends State<SignupPage>
       print(e);
     });
 
-    var data = Map<String,dynamic>();
+    var data = Map<String, dynamic>();
     data["mobToken"] = tokenId;
-    db.collection("pushToken").document(userid).setData(data).catchError((e){
+    db.collection("pushToken").document(userid).setData(data).catchError((e) {
       print(e);
     });
     // db.collection("pushToken").document(userid).add(data).catchError((e){
@@ -176,7 +191,7 @@ class _SignupPageState extends State<SignupPage>
     return false;
   }
 
-   validateAndSubmit(BuildContext context) async {
+  validateAndSubmit(BuildContext context) async {
     if (isValide()) {
       signUpInwithEmail(context);
     }
@@ -189,7 +204,7 @@ class _SignupPageState extends State<SignupPage>
   void initState() {
     super.initState();
     prepareTestPdf();
-    _messaging.getToken().then((token){
+    _messaging.getToken().then((token) {
       // print(token);
       setState(() {
         tokenId = token;

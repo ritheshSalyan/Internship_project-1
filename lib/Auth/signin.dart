@@ -59,7 +59,8 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
-      preferences(user.uid, _email);
+     if(user.isEmailVerified){
+        preferences(user.uid, _email);
       progressDialog.hide();
       print("Sign in Successfull");
 //      Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -70,6 +71,11 @@ class _SigninPageState extends State<SigninPage> {
         builder: (context) =>
         new RoadmapLoader(),
       ));
+     }
+     else{
+
+       Toast.show("Please Verify Your Email id", context,duration: Toast.LENGTH_LONG);
+     }
     } catch (e) {
       // print(e.toString());
       progressDialog.hide();
@@ -88,9 +94,14 @@ class _SigninPageState extends State<SigninPage> {
     return false;
   }
 
-  static otpValidation() async {
+  static otpValidation(BuildContext context) async {
     if (_otpvalidate()) {
       print("$_otpEmail");
+      Toast.show("Password Reset Mail has been sent", context,duration: Toast.LENGTH_LONG);
+      Navigator.of(context).pop();
+      await _auth.sendPasswordResetEmail(email: _otpEmail);
+     
+      
     }
   }
 
@@ -340,7 +351,9 @@ class _SigninPageState extends State<SigninPage> {
                                             height: 50,
                                             buttonColor: Color(0xffffffff),
                                             child: OutlineButton(
-                                                onPressed: otpValidation,
+                                                onPressed: (){
+                                                  otpValidation(context);
+                                                },
                                                 child: Text(
                                                   "Send Email",
                                                   style: TextStyle(

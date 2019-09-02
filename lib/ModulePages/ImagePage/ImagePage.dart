@@ -74,7 +74,7 @@ class _ImagePagePageState extends State<ImagePagePage>
                   // ),
                   child: ExtendedImage.asset(
                     widget.title,
-                    width: MediaQuery.of(context).size.width * 0.97,
+                    height: MediaQuery.of(context).size.width * 0.7,
                   ),
                 ),
                
