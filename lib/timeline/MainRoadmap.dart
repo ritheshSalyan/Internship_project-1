@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
@@ -358,6 +359,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProfileLoading(uid: uid),
@@ -377,6 +379,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (Vocabulary()),
@@ -394,6 +397,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (HustleStoreLoader()),
@@ -411,6 +415,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (ChatBoardRoomLoader()),
@@ -434,6 +439,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 //         (FileUploadLoading(modNum: 8, index: 22)),
                 //   ),
                 // );
+                Navigator.of(context).pop();
                  Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
@@ -452,6 +458,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (HowToEarn()),

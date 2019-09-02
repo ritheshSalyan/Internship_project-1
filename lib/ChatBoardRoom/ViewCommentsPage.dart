@@ -118,184 +118,182 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
   @override
   Widget build(BuildContext context) {
     return OfflineBuilder(
-      connectivityBuilder:
-          (context, ConnectivityResult connectivity, Widget child) {
-        final connected = connectivity != ConnectivityResult.none;
-        if (connected) {
-          child = Scaffold(
-            appBar: AppBar(
-              title: Text("View Comments"),
-            ),
-            body: SingleChildScrollView(
-              child: Stack(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: Card(
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.grey),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Colors.green,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: Wrap(
-                                        children: <Widget>[
-                                          AutoSizeText(
-                                            widget.question,
-                                            maxLines: 50,
-                                            textAlign: TextAlign.center,
+        connectivityBuilder:
+            (context, ConnectivityResult connectivity, Widget child) {
+          final connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            child = Scaffold(
+              appBar: AppBar(
+                title: Text("View Comments"),
+              ),
+              body: SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Card(
+                            elevation: 8,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide(color: Colors.grey),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 25,
+                                    ),
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Colors.green,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                        child: Wrap(
+                                          children: <Widget>[
+                                            AutoSizeText(
+                                              widget.question,
+                                              maxLines: 50,
+                                              textAlign: TextAlign.center,
 //                                overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListView.separated(
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        primary: true,
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: widget.answers.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return (widget.answers[index] == "")
-                              ? Container()
-                              : ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: Colors.green,
-                                  ),
-                                  title: Text(widget.answers[index]),
-                                );
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-//          flushBar(context);
-                print("hello");
-                flush = Flushbar<List<String>>(
-                  userInputForm: Form(
-                    autovalidate: true,
-                    key: _formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TextFormField(
-                          autovalidate: true,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Field cannot be empty";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              text = value;
-                            });
-                          },
-                          style: TextStyle(color: Colors.black),
-                          maxLength: 300,
-                          maxLines: 3,
-                          maxLengthEnforced: true,
-                          decoration: InputDecoration(
-                            fillColor: Colors.white10,
-                            filled: true,
-                            border: UnderlineInputBorder(),
-                            helperText: "Share Opinion",
-                            helperStyle: TextStyle(color: Colors.green),
-                            hintText: "Share thoughts",
-                            hintStyle: TextStyle(color: Colors.green),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: OutlineButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: BorderSide(
-                                  color: Colors.black,
-                                  width: 10.0,
+                                  ],
                                 ),
-                              ),
-                              textColor: Colors.black,
-                              child: Text("Reply"),
-                              onPressed: () {
-                                validateForm(context);
-                              },
+                              ],
                             ),
                           ),
-                        )
+                        ),
+                        ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          primary: true,
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: widget.answers.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return (widget.answers[index] == "")
+                                ? Container()
+                                : ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.green,
+                                    ),
+                                    title: Text(widget.answers[index]),
+                                  );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        ),
                       ],
                     ),
-                  ),
-                  // isDismissible: false,
-                  backgroundColor: Colors.grey[200],
-                )..show(context).whenComplete(() {
-                    print("done and dusted - 1");
-                    flush = Flushbar<List<String>>(
-                      backgroundColor: Colors.green,
-                      isDismissible: true,
-                      duration: Duration(seconds: 3),
-                      flushbarPosition: FlushbarPosition.TOP,
-                      title: "Reply has been sent",
-                      messageText: Column(children: <Widget>[
-                        Text("Successfully added"),
-                      ]),
-                    )..show(context).whenComplete(() {
-                        print("done and dusted - 2");
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => ChatBoardRoomLoader(),
-                        ));
-                      });
-                  });
-              },
-              child: Icon(
-                FontAwesomeIcons.comment,
+                  ],
+                ),
               ),
-              backgroundColor: Colors.green,
-              tooltip: "Reply to discussion",
-            ),
-          );
-        }
-        return child;
-      },
-      child: NoNetPage()
-    );
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+//          flushBar(context);
+                  print("hello");
+                  flush = Flushbar<List<String>>(
+                    userInputForm: Form(
+                      autovalidate: true,
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          TextFormField(
+                            autovalidate: true,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Field cannot be empty";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              setState(() {
+                                text = value;
+                              });
+                            },
+                            style: TextStyle(color: Colors.black),
+                            maxLength: 300,
+                            maxLines: 3,
+                            maxLengthEnforced: true,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white10,
+                              filled: true,
+                              border: UnderlineInputBorder(),
+                              helperText: "Share Opinion",
+                              helperStyle: TextStyle(color: Colors.green),
+                              hintText: "Share thoughts",
+                              hintStyle: TextStyle(color: Colors.green),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: OutlineButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(
+                                    color: Colors.black,
+                                    width: 10.0,
+                                  ),
+                                ),
+                                textColor: Colors.black,
+                                child: Text("Reply"),
+                                onPressed: () {
+                                  validateForm(context);
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    // isDismissible: false,
+                    backgroundColor: Colors.grey[200],
+                  )..show(context).whenComplete(() {
+                      print("done and dusted - 1");
+                      flush = Flushbar<List<String>>(
+                        backgroundColor: Colors.green,
+                        isDismissible: true,
+                        duration: Duration(seconds: 3),
+                        flushbarPosition: FlushbarPosition.TOP,
+                        title: "Reply has been sent",
+                        messageText: Column(children: <Widget>[
+                          Text("Successfully added"),
+                        ]),
+                      )..show(context).whenComplete(() {
+                          print("done and dusted - 2");
+                          Navigator.of(context).pushReplacementNamed('/chat');
+                        });
+                    });
+                },
+                child: Icon(
+                  FontAwesomeIcons.comment,
+                ),
+                backgroundColor: Colors.green,
+                tooltip: "Reply to discussion",
+              ),
+            );
+          }
+          return child;
+        },
+        child: NoNetPage());
   }
 }

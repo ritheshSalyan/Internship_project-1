@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tags/tag.dart';
-import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 
 class AddChatBoardRoom extends StatefulWidget {
   @override
@@ -15,6 +15,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   String text = "";
   String userId;
   Firestore db;
+  ProgressDialog progressDialog;
   DateTime now = DateTime.now();
   bool _isTapped1 = false;
   bool _isTapped2 = false;
@@ -58,6 +59,9 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   }
 
   void addDiscussion(BuildContext context) async {
+    progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+    progressDialog.setMessage("Adding question");
+    progressDialog.show();
     db = Firestore.instance;
     var message = Map<String, dynamic>();
     message["question"] = text;
@@ -69,9 +73,9 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     message["timestamp"] = now.millisecondsSinceEpoch;
         await db.collection("chat").add(message).then((done) {
       print(done);
-      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //   builder: (context) => ChatBoardRoomLoader(),
-      // ));
+      progressDialog.hide();
+      Navigator.of(context).pushReplacementNamed('/chat');
+      // Navigator.of(context).popUntil(ModalRoute.withName('/chat'));
     });
   }
 

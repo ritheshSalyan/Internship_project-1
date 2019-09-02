@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,6 +24,7 @@ class ChatBoardRoom extends StatefulWidget {
 class _ChatBoardRoomState extends State<ChatBoardRoom> {
   String tag = "Module 1";
   Firestore db;
+  dynamic chatSharedUser;
   String documentId;
   SharedPreferences sharedPreferences;
   dynamic userId;
@@ -80,9 +82,9 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     var data = Map<String, dynamic>();
     //if not null then read the complete array of upvoters and add their userid to it
     if (widget.valueData[index].upvoters.length != 0) {
-        for (var j in widget.valueData[index].upvoters) {
-          upvoters.add(j);
-        }
+      for (var j in widget.valueData[index].upvoters) {
+        upvoters.add(j);
+      }
       upvoters.add(userId);
       data["upvote"] = widget.valueData[index].upvoters.length;
       data["upvoters"] = upvoters;
@@ -98,7 +100,8 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
           });
         });
       } catch (e) {}
-    } else {      //if null then just add their user account to upvoters list
+    } else {
+      //if null then just add their user account to upvoters list
       print("imhere");
       upvoters.add(userId);
       data["upvote"] = widget.valueData[index].upvoters.length + 1;
@@ -136,33 +139,60 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
               itemCount: widget.len,
               itemBuilder: (context, int index) {
                 print(index);
-
                 //to check if the user already given the upvote or not
                 if (widget.valueData[index].upvoters.length != 0) {
-                  for (var i = 0;
-                      i < widget.valueData[index].upvoters.length;
-                      i++) {
-                        value = widget.valueData[index].upvoters.length;
-                    for (var j in widget.valueData[index].upvoters) {
-                      if (j == userId) {
-                        upvoteDecision[index] = true;
-                        break;
-                      }
+                  value = widget.valueData[index].upvoters.length;
+                  for (var j in widget.valueData[index].upvoters) {
+                    if (j == userId) {
+                      upvoteDecision[index] = true;
+                      break;
                     }
                   }
                 }
-
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => ViewCommentPage(
                           question: widget.valueData[index].question,
                           answers: widget.valueData[index].answer,
                         ),
-                        fullscreenDialog: true,
+                        fullscreenDialog: false,
                       ),
                     );
+                  },
+                  onLongPress: () {
+                    chatSharedUser = widget.valueData[index].uid;
+                    if (userId == chatSharedUser) {
+                      Flushbar(
+                        titleText: Text(
+                          "Tools",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        messageText: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.delete_outline,
+                                  color: Colors.black),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.edit, color: Colors.black),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.share, color: Colors.black),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.transparent,
+                        duration: Duration(seconds: 5),
+                        // isDismissible: true,
+                      )..show(context);
+                    }
+                    // return val;
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -227,7 +257,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                 onPressed: () {
                                   if (upvoteDecision[index]) {
                                     //do nothing
-                                   Toast.show("Already upvoted !", context);
+                                    Toast.show("Already upvoted !", context);
                                   } else {
                                     increaseUpvote(index);
                                   }
@@ -264,10 +294,10 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => AddChatBoardRoom(),
-                    fullscreenDialog: false,
+                    fullscreenDialog: true,
                   ),
                 );
                 // .whenComplete(

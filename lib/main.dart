@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -59,6 +60,9 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: Colors.white,
         textSelectionColor: Colors.black,
       ),
+      routes: <String,WidgetBuilder>{
+        '/chat': (BuildContext context)=>new ChatBoardRoomLoader(),
+      },
     );
   }
 }

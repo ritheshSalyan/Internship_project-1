@@ -9,6 +9,7 @@ class ChatRoom {
   dynamic timestamp;
   List<dynamic> answer;
   List<dynamic> upvoters;
+  dynamic uid;
 
   ChatRoom({
     this.answer,
@@ -17,6 +18,7 @@ class ChatRoom {
     this.upvote,
     this.upvoters,
     this.timestamp,
+    this.uid,
   });
 }
 
@@ -91,6 +93,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
           question: value.data["question"],
           upvoters: value.data["upvoters"],
           timestamp: value.data["timestamp"],
+          uid: value.data["uid"],
         ));
       });
     });
