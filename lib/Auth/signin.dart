@@ -59,7 +59,7 @@ class _SigninPageState extends State<SigninPage> {
         email: _email,
         password: _password,
       );
-     if(user.isEmailVerified){
+    //  if(user.isEmailVerified){
         preferences(user.uid, _email);
       progressDialog.hide();
       print("Sign in Successfull");
@@ -71,11 +71,11 @@ class _SigninPageState extends State<SigninPage> {
         builder: (context) =>
         new RoadmapLoader(),
       ));
-     }
-     else{
+   //  }
+    //  else{
 
-       Toast.show("Please Verify Your Email id", context,duration: Toast.LENGTH_LONG);
-     }
+    //    Toast.show("Please Verify Your Email id", context,duration: Toast.LENGTH_LONG);
+    //  }
     } catch (e) {
       // print(e.toString());
       progressDialog.hide();

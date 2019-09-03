@@ -85,14 +85,14 @@ class _SignupPageState extends State<SignupPage>
       );
       print("Email Verification");
       progressDialog.setMessage("Please Verify Email");
-      await user.sendEmailVerification();
+      //await user.sendEmailVerification();
 
-      // user = await _auth.signInWithEmailAndPassword(
-      //   email: email,
-      //   password: _password,
-      // );
+      user = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: _password,
+      );
       userid = user.uid;
-     // _preferences(userid);
+     _preferences(userid);
       print("its is $user");
       Toast.show("Please Verify your Email id and sign In", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
@@ -126,7 +126,7 @@ class _SignupPageState extends State<SignupPage>
          progressDialog.hide();
 
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => new EmailVerification(user:user,
+        MaterialPageRoute(builder: (context) => new RoadmapLoader(
               status:status,
             ),
             ),
