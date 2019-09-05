@@ -156,7 +156,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.1,
                           left: MediaQuery.of(context).size.width * 0.02),
-                      child: Column(
+                      child: Row(
                         children: <Widget>[
                           Text(
                             widget.title,
@@ -169,6 +169,46 @@ class _DiscussionPageState extends State<DiscussionPage> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
+                          GestureDetector(
+                            child: Icon(Icons.home),
+                            onTap: () {
+                              showDialog<bool>(
+                                  context: context,
+                                  builder: (_) {
+                                    return AlertDialog(
+                                      content: Text(
+                                          "Are you sure you want to return to home Page?? "),
+                                      title: Text(
+                                        "Warning!",
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text(
+                                            "Yes",
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                          onPressed: () {
+                                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                            Navigator.of(context).popUntil(
+                                                ModalRoute.withName(
+                                                    "TimelinePage"));
+                                          },
+                                        ),
+                                        FlatButton(
+                                          child: Text(
+                                            "No",
+                                            style:
+                                                TextStyle(color: Colors.green),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context, false);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -179,7 +219,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       top: MediaQuery.of(context).size.height * 0.2),
                   child: Column(
                     children: <Widget>[
-                    
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,30 +226,41 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           Padding(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.14),
-                            child:(widget.image!="")?ExtendedImage.asset(
-                              widget.image,
-                              // "assets/Images/photo.png",
-                              enableLoadState: true,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              width: MediaQuery.of(context).size.width * 0.5,
+                            child: (widget.image != "")
+                                ? ExtendedImage.asset(
+                                    widget.image,
+                                    // "assets/Images/photo.png",
+                                    enableLoadState: true,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
 //                            alignment: Alignment.center,
-                              mode: ExtendedImageMode.Gesture,
-                            ):SizedBox(height: MediaQuery.of(context).size.height * 0.15,
-                              width: MediaQuery.of(context).size.width * 0.5,),
+                                    mode: ExtendedImageMode.Gesture,
+                                  )
+                                : SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                  ),
                           ),
-                          (widget.image!="")?IconButton(
-                            icon: Icon(
-                              Icons.zoom_out_map,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ImageViewer(image: widget.image),
-                                fullscreenDialog: true,
-                              ));
-                            },
-                          ):SizedBox(),
+                          (widget.image != "")
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.zoom_out_map,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ImageViewer(image: widget.image),
+                                      fullscreenDialog: true,
+                                    ));
+                                  },
+                                )
+                              : SizedBox(),
                         ],
                       ),
 

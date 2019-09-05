@@ -56,18 +56,59 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
           child: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0),
         child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Text(
-            widget.title,
-            //"Startup or Job",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: "sans-serif",
-                color: Colors.black,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500),
-          ),
-        ),
+            padding: EdgeInsets.all(15),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  widget.title,
+                  //"Startup or Job",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "sans-serif",
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500),
+                ),
+                GestureDetector(
+                  child: Icon(Icons.home),
+                  onTap: () {
+                    showDialog<bool>(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            content: Text(
+                                "Are you sure you want to return to home Page?? "),
+                            title: Text(
+                              "Warning!",
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                onPressed: () {
+                                  // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                  Navigator.of(context).popUntil(
+                                      ModalRoute.withName("TimelinePage"));
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context, false);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                )
+              ],
+            )),
       )),
     );
     itemInside.add(
