@@ -90,7 +90,7 @@ class _IncubationState extends State<Incubation> {
       fileName = regex.stringMatch(uri);
 //      progressDialog.update(message: "Loading Resume`");
       tempDir = Directory.systemTemp;
-      final dir ="/storage/emulated/0/Startupreneur";
+      final dir =(await getExternalStorageDirectory()).path;
       print("File path $dir");
       file = File('$dir/$fileName');
       print(file.path);

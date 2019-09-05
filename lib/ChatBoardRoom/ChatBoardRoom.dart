@@ -1,15 +1,17 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:toast/toast.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
 
 class ChatBoardRoom extends StatefulWidget {
-  ChatBoardRoom({Key key, this.valueData, this.len,this.v}) : super(key: key);
-
+  ChatBoardRoom({Key key, this.valueData, this.len, this.v}) : super(key: key);
 
   final List<dynamic> valueData;
   final dynamic len;
@@ -22,50 +24,32 @@ class ChatBoardRoom extends StatefulWidget {
 class _ChatBoardRoomState extends State<ChatBoardRoom> {
   String tag = "Module 1";
   Firestore db;
+  dynamic chatSharedUser;
   String documentId;
   SharedPreferences sharedPreferences;
   dynamic userId;
-  List<dynamic> list = [];
+  List<dynamic> upvoters = [];
   int upvote;
   int value;
-  bool upvoteDecision = false;
+  List<bool> upvoteDecision = [];
 
   @override
   void initState() {
     super.initState();
     db = Firestore.instance;
     print(widget.valueData);
-    list.clear();
+    upvoters.clear();
     preference().then((user) {
       setState(() {
-        
         userId = user;
-        // print("value is ${userId.toString()}");
-        try{
-          for (var i = 0; i <= widget.len - 1; i++) {
-            if(userId ==widget.valueData[i].uid ){
-                for(var k in widget.valueData[i].upvote){
-                    print(k);
-                }
-            }
-        }
-        print("hey user $userId");
-        for (var j in list) {
-          if (j == userId) {
-            setState(() {
-              upvoteDecision = true;
-            });
-            print(upvoteDecision);
+        if (widget.len != 0) {
+          for (var i = 0; i < widget.len; i++) {
+            upvoteDecision.add(false);
+            print(upvoteDecision[i]);
           }
         }
-        }catch(e){
-          print(e);
-        }
-        
       });
     });
-
-    // fetchingValue();
   }
 
   Future<dynamic> preference() async {
@@ -78,50 +62,32 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   }
 
   void increaseUpvote(int index) async {
-    list.clear();
-    for (var k = 0; k <= widget.valueData[index].upvoters.length - 1; k++) {
-      list.add(widget.valueData[index].upvoters[k]);
-    }
-    for (var j in list) {
-      if (j == userId) {
-        setState(() {
-          upvoteDecision = true;
+    upvoters.clear();
+    print("from increase $index");
+    try {
+      await db
+          .collection("chat")
+          .where("timestamp", isEqualTo: widget.valueData[index].timestamp)
+          .getDocuments()
+          .then((document) {
+        document.documents.forEach((vl) {
+          documentId = vl.documentID;
         });
-        print(upvoteDecision);
-      }
+      }).then((val) {
+        print("$documentId");
+      });
+    } catch (e) {
+      print(e);
     }
-    // print(list);
-    // print("flag is $upvoteDecision");
-    if (!upvoteDecision) {
-      upvote = widget.valueData[index].upvote;
-      if (widget.valueData[index].upvoters.length == 0) {
-        list.add(userId);
-      } else {
-        for (var k = 0; k <= widget.valueData[index].upvoters.length - 1; k++) {
-          list.add(widget.valueData[index].upvoters[k]);
-        }
-        list.add(userId);
+    var data = Map<String, dynamic>();
+    //if not null then read the complete array of upvoters and add their userid to it
+    if (widget.valueData[index].upvoters.length != 0) {
+      for (var j in widget.valueData[index].upvoters) {
+        upvoters.add(j);
       }
-      // print("hello ${widget.valueData[index].upvoters}");
-      // print("upvote is $upvote");
-      var data = Map<String, dynamic>();
+      upvoters.add(userId);
       data["upvote"] = widget.valueData[index].upvoters.length;
-      data["upvoters"] = list;
-      try {
-        await db
-            .collection("chat")
-            .where("question", isEqualTo: widget.valueData[index].question)
-            .getDocuments()
-            .then((document) {
-          document.documents.forEach((vl) {
-            documentId = vl.documentID;
-          });
-        }).then((val) {
-          print("done fetching");
-        });
-      } catch (e) {
-        print(e);
-      }
+      data["upvoters"] = upvoters;
       try {
         await db
             .collection("chat")
@@ -130,155 +96,231 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
             .then((val) {
           setState(() {
             value = widget.valueData[index].upvoters.length;
-            print(value);
-            upvoteDecision = true;
+            upvoteDecision[index] = true;
+          });
+        });
+      } catch (e) {}
+    } else {
+      //if null then just add their user account to upvoters list
+      print("imhere");
+      upvoters.add(userId);
+      data["upvote"] = widget.valueData[index].upvoters.length + 1;
+      data["upvoters"] = upvoters;
+      try {
+        await db
+            .collection("chat")
+            .document(documentId)
+            .setData(data, merge: true)
+            .then((val) {
+          setState(() {
+            value = widget.valueData[index].upvoters.length;
+            upvoteDecision[index] = true;
           });
         });
       } catch (e) {}
     }
+
+    // print(widget.valueData[index].upvoters[index]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Discussion Board"),
-      ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.len,
-        itemBuilder: (context, int index) {
-          print(index);
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ViewCommentPage(
-                    question: widget.valueData[index].question,
-                    answers: widget.valueData[index].answer,
-                  ),
-                  fullscreenDialog: true,
-                ),
-              );
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: Colors.grey),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 25,
+    return OfflineBuilder(
+      connectivityBuilder:
+          (context, ConnectivityResult connectivity, Widget child) {
+        final connected = connectivity != ConnectivityResult.none;
+        if (connected) {
+          child = Scaffold(
+            appBar: AppBar(
+              title: Text("Discussion Board"),
+            ),
+            body: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.len,
+              itemBuilder: (context, int index) {
+                print(index);
+                //to check if the user already given the upvote or not
+                if (widget.valueData[index].upvoters.length != 0) {
+                  value = widget.valueData[index].upvoters.length;
+                  for (var j in widget.valueData[index].upvoters) {
+                    if (j == userId) {
+                      upvoteDecision[index] = true;
+                      break;
+                    }
+                  }
+                }
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => ViewCommentPage(
+                          question: widget.valueData[index].question,
+                          answers: widget.valueData[index].answer,
                         ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.green,
+                        fullscreenDialog: false,
+                      ),
+                    );
+                  },
+                  onLongPress: () {
+                    chatSharedUser = widget.valueData[index].uid;
+                    if (userId == chatSharedUser) {
+                      Flushbar(
+                        titleText: Text(
+                          "Tools",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Wrap(
-                              children: <Widget>[
-                                AutoSizeText(
-                                  (widget.valueData[index].question==null)?"Loading ...":widget.valueData[index].question,
-                                  maxLines: 50,
-                                  textAlign: TextAlign.center,
-//                                overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                        messageText: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.delete_outline,
+                                  color: Colors.black),
+                              onPressed: () {},
                             ),
+                            IconButton(
+                              icon: Icon(Icons.edit, color: Colors.black),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.share, color: Colors.black),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.transparent,
+                        duration: Duration(seconds: 5),
+                        // isDismissible: true,
+                      )..show(context);
+                    }
+                    // return val;
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.grey),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 25,
+                              ),
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.green,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      AutoSizeText(
+                                        (widget.valueData[index].question ==
+                                                null)
+                                            ? "Loading ..."
+                                            : widget.valueData[index].question,
+                                        maxLines: 50,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.comment,
-                          color: Colors.green,
-                        ),
-                        Text(" ${widget.valueData[index].answer.length }"),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (upvoteDecision) {
-                            } else {
-                              increaseUpvote(index);
-                            }
-                          },
-                          icon: Icon(FontAwesomeIcons.thumbsUp),
-                          color: (upvoteDecision == true)
-                              ? Colors.grey
-                              : Colors.green,
-                        ),
-                        (value != null)
-                            ? Text(
-                                " ${value}",
-                              )
-                            :Text("${0}"),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        ActionChip(
-                          label: Text(
-                            "${widget.valueData[index].tag}",
-                            style: TextStyle(color: Colors.white),
+                          SizedBox(
+                            height: 20,
                           ),
-                          onPressed: () {},
-                          backgroundColor: Colors.green,
-                        ),
-                      ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.comment,
+                                color: Colors.green,
+                              ),
+                              Text(" ${widget.valueData[index].answer.length}"),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  if (upvoteDecision[index]) {
+                                    //do nothing
+                                    Toast.show("Already upvoted !", context);
+                                  } else {
+                                    increaseUpvote(index);
+                                  }
+                                },
+                                icon: Icon(FontAwesomeIcons.thumbsUp),
+                                color: (upvoteDecision[index] == true)
+                                    ? Colors.grey
+                                    : Colors.green,
+                              ),
+                              (value != null)
+                                  ? Text(
+                                      " ${widget.valueData[index].upvoters.length}",
+                                    )
+                                  : Text("${0}"),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              ActionChip(
+                                label: Text(
+                                  "${widget.valueData[index].tag}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {},
+                                backgroundColor: Colors.green,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => AddChatBoardRoom(),
+                    fullscreenDialog: true,
+                  ),
+                );
+                // .whenComplete(
+                //   () {
+                //     Future.delayed(Duration(seconds: 5)).then(
+                //       (complete) {
+                //         Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //           builder: (context) => ChatBoardRoomLoader(),
+                //         ));
+                //       },
+                //     );
+                //   },
+                // );
+              },
+              tooltip: "Click to share thought",
+              child: Icon(Icons.add),
+              backgroundColor: Colors.green,
             ),
           );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(
-            MaterialPageRoute(
-              builder: (context) => AddChatBoardRoom(),
-              fullscreenDialog: true,
-            ),
-          )
-              .whenComplete(
-            () {
-              Future.delayed(Duration(seconds: 5)).then(
-                (complete) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => ChatBoardRoomLoader(),
-                  ));
-                },
-              );
-            },
-          );
-        },
-        tooltip: "Click to share thought",
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
-      ),
+        }
+        return child;
+      },
+      child: NoNetPage(),
     );
   }
 }

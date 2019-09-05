@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,9 +11,10 @@ class DecisionGame extends StatefulWidget {
   _DecisionGameState createState() => _DecisionGameState();
 }
 
-class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClientMixin {
+class _DecisionGameState extends State<DecisionGame>
+    with AutomaticKeepAliveClientMixin {
   Firestore db = Firestore.instance;
-  
+
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
@@ -25,8 +27,8 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
   String correctAns = "";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   int _answerIs = 0;
- 
- @override
+
+  @override
   bool get wantKeepAlive => true;
 
   @override
@@ -108,16 +110,18 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     switch (snapshot.data) {
                                       case null:
-                                        return  Center(
+                                        return Center(
                                           child: CircularProgressIndicator(
-                                          value: null,
-                                          strokeWidth: 3,
-                                          valueColor: AlwaysStoppedAnimation(Colors.green,),
-                                        ),
+                                            value: null,
+                                            strokeWidth: 3,
+                                            valueColor: AlwaysStoppedAnimation(
+                                              Colors.green,
+                                            ),
+                                          ),
                                         );
                                       default:
                                         options.clear();
-                                        
+
                                         snapshot.data.documents
                                             .forEach((document) {
                                           document["answer"].toString();
@@ -175,21 +179,32 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                 print("hello $_answerIs");
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Column(
-                                      
-                                      children: <Widget>[
-                                        Image.asset('assets/Images/dec.png',
-                                        height: MediaQuery.of(context).size.height*0.3,),
-                                        Text(
-                                      answers[_answerIs],
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                          
-                                    ),
-                                      ],
+                                    content: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.5,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Image.asset(
+                                            'assets/Images/dec.png',
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.2,
+                                          ),
+                                          AutoSizeText(
+                                            answers[_answerIs],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              // fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            // minFontSize: ,
+                                            maxLines: 10,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     duration: Duration(hours: 1),
                                     backgroundColor: Colors.green[600],
@@ -205,7 +220,7 @@ class _DecisionGameState extends State<DecisionGame> with AutomaticKeepAliveClie
                                             .hideCurrentSnackBar();
                                         List<dynamic> arguments = [
                                           widget.modNum,
-                                          widget.order+1
+                                          widget.order + 1
                                         ];
                                         orderManagement.moveNextIndex(
                                             context, arguments);

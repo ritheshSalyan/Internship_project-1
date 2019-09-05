@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../ModulePages/Activity/Activity.dart';
 import '../ModuleOrderController/Types.dart';
 
@@ -155,12 +157,25 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: new Scaffold(
-            body: LiquidSwipe(
-          pages: pages,
-          fullTransitionValue: 350,
-          enableSlideIcon: true,
-        )));
+      debugShowCheckedModeBanner: false,
+      home: new Scaffold(
+        // body:
+        body: OfflineBuilder(
+          connectivityBuilder:
+              (context, ConnectivityResult connectivity, Widget child) {
+            final connected = connectivity != ConnectivityResult.none;
+            if (connected) {
+              child = LiquidSwipe(
+                pages: pages,
+                fullTransitionValue: 350,
+                enableSlideIcon: true,
+              );
+            }
+            return child;
+          },
+          child: NoNetPage(),
+        ),
+      ),
+    );
   }
 }

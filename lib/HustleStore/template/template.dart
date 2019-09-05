@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import '../../Auth/signin.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:permission/permission.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter_downloader/flutter_downloader.dart';
 
 class TemplateDownload extends StatefulWidget {
   TemplateDownload({Key key, this.files, this.lengthList}) : super(key: key);
@@ -33,6 +35,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
   String fileName;
   BuildContext context;
   File file;
+  String exception;
   String folder = "downloads";
   // List<dynamic> files = [];
   StorageReference storageReference;
@@ -45,7 +48,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     super.initState();
     context = this.context;
 
-    _messaging.getToken().then((token){
+    _messaging.getToken().then((token) {
       print(token);
     });
     preferences();
@@ -55,7 +58,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
   void request() async {
     List<PermissionName> list = [PermissionName.Storage];
     var permission = await Permission.requestPermissions(list);
-    var status  = await Permission.getPermissionsStatus(list);
+    var status = await Permission.getPermissionsStatus(list);
   }
 
   void preferences() async {
@@ -79,23 +82,43 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       if (!yes) {
         print("inside failed loop $yes");
         Directory('/storage/emulated/0/Startupreneur').create();
+      } else {
+        print("im here");
+        Directory('/storage/emulated/0/Startupreneur/templates').create();
       }
     }).catchError((e) {
-      Directory('/storage/emulated/0/Startupreneur').create();
+      Directory('/storage/emulated/0/Startupreneur/templates').create();
+      setState(() {
+        exception = "error creating";
+      });
+    });
+    Directory('/storage/emulated/0/Startupreneur/templates')
+        .create()
+        .catchError((e) {
+      print(e);
+      setState(() {
+        exception = "error creating";
+      });
     });
     String uri = Uri.decodeFull(widget.files[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String fileName = regex.stringMatch(uri);
-    final dir = ('/storage/emulated/0/Startupreneur');
-    final dir1 = ((await getExternalStorageDirectory()).path);
-
-    print("File path $dir1");
-    file = File('$dir/$fileName');
+    file = File('/storage/emulated/0/Startupreneur/templates/$fileName');
     print("from download $fileName");
     print("${file.path}");
 
     progressDialog.setMessage("Downloading ...");
     progressDialog.show();
+    // final taskId = await FlutterDownloader.enqueue(
+    //   url: widget.files[index],
+    //   savedDir: file.path,
+    //   showNotification:
+    //       true, // show download progress in status bar (for Android)
+    //   openFileFromNotification:
+    //       true, // click on notification to open downloaded file (for Android)
+    // );
+
+  // print("task $taskId");
     HttpClient client = new HttpClient();
     await client
         .getUrl(Uri.parse(widget.files[index]))
@@ -104,11 +127,16 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       return request.close();
     }).then((HttpClientResponse response) {
       print("writing");
-      response.pipe((file).openWrite());
+      try{
+        response.pipe((file).openWrite()).catchError((e){
+         Toast.show("Error while downloading! Please try again", context, gravity: Toast.BOTTOM, duration: 5);
+        });
       print("done");
-      progressDialog.hide();
-      Toast.show("Check the file in your Internal Storage in the folder The Startupreneur/$fileName", context,
-          gravity: Toast.BOTTOM, duration: 5);
+       progressDialog.hide();
+      Toast.show("Check the $fileName in your Internal Storage in the folder 'Startupreneur' ", context, gravity: Toast.BOTTOM, duration: 5);
+      }catch(e){
+         Toast.show("Error while downloading!  Please try again ", context, gravity: Toast.BOTTOM, duration: 5);
+      }
     }).catchError((e) {
       print("error $e");
       progressDialog.hide();
@@ -191,17 +219,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
           }
           return (child);
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'There are no bottons to push :)',
-            ),
-            new Text(
-              'Just turn off your internet.',
-            ),
-          ],
-        ),
+        child: NoNetPage(),
       ),
     );
   }

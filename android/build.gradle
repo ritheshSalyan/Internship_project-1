@@ -27,8 +27,28 @@ buildscript {
                 }
                 if (details.requested.group == 'androidx.localbroadcastmanager' &&
                     !details.requested.name.contains('androidx')) {
-                details.useVersion "1.0.0"
-            }
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.viewpager' &&
+                        !details.requested.name.contains('androidx')) {
+                    details.useVersion "1.0.0"
+                }
+                 if (details.requested.group == 'androidx.lifecycle' &&
+                        !details.requested.name.contains('androidx')) {
+                    details.useVersion "2.0.0"
+                }
+                if (details.requested.group == 'androidx.loader' &&
+                        !details.requested.name.contains('androidx')) {
+                    details.useVersion "1.0.0"
+                }
+                 if (details.requested.group == 'androidx.arch.core' &&
+                        !details.requested.name.contains('androidx')) {
+                    details.useVersion "2.0.1"
+                }
+                if (details.requested.group == 'androidx.fragment' &&
+                        !details.requested.name.contains('androidx')) {
+                    details.useVersion "1.1.0-rc04"
+                }
             }
         }
     }

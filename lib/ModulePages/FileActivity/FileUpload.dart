@@ -33,8 +33,11 @@ class FileUploadState extends State<FileUpload> {
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: OutlineButton(
-          focusColor: Colors.black,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: Colors.black)),
+          borderSide: BorderSide(
+          color: Colors.white,
+        ),
+          focusColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: Colors.white,width: 3)),
           onPressed: () {
             getFilePath();
           },
@@ -205,7 +208,7 @@ class FileUploadState extends State<FileUpload> {
       setState(() {
         file = file1;
       });
-      upload();
+      upload(file1);
     } catch (e) {
       Toast.show("Upload failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
@@ -226,7 +229,7 @@ class FileUploadState extends State<FileUpload> {
   //   // Do what you want
   // }
 
-  Future upload() async {
+  Future upload(file) async {
     FirebaseAuth.instance.currentUser().then((user) {
       this.uid = user.uid;
     });

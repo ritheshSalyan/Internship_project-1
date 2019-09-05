@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tags/tag.dart';
-import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 
 class AddChatBoardRoom extends StatefulWidget {
   @override
@@ -17,6 +15,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   String text = "";
   String userId;
   Firestore db;
+  ProgressDialog progressDialog;
+  DateTime now = DateTime.now();
   bool _isTapped1 = false;
   bool _isTapped2 = false;
   bool _isTapped3 = false;
@@ -40,6 +40,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     super.initState();
     preference();
     tags.clear();
+    print(now.millisecondsSinceEpoch);
   }
 
   static bool _validate() {
@@ -58,19 +59,23 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   }
 
   void addDiscussion(BuildContext context) async {
+    progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+    progressDialog.setMessage("Adding question");
+    progressDialog.show();
     db = Firestore.instance;
     var message = Map<String, dynamic>();
     message["question"] = text;
     message["upvote"] = 0;
     message["tag"] = tags[0];
-    message["answers"] = [""];
+    message["answers"] = [];
     message["uid"] = userId;
     message["upvoters"] = [];
-    await db.collection("chat").add(message).then((done) {
+    message["timestamp"] = now.millisecondsSinceEpoch;
+        await db.collection("chat").add(message).then((done) {
       print(done);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => ChatBoardRoomLoader(),
-      ));
+      progressDialog.hide();
+      Navigator.of(context).pushReplacementNamed('/chat');
+      // Navigator.of(context).popUntil(ModalRoute.withName('/chat'));
     });
   }
 

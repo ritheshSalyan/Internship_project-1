@@ -36,14 +36,16 @@ List<Doodle> doodles = [
       "Starting Up",
       style: TextStyle(
 //                            color: Colors.white,
-          // fontSize: 16,
-          letterSpacing: 0.5,
-          // fontFamily: "Open Sans",
-          fontWeight: FontWeight.w400),
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
       textAlign: TextAlign.center,
     ),
     time: "Module 1",
     doodle: "assets/Images/StaringUpIcon.png",
+    // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
       Icons.flag,
@@ -74,6 +76,8 @@ List<Doodle> doodles = [
     ),
     time: "Module 2",
     doodle: "assets/Images/ideaIcon2.png",
+    // doodle: "assets/Images/hustle/document.png",
+
     // "https://www.google.com/logos/doodles/2015/abu-al-wafa-al-buzjanis-1075th-birthday-5436382608621568-hp2x.jpg",
     icon: Icon(
       FontAwesomeIcons.circle,
@@ -105,6 +109,7 @@ List<Doodle> doodles = [
     ),
     time: "Module 3",
     doodle: "assets/Images/ethicsIcon.png",
+    // doodle: "assets/Images/hustle/funding.png",
     // "https://lh3.googleusercontent.com/ZTlbHDpH59p-aH2h3ggUdhByhuq1AfviGuoQpt3QqaC7bROzbKuARKeEfggkjRmAwfB1p4yKbcjPusNDNIE9O7STbc9C0SAU0hmyTjA=s660",
     icon: Icon(
       FontAwesomeIcons.circle,
@@ -394,7 +399,7 @@ List<Doodle> doodles = [
     //   // Icons.
     //   color: Colors.white,
     // ),
-     icon: Icon(
+    icon: Icon(
       FontAwesomeIcons.trophy,
       size: 24,
       // Icons.
@@ -428,13 +433,12 @@ List<Doodle> doodles = [
     time: "Module 13",
     doodle: "assets/Images/hustel.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
-   icon: Icon(
-     Icons.store,
-     size: 24,
-     // Icons.
-     color: Colors.white,
-
-   ),
+    icon: Icon(
+      Icons.store,
+      size: 24,
+      // Icons.
+      color: Colors.white,
+    ),
     // icon: Icon(
     //   FontAwesomeIcons.trophy,
     //   size: 24,

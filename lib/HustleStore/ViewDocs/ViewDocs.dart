@@ -54,22 +54,21 @@ class _ViewDocsState extends State<ViewDocs> {
 
 
     progressDialog = ProgressDialog(context, ProgressDialogType.Normal);
-    Directory('/storage/emulated/0/Startupreneur/cache').exists().then((yes) {
-      if (!yes) {
-        print("inside failed loop $yes");
-        Directory('/storage/emulated/0/Startupreneur/cache').create();
-      }
-    }).catchError((e) {
-      Directory('/storage/emulated/0/Startupreneur/cache').create();
-    });
+    // Directory('/storage/emulated/0/Startupreneur/cache').exists().then((yes) {
+    //   if (!yes) {
+    //     print("inside failed loop $yes");
+    //     Directory('/storage/emulated/0/Startupreneur/cache').create();
+    //   }
+    // }).catchError((e) {
+    //   Directory('/storage/emulated/0/Startupreneur/cache').create();
+    // });
     String uri = Uri.decodeFull(widget.doc[index]);
     final RegExp regex = RegExp('([^?/]*\.(pdf))');
     String fileName = regex.stringMatch(uri);
-    final dir = ('/storage/emulated/0/Startupreneur/cache');
-    final dir1 = ((await getExternalStorageDirectory()).path);
+    // final dir = ('/storage/emulated/0/Startupreneur/cache');
+    final dir = ((await getExternalStorageDirectory()).path);
 
-
-    print("File path $dir1");
+    print("File path $dir");
     file = File('$dir/$fileName');
     print("from download $fileName");
     int size = await file.length();
@@ -89,8 +88,8 @@ class _ViewDocsState extends State<ViewDocs> {
       response.pipe((file).openWrite());
       print("done");
       progressDialog.hide();
-      Toast.show("Check the file in your Internal Storage in the folder Startupreneur/cache/$fileName in storage", context,
-          gravity: Toast.BOTTOM, duration: 5);
+      // Toast.show("Check the file in your Internal Storage in the folder Startupreneur/cache/$fileName in storage", context,
+          // gravity: Toast.BOTTOM, duration: 5);
     }).catchError((e) {
       print("error $e");
       progressDialog.hide();
@@ -106,7 +105,7 @@ class _ViewDocsState extends State<ViewDocs> {
     }catch(e){
       print(e);
     }
-    File("/storage/emulated/0/Startupreneur/cache/$fileName").exists().then((res){
+    File("${dir}/$fileName").exists().then((res){
       if(res){
         Navigator.of(context).push(
           MaterialPageRoute(

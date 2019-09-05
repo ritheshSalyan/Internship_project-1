@@ -9,8 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-
-
 class HustleStore extends StatefulWidget {
   HustleStore({Key key, this.points, this.overall}) : super(key: key);
   int overall;
@@ -66,24 +64,30 @@ class _HustleStoreState extends State<HustleStore> {
     });
   }
 
-  Widget planetThumbnail(BuildContext context, String logo) => new Container(
-        alignment: FractionalOffset.centerLeft,
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 35,
-          child: new Image(
-            image: new AssetImage(logo),
-            height: 60.0,
-            width: 60.0,
-          ),
-        ),
+  // Widget planetThumbnail(BuildContext context, String logo) => new Container(
+  //       alignment: FractionalOffset.centerLeft,
+  //       child: CircleAvatar(
+  //         backgroundColor: Colors.transparent,
+  //         radius: 8000,
+  //         child: new Image(
+  //           image: new AssetImage(logo),
+  //           // height: MediaQuery.of(context).size.height,
+  //           width: MediaQuery.of(context).size.width
+  //         ),
+  //       ),
+  //     );
+  Widget planetThumbnail(BuildContext context, String logo) => new Image(
+        image: new AssetImage(logo),
+        // height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
       );
+
 
   Widget planetCard(BuildContext context, int index, String description,
           Image gemIcon, int price, OutlineButton button, String logo) =>
       new Container(
-//    color: Colors.black12,
-        height: MediaQuery.of(context).size.height * 0.7,
+  //  color: Colors.black,
+        // height: MediaQuery.of(context).size.height,
         margin:
             new EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
         decoration: new BoxDecoration(
@@ -110,7 +114,7 @@ class _HustleStoreState extends State<HustleStore> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(
-                    MediaQuery.of(context).size.width * 0.04,
+                    MediaQuery.of(context).size.width * 0,
                   ),
                   child: planetThumbnail(context, logo),
                 ),
@@ -119,7 +123,7 @@ class _HustleStoreState extends State<HustleStore> {
                       top: MediaQuery.of(context).size.height * 0.04),
                   child: Padding(
                     padding: EdgeInsets.all(
-                      MediaQuery.of(context).size.width * 0.05,
+                      MediaQuery.of(context).size.width * 0,
                     ),
                     child: Column(
                       children: <Widget>[

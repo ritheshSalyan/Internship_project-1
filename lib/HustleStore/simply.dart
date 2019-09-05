@@ -12,8 +12,7 @@ import 'paymentGateway/paymentGatewayLoader.dart';
 import 'seedFunding/seedFundingLoader.dart';
 import 'template/templateLoader.dart';
 import 'internship/DataListingLoader.dart';
-import'hyperLinkPage/hyperLinkPage.dart';
-
+import 'hyperLinkPage/hyperLinkPage.dart';
 
 class Component {
   String name;
@@ -69,17 +68,24 @@ class _HustleStoreState extends State<HustleStore> {
     return new Container(
 //      height: MediaQuery.of(context).size.height * 0.3,
 //    margin: new EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*0.1),
-        alignment: FractionalOffset.centerLeft,
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 35,
-          child: new Image(
-            image: new AssetImage(logo),
-            height: 60.0,
-            width: 60.0,
-          ),
-        ));
+      alignment: FractionalOffset.centerLeft,
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 50,
+        child: new ExtendedImage.asset(
+          logo,
+          // height: 60.0,
+          // width: 60.0,
+          enableLoadState: true,
+        ),
+      ),
+    );
   }
+  // Widget planetThumbnail(BuildContext context, String logo) => new Image(
+  //       image: new AssetImage(logo),
+  //       // height: MediaQuery.of(context).size.height,
+  //       width: MediaQuery.of(context).size.width,
+  //     );
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +129,10 @@ class _HustleStoreState extends State<HustleStore> {
         child: Column(
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("storeDetails").orderBy("id").snapshots(),
+              stream: Firestore.instance
+                  .collection("storeDetails")
+                  .orderBy("id")
+                  .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 switch (snapshot.data) {
                   case null:
@@ -198,35 +207,36 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => seedFundingLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            seedFundingLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => AddEntryDialog(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               case "template":
                                 print("Template");
-                               claimedUser.clear();
+                                claimedUser.clear();
                                 print("${list[index].claimed.length}");
                                 if (list[index].claimed.length == 0) {
                                   print("inisde if");
@@ -262,32 +272,32 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>TemplateLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => TemplateLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                      maintainState: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => AddEntryDialog(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                        ),
+                                        fullscreenDialog: true,
+                                        maintainState: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               case "incubation":
                                 print("incubation");
@@ -326,42 +336,45 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Incubation(title: "Incubation",),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Incubation(
+                                          title: "Incubation",
+                                        ),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => AddEntryDialog(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
-                                
+
                               case "gateway":
                                 print("gateway");
-                               claimedUser.clear();
+                                claimedUser.clear();
                                 print("${list[index].claimed.length}");
                                 if (list[index].claimed.length == 0) {
                                   print("inisde if");
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialogHyperLink(
+                                      builder: (context) =>
+                                          AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -371,7 +384,8 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
-                                        link: "https://register.payumoney.com/Startupreneur_Incubator",
+                                        link:
+                                            "https://register.payumoney.com/Startupreneur_Incubator",
                                       ),
                                       fullscreenDialog: true,
                                     ),
@@ -391,32 +405,35 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => paymentGatewayLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialogHyperLink(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                        link: "https://register.payumoney.com/Startupreneur_Incubator",
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            paymentGatewayLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddEntryDialogHyperLink(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                          link:
+                                              "https://register.payumoney.com/Startupreneur_Incubator",
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               case "internship":
                                 claimedUser.clear();
@@ -454,31 +471,32 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => DataListingLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DataListingLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => AddEntryDialog(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               case "credits":
                                 print("google credits");
@@ -488,7 +506,8 @@ class _HustleStoreState extends State<HustleStore> {
                                   print("inisde if");
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => AddEntryDialogHyperLink(
+                                      builder: (context) =>
+                                          AddEntryDialogHyperLink(
                                         points: list[index].points,
                                         available: widget.point,
                                         descript: list[index].description,
@@ -498,7 +517,8 @@ class _HustleStoreState extends State<HustleStore> {
                                         claimedUser: claimedUser,
                                         len: 12,
                                         type: list[index].type,
-                                        link: "https://cloud.google.com/developers/startups/",
+                                        link:
+                                            "https://cloud.google.com/developers/startups/",
                                       ),
                                       fullscreenDialog: true,
                                     ),
@@ -518,32 +538,35 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => googleCloudLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialogHyperLink(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                        link: "https://cloud.google.com/developers/startups/",
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            googleCloudLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddEntryDialogHyperLink(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                          link:
+                                              "https://cloud.google.com/developers/startups/",
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               case "hacks":
                                 print("Hacks");
@@ -582,31 +605,32 @@ class _HustleStoreState extends State<HustleStore> {
                                     }
                                   }
                                   if (flag) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => startupHacksLoader(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            startupHacksLoader(),
                                       ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => AddEntryDialog(
+                                          points: list[index].points,
+                                          available: widget.point,
+                                          descript: list[index].description,
+                                          image: list[index].image,
+                                          title: "",
+                                          userid: userId,
+                                          claimedUser: claimedUser,
+                                          len: 12,
+                                          type: list[index].type,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  }
                                 }
-                                }
-                                
+
                                 break;
                               default:
                                 print("none");

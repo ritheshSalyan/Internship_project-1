@@ -1,15 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/ModulePages/FileActivity/FileUpload.dart';
+import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import '../Auth/signin.dart';
@@ -22,9 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:startupreneur/how_to_earn/how_to_earn.dart';
-import '../ModulePages/ImagePage/ImagePageLoader.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import '../ModulePages/FileActivity/FileUploadLoader.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail, this.status})
@@ -51,6 +55,7 @@ class _TimelinePageState extends State<TimelinePage> {
   String uid = "";
   bool position = true;
   var val = 1;
+  bool timeSet = false;
   static String name = "User";
   PDFDocument doc;
   Flushbar<List<String>> flush;
@@ -98,10 +103,22 @@ class _TimelinePageState extends State<TimelinePage> {
   void initState() {
     super.initState();
     preferences(context);
+    Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
+      if (!yes) {
+        print("inside failed loop $yes");
+        Directory('/storage/emulated/0/Startupreneur').create();
+      }else{
+        print("im here");
+         Directory('/storage/emulated/0/Startupreneur/templates').create();
+      }
+    }).catchError((e) {
+      Directory('/storage/emulated/0/Startupreneur/templates').create();
+    });
     // widget.status = true;
     _messaging.getToken().then((token) {
       print(token);
     });
+
   }
 
   void preferences(BuildContext context) async {
@@ -159,6 +176,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.status) {
         Flushbar(
@@ -228,11 +246,12 @@ class _TimelinePageState extends State<TimelinePage> {
     ];
     orderManagement.currentIndex = 0;
 
-    // LiquidPullToRefresh(
-    //   onRefresh: () {}, // refresh callback
-    //   child: ListView(),
-    // ); // scroll view
-    return Scaffold(
+
+    return OfflineBuilder(
+      connectivityBuilder: (context,ConnectivityResult connectivity , Widget child){
+          final connected = connectivity!=ConnectivityResult.none;
+          if(connected){
+            child = Scaffold(
       extendBody: true,
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -247,14 +266,6 @@ class _TimelinePageState extends State<TimelinePage> {
         actions: <Widget>[
           Row(
             children: <Widget>[
-              // IconButton(
-              //   onPressed: () {},
-              //   icon: Icon(
-              //     FontAwesomeIcons.solidGem,
-              //     color: Colors.green,
-              //     size: 15,
-              //   ),
-              // ),
               Image.asset(
                 "assets/Images/coins.png",
                 height: 15,
@@ -262,7 +273,7 @@ class _TimelinePageState extends State<TimelinePage> {
               ),
               Text(
                 " $gems",
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(color: Colors.black, fontSize: 12,),
               ),
               Padding(
                 padding: EdgeInsets.only(right: 20),
@@ -350,6 +361,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProfileLoading(uid: uid),
@@ -369,6 +381,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (Vocabulary()),
@@ -386,6 +399,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (HustleStoreLoader()),
@@ -403,6 +417,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (ChatBoardRoomLoader()),
@@ -423,9 +438,16 @@ class _TimelinePageState extends State<TimelinePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        (FileUploadLoading(modNum: 8, index: 22)),
+                        (FileUploadLoading(modNum: 2, index: 38)),
                   ),
                 );
+                // Navigator.of(context).pop();
+                //  Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) =>
+                //         (NoNetPage()),
+                //   ),
+                // );
               },
             ),
             ListTile(
@@ -438,6 +460,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => (HowToEarn()),
@@ -536,15 +559,20 @@ class _TimelinePageState extends State<TimelinePage> {
         ),
       ),
       body: Stack(
-        children: <Widget>[
-          PageView(
-            children: pages,
-          ),
-        ],
-      ),
+              children: <Widget>[
+                PageView(
+                  children:pages
+                ),
+              ],
+            ),
+    );
+          }
+          return child;
+          
+      },
+      child: NoNetPage(),
     );
   }
-
   timelineModel(TimelinePosition position) => Timeline.builder(
         itemBuilder: centerTimelineBuilder,
         itemCount: doodles.length,
@@ -563,9 +591,6 @@ class _TimelinePageState extends State<TimelinePage> {
         new GestureDetector(
           onTap: () {
             print("value of i is $i");
-            // for (k = 0; k < completedCourse.length; k++) {
-            // if (completedCourse[k] == i + 1) {
-
             if (check(i)) {
               print(" true $i");
               // val = completedCourse[k];
@@ -576,14 +601,12 @@ class _TimelinePageState extends State<TimelinePage> {
                     builder: (context) => ModuleOverviewLoading(modNum: i + 1),
                   ),
                 );
-                // builder: (context)=>Vocabulary(),
               } else if (i != 12) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => QuoteLoading(modNum: i + 1),
                   ),
                 );
-                // builder: (context)=>Vocabulary(),
               } else {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -591,9 +614,6 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                 );
               }
-
-              // break;
-              // }
             } else {
               print(" false");
             }
@@ -603,20 +623,8 @@ class _TimelinePageState extends State<TimelinePage> {
             children: <Widget>[
               Container(
                 color: Colors.grey[50],
-
-                //                height: MediaQuery
-                //                    .of(context)
-                //                    .size
-                //                    .height * 0.37,
                 height: 210.0,
                 width: 145.0,
-                //                width: MediaQuery
-                //                    .of(context)
-                //                    .size
-                //                    .width * 0.43,width: MediaQuery
-                ////                    .of(context)
-                ////                    .size
-                ////                    .width * 0.43,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
                   //                    color: doodle.color,
@@ -632,7 +640,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   ),
                   // shape:Border.all(width: 3,
                   // color: Colors.green),
-                  //                    margin: EdgeInsets.symmetric(vertical: 16.0),
+                  // margin: EdgeInsets.symmetric(vertical: 16.0),
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -647,24 +655,7 @@ class _TimelinePageState extends State<TimelinePage> {
                         const SizedBox(
                           height: 8.0,
                         ),
-                        // Text(doodle.time, style: textTheme.caption),
-                        // const SizedBox(
-                        //   height: 8.0,
-                        // ),
                         doodle.name,
-                        //                        Text(
-                        //                          doodle.name,
-                        ////                           style: TextStyle(fontSize: 16,),
-                        //                          // fontWeight: FontWeight.w400
-                        //                          // ),
-                        //                          style: TextStyle(
-                        ////                            color: Colors.white,
-                        //                              fontSize: 16,
-                        //                              letterSpacing: 0.5,
-                        //                              // fontFamily: "Open Sans",
-                        //                              fontWeight: FontWeight.w400),
-                        //                          textAlign: TextAlign.center,
-                        //                        ),
                         const SizedBox(
                           height: 8.0,
                         ),

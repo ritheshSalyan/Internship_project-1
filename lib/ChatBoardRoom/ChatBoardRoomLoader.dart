@@ -6,8 +6,10 @@ class ChatRoom {
   String question;
   String tag;
   dynamic upvote;
+  dynamic timestamp;
   List<dynamic> answer;
   List<dynamic> upvoters;
+  dynamic uid;
 
   ChatRoom({
     this.answer,
@@ -15,6 +17,8 @@ class ChatRoom {
     this.tag,
     this.upvote,
     this.upvoters,
+    this.timestamp,
+    this.uid,
   });
 }
 
@@ -80,7 +84,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
   Future<List<dynamic>> fetchDataStorage() async {
     db = Firestore.instance;
     list.clear();
-    await db.collection("chat").getDocuments().then((document) {
+    await db.collection("chat").orderBy("timestamp",descending: true).getDocuments().then((document) {
       document.documents.forEach((value) {
         list.add(new ChatRoom(
           answer: value.data["answers"],
@@ -88,6 +92,8 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
           tag: value.data["tag"],
           question: value.data["question"],
           upvoters: value.data["upvoters"],
+          timestamp: value.data["timestamp"],
+          uid: value.data["uid"],
         ));
       });
     });

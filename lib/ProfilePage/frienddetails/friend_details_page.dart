@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 // import '../frienddetails/footer/friend_detail_footer.dart';
 import '../frienddetails/friend_detail_body.dart';
 import '../frienddetails/header/friend_detail_header.dart';
@@ -10,8 +12,8 @@ class FriendDetailsPage extends StatefulWidget {
   //   this.friend, {
   //   this.avatarTag,
   // });
-  FriendDetailsPage({Key key,this.friend}):super(key:key);
-   Friend friend;
+  FriendDetailsPage({Key key, this.friend}) : super(key: key);
+  Friend friend;
   // final Object avatarTag;
 
   @override
@@ -33,36 +35,36 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
     // );
 
     return new Scaffold(
-        body: SingleChildScrollView(
-      // child: CustomPaint(
-      //   painter: BluePainter(),
-        child: new SingleChildScrollView(
-          child: new Container(
-            child: CustomPaint(
-        painter: BluePainter(),
-
-            // decoration: linearGradient,
-            child: new Column(
-              //crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                new FriendDetailHeader(
-                  friend:widget.friend,
-                  context: context,
-                 // avatarTag: widget.avatarTag,
+      body: OfflineBuilder(
+        connectivityBuilder:
+            (context, ConnectivityResult connectivity, Widget child) {
+          final connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            child = new SingleChildScrollView(
+              child: new Container(
+                child: CustomPaint(
+                  painter: BluePainter(),
+                  child: new Column(
+                    children: <Widget>[
+                      new FriendDetailHeader(
+                        friend: widget.friend,
+                        context: context,
+                      ),
+                      new Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: new FriendDetailBody(widget.friend),
+                      ),
+                    ],
+                  ),
                 ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new FriendDetailBody(widget.friend),
-                ),
-               
-                //new FriendShowcase(widget.friend),
-              ],
-            ),
-          ),
-          )
-        ),
-     // ),
-    ),);
+              ),
+            );
+          }
+          return child;
+        },
+        child: NoNetPage(),
+      ),
+    );
   }
 }
 
@@ -86,7 +88,7 @@ class BluePainter extends CustomPainter {
     // ovalPath.quadraticBezierTo(
     //     width * 0.5, height * 0.35, width, height * 0.2);
 
- ovalPath.lineTo(width,350);
+    ovalPath.lineTo(width, 350);
     // draw remaining line to bottom left side
     ovalPath.lineTo(width, 0);
     ovalPath.lineTo(0, 0);

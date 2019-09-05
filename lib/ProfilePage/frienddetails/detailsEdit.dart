@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/ProfilePage/friends/friend.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
@@ -15,14 +17,14 @@ import 'package:path/path.dart' as p;
 import 'dart:io';
 
 class EditDetail extends StatefulWidget {
-  EditDetail({Key key,this.user}):super(key:key);
+  EditDetail({Key key, this.user}) : super(key: key);
   Friend user;
   @override
   _EditDetailState createState() => _EditDetailState();
 }
 
-class _EditDetailState extends State<EditDetail> with AutomaticKeepAliveClientMixin{
-
+class _EditDetailState extends State<EditDetail>
+    with AutomaticKeepAliveClientMixin {
   static Friend currentuser;
   static var _value = null;
   static FirebaseUser user;
@@ -108,12 +110,12 @@ class _EditDetailState extends State<EditDetail> with AutomaticKeepAliveClientMi
   static void createNote(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Saving data..");
-     progressDialog.show();
+    progressDialog.show();
     var dataMap = new Map<String, dynamic>();
     dataMap['name'] = fname;
     dataMap['email'] = email;
     dataMap['mobile'] = mobile;
-   // dataMap['gender'] = gender;
+    // dataMap['gender'] = gender;
     dataMap['institutionOrCompany'] = institutionOrCompany;
     dataMap['typeOfOccupations'] = typeOfOccupations;
     //dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
@@ -121,14 +123,18 @@ class _EditDetailState extends State<EditDetail> with AutomaticKeepAliveClientMi
     // dataMap['points'] = 0;
     //dataMap['completed'] = [1];
     // dataMap['uid'] = userid;
-     await db.collection("user").document(currentuser.uid).setData(dataMap,merge: true).catchError((e){
-       progressDialog.hide();
+    await db
+        .collection("user")
+        .document(currentuser.uid)
+        .setData(dataMap, merge: true)
+        .catchError((e) {
+      progressDialog.hide();
       print(e);
     });
-     progressDialog.hide();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new ProfileLoading(uid:currentuser.uid),
-      ));
+    progressDialog.hide();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => new ProfileLoading(uid: currentuser.uid),
+    ));
   }
 
   static bool isValide() {
@@ -143,20 +149,20 @@ class _EditDetailState extends State<EditDetail> with AutomaticKeepAliveClientMi
 
   static validateAndSubmit(BuildContext context) async {
     if (isValide()) {
-     // signUpInwithEmail(context);
-     createNote(context);
+      // signUpInwithEmail(context);
+      createNote(context);
     }
   }
-void getFilePath(BuildContext context) async {
-   
+
+  void getFilePath(BuildContext context) async {
     //  String _filePath;
     try {
       print("Before pickking file");
       // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
       File file1 = await FilePicker.getFile(type: FileType.ANY);
-       progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
-    progressDialog.setMessage("Uploading....");
-    progressDialog.show();
+      progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
+      progressDialog.setMessage("Uploading....");
+      progressDialog.show();
       print("File picked successfully");
       if (file1 == null) {
         return;
@@ -166,18 +172,15 @@ void getFilePath(BuildContext context) async {
         file = file1;
       });
       upload(context);
-      
     } catch (e) {
       progressDialog.hide();
-       Toast.show("Upload failed, please try again", context,
+      Toast.show("Upload failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       print("Error while picking the file: " + e.toString());
     }
   }
 
-  
-
-  Future upload(BuildContext context) async{
+  Future upload(BuildContext context) async {
     // FirebaseAuth.instance.currentUser().then((user) {
     //   this.uid = user.uid;
     // });
@@ -187,20 +190,24 @@ void getFilePath(BuildContext context) async {
         .child(currentuser.uid)
         .child("resume." + extenstion);
 
-   StorageUploadTask task = storageRef.putFile(file);
+    StorageUploadTask task = storageRef.putFile(file);
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-StorageTaskSnapshot taskSnapshot = await task.onComplete;
-String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-print("On downloadUrl task"+downloadUrl);
+    StorageTaskSnapshot taskSnapshot = await task.onComplete;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    print("On downloadUrl task" + downloadUrl);
 
-var dataMap = new Map<String, dynamic>();
+    var dataMap = new Map<String, dynamic>();
     dataMap['resume'] = downloadUrl;
 
-await db.collection("user").document(currentuser.uid).setData(dataMap,merge: true).catchError((e){
-       progressDialog.hide();
-        Toast.show("Upload failed, please try again", context,
+    await db
+        .collection("user")
+        .document(currentuser.uid)
+        .setData(dataMap, merge: true)
+        .catchError((e) {
+      progressDialog.hide();
+      Toast.show("Upload failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       print(e);
     });
@@ -213,16 +220,15 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
     // }
     print("Hai");
     progressDialog.hide();
-  //  Scaffold.of(context).showSnackBar( SnackBar(
-  //       content: Text("Resume uploaded "),
-  //       duration: Duration(seconds: 3),
-  //     )
-  //  );
-  Toast.show("Resume Uploaded Successfully", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+    //  Scaffold.of(context).showSnackBar( SnackBar(
+    //       content: Text("Resume uploaded "),
+    //       duration: Duration(seconds: 3),
+    //     )
+    //  );
+    Toast.show("Resume Uploaded Successfully", context,
+        gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     //  List<dynamic> arguments = [widget.modNum, widget.index + 1];
     //         orderManagement.moveNextIndex(context, arguments);
-
   }
 
   @override
@@ -245,12 +251,12 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
       textEditingController4.text = currentuser.institution;
       print("init state");
     });
-   
+
     print(currentuser.name);
   }
 
   Widget fullName(BuildContext context) => TextFormField(
-       // initialValue:"fname",//"${currentuser.name}",
+        // initialValue:"fname",//"${currentuser.name}",
         controller: textEditingController1,
         validator: (value) => value.isEmpty ? "Name cannot be empty" : null,
         onSaved: (value) {
@@ -273,7 +279,7 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
       );
 
   Widget emailAddress(BuildContext context) => TextFormField(
-    // initialValue: "${currentuser.email}",
+        // initialValue: "${currentuser.email}",
         controller: textEditingController2,
         validator: (value) => value.isEmpty ? "Email cannot be empty" : null,
         onSaved: (value) {
@@ -297,7 +303,7 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
       );
 
   Widget mobileNumber(BuildContext context) => TextFormField(
-    // initialValue: "${currentuser.mobile}",
+        // initialValue: "${currentuser.mobile}",
         controller: textEditingController3,
         validator: (value) {
           if (value.isEmpty) {
@@ -328,7 +334,7 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
       );
 
   Widget institution_or_company(BuildContext context) => TextFormField(
-    // initialValue: "${currentuser.institution}",
+        // initialValue: "${currentuser.institution}",
         controller: textEditingController4,
         onSaved: (value) {
           setState(() {
@@ -342,13 +348,11 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
           labelText: "Institution/Company",
           labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-
-         
         ),
       );
 
   Widget occupation(BuildContext context) => TextFormField(
-    // initialValue: "${currentuser.occupation}",
+        // initialValue: "${currentuser.occupation}",
         controller: textEditingController5,
         onSaved: (value) {
           setState(() {
@@ -370,13 +374,12 @@ await db.collection("user").document(currentuser.uid).setData(dataMap,merge: tru
         ),
       );
 
-Widget uploadResume(BuildContext context) => ButtonTheme(
+  Widget uploadResume(BuildContext context) => ButtonTheme(
         minWidth: 300,
         height: 50,
         buttonColor: Color.fromRGBO(255, 116, 23, 1),
         child: OutlineButton(
-         
-          borderSide:BorderSide(
+          borderSide: BorderSide(
             color: Colors.green,
             width: 1.5,
           ),
@@ -442,70 +445,78 @@ Widget uploadResume(BuildContext context) => ButtonTheme(
         ),
         backgroundColor: Theme.of(context).primaryColorDark,
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        width: 600,
-        height: double.infinity,
-        // child: SingleChildScrollView(
-        child: Form(
-          key: _formkey,
-          child: ListView(
-            children: <Widget>[
-              Text(
-                "EDIT DETAILS",
-                style: TextStyle(
-                    fontSize: 20, letterSpacing: 2, fontFamily: "Open Sans"),
+      // body:
+      body: OfflineBuilder(
+        connectivityBuilder:
+            (context, ConnectivityResult connectivity, Widget child) {
+          final connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            child = Container(
+              padding: EdgeInsets.all(20),
+              width: 600,
+              child: Form(
+                key: _formkey,
+                child: ListView(
+                  children: <Widget>[
+                    Text(
+                      "EDIT DETAILS",
+                      style: TextStyle(
+                          fontSize: 20,
+                          letterSpacing: 2,
+                          fontFamily: "Open Sans"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 200),
+                    ),
+                    Text(
+                      "                ",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.green,
+                          decorationThickness: 5),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    fullName(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    emailAddress(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    mobileNumber(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    occupation(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    institution_or_company(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    uploadResume(context),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    signUpButton(context),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 200),
-              ),
-              Text(
-                "                ",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.green,
-                    decorationThickness: 5),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              fullName(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              emailAddress(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-            
-              mobileNumber(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-             
-              occupation(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              institution_or_company(context),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              uploadResume(context),
-               Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              signUpButton(context),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          ),
-        ),
+            );
+          }
+          return child;
+        },
+        child: NoNetPage()
       ),
     );
   }
