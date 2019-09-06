@@ -7,9 +7,10 @@ import '../../ModuleOrderController/Types.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
-  videoPlayerPage({Key key, this.title, this.modNum,this.index}) : super(key: key);
+  videoPlayerPage({Key key, this.title, this.modNum, this.index})
+      : super(key: key);
   final String title;
-  final int modNum,index;
+  final int modNum, index;
   _videoPlayerPageState createState() => _videoPlayerPageState();
 }
 
@@ -29,11 +30,53 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             primary: true,
             backgroundColor: Theme.of(context).primaryColorDark,
             // automaticallyImplyLeading: false,
-            expandedHeight: MediaQuery.of(context).size.height*0.2,
-            title: Text(
-              widget.title,
-              style: TextStyle(color: Colors.black),
-              textAlign: TextAlign.center,
+            expandedHeight: MediaQuery.of(context).size.height * 0.2,
+            title: Row(
+              children: <Widget>[
+                Text(
+                  widget.title,
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+                GestureDetector(
+                  child: Icon(Icons.home),
+                  onTap: () {
+                    showDialog<bool>(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            content: Text(
+                                "Are you sure you want to return to home Page?? "),
+                            title: Text(
+                              "Warning!",
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                onPressed: () {
+                                  // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                  Navigator.of(context).popUntil(
+                                      ModalRoute.withName("TimelinePage"));
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context, false);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                )
+              ],
             ),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
@@ -69,30 +112,35 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                 child: Text(
                                   description,
                                   style: TextStyle(
-                                    
                                     fontSize: 16.0,
                                   ),
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.height*0.3,
+                                width: MediaQuery.of(context).size.height * 0.3,
                                 child: Padding(
-                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1),
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  color: Colors.green,
-                                  onPressed: () {
-                                     List<dynamic> arguments = [widget.modNum,widget.index+1];
-                                    orderManagement.moveNextIndex(context, arguments);
-                                  },
-                                  child: Icon(
-                                    Icons.navigate_next,
-                                    size: 40.0,
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.1),
+                                  child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    color: Colors.green,
+                                    onPressed: () {
+                                      List<dynamic> arguments = [
+                                        widget.modNum,
+                                        widget.index + 1
+                                      ];
+                                      orderManagement.moveNextIndex(
+                                          context, arguments);
+                                    },
+                                    child: Icon(
+                                      Icons.navigate_next,
+                                      size: 40.0,
+                                    ),
                                   ),
                                 ),
-                              ),
                               )
                             ],
                           ),

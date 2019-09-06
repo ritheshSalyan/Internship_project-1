@@ -84,20 +84,60 @@ class _HustelTipPageState extends State<HustelTipPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1,
-                    left: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  child: Text(
-                    "Hustle Tip",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.1,
+                      left: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    child: Text(
+                      "Hustle Tip",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
-                ),
+                  GestureDetector(
+                    child: Icon(Icons.home),
+                    onTap: () {
+                      showDialog<bool>(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              content: Text(
+                                  "Are you sure you want to return to home Page?? "),
+                              title: Text(
+                                "Warning!",
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    "Yes",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onPressed: () {
+                                    // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                    Navigator.of(context).popUntil(
+                                        ModalRoute.withName("TimelinePage"));
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    "No",
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context, false);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  )
+                ]),
                 Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.12,

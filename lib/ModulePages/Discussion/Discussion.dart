@@ -139,6 +139,49 @@ class _DiscussionPageState extends State<DiscussionPage> {
   Widget build(BuildContext context) {
     data = widget.content;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Builder(
           builder: (context) {
@@ -150,75 +193,39 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.18,
                     width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1,
-                          left: MediaQuery.of(context).size.width * 0.02),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            widget.title,
-                            textAlign: TextAlign.center,
-                            //"Startup or Job",
-                            style: TextStyle(
-                              fontFamily: "sans-serif",
-                              color: Colors.white,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          GestureDetector(
-                            child: Icon(Icons.home),
-                            onTap: () {
-                              showDialog<bool>(
-                                  context: context,
-                                  builder: (_) {
-                                    return AlertDialog(
-                                      content: Text(
-                                          "Are you sure you want to return to home Page?? "),
-                                      title: Text(
-                                        "Warning!",
-                                      ),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text(
-                                            "Yes",
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                          onPressed: () {
-                                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                            Navigator.of(context).popUntil(
-                                                ModalRoute.withName(
-                                                    "TimelinePage"));
-                                          },
-                                        ),
-                                        FlatButton(
-                                          child: Text(
-                                            "No",
-                                            style:
-                                                TextStyle(color: Colors.green),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context, false);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                          )
-                        ],
-                      ),
-                    ),
+                    child: Text(" "),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2),
+                      top: MediaQuery.of(context).size.height * 0.0),
                   child: Column(
                     children: <Widget>[
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //       top: MediaQuery.of(context).size.height * 0.05,
+                      //       left: MediaQuery.of(context).size.width * 0.02),
+                        //  Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          // children: <Widget>[
+                            Text(
+                              widget.title,
+                              textAlign: TextAlign.center,
+                              //"Startup or Job",
+                              style: TextStyle(
+                                fontFamily: "sans-serif",
+                                color: Colors.white,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                      //     ],
+                      //  // ),
+                      // ),
+                      SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

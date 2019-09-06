@@ -34,10 +34,12 @@ class FileUploadState extends State<FileUpload> {
         scrollDirection: Axis.horizontal,
         child: OutlineButton(
           borderSide: BorderSide(
-          color: Colors.white,
-        ),
+            color: Colors.white,
+          ),
           focusColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: Colors.white,width: 3)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: Colors.white, width: 3)),
           onPressed: () {
             getFilePath();
           },
@@ -47,24 +49,25 @@ class FileUploadState extends State<FileUpload> {
                 "Upload",
                 style: TextStyle(color: Colors.white),
               ),
-             Padding(
-               padding: EdgeInsets.only(left: 1),
-               child: Icon(Icons.file_upload,color: Colors.white,),
-             )
+              Padding(
+                padding: EdgeInsets.only(left: 1),
+                child: Icon(
+                  Icons.file_upload,
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
-        )
-        );
+        ));
   }
 
   @override
   void initState() {
     super.initState();
-
-   
   }
-  void getSlides(){
-     List<Page> page = widget.pages;
+
+  void getSlides() {
+    List<Page> page = widget.pages;
 
     print("Length of pages" + page.length.toString());
 
@@ -78,43 +81,86 @@ class FileUploadState extends State<FileUpload> {
       slides.add(
         new Container(
           alignment: Alignment.center,
-            color: Colors.green,
-            child:SingleChildScrollView(
-              child:  Column(
+          color: Colors.green,
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.05),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Text(
+                          item.headding,
+                          maxLines: 4,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      child: Icon(Icons.home),
+                      onTap: () {
+                        showDialog<bool>(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                content: Text(
+                                    "Are you sure you want to return to home Page?? "),
+                                title: Text(
+                                  "Warning!",
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text(
+                                      "Yes",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    onPressed: () {
+                                      // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                      Navigator.of(context).popUntil(
+                                          ModalRoute.withName("TimelinePage"));
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text(
+                                      "No",
+                                      style: TextStyle(color: Colors.green),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context, false);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                    )
+                  ],
+                ),
                 Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.05),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
                   child: Material(
                     color: Colors.transparent,
                     child: Text(
-                      item.headding,
-                      maxLines: 4,
+                      body,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        // fontWeight: FontWeight.,
                       ),
                     ),
                   ),
                 ),
-               Padding(
-                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
-                 child:  Material(
-                  color: Colors.transparent,
-                  child: Text(
-                    body,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      // fontWeight: FontWeight.,
-                    ),
-                  ),
-                ),
-               ),
                 Material(
                     color: Colors.transparent,
                     child: Text(
@@ -128,7 +174,8 @@ class FileUploadState extends State<FileUpload> {
                 //  pathImage: "images/photo_eraser.png",
               ],
             ),
-            ),),
+          ),
+        ),
       );
     }
     var item = page[page.length - 1];
@@ -139,31 +186,32 @@ class FileUploadState extends State<FileUpload> {
     slides.add(
       new Container(
         alignment: Alignment.center,
-            color: Colors.green,
-            child:SingleChildScrollView(
-              child:  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.05),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      item.headding,
-                      maxLines: 4,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+        color: Colors.green,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.05),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    item.headding,
+                    maxLines: 4,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-               Padding(
-                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
-                 child:  Material(
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+                child: Material(
                   color: Colors.transparent,
                   child: Text(
                     body,
@@ -175,12 +223,12 @@ class FileUploadState extends State<FileUpload> {
                     ),
                   ),
                 ),
-               ),
-               renderDoneBtn()
-                //  pathImage: "images/photo_eraser.png",
-              ],
-            ),
-            ),
+              ),
+              renderDoneBtn()
+              //  pathImage: "images/photo_eraser.png",
+            ],
+          ),
+        ),
       ),
     );
   }
