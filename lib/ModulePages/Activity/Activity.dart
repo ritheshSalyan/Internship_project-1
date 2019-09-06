@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Discussion/Discussion.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class ActivityPage extends StatefulWidget {
   ActivityPage(
@@ -124,6 +125,7 @@ class _ActivityPageState extends State<ActivityPage> {
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.index);
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },

@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:extended_image/extended_image.dart';
+import '../../saveProgress.dart';
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
@@ -162,6 +163,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.index);
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },

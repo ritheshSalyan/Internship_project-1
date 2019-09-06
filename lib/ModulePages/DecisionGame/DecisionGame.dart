@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class DecisionGame extends StatefulWidget {
   DecisionGame({Key key, this.modNum, this.order}) : super(key: key);
@@ -60,6 +61,7 @@ class _DecisionGameState extends State<DecisionGame>
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.order);
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },

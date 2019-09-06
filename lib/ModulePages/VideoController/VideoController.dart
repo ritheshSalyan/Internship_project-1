@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
 import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -112,6 +113,7 @@ class _VideoPlayState extends State<VideoPlay> {
                             style: TextStyle(color: Colors.red),
                           ),
                           onPressed: () {
+                            SaveProgress.preferences(widget.modNum, widget.index);
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));

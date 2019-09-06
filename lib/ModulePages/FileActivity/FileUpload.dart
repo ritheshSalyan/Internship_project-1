@@ -12,6 +12,7 @@ import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import '../../ModuleOrderController/Types.dart';
 //import 'package:intro_slider_example/home.dart';
 import 'package:toast/toast.dart';
+import '../../saveProgress.dart';
 
 class FileUpload extends StatefulWidget {
   FileUpload({Key key, this.modNum, this.index, this.pages}) : super(key: key);
@@ -67,6 +68,46 @@ class FileUploadState extends State<FileUpload> {
   }
 
   void getSlides() {
+    var alert = GestureDetector(
+      child: Icon(Icons.home,color: Colors.white,),
+      onTap: () {
+        showDialog<bool>(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                content:
+                    Text("Are you sure you want to return to home Page?? "),
+                title: Text(
+                  "Warning!",
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "Yes",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      SaveProgress.preferences(widget.modNum, widget.index);
+
+                      // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                      Navigator.of(context)
+                          .popUntil(ModalRoute.withName("TimelinePage"));
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "No",
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                  ),
+                ],
+              );
+            });
+      },
+    );
     List<Page> page = widget.pages;
 
     print("Length of pages" + page.length.toString());
@@ -80,71 +121,41 @@ class FileUploadState extends State<FileUpload> {
       //  print("body = "+body);
       slides.add(
         new Container(
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           color: Colors.green,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.05),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          item.headding,
-                          maxLines: 4,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+               Padding(
+                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),
+                 child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                       alert,
+                    ],
+                ),
+               ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.05),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      item.headding,
+                      maxLines: 4,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    GestureDetector(
-                      child: Icon(Icons.home),
-                      onTap: () {
-                        showDialog<bool>(
-                            context: context,
-                            builder: (_) {
-                              return AlertDialog(
-                                content: Text(
-                                    "Are you sure you want to return to home Page?? "),
-                                title: Text(
-                                  "Warning!",
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                    onPressed: () {
-                                      // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                      Navigator.of(context).popUntil(
-                                          ModalRoute.withName("TimelinePage"));
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(color: Colors.green),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context, false);
-                                    },
-                                  ),
-                                ],
-                              );
-                            });
-                      },
-                    )
-                  ],
+                  ),
                 ),
+               
+
                 Padding(
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
@@ -191,6 +202,16 @@ class FileUploadState extends State<FileUpload> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+               Padding(
+                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),
+                 child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                       alert,
+                    ],
+                ),
+               ),
               Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height * 0.05),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class DecisionGameTextPage extends StatefulWidget {
   DecisionGameTextPage(
@@ -200,6 +201,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.index);
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },
