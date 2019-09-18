@@ -6,9 +6,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/ModulePages/FileActivity/FileUpload.dart';
+import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/saveProgress.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
@@ -105,9 +108,9 @@ class _TimelinePageState extends State<TimelinePage> {
       if (!yes) {
         print("inside failed loop $yes");
         Directory('/storage/emulated/0/Startupreneur').create();
-      }else{
+      } else {
         print("im here");
-         Directory('/storage/emulated/0/Startupreneur/templates').create();
+        Directory('/storage/emulated/0/Startupreneur/templates').create();
       }
     }).catchError((e) {
       Directory('/storage/emulated/0/Startupreneur/templates').create();
@@ -116,7 +119,6 @@ class _TimelinePageState extends State<TimelinePage> {
     _messaging.getToken().then((token) {
       print(token);
     });
-
   }
 
   void preferences(BuildContext context) async {
@@ -244,63 +246,125 @@ class _TimelinePageState extends State<TimelinePage> {
     ];
     orderManagement.currentIndex = 0;
 
-
     return OfflineBuilder(
-      connectivityBuilder: (context,ConnectivityResult connectivity , Widget child){
-          final connected = connectivity!=ConnectivityResult.none;
-          if(connected){
-            child = Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Image.asset(
-          "assets/Images/Capture.PNG",
-          width: MediaQuery.of(context).size.width * 0.57,
-        ),
-        automaticallyImplyLeading: true,
-        backgroundColor: Theme.of(context).primaryColorDark,
-        elevation: 10.0,
-        actions: <Widget>[
-          Row(
-            children: <Widget>[
-              Image.asset(
-                "assets/Images/coins.png",
-                height: 15,
-                width: 15,
+      connectivityBuilder:
+          (context, ConnectivityResult connectivity, Widget child) {
+        final connected = connectivity != ConnectivityResult.none;
+        if (connected) {
+          child = Scaffold(
+            extendBody: true,
+            backgroundColor: Colors.grey[50],
+            appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.black),
+              title: Image.asset(
+                "assets/Images/Capture.PNG",
+                width: MediaQuery.of(context).size.width * 0.57,
               ),
-              Text(
-                " $gems",
-                style: TextStyle(color: Colors.black, fontSize: 12,),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 20),
-              ),
-            ],
-          )
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountEmail: Row(
-                children: <Widget>[
-                  // IconButton(
-                  //   onPressed: () {},
-                  //   icon: Icon(
-                  //     FontAwesomeIcons.solidGem,
-                  //     color: Colors.green,
-                  //     size: 15,
-                  //   ),
-                  // ),
-                  GestureDetector(
-                    child: Image.asset(
+              automaticallyImplyLeading: true,
+              backgroundColor: Theme.of(context).primaryColorDark,
+              elevation: 10.0,
+              actions: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Image.asset(
                       "assets/Images/coins.png",
-                      height: 20,
-                      width: 20,
+                      height: 15,
+                      width: 15,
+                    ),
+                    Text(
+                      " $gems",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            drawer: Drawer(
+              child: ListView(
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountEmail: Row(
+                      children: <Widget>[
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: Icon(
+                        //     FontAwesomeIcons.solidGem,
+                        //     color: Colors.green,
+                        //     size: 15,
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          child: Image.asset(
+                            "assets/Images/coins.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProfileLoading(uid: uid),
+                              ),
+                            );
+                          },
+                        ),
+                        Text(
+                          " $gems",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20),
+                        ),
+                      ],
+                    ),
+                    accountName: Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(_url),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileLoading(uid: uid),
+                          ),
+                        );
+                      },
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset("assets/Images/log.png"),
+                        ],
+                      )),
+                  ListTile(
+                    leading: Icon(
+                      Icons.assignment_ind,
+                    ),
+                    title: Text(
+                      'My Dashboard',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
                     ),
                     onTap: () {
+                      Navigator.of(context).pop();
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ProfileLoading(uid: uid),
@@ -308,269 +372,209 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  Text(
-                    " $gems",
-                    style: TextStyle(color: Colors.white),
+                  ListTile(
+                    leading: Icon(
+                      Icons.book,
+                    ),
+                    title: Text(
+                      'Startup Dictionary',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (Vocabulary()),
+                        ),
+                      );
+                    },
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
+                  ListTile(
+                    leading: Icon(Icons.store),
+                    title: Text(
+                      'The Startupreneur GoldMine',
+                      style: TextStyle(
+                        color: Colors.green,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (HustleStoreLoader()),
+                        ),
+                      );
+                    },
                   ),
+                  ListTile(
+                    leading: Icon(Icons.chat),
+                    title: Text(
+                      'Discussion Board',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (ChatBoardRoomLoader()),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.help),
+                    title: Text(
+                      'Help and FAQ',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         (FileUploadLoading(modNum: 2, index: 38)),
+                      //   ),
+                      // );
+                      // Navigator.of(context).pop();
+                      //  Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         (NoNetPage()),
+                      //   ),
+                      // );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text(
+                      'How to Earn Points',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (HowToEarn()),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.lock_open),
+                    title: Text(
+                      'Logout',
+                      style: TextStyle(
+                        color: Colors.green,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    onTap: () {
+                      _auth.signOut();
+                      _Sharedpreference(context);
+                      //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      //                    builder: (context) => SigninPage(),
+                      //                  ));
+                    },
+                  ),
+                  Divider(),
+                  Align(
+                    alignment: Alignment.bottomLeft * 0.4,
+                    child: Text(
+                      "The Startupreneur® All Rights Reserved",
+                      style:
+                          TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      //                  SizedBox(
+                      //                    width: MediaQuery.of(context).size.width * 0.05,
+                      //                  ),
+                      IconButton(
+                        onPressed: () {
+                          launcher(
+                              "https://www.facebook.com/thestartupreneurofficial/");
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launcher(
+                              "https://www.linkedin.com/company/startupreneur/");
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.linkedinIn,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launcher("https://twitter.com/TStartupreneur");
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.twitter,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launcher("http://bit.ly/2Kp153P");
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.medium,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                  //              SizedBox(
+                  ////                height: MediaQuery.of(context).size.height * 0.01,
+                  ////              ),
                 ],
               ),
-              accountName: Text(
-                name,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              currentAccountPicture: GestureDetector(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(_url),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ProfileLoading(uid: uid),
-                    ),
-                  );
-                },
-              ),
-              decoration: BoxDecoration(
-                color: Colors.green,
-              ),
             ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  children: <Widget>[
-                    Image.asset("assets/Images/log.png"),
-                  ],
-                )),
-            ListTile(
-              leading: Icon(
-                Icons.assignment_ind,
-              ),
-              title: Text(
-                'My Dashboard',
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ProfileLoading(uid: uid),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.book,
-              ),
-              title: Text(
-                'Startup Dictionary',
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (Vocabulary()),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.store),
-              title: Text(
-                'The Startupreneur GoldMine',
-                style: TextStyle(
-                  color: Colors.green,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (HustleStoreLoader()),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.chat),
-              title: Text(
-                'Discussion Board',
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (ChatBoardRoomLoader()),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.help),
-              title: Text(
-                'Help and FAQ',
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) =>
-                //         (FileUploadLoading(modNum: 8, index: 22)),
-                //   ),
-                // );
-                Navigator.of(context).pop();
-                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        (NoNetPage()),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text(
-                'How to Earn Points',
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (HowToEarn()),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.lock_open),
-              title: Text(
-                'Logout',
-                style: TextStyle(
-                  color: Colors.green,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              onTap: () {
-                _auth.signOut();
-                _Sharedpreference(context);
-                //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //                    builder: (context) => SigninPage(),
-                //                  ));
-              },
-            ),
-            Divider(),
-            Align(
-              alignment: Alignment.bottomLeft * 0.4,
-              child: Text(
-                "The Startupreneur® All Rights Reserved",
-                style:
-                    TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
-              ),
-            ),
-            Row(
+            body: Stack(
               children: <Widget>[
-                //                  SizedBox(
-                //                    width: MediaQuery.of(context).size.width * 0.05,
-                //                  ),
-                IconButton(
-                  onPressed: () {
-                    launcher(
-                        "https://www.facebook.com/thestartupreneurofficial/");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.facebook,
-                    color: Colors.green,
-                    size: 18,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-                IconButton(
-                  onPressed: () {
-                    launcher("https://www.linkedin.com/company/startupreneur/");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.linkedinIn,
-                    color: Colors.green,
-                    size: 18,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-                IconButton(
-                  onPressed: () {
-                    launcher("https://twitter.com/TStartupreneur");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.twitter,
-                    color: Colors.green,
-                    size: 18,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-                IconButton(
-                  onPressed: () {
-                    launcher("http://bit.ly/2Kp153P");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.medium,
-                    color: Colors.green,
-                    size: 18,
-                  ),
-                ),
+                PageView(children: pages),
               ],
             ),
-            //              SizedBox(
-            ////                height: MediaQuery.of(context).size.height * 0.01,
-            ////              ),
-          ],
-        ),
-      ),
-      body: Stack(
-              children: <Widget>[
-                PageView(
-                  children:pages
-                ),
-              ],
-            ),
-    );
-          }
-          return child;
-          
+          );
+        }
+        return child;
       },
       child: NoNetPage(),
     );
   }
+
   timelineModel(TimelinePosition position) => Timeline.builder(
         itemBuilder: centerTimelineBuilder,
         itemCount: doodles.length,
@@ -587,30 +591,94 @@ class _TimelinePageState extends State<TimelinePage> {
     var val = 1;
     return TimelineModel(
         new GestureDetector(
-          onTap: () {
+          onTap: () async {
             print("value of i is $i");
             if (check(i)) {
               print(" true $i");
               // val = completedCourse[k];
               print("val is $val");
-              if (i == 11) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ModuleOverviewLoading(modNum: i + 1),
-                  ),
-                );
-              } else if (i != 12) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => QuoteLoading(modNum: i + 1),
-                  ),
-                );
+              int progressNum = await SaveProgress.getProgerss(i + 1);
+              print("PROGRESS NUM ${progressNum}");
+              if (progressNum == 0) {
+                if (i == 11) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ModuleOverviewLoading(modNum: i + 1),
+                    ),
+                  );
+                } else if (i != 12) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => QuoteLoading(modNum: i + 1),
+                    ),
+                  );
+                } else {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (HustleStoreLoader()),
+                    ),
+                  );
+                }
               } else {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => (HustleStoreLoader()),
-                  ),
-                );
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text("Do you want to Continue ?"),
+                        title: Text(
+                          "Warning!",
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.getEventsFromFirestore(i + 1)
+                                  .then((_) {
+                                List<int> arguments = [i + 1, progressNum];
+                                orderManagement.moveNextIndex(
+                                    context, arguments);
+                              });
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                              if (i == 11) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ModuleOverviewLoading(modNum: i + 1),
+                                  ),
+                                );
+                              } else if (i != 12) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        QuoteLoading(modNum: i + 1),
+                                  ),
+                                );
+                              } else {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => (HustleStoreLoader()),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      );
+                    });
               }
             } else {
               print(" false");

@@ -13,7 +13,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   Firestore db = Firestore.instance;
- static final _formkey = GlobalKey<FormState>();
+  static final _formkey = GlobalKey<FormState>();
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
@@ -32,6 +32,50 @@ class _QuizPageState extends State<QuizPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+         appBar: AppBar(
+        // backgroundColor: Colors.white,
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home,),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
         key: _key,
         body: Builder(
           builder: (context) {
@@ -57,7 +101,7 @@ class _QuizPageState extends State<QuizPage> {
                             Padding(
                               padding: EdgeInsets.only(
                                   top:
-                                      MediaQuery.of(context).size.height * 0.2),
+                                      MediaQuery.of(context).size.height * 0.1),
                             ),
                             Expanded(
                               child: StreamBuilder<QuerySnapshot>(
@@ -80,11 +124,16 @@ class _QuizPageState extends State<QuizPage> {
                                           .forEach((document) {
                                         question = document["question"];
                                       });
-                                      return Text(
-                                        question,
-                                        textAlign: TextAlign.left,
-                                        style: _questionStyle,
-                                      );
+                                      // return Row(
+                                      //   children: <Widget>[
+                                        return  Text(
+                                            question,
+                                            textAlign: TextAlign.left,
+                                            style: _questionStyle,
+                                          );
+                                        
+                                      //   ],
+                                      // );
                                   }
                                 },
                               ),
@@ -119,8 +168,9 @@ class _QuizPageState extends State<QuizPage> {
                                       options.clear();
                                       snapshot.data.documents
                                           .forEach((document) {
-                                        correctAns =
-                                            document["answer"].toString().split(",");
+                                        correctAns = document["answer"]
+                                            .toString()
+                                            .split(",");
                                         reason = document["reason"];
                                         if (reason.isEmpty) {
                                           reason = "";
@@ -176,12 +226,11 @@ class _QuizPageState extends State<QuizPage> {
                             onPressed: () {
                               print("hello $_answerIs");
                               // if (_answerIs == correctAns) {
-                                if (correctAns.contains(_answerIs)) {
+                              if (correctAns.contains(_answerIs)) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "Well Done!\n\n" +
-                                          reason,
+                                      "Well Done!\n\n" + reason,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16.0,

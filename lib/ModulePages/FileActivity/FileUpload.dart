@@ -12,6 +12,7 @@ import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import '../../ModuleOrderController/Types.dart';
 //import 'package:intro_slider_example/home.dart';
 import 'package:toast/toast.dart';
+import '../../saveProgress.dart';
 
 class FileUpload extends StatefulWidget {
   FileUpload({Key key, this.modNum, this.index, this.pages}) : super(key: key);
@@ -33,8 +34,13 @@ class FileUploadState extends State<FileUpload> {
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: OutlineButton(
-          focusColor: Colors.black,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),side: BorderSide(color: Colors.black)),
+          borderSide: BorderSide(
+            color: Colors.white,
+          ),
+          focusColor: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: Colors.white, width: 3)),
           onPressed: () {
             getFilePath();
           },
@@ -44,24 +50,65 @@ class FileUploadState extends State<FileUpload> {
                 "Upload",
                 style: TextStyle(color: Colors.white),
               ),
-             Padding(
-               padding: EdgeInsets.only(left: 1),
-               child: Icon(Icons.file_upload,color: Colors.white,),
-             )
+              Padding(
+                padding: EdgeInsets.only(left: 1),
+                child: Icon(
+                  Icons.file_upload,
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
-        )
-        );
+        ));
   }
 
   @override
   void initState() {
     super.initState();
-
-   
   }
-  void getSlides(){
-     List<Page> page = widget.pages;
+
+  void getSlides() {
+    var alert = GestureDetector(
+      child: Icon(Icons.home,color: Colors.white,),
+      onTap: () {
+        showDialog<bool>(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                content:
+                    Text("Are you sure you want to return to home Page?? "),
+                title: Text(
+                  "Warning!",
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "Yes",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      SaveProgress.preferences(widget.modNum, widget.index);
+
+                      // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                      Navigator.of(context)
+                          .popUntil(ModalRoute.withName("TimelinePage"));
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "No",
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                  ),
+                ],
+              );
+            });
+      },
+    );
+    List<Page> page = widget.pages;
 
     print("Length of pages" + page.length.toString());
 
@@ -74,12 +121,22 @@ class FileUploadState extends State<FileUpload> {
       //  print("body = "+body);
       slides.add(
         new Container(
-          alignment: Alignment.center,
-            color: Colors.green,
-            child:SingleChildScrollView(
-              child:  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          alignment: Alignment.topCenter,
+          color: Colors.green,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+               Padding(
+                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),
+                 child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                       alert,
+                    ],
+                ),
+               ),
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).size.height * 0.05),
@@ -97,21 +154,24 @@ class FileUploadState extends State<FileUpload> {
                     ),
                   ),
                 ),
-               Padding(
-                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
-                 child:  Material(
-                  color: Colors.transparent,
-                  child: Text(
-                    body,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      // fontWeight: FontWeight.,
+               
+
+                Padding(
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      body,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        // fontWeight: FontWeight.,
+                      ),
                     ),
                   ),
                 ),
-               ),
                 Material(
                     color: Colors.transparent,
                     child: Text(
@@ -125,7 +185,8 @@ class FileUploadState extends State<FileUpload> {
                 //  pathImage: "images/photo_eraser.png",
               ],
             ),
-            ),),
+          ),
+        ),
       );
     }
     var item = page[page.length - 1];
@@ -136,31 +197,42 @@ class FileUploadState extends State<FileUpload> {
     slides.add(
       new Container(
         alignment: Alignment.center,
-            color: Colors.green,
-            child:SingleChildScrollView(
-              child:  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.05),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      item.headding,
-                      maxLines: 4,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+        color: Colors.green,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               Padding(
+                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),
+                 child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                       alert,
+                    ],
+                ),
+               ),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.05),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    item.headding,
+                    maxLines: 4,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-               Padding(
-                 padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
-                 child:  Material(
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+                child: Material(
                   color: Colors.transparent,
                   child: Text(
                     body,
@@ -172,12 +244,12 @@ class FileUploadState extends State<FileUpload> {
                     ),
                   ),
                 ),
-               ),
-               renderDoneBtn()
-                //  pathImage: "images/photo_eraser.png",
-              ],
-            ),
-            ),
+              ),
+              renderDoneBtn()
+              //  pathImage: "images/photo_eraser.png",
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -205,7 +277,7 @@ class FileUploadState extends State<FileUpload> {
       setState(() {
         file = file1;
       });
-      upload();
+      upload(file1);
     } catch (e) {
       Toast.show("Upload failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
@@ -226,7 +298,7 @@ class FileUploadState extends State<FileUpload> {
   //   // Do what you want
   // }
 
-  Future upload() async {
+  Future upload(file) async {
     FirebaseAuth.instance.currentUser().then((user) {
       this.uid = user.uid;
     });

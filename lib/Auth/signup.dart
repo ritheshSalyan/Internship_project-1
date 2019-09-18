@@ -74,7 +74,7 @@ class _SignupPageState extends State<SignupPage>
 
   void signUpInwithEmail(BuildContext context) async {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
-    progressDialog.setMessage("Saving data..");
+    progressDialog.setMessage("Creating Account..");
 
     try {
       progressDialog.show();
@@ -83,15 +83,19 @@ class _SignupPageState extends State<SignupPage>
         email: email,
         password: _password,
       );
-      progressDialog.hide();
+      print("Email Verification");
+      progressDialog.setMessage("Please Verify Email");
+      //await user.sendEmailVerification();
+
       user = await _auth.signInWithEmailAndPassword(
         email: email,
         password: _password,
       );
       userid = user.uid;
-      _preferences(userid);
+     _preferences(userid);
       print("its is $user");
-
+      Toast.show("Please Verify your Email id and sign In", context,
+          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       if (referalCodeFromFriend.isNotEmpty) {
         await db
             .collection("user")
@@ -121,7 +125,8 @@ class _SignupPageState extends State<SignupPage>
         ),
       ));
     } catch (e) {
-      progressDialog.hide();
+      print("ERROR IN SIGNUP:"+e.toString());
+      //progressDialog.hide();
       Toast.show("Sign up failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     } finally {

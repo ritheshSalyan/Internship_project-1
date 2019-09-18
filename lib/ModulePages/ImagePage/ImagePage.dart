@@ -12,7 +12,7 @@ class ImagePagePage extends StatefulWidget {
     this.index,
     this.headding,
   }) : super(key: key);
-  String title,headding;
+  String title, headding;
   int modNum, index;
 
   @override
@@ -37,7 +37,7 @@ class _ImagePagePageState extends State<ImagePagePage>
 
   @override
   Widget build(BuildContext context) {
-    print("Heading in ImagePage is "+widget.headding);
+    print("Heading in ImagePage is " + widget.headding);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Builder(
@@ -47,37 +47,77 @@ class _ImagePagePageState extends State<ImagePagePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(
-                    // top: MediaQuery.of(context).size.height * 0.1,
-                    bottom: MediaQuery.of(context).size.height * 0.1,
-                  ),
-                  child: Text(
-                    widget.headding,
-                    //"Startup or Job",
-                    style: TextStyle(
-                        fontFamily: "sans-serif",
-                        color: Colors.green,
-                        fontSize: 25.0,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-
+                    padding: EdgeInsets.only(
+                      // top: MediaQuery.of(context).size.height * 0.1,
+                      bottom: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          widget.headding,
+                          //"Startup or Job",
+                          style: TextStyle(
+                              fontFamily: "sans-serif",
+                              color: Colors.green,
+                              fontSize: 25.0,
+                              letterSpacing: 1.2,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        GestureDetector(
+                          child: Icon(Icons.home),
+                          onTap: () {
+                            showDialog<bool>(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    content: Text(
+                                        "Are you sure you want to return to home Page?? "),
+                                    title: Text(
+                                      "Warning!",
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text(
+                                          "Yes",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                        onPressed: () {
+                                          // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                          Navigator.of(context).popUntil(
+                                              ModalRoute.withName(
+                                                  "TimelinePage"));
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          "No",
+                                          style: TextStyle(color: Colors.green),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context, false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                        )
+                      ],
+                    )),
                 Padding(
                   padding: EdgeInsets.only(
-                    // top: MediaQuery.of(context).size.height * 0.1,
-                    // left: MediaQuery.of(context).size.height * 0.01,
-                  ),
+                      // top: MediaQuery.of(context).size.height * 0.1,
+                      // left: MediaQuery.of(context).size.height * 0.01,
+                      ),
                   // child: Image.asset(
                   //   widget.title,
                   //   height: MediaQuery.of(context).size.height * 0.7,
                   // ),
                   child: ExtendedImage.asset(
                     widget.title,
-                    width: MediaQuery.of(context).size.width * 0.97,
+                    height: MediaQuery.of(context).size.height * 0.7,
                   ),
                 ),
-               
                 Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.05,

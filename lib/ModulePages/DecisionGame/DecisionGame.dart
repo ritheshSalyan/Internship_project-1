@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class DecisionGame extends StatefulWidget {
   DecisionGame({Key key, this.modNum, this.order}) : super(key: key);
@@ -37,6 +38,50 @@ class _DecisionGameState extends State<DecisionGame>
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.order);
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
           key: _key,
           body: Builder(
             builder: (context) {
@@ -48,7 +93,7 @@ class _DecisionGameState extends State<DecisionGame>
                       clipper: WaveClipperOne(),
                       child: Container(
                         decoration: BoxDecoration(color: Colors.green),
-                        height: 200,
+                        height: MediaQuery.of(context).size.height*0.3,
                       ),
                     ),
                     Padding(
@@ -93,6 +138,7 @@ class _DecisionGameState extends State<DecisionGame>
                                   },
                                 ),
                               ),
+                             
                             ],
                           ),
                           SizedBox(height: 20.0),

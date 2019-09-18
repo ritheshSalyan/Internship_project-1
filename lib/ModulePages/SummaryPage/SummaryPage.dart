@@ -162,6 +162,49 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
   Widget build(BuildContext context) {
     data = widget.content;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Builder(
           builder: (context) {
@@ -179,18 +222,14 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.1,
                           left: MediaQuery.of(context).size.width * 0.02),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            widget.title,
-                            //"Startup or Job",
-                            style: TextStyle(
-                                fontFamily: "sans-serif",
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
+                      child: Text(
+                        widget.title,
+                        //"Startup or Job",
+                        style: TextStyle(
+                            fontFamily: "sans-serif",
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -203,7 +242,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width*0.04,
+                          left: MediaQuery.of(context).size.width * 0.04,
                         ),
                         child: Image.asset(
                           widget.image,

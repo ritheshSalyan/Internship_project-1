@@ -71,16 +71,21 @@ class _HustleStoreState extends State<HustleStore> {
       alignment: FractionalOffset.centerLeft,
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 35,
+        radius: 50,
         child: new ExtendedImage.asset(
           logo,
-          height: 60.0,
-          width: 60.0,
+          // height: 60.0,
+          // width: 60.0,
           enableLoadState: true,
         ),
       ),
     );
   }
+  // Widget planetThumbnail(BuildContext context, String logo) => new Image(
+  //       image: new AssetImage(logo),
+  //       // height: MediaQuery.of(context).size.height,
+  //       width: MediaQuery.of(context).size.width,
+  //     );
 
   @override
   Widget build(BuildContext context) {

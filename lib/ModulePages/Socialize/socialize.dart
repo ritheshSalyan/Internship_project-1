@@ -3,8 +3,8 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class SocializeTask extends StatefulWidget {
-  SocializeTask({Key key,this.index,this.modNum}):super(key:key);
-  final int index,modNum;
+  SocializeTask({Key key, this.index, this.modNum}) : super(key: key);
+  final int index, modNum;
   @override
   _SocializeTaskState createState() => _SocializeTaskState();
 }
@@ -14,9 +14,6 @@ class _SocializeTaskState extends State<SocializeTask> {
   var _job = false;
   var _startup = false;
 
-  
-
-  
   bool _validate() {
     final form = _formkey.currentState;
 
@@ -74,7 +71,6 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Pros",
                           style: TextStyle(
-                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -121,7 +117,6 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Cons",
                           style: TextStyle(
-                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -215,7 +210,6 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Pros",
                           style: TextStyle(
-                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -235,7 +229,6 @@ class _SocializeTaskState extends State<SocializeTask> {
                           ),
                         ),
                         TextFormField(
-                          
                           validator: (value) =>
                               value.isEmpty ? "Cannot be empty" : null,
                           keyboardType: TextInputType.text,
@@ -264,7 +257,6 @@ class _SocializeTaskState extends State<SocializeTask> {
                         Text(
                           "Cons",
                           style: TextStyle(
-                            
                             fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
@@ -343,6 +335,49 @@ class _SocializeTaskState extends State<SocializeTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Builder(
           builder: (context) {
@@ -358,7 +393,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                         top: MediaQuery.of(context).size.height * 0.05),
+                          top: MediaQuery.of(context).size.height * 0.05),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -478,8 +513,12 @@ class _SocializeTaskState extends State<SocializeTask> {
                                   //     builder: (context) => QuestionFinalPage(),
                                   //   ),
                                   // );
-                                    List<dynamic> arguments = [widget.modNum,7+1];
-          orderManagement.moveNextIndex(context, arguments);
+                                  List<dynamic> arguments = [
+                                    widget.modNum,
+                                    7 + 1
+                                  ];
+                                  orderManagement.moveNextIndex(
+                                      context, arguments);
                                 },
                               );
                             } else {

@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:extended_image/extended_image.dart';
+import '../../saveProgress.dart';
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
@@ -139,6 +140,50 @@ class _DiscussionPageState extends State<DiscussionPage> {
   Widget build(BuildContext context) {
     data = widget.content;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.index);
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Builder(
           builder: (context) {
@@ -150,36 +195,39 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.18,
                     width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1,
-                          left: MediaQuery.of(context).size.width * 0.02),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            widget.title,
-                            textAlign: TextAlign.center,
-                            //"Startup or Job",
-                            style: TextStyle(
-                              fontFamily: "sans-serif",
-                              color: Colors.white,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: Text(" "),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2),
+                      top: MediaQuery.of(context).size.height * 0.0),
                   child: Column(
                     children: <Widget>[
-                    
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //       top: MediaQuery.of(context).size.height * 0.05,
+                      //       left: MediaQuery.of(context).size.width * 0.02),
+                        //  Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          // children: <Widget>[
+                            Text(
+                              widget.title,
+                              textAlign: TextAlign.center,
+                              //"Startup or Job",
+                              style: TextStyle(
+                                fontFamily: "sans-serif",
+                                color: Colors.white,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                      //     ],
+                      //  // ),
+                      // ),
+                      SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,30 +235,41 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           Padding(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.14),
-                            child:(widget.image!="")?ExtendedImage.asset(
-                              widget.image,
-                              // "assets/Images/photo.png",
-                              enableLoadState: true,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              width: MediaQuery.of(context).size.width * 0.5,
+                            child: (widget.image != "")
+                                ? ExtendedImage.asset(
+                                    widget.image,
+                                    // "assets/Images/photo.png",
+                                    enableLoadState: true,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
 //                            alignment: Alignment.center,
-                              mode: ExtendedImageMode.Gesture,
-                            ):SizedBox(height: MediaQuery.of(context).size.height * 0.15,
-                              width: MediaQuery.of(context).size.width * 0.5,),
+                                    mode: ExtendedImageMode.Gesture,
+                                  )
+                                : SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                  ),
                           ),
-                          (widget.image!="")?IconButton(
-                            icon: Icon(
-                              Icons.zoom_out_map,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ImageViewer(image: widget.image),
-                                fullscreenDialog: true,
-                              ));
-                            },
-                          ):SizedBox(),
+                          (widget.image != "")
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.zoom_out_map,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ImageViewer(image: widget.image),
+                                      fullscreenDialog: true,
+                                    ));
+                                  },
+                                )
+                              : SizedBox(),
                         ],
                       ),
 

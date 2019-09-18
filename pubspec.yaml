@@ -68,7 +68,7 @@ dependencies:
   permission_handler: ^3.2.2
   flutter_launcher_icons: ^0.7.2
   firebase_crashlytics: ^0.1.0+3
-  flutter_downloader: ^1.1.9
+  # flutter_downloader: ^1.1.9
   smart_flare: ^0.2.6
 
 

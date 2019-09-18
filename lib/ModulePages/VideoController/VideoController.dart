@@ -4,14 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
 import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {
-  VideoPlay({Key key,this.modNum ,this.videoLink, this.title, this.btnTitle,this.index})
+  VideoPlay(
+      {Key key,
+      this.modNum,
+      this.videoLink,
+      this.title,
+      this.btnTitle,
+      this.index})
       : super(key: key);
-  final int modNum,index;
+  final int modNum, index;
   final String videoLink;
   final String btnTitle;
   final String title;
@@ -35,14 +42,14 @@ class _VideoPlayState extends State<VideoPlay> {
     _chewieController = ChewieController(
       autoInitialize: true,
       allowedScreenSleep: false,
-      deviceOrientationsAfterFullScreen: const[DeviceOrientation.portraitUp],
+      deviceOrientationsAfterFullScreen: const [DeviceOrientation.portraitUp],
       videoPlayerController: _videoPlayerController1,
-      placeholder:Center(
-        child:  CircularProgressIndicator(
-        value: null,
-        valueColor: AlwaysStoppedAnimation(Colors.green),
-        strokeWidth: 5.0,
-      ),
+      placeholder: Center(
+        child: CircularProgressIndicator(
+          value: null,
+          valueColor: AlwaysStoppedAnimation(Colors.green),
+          strokeWidth: 5.0,
+        ),
       ),
       materialProgressColors: ChewieProgressColors(
         backgroundColor: Colors.green,
@@ -50,7 +57,7 @@ class _VideoPlayState extends State<VideoPlay> {
         bufferedColor: Colors.black,
         handleColor: Colors.blue,
       ),
-      aspectRatio: 16/9,
+      aspectRatio: 16 / 9,
       autoPlay: false,
       looping: true,
       errorBuilder: (context, errorMessage) {
@@ -68,10 +75,9 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   void dispose() {
-     super.dispose();
+    super.dispose();
     _videoPlayerController1.dispose();
     _chewieController.dispose();
-   
   }
 
   @override
@@ -85,6 +91,50 @@ class _VideoPlayState extends State<VideoPlay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to home Page?? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            SaveProgress.preferences(widget.modNum, widget.index);
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -92,20 +142,24 @@ class _VideoPlayState extends State<VideoPlay> {
               clipper: WaveClipperOne(),
               child: Container(
                 decoration: BoxDecoration(color: Colors.green),
-                height: 200,
+                height: MediaQuery.of(context).size.height * 0.19,
                 width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.1),
-                  child: Text(
-                    widget.title,
-                    textAlign:TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "QuickSand",
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                      top: MediaQuery.of(context).size.height * 0.05),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "QuickSand",
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -118,19 +172,19 @@ class _VideoPlayState extends State<VideoPlay> {
                 controller: _chewieController,
               ),
             ),
-             Padding(
+            Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.05,
                 left: MediaQuery.of(context).size.width * 0.1,
                 right: MediaQuery.of(context).size.width * 0.1,
               ),
-              child:  Center(
-            child: Text("* Wait and watch the above video to get started!",
-            style: TextStyle(fontSize: 18),),
-                   
+              child: Center(
+                child: Text(
+                  "* Wait and watch the above video to get started!",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
-            ),
-           
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.width * 0.1,
@@ -153,7 +207,7 @@ class _VideoPlayState extends State<VideoPlay> {
                 //   ));
                 // }
 
-                List<dynamic> arguments = [widget.modNum,widget.index+1];
+                List<dynamic> arguments = [widget.modNum, widget.index + 1];
                 orderManagement.moveNextIndex(context, arguments);
               },
               child: Text(

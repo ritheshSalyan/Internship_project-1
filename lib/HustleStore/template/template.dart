@@ -15,7 +15,7 @@ import '../../Auth/signin.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:permission/permission.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+// import 'package:flutter_downloader/flutter_downloader.dart';
 
 class TemplateDownload extends StatefulWidget {
   TemplateDownload({Key key, this.files, this.lengthList}) : super(key: key);

@@ -39,7 +39,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -89,7 +89,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -123,9 +123,9 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
           height: double.infinity,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -159,7 +159,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-        // body:
+         
         body: OfflineBuilder(
           connectivityBuilder:
               (context, ConnectivityResult connectivity, Widget child) {
