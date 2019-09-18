@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ModuleOrderController/Types.dart';
@@ -110,6 +108,11 @@ class SaveProgress {
         case "Type.heading":
           print("heading");
           typeList.add(Type.heading);
+          break;
+
+        case "Type.flip":
+          print("heading");
+          typeList.add(Type.flip);
           break;
         default:
           print("Default");
