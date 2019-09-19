@@ -111,8 +111,14 @@ class SaveProgress {
           break;
 
         case "Type.flip":
-          print("heading");
+          print("flip");
           typeList.add(Type.flip);
+          break;
+
+          
+          case "Type.ideaActivity":
+          print("Type.ideaActivity");
+          typeList.add(Type.ideaActivity);
           break;
         default:
           print("Default");
