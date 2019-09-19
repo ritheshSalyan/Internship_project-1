@@ -138,6 +138,28 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget image = SizedBox(
+      height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width * 0.5,
+    );
+
+    if (widget.image != "") {
+      print("Title here ${widget.title}");
+      if ((widget.image.contains("assets/"))) {
+        print("Inside Assets");
+       image =  ExtendedImage.asset(
+          widget.image,
+          height: MediaQuery.of(context).size.height * 0.2,
+        );
+      } else {
+         print("Inside Network");
+       image =  ExtendedImage.network(
+          widget.image,
+          height: MediaQuery.of(context).size.height * 0.2,
+        );
+      }
+    }
+    // print("Image is ${}");
     data = widget.content;
     return Scaffold(
       appBar: AppBar(
@@ -163,7 +185,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(widget.modNum, widget.index);
+                            SaveProgress.preferences(
+                                widget.modNum, widget.index);
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },
@@ -209,25 +232,27 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       //   padding: EdgeInsets.only(
                       //       top: MediaQuery.of(context).size.height * 0.05,
                       //       left: MediaQuery.of(context).size.width * 0.02),
-                        //  Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                          // crossAxisAlignment: CrossAxisAlignment.center,
-                          // children: <Widget>[
-                            Text(
-                              widget.title,
-                              textAlign: TextAlign.center,
-                              //"Startup or Job",
-                              style: TextStyle(
-                                fontFamily: "sans-serif",
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                      //  Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      // children: <Widget>[
+                      Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        //"Startup or Job",
+                        style: TextStyle(
+                          fontFamily: "sans-serif",
+                          color: Colors.white,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       //     ],
                       //  // ),
                       // ),
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,24 +260,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           Padding(
                             padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.14),
-                            child: (widget.image != "")
-                                ? ExtendedImage.asset(
-                                    widget.image,
-                                    // "assets/Images/photo.png",
-                                    enableLoadState: true,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-//                            alignment: Alignment.center,
-                                    mode: ExtendedImageMode.Gesture,
-                                  )
-                                : SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                  ),
+                            child: image,
                           ),
                           (widget.image != "")
                               ? IconButton(

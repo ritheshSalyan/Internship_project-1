@@ -52,6 +52,8 @@ class _ImagePagePageState extends State<ImagePagePage>
                       bottom: MediaQuery.of(context).size.height * 0.1,
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           widget.headding,
@@ -113,7 +115,11 @@ class _ImagePagePageState extends State<ImagePagePage>
                   //   widget.title,
                   //   height: MediaQuery.of(context).size.height * 0.7,
                   // ),
-                  child: ExtendedImage.asset(
+                  child: (widget.title.contains("assets/Images"))
+                  ?ExtendedImage.asset(
+                    widget.title,
+                    height: MediaQuery.of(context).size.height * 0.7,
+                  ):ExtendedImage.network(
                     widget.title,
                     height: MediaQuery.of(context).size.height * 0.7,
                   ),
