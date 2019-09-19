@@ -6,6 +6,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/ModulePages/FileActivity/FileUpload.dart';
 import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
@@ -119,6 +120,8 @@ class _TimelinePageState extends State<TimelinePage> {
     _messaging.getToken().then((token) {
       print(token);
     });
+
+    Analytics.analyticsBehaviour("Main_RoadMap_TimeLine_Page", "RoadMap");
   }
 
   void preferences(BuildContext context) async {
@@ -627,13 +630,13 @@ class _TimelinePageState extends State<TimelinePage> {
                       return AlertDialog(
                         content: Text("Do you want to Continue ?"),
                         title: Text(
-                          "Warning!",
+                          "Continue!",
                         ),
                         actions: <Widget>[
                           FlatButton(
                             child: Text(
                               "Yes",
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(color: Colors.green),
                             ),
                             onPressed: () {
                               Navigator.of(context).pop(true);
@@ -649,7 +652,7 @@ class _TimelinePageState extends State<TimelinePage> {
                           FlatButton(
                             child: Text(
                               "No",
-                              style: TextStyle(color: Colors.green),
+                              style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
                               Navigator.of(context).pop(true);

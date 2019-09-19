@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModuleVocabulary extends StatefulWidget {
@@ -29,6 +30,8 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
     controller = PageController();
     // widget.modNum ;
     print("init inisde ${widget.word}");
+
+    Analytics.analyticsBehaviour("Module_Vocabulary_Page", "Vocabulary");
   }
 
   @override
@@ -279,7 +282,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

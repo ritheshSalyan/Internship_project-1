@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
@@ -70,6 +71,7 @@ class _SignupPageState extends State<SignupPage>
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
     sharedPreferences.setString("UserEmail", email);
+    Analytics.setUserId(userid);
   }
 
   void signUpInwithEmail(BuildContext context) async {
@@ -189,16 +191,17 @@ class _SignupPageState extends State<SignupPage>
   @override
   bool get wantKeepAlive => true;
 
+
   @override
   void initState() {
     super.initState();
     prepareTestPdf();
     _messaging.getToken().then((token) {
-      // print(token);
       setState(() {
         tokenId = token;
       });
     });
+    Analytics.analyticsBehaviour("Sign_up_page", "SignUp");
   }
 
   Widget fullName(BuildContext context) => TextFormField(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:permission/permission.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/Auth/PdfReader.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,6 +34,7 @@ class _ViewDocsState extends State<ViewDocs> {
     @override
     void initState(){
       request();
+      Analytics.analyticsBehaviour("View_Docs_Page_Hustle", "ViewDocs");
     }
     
     request() async{

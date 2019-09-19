@@ -1,6 +1,9 @@
 // flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 
+import 'dart:async';
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
@@ -13,10 +16,9 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  
-  // var dir  = await getExternalStorageDirectory();
-  // print("hey $dir");
-  runApp(MyApp());
+  runZoned<Future<void>>(() async {
+    runApp(MyApp());
+  }, onError: Crashlytics.instance.recordError);
 }
 
 class MyApp extends StatefulWidget {
@@ -26,6 +28,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // static const platform = MethodChannel("permission");
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+  FirebaseAnalyticsObserver observer;
 
   @override
   void initState() {
@@ -34,13 +38,11 @@ class _MyAppState extends State<MyApp> {
     request();
   }
 
-
   void request() async {
-    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
   }
 
-
-  
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -49,7 +51,10 @@ class _MyAppState extends State<MyApp> {
     ]);
     return MaterialApp(
       title: 'The Startupreneur',
-      home: homePage(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
+      home: homePage(analytics: analytics, observer: observer),
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
         primaryColor: Colors.green,
@@ -60,8 +65,8 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: Colors.white,
         textSelectionColor: Colors.black,
       ),
-      routes: <String,WidgetBuilder>{
-        '/chat': (BuildContext context)=>new ChatBoardRoomLoader(),
+      routes: <String, WidgetBuilder>{
+        '/chat': (BuildContext context) => new ChatBoardRoomLoader(),
       },
     );
   }

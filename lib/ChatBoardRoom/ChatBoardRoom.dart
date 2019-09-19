@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:toast/toast.dart';
 import 'AddChatBoardRoom.dart';
@@ -50,6 +51,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         }
       });
     });
+    Analytics.analyticsBehaviour("Discussion_Chat_Page", "Discussion_Page");
   }
 
   Future<dynamic> preference() async {

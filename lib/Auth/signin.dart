@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'package:startupreneur/home.dart';
@@ -38,12 +39,14 @@ class _SigninPageState extends State<SigninPage> {
         tokenId = token;
       });
     });
+    Analytics.analyticsBehaviour("Sign_in_page", "SignIn");
   }
 
   static preferences(String userId, String _email) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userId);
     sharedPreferences.setString("UserEmail", _email);
+    Analytics.setUserId(userId);
     print(sharedPreferences.getString("UserId"));
     var data = Map<String, dynamic>();
     data["mobToken"] = tokenId;

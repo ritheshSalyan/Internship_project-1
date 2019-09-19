@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../socialize/socialize.dart';
+// import '../socialize/socialize.dart';
+import '../Socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class SummaryTheoryPage extends StatefulWidget {
@@ -173,7 +174,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

@@ -57,7 +57,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

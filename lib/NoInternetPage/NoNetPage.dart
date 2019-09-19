@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_flare/smart_flare.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 
 class NoNetPage extends StatefulWidget {
   @override
@@ -7,6 +8,15 @@ class NoNetPage extends StatefulWidget {
 }
 
 class _NoNetPageState extends State<NoNetPage> {
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Analytics.analyticsBehaviour("No_Internet_page_loading", "No_internet");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Material(

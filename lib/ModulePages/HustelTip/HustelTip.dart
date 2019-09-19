@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -26,13 +27,7 @@ class _HustelTipPageState extends State<HustelTipPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _controller = AnimationController(
-    //     duration: Duration(milliseconds: 3000), vsync: this);
-    // animation = Tween(begin: -500.0, end: 100.0).animate(_controller)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
-    // _controller.forward();
+    Analytics.analyticsBehaviour("Hustle_Tip_Page", "Hustle_Tip");
   }
 
   void dispose() {
@@ -107,7 +102,7 @@ class _HustelTipPageState extends State<HustelTipPage>
                           builder: (_) {
                             return AlertDialog(
                               content: Text(
-                                  "Are you sure you want to return to home Page?? "),
+                                  "Are you sure you want to return to Home Page? "),
                               title: Text(
                                 "Warning!",
                               ),

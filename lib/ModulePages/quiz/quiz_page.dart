@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,6 +27,14 @@ class _QuizPageState extends State<QuizPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Analytics.analyticsBehaviour("Quiz_Page", "Quiz_Page");
+  }
+
   @override
   Widget build(BuildContext context) {
     String question = "";
@@ -44,7 +53,7 @@ class _QuizPageState extends State<QuizPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

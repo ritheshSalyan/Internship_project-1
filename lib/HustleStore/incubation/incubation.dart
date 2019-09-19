@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HustleStore/ViewDocs/ViewDocs.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -58,6 +59,8 @@ class _IncubationState extends State<Incubation> {
     super.initState();
     preferences();
     status = false;
+
+    Analytics.analyticsBehaviour("Incubation_Hustle_Store", "incubation_Hustle");
   }
 
   void preferences() async {

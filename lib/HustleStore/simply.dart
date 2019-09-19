@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HustleStore/detailingPage/detailing.dart';
 import 'googleCloud/googleCloudLoader.dart';
 import 'hacks/startup_hacks_loader.dart';
@@ -56,6 +57,7 @@ class _HustleStoreState extends State<HustleStore> {
     super.initState();
     preferences();
     db = Firestore.instance;
+    Analytics.analyticsBehaviour("Hustle_Store_Page", "HustleStoreMainPage");
   }
 
   void preferences() async {

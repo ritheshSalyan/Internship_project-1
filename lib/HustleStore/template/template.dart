@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
@@ -53,6 +54,8 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     });
     preferences();
     request();
+
+    Analytics.analyticsBehaviour("Templates_Page_Hustle", "Template_Page");
   }
 
   void request() async {
