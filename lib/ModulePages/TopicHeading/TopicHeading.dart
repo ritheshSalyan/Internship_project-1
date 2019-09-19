@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/saveProgress.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -69,6 +70,8 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                           ),
                           onPressed: () {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            SaveProgress.preferences(widget.modNum, widget.index);
+
                             Navigator.of(context)
                                 .popUntil(ModalRoute.withName("TimelinePage"));
                           },
@@ -124,7 +127,9 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                           color: Colors.green,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
+                          
                         ),
+                        maxLines: 8,
                       ),
                       SizedBox(
                         height: 35,

@@ -206,7 +206,7 @@ class FileUploadState extends State<FileUpload> {
         color: Colors.green,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
                Padding(
                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),

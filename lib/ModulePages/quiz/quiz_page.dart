@@ -239,7 +239,7 @@ class _QuizPageState extends State<QuizPage> {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "Well Done!\n\n" + reason,
+                                      "You’ve got it Right\n\n" + reason,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16.0,
@@ -259,7 +259,7 @@ class _QuizPageState extends State<QuizPage> {
                                             .hideCurrentSnackBar();
                                         List<dynamic> arguments = [
                                           widget.modNum,
-                                          widget.index + 1
+                                          widget.index 
                                         ];
                                         orderManagement.moveNextIndex(
                                             context, arguments);
@@ -280,7 +280,7 @@ class _QuizPageState extends State<QuizPage> {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "Oops! Wrong answer",
+                                      "Hmm, not quite right but definitely an interesting perspective",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16.0,

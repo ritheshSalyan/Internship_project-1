@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
+import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import '../ModulePages/quiz/quizLoader.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import '../ModulePages/VideoController/VideoController.dart';
@@ -39,6 +41,8 @@ enum Type {
   uploadActivity,
   hustelTip,
   imagePage,
+  flip,
+  ideaActivity,
 }
 
 class orderManagement {
@@ -124,6 +128,25 @@ class orderManagement {
             MaterialPageRoute(
               builder: (context) =>
                   ImagePageLoading(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
+           case Type.ideaActivity:
+          print("ideaActivity");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                 IdeaActivity(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
+
+           case Type.flip:
+          print("flip");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                 FlipPage(modnum: arguments[0], index: currentIndex),
             ),
           );
           break;
