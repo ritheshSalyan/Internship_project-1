@@ -95,16 +95,16 @@ class orderManagement {
           ),
         );
       } else {
-        complete.add(arguments[0] + 1);
-        var data = Map<String, dynamic>();
-        data["completed"] = complete;
-        data["points"] = points+modulePoint;
-        await db.collection("user").document(userid).setData(data, merge: true);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SummaryPage(),
-          ),
-        );
+        // complete.add(arguments[0] + 1);
+        // var data = Map<String, dynamic>();
+        // data["completed"] = complete;
+        // data["points"] = points+modulePoint;
+        // await db.collection("user").document(userid).setData(data, merge: true);
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => SummaryPage(),
+        //   ),
+        // );
       }
     } else {
       switch (order[currentIndex]) {

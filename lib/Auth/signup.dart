@@ -75,64 +75,98 @@ class _SignupPageState extends State<SignupPage>
   }
 
   void signUpInwithEmail(BuildContext context) async {
+    bool flag = false;
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Creating Account..");
+    progressDialog.show();
 
-    try {
-      progressDialog.show();
-
-      user = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: _password,
-      );
-      print("Email Verification");
-      progressDialog.setMessage("Please Verify Email");
-      //await user.sendEmailVerification();
-
-      user = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: _password,
-      );
-      userid = user.uid;
-     _preferences(userid);
-      print("its is $user");
-      Toast.show("Please Verify your Email id and sign In", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
-      if (referalCodeFromFriend.isNotEmpty) {
-        await db
-            .collection("user")
-            .where("uid", isEqualTo: referalCodeFromFriend)
-            .getDocuments()
-            .then((onValue) {
-          onValue.documents.forEach((document) {
-            referePoint = document.data["points"];
-          });
-        });
-
-        var dataMap = new Map<String, dynamic>();
-        dataMap['points'] = 5000 + referePoint;
-        db
-            .collection("user")
-            .document(referalCodeFromFriend)
-            .setData(dataMap, merge: true);
-      }
-
-      createNote();
-      setState(() {
-        status = true;
+    var value;
+    await _auth.fetchSignInMethodsForEmail(email: email).then((data) {
+      print(data);
+      value = data;
+    });
+    if (value.isNotEmpty) {
+      value.forEach((result) {
+        print(result);
+        switch (result) {
+          case "ERROR_INVALID_CREDENTIAL":
+            Toast.show("Sign up failed, please try again", context,
+                gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+            progressDialog.hide();
+            break;
+          case "ERROR_USER_NOT_FOUND":
+            setState(() {
+              flag = true;
+            });
+            break;
+          default:
+            Toast.show(
+                "Email is already in use! Please Login with credientials",
+                context,
+                gravity: Toast.BOTTOM,
+                duration: Toast.LENGTH_LONG);
+            progressDialog.hide();
+        }
       });
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new RoadmapLoader(
-          status: status,
-        ),
-      ));
-    } catch (e) {
-      print("ERROR IN SIGNUP:"+e.toString());
-      //progressDialog.hide();
-      Toast.show("Sign up failed, please try again", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
-    } finally {
-      if (user != null) {}
+    } else {
+      flag = true;
+    }
+
+    if (flag) {
+      try {
+        progressDialog.show();
+        user = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: _password,
+        );
+        print("Email Verification");
+        progressDialog.setMessage("Please Verify Email");
+        //await user.sendEmailVerification();
+        user = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: _password,
+        );
+        userid = user.uid;
+        _preferences(userid);
+        print("its is $user");
+        Toast.show("Please Verify your Email id and sign In", context,
+            gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+        if (referalCodeFromFriend.isNotEmpty) {
+          await db
+              .collection("user")
+              .where("uid", isEqualTo: referalCodeFromFriend)
+              .getDocuments()
+              .then((onValue) {
+            onValue.documents.forEach((document) {
+              referePoint = document.data["points"];
+            });
+          });
+
+          var dataMap = new Map<String, dynamic>();
+          dataMap['points'] = 5000 + referePoint;
+          db
+              .collection("user")
+              .document(referalCodeFromFriend)
+              .setData(dataMap, merge: true);
+        }
+
+        createNote();
+        setState(() {
+          status = true;
+        });
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => new RoadmapLoader(
+            status: status,
+          ),
+        ));
+      } catch (e) {
+        print("ERROR IN SIGNUP:" + e.toString());
+        //progressDialog.hide();
+        Toast.show("Sign up failed, please try again", context,
+            gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+      } finally {
+        if (user != null) {}
+      }
     }
   }
 
@@ -147,7 +181,7 @@ class _SignupPageState extends State<SignupPage>
     dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
     dataMap['uid'] = userid;
     dataMap['points'] = 1000;
-    dataMap['completed'] = [1];
+    dataMap['completed'] = [1, 2];
     dataMap["payment"] = true;
     dataMap["resume"] = "";
     dataMap["hustle"] = [];
@@ -190,7 +224,6 @@ class _SignupPageState extends State<SignupPage>
 
   @override
   bool get wantKeepAlive => true;
-
 
   @override
   void initState() {

@@ -39,8 +39,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void request() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    try {
+      Map<PermissionGroup, PermissionStatus> permissions =
+          await PermissionHandler()
+              .requestPermissions([PermissionGroup.storage]);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
