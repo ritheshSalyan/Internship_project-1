@@ -225,6 +225,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                       child: Text(
                         widget.title,
                         //"Startup or Job",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: "sans-serif",
                             color: Colors.white,

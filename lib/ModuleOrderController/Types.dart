@@ -132,7 +132,7 @@ class orderManagement {
           );
           break;
            case Type.ideaActivity:
-          print("ideaActivity");
+          print("ideaActivity $currentIndex");
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>

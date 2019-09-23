@@ -3,20 +3,25 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
 
 class IdeaActivity extends StatefulWidget {
   IdeaActivity({Key key, this.modNum, this.index}) : super(key: key);
-  int modNum, index;
+  final  int modNum, index;
   @override
   _IdeaActivityState createState() => _IdeaActivityState();
 }
 
 class _IdeaActivityState extends State<IdeaActivity> {
-static String name,idea,grow,person;
+  static String name, idea, grow, person;
+
+  ProgressDialog progressDialog;
   @override
   Widget build(BuildContext context) {
+    print("*************************************${widget.index}");
     return OfflineBuilder(
       child: NoNetPage(),
       connectivityBuilder: (contex, connection, child) {
@@ -139,7 +144,7 @@ static String name,idea,grow,person;
                               Icons.info_outline,
                               color: Colors.green,
                             ),
-                            hintText: "you@example.com",
+                            hintText: " ",
                             labelText:
                                 "What is your Business Idea: How is it differentiated?",
                             labelStyle: TextStyle(
@@ -216,8 +221,19 @@ static String name,idea,grow,person;
                   ),
                   OutlineButton(
                     child: Text("Upload"),
-                    onPressed: () {
-                      getFile();
+                    onPressed: () async {
+                      progressDialog = new ProgressDialog(
+                          context, ProgressDialogType.Normal);
+                      progressDialog.setMessage("Uploading....");
+                      print("*****************************************************INdex here ${widget.index}");
+                      progressDialog.show();
+                      await getFile();
+                      List<dynamic> arguments = [
+                        widget.modNum,
+                        widget.index + 1
+                      ];
+                      orderManagement.moveNextIndex(context, arguments);
+                      progressDialog.hide();
                     },
                   )
                 ],
@@ -250,12 +266,13 @@ static String name,idea,grow,person;
     // var bodyBytes = downloadData.bodyBytes;
     final String name1 = await ref.getName();
     final String path = await ref.getPath();
-	final String stri = await tempFile.readAsString();
+    final String stri = await tempFile.readAsString();
     print(
       'Success!\nDownloaded $name1 \nUrl: $url'
       '\npath: $path \nBytes Count :: $byteCount\n${stri}',
     );
-	tempFile.writeAsString("$name,$idea,$person,$grow\n",flush:false,mode: FileMode.APPEND);
+    tempFile.writeAsString("$name,$idea,$person,$grow\n",
+        flush: false, mode: FileMode.APPEND);
     upload(ref, tempFile);
 
     // _scaffoldKey.currentState.showSnackBar(
