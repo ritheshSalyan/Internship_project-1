@@ -230,7 +230,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                       await getFile();
                       List<dynamic> arguments = [
                         widget.modNum,
-                        widget.index + 1
+                       32 + 1
                       ];
                       orderManagement.moveNextIndex(context, arguments);
                       progressDialog.hide();
