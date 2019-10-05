@@ -21,7 +21,7 @@ class _QuizPageState extends State<QuizPage> {
     color: Colors.white,
   );
   List<dynamic> options = [];
-  int selectedRadio = 0;
+  int selectedRadio;
   String reason = "";
   List<String> correctAns;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -194,6 +194,7 @@ class _QuizPageState extends State<QuizPage> {
                                       return ListView.builder(
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
+                                        // reverse: true,
                                         itemCount: options.length,
                                         itemBuilder: (context, index) {
                                           return RadioListTile(
@@ -205,7 +206,6 @@ class _QuizPageState extends State<QuizPage> {
                                               setState(() {
                                                 selectedRadio = value;
                                                 _answerIs = (value).toString();
-                                                // _answers[_currentIndex] = value;
                                                 print("answer $_answerIs");
                                               });
                                             },

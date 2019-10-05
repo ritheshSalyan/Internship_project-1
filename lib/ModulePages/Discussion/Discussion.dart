@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
@@ -38,6 +39,22 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // TODO: implement initState
     super.initState();
     Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  
+  @override 
+  dispose(){
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]).then((_){
+      print("Dispose of oirentation done");
+    });
+    super.dispose();
   }
 
 
