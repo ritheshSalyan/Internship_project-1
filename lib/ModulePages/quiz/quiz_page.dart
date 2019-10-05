@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -14,7 +13,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   Firestore db = Firestore.instance;
-  static final _formkey = GlobalKey<FormState>();
+  // static final _formkey = GlobalKey<FormState>();
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
@@ -30,7 +29,7 @@ class _QuizPageState extends State<QuizPage> {
 
    @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("Quiz_Page", "Quiz_Page");
   }

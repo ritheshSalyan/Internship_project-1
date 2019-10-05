@@ -1,8 +1,5 @@
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../HustleStoreLoader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,7 +38,7 @@ class AddEntryDialogState extends State<AddEntryDialogHyperLink> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     print("init ${widget.claimedUser}");
     // SchedulerBinding.instance.addPostFrameCallback((_){

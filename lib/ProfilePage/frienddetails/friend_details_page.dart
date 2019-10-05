@@ -6,7 +6,6 @@ import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../frienddetails/friend_detail_body.dart';
 import '../frienddetails/header/friend_detail_header.dart';
 import '../friends/friend.dart';
-import 'package:meta/meta.dart';
 
 class FriendDetailsPage extends StatefulWidget {
   // FriendDetailsPage(
@@ -26,7 +25,6 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
   
    @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Analytics.analyticsBehaviour("User_Profile_page", "Profile_Page");
   }

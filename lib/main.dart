@@ -1,7 +1,6 @@
 // flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 
 import 'dart:async';
-import 'dart:io';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:path_provider/path_provider.dart';
 // import 'HustleStore/HustleStore.dart';
 
 void main() async {
@@ -33,14 +31,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     request();
   }
 
   void request() async {
     try {
-      Map<PermissionGroup, PermissionStatus> permissions =
           await PermissionHandler()
               .requestPermissions([PermissionGroup.storage]);
     } catch (e) {

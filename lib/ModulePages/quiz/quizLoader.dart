@@ -15,7 +15,7 @@ class QuizLoading extends StatefulWidget {
 class _QuizLoading extends State<QuizLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // Navigator.of(context).pushReplacement(
     //   MaterialPageRoute(

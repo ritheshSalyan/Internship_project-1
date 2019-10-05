@@ -25,7 +25,6 @@ class DiagonalClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final height = size.height;
     final width = size.width;
-    Path path = new Path();
 
     Path ovalPath = new  Path();
     // Start paint from 20% height to the left

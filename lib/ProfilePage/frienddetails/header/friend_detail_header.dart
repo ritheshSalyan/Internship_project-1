@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'diagonally_cut_colored_image.dart';
 import '../../friends/friend.dart';
-import 'package:meta/meta.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
-import 'package:photo_view/photo_view.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../ProfilePageLoader.dart';
 
 class FriendDetailHeader extends StatelessWidget  {
@@ -19,7 +15,7 @@ class FriendDetailHeader extends StatelessWidget  {
     this.friend,
     this.context,
   });
-  File file;
+   File file;
   final Friend friend;
   final BuildContext context;
  
@@ -29,7 +25,7 @@ class FriendDetailHeader extends StatelessWidget  {
     try {
      
        print("Before File picked ");
-      var file1 = await FilePicker.getFile(type: FileType.IMAGE).timeout(Duration(seconds: 10),onTimeout: (){print("hello timeput");});
+      var file1 = await FilePicker.getFile(type: FileType.IMAGE).timeout(Duration(seconds: 10));
       // var file1 = await ImagePicker.pickImage(source: ImageSource.gallery);
       
       print("File picked successfully");

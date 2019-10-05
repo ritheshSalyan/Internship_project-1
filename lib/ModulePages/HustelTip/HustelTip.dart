@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import '../../ModuleOrderController/Types.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HustelTipPage extends StatefulWidget {
   HustelTipPage({
@@ -25,7 +24,7 @@ class _HustelTipPageState extends State<HustelTipPage>
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("Hustle_Tip_Page", "Hustle_Tip");
   }

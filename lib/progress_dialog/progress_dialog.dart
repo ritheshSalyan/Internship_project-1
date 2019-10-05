@@ -5,7 +5,7 @@ String _dialogMessage = "Loading...";
 enum ProgressDialogType { Normal, Download }
 
 ProgressDialogType _progressDialogType = ProgressDialogType.Normal;
-double _progress = 0.0;
+int _progress = 0;
 
 bool _isShowing = false;
 
@@ -26,7 +26,7 @@ class ProgressDialog {
     debugPrint("ProgressDialog message changed: $mess");
   }
 
-  void update({double progress, String message}) {
+  void update({int progress, String message}) {
     debugPrint("ProgressDialog message changed: ");
     if (_progressDialogType == ProgressDialogType.Download) {
       debugPrint("Old Progress: $_progress, New Progress: $progress");

@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -36,7 +35,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
    @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
      SystemChrome.setPreferredOrientations([

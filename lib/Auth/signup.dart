@@ -9,10 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
-import 'dart:io';
-import 'dart:typed_data';
 import 'PdfReader.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,7 +21,6 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage>
     with AutomaticKeepAliveClientMixin {
-  static var _value = null;
   static FirebaseUser user;
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
@@ -53,11 +49,11 @@ class _SignupPageState extends State<SignupPage>
   static var fname = "";
   static var email = "";
   static var mobile = "";
-  static var gender = null;
+  static var gender;
   static var _password = "";
-  static var _confirmPassword = "";
+  // static var _confirmPassword = "";
   static var institutionOrCompany = "";
-  static var typeOfOccupations = null;
+  static var typeOfOccupations;
   static var referalCodeFromFriend = "", userid = "";
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;

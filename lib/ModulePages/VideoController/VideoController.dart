@@ -7,7 +7,6 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
-import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {

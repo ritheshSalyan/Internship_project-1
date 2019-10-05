@@ -15,7 +15,7 @@ class DecisionGameTextLoading extends StatefulWidget {
 class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

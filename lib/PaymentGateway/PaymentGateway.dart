@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +15,7 @@ class _PaymentGatewayPageState extends State<PaymentGatewayPage> with AutomaticK
 
   SharedPreferences _sharedPreferences;
   String userId;
-  Razorpay _razorpay;
+  // Razorpay _razorpay;
   Firestore  db = Firestore.instance;
   dynamic decision;
   FirebaseAuth _auth = FirebaseAuth.instance;

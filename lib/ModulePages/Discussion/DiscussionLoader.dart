@@ -16,7 +16,7 @@ class DiscussionLoading extends StatefulWidget {
 class _DiscussionLoading extends State<DiscussionLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
      SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'quote.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class QuoteLoading extends StatefulWidget {
   QuoteLoading({Key key, this.modNum}) : super(key: key);
@@ -15,7 +14,7 @@ class QuoteLoading extends StatefulWidget {
 class _QuoteLoading extends State<QuoteLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
    
   }

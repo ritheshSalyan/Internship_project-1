@@ -4,9 +4,6 @@ import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/Auth/signin.dart';
-import '../home.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import '../Auth/signin.dart';
 
 // class IntroPage extends StatefulWidget {
@@ -34,7 +31,7 @@ class _PageStarter1StateState extends State<PageStarter1State> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("Introduction_Page", "Starting_Page");
   }

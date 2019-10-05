@@ -33,7 +33,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

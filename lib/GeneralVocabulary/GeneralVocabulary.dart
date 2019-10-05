@@ -24,7 +24,7 @@ class _VocabularyState extends State<Vocabulary> {
   // final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // dataRetrieve();
     Analytics.analyticsBehaviour("At_Main_Vocabulary_Page", "GeneralVocabulary");

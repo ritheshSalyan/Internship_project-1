@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ImagePage.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class ImagePageLoading extends StatefulWidget {
   ImagePageLoading({Key key, this.modNum,this.index}) : super(key: key);
@@ -15,7 +14,7 @@ class ImagePageLoading extends StatefulWidget {
 class _ImagePageLoading extends State<ImagePageLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

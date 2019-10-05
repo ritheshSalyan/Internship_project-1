@@ -5,15 +5,6 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
-import 'package:startupreneur/HustleStore/detailingPage/detailing.dart';
-import 'googleCloud/googleCloudLoader.dart';
-import 'hacks/startup_hacks_loader.dart';
-import 'incubation/incubation.dart';
-import 'paymentGateway/paymentGatewayLoader.dart';
-import 'seedFunding/seedFundingLoader.dart';
-import 'template/templateLoader.dart';
-import 'internship/DataListingLoader.dart';
-import 'hyperLinkPage/hyperLinkPage.dart';
 
 class Component {
   String name;
@@ -53,7 +44,7 @@ class _HustleStoreState extends State<HustleStore> {
   List<dynamic> list = [];
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     preferences();
     db = Firestore.instance;

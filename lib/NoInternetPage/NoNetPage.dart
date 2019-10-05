@@ -11,7 +11,7 @@ class _NoNetPageState extends State<NoNetPage> {
 
    @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("No_Internet_page_loading", "No_internet");
   }

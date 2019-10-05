@@ -15,7 +15,7 @@ class _PdfReaderState extends State<PdfReader> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     print("path from pdfreader ${widget.path}");
   }

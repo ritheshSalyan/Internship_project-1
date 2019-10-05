@@ -36,7 +36,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     preference();
     tags.clear();

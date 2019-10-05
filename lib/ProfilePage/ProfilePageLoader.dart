@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../ProfilePage/frienddetails/friend_details_page.dart';
 import 'friends/friend.dart';
@@ -9,7 +8,7 @@ import 'friends/friend.dart';
 
 class ProfileLoading extends StatefulWidget {
   ProfileLoading({Key key,this.uid}) : super(key: key);
-  String uid;
+  final String uid;
   
   // final int modNum;
   @override
@@ -21,7 +20,6 @@ class _ProfileLoading extends State<ProfileLoading> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
    
   }

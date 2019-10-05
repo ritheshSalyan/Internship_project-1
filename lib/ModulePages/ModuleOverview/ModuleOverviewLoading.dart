@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'ModuleOverview.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class ModuleOverviewLoading extends StatefulWidget {
   ModuleOverviewLoading({Key key, this.modNum}) : super(key: key);
@@ -16,7 +14,7 @@ class ModuleOverviewLoading extends StatefulWidget {
 class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

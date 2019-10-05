@@ -1,7 +1,6 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
-import '../Discussion/Discussion.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -26,7 +25,7 @@ class _ActivityPageState extends State<ActivityPage> {
 
  @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("Category_Activity", "Category");
   }

@@ -99,7 +99,7 @@ List<Doodle> doodles = [
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
-      "Market Research - 1",
+      "Market Research I",
       style: TextStyle(
 //                            color: Colors.white,
         // fontSize: 16,
@@ -131,7 +131,7 @@ List<Doodle> doodles = [
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
-      "Market Research - 2",
+      "Market Research II",
       style: TextStyle(
 //                            color: Colors.white,
         // fontSize: 16,

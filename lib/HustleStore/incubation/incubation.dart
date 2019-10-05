@@ -55,7 +55,7 @@ class _IncubationState extends State<Incubation> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     preferences();
     status = false;

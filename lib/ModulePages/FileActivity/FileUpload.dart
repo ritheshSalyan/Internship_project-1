@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 // import 'package:intro_slider/dot_animation_enum.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
@@ -30,7 +28,7 @@ class FileUploadState extends State<FileUpload> {
 
    @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     Analytics.analyticsBehaviour("File_Uploading_Page_Module", "File_Upload_Page");
   }
@@ -340,7 +338,7 @@ class FileUploadState extends State<FileUpload> {
     String result;
     if (task.isComplete) {
       if (task.isSuccessful) {
-        String url = await task.lastSnapshot.ref.getDownloadURL();
+        await task.lastSnapshot.ref.getDownloadURL();
         // var file = FileData(task.lastSnapshot.ref.toString(),
         //     task.lastSnapshot.storageMetadata.name, url);
         result = 'Complete' + task.lastSnapshot.ref.toString();

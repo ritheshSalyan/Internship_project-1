@@ -1,8 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
-import 'package:startupreneur/Auth/signin.dart';
-import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/IntroPage/IntroPageController.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';

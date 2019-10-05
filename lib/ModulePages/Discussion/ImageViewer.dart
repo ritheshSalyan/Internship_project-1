@@ -1,7 +1,5 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:photo_view/photo_view.dart';
 
 class ImageViewer extends StatefulWidget {
   ImageViewer({Key key, this.image}) : super(key: key);
@@ -13,7 +11,7 @@ class ImageViewer extends StatefulWidget {
 class _ImageViewerState extends State<ImageViewer> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // SystemChrome.setPreferredOrientations([
     //   DeviceOrientation.portraitUp,

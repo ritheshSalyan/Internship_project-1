@@ -1,18 +1,13 @@
-import 'dart:async';
 import 'dart:io';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
-import '../../Auth/signin.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:permission/permission.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -45,7 +40,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     context = this.context;
 
@@ -60,15 +55,14 @@ class _TemplateDownloadState extends State<TemplateDownload> {
 
   void request() async {
     List<PermissionName> list = [PermissionName.Storage];
-    var permission = await Permission.requestPermissions(list);
-    var status = await Permission.getPermissionsStatus(list);
+    await Permission.requestPermissions(list);
+     await Permission.getPermissionsStatus(list);
   }
 
   void preferences() async {
     sharedPreferences = await SharedPreferences.getInstance();
     userId = sharedPreferences.getString("UserId");
     print(userId);
-    String platfrom;
   }
 
   String fileNameRetriver(int index) {
@@ -161,7 +155,6 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     final double width = MediaQuery.of(context).size.width * 0.9;
     final double height = MediaQuery.of(context).size.height * 0.75;
 
-    Widget child;
     return Scaffold(
       appBar: AppBar(
         title: Text(

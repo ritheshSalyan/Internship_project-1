@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../VideoController/VideoController.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class videoPlayerPage extends StatefulWidget {

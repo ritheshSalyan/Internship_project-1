@@ -3,7 +3,6 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
-import '../ModulePages/Activity/Activity.dart';
 import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
@@ -26,7 +25,6 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
   }
 
   void create_slides() {
-    int i = 3;
     List<String> list = widget.dialogue;
     for (int i = 0; i < list.length; i++) {
       String item = list[i];
