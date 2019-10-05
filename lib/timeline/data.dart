@@ -62,10 +62,11 @@ List<Doodle> doodles = [
     ),
     color: Colors.grey[100],
   ),
+ 
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
-      "Idea and Market Research",
+      "Idea",
       style: TextStyle(
 //                            color: Colors.white,
           // fontSize: 10,
@@ -92,6 +93,70 @@ List<Doodle> doodles = [
     ),
     points: Text(
       "${1500}",
+    ),
+    color: Colors.grey[100],
+  ),
+    new Doodle(
+    colors: [Colors.grey[100], Colors.grey[100]],
+    name: AutoSizeText(
+      "Market Research I",
+      style: TextStyle(
+//                            color: Colors.white,
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    time: "Module 14",
+    doodle: "assets/Images/StaringUpIcon.png",
+    // doodle: "assets/Images/gcloud.png",
+    // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
+    icon: Icon(
+      Icons.flag,
+      color: Colors.white,
+    ),
+    iconBackground: Colors.green,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "${2000}",
+    ),
+    color: Colors.grey[100],
+  ),
+    new Doodle(
+    colors: [Colors.grey[100], Colors.grey[100]],
+    name: AutoSizeText(
+      "Market Research II",
+      style: TextStyle(
+//                            color: Colors.white,
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    time: "Module 15",
+    doodle: "assets/Images/StaringUpIcon.png",
+    // doodle: "assets/Images/gcloud.png",
+    // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
+    icon: Icon(
+      Icons.flag,
+      color: Colors.white,
+    ),
+    iconBackground: Colors.green,
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "${2500}",
     ),
     color: Colors.grey[100],
   ),
@@ -123,7 +188,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${2000}",
+      "${3000}",
     ),
     color: Colors.grey[100],
   ),
@@ -154,7 +219,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${2500}",
+      "${3500}",
     ),
     color: Colors.grey[100],
   ),
@@ -185,7 +250,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${3000}",
+      "${4000}",
     ),
     color: Colors.grey[100],
   ),
@@ -216,7 +281,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${3500}",
+      "${4500}",
     ),
     color: Colors.grey[100],
   ),
@@ -248,7 +313,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${4000}",
+      "${5000}",
     ),
     color: Colors.grey[100],
   ),
@@ -279,7 +344,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${4500}",
+      "${5500}",
     ),
     color: Colors.grey[100],
   ),
@@ -310,7 +375,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${5000}",
+      "${6000}",
     ),
     color: Colors.grey[100],
   ),
@@ -342,7 +407,7 @@ List<Doodle> doodles = [
     ),
     color: Colors.grey[100],
     points: Text(
-      "${5500}",
+      "${6500}",
     ),
   ),
   Doodle(
@@ -372,7 +437,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${6000}",
+      "${7000}",
     ),
     color: Colors.grey[100],
   ),
@@ -412,7 +477,7 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${6500}",
+      "${7500}",
     ),
     color: Colors.grey[100],
   ),

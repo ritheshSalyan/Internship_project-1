@@ -5,6 +5,7 @@ import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flushbar/flushbar.dart';
@@ -71,6 +72,8 @@ class _ListingDataState extends State<ListingData> {
     } else {
       widget.title = "Internship";
     }
+
+    Analytics.analyticsBehaviour("internship_Offer_Page", "Internship_Page");
   }
 
   void preferences() async {

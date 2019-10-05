@@ -1,8 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import '../../ModuleOrderController/Types.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class ImagePagePage extends StatefulWidget {
   ImagePagePage({
@@ -26,7 +24,7 @@ class _ImagePagePageState extends State<ImagePagePage>
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -73,7 +71,7 @@ class _ImagePagePageState extends State<ImagePagePage>
                                 builder: (_) {
                                   return AlertDialog(
                                     content: Text(
-                                        "Are you sure you want to return to home Page?? "),
+                                        "Are you sure you want to return to Home Page? "),
                                     title: Text(
                                       "Warning!",
                                     ),

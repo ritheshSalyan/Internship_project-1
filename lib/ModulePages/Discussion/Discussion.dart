@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:photo_view/photo_view.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:extended_image/extended_image.dart';
@@ -31,6 +32,31 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+
+   @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  
+  @override 
+  dispose(){
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]).then((_){
+      print("Dispose of oirentation done");
+    });
+    super.dispose();
+  }
+
+
 
   _onSubmit() {
     setState(() {
@@ -173,7 +199,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

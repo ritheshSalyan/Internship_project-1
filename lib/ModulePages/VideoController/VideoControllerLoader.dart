@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'VideoController.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class VideoControllerLoading extends StatefulWidget {
   VideoControllerLoading({Key key, this.modNum,this.index}) : super(key: key);
@@ -15,7 +14,7 @@ class VideoControllerLoading extends StatefulWidget {
 class _VideoControllerLoading extends State<VideoControllerLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

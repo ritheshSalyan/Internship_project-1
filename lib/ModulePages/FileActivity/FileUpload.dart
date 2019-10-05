@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:intro_slider/dot_animation_enum.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,6 +24,14 @@ class FileUpload extends StatefulWidget {
 //------------------ Default config ------------------
 class FileUploadState extends State<FileUpload> {
   List<Container> slides = new List();
+
+
+   @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("File_Uploading_Page_Module", "File_Upload_Page");
+  }
 
   File file;
   String uid;
@@ -62,10 +69,7 @@ class FileUploadState extends State<FileUpload> {
         ));
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  
 
   void getSlides() {
     var alert = GestureDetector(
@@ -76,7 +80,7 @@ class FileUploadState extends State<FileUpload> {
             builder: (_) {
               return AlertDialog(
                 content:
-                    Text("Are you sure you want to return to home Page?? "),
+                    Text("Are you sure you want to return to Home Page? "),
                 title: Text(
                   "Warning!",
                 ),
@@ -334,7 +338,7 @@ class FileUploadState extends State<FileUpload> {
     String result;
     if (task.isComplete) {
       if (task.isSuccessful) {
-        String url = await task.lastSnapshot.ref.getDownloadURL();
+        await task.lastSnapshot.ref.getDownloadURL();
         // var file = FileData(task.lastSnapshot.ref.toString(),
         //     task.lastSnapshot.storageMetadata.name, url);
         result = 'Complete' + task.lastSnapshot.ref.toString();

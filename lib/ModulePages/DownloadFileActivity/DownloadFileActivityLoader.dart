@@ -1,35 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivity.dart';
+import '../../ModuleOrderController/Types.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'TopicHeading.dart';
-import '../../ModuleOrderController/Types.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'DecisionGame.dart';
 
-class TopicHeadingLoading extends StatefulWidget {
-  TopicHeadingLoading({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+class DownloadFileActivityLoader extends StatefulWidget {
+  DownloadFileActivityLoader({Key key, this.modNum, this.index})
+      : super(key: key);
+  final int modNum, index;
   @override
-  _TopicHeadingLoading createState() => _TopicHeadingLoading();
+  _DownloadFileActivityLoader createState() => _DownloadFileActivityLoader();
 }
 
-class _TopicHeadingLoading extends State<TopicHeadingLoading> {
+class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
   @override
   void initState() {
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      print("TopicHeading is " + title.toString());
+    getEventsFromFirestore(widget.modNum).then((value) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => TopicHeadingPage(
-           index:widget.index,
+          builder: (context) => DownloadFileActivity(
             modNum: widget.modNum,
-            title: title[0],
-           
+            order: widget.index,
+            file: value,
           ),
         ),
       );
@@ -62,34 +62,22 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
     );
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('topicHeading');
+  static Future<String> getEventsFromFirestore(int modNum) async {
+    CollectionReference ref = Firestore.instance.collection('downloadFileActivity');
     QuerySnapshot eventsQuery =
         await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+        .where("order",isEqualTo: 1).getDocuments();
+        // .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
-    List<String> title = [];
+    String title;
     eventsQuery.documents.forEach((document) {
-      print("TopicHeading " +
-          document.toString());
+      print("downloadFileActivity " +
+          document['file']);
 
-      title = convert(document["content"]);
+      title = document["file"];
       // title.add(document["image"].toString());
     });
-
     return title;
-  }
-  
-  static List<String> convert(List<dynamic> dlist){
-
-    List<String> list = new List<String>();
-
-    for (var item in dlist) {
-       list.add(item.toString());
-       print(item.toString());
-    }
-    //list.add("assets/Images/think.png");
-    return list;
   }
 }

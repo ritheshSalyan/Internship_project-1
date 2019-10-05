@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 
 class ViewCommentPage extends StatefulWidget {

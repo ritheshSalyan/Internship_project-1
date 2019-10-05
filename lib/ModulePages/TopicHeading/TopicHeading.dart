@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/saveProgress.dart';
 import '../../ModuleOrderController/Types.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class TopicHeadingPage extends StatefulWidget {
    TopicHeadingPage(
@@ -27,7 +26,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // _controller = AnimationController(
     //     duration: Duration(milliseconds: 3000), vsync: this);
@@ -58,7 +57,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

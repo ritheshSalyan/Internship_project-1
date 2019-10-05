@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
@@ -8,10 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
-import 'dart:io';
-import 'dart:typed_data';
 import 'PdfReader.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -23,7 +21,6 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage>
     with AutomaticKeepAliveClientMixin {
-  static var _value = null;
   static FirebaseUser user;
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
@@ -52,11 +49,11 @@ class _SignupPageState extends State<SignupPage>
   static var fname = "";
   static var email = "";
   static var mobile = "";
-  static var gender = null;
+  static var gender;
   static var _password = "";
-  static var _confirmPassword = "";
+  // static var _confirmPassword = "";
   static var institutionOrCompany = "";
-  static var typeOfOccupations = null;
+  static var typeOfOccupations;
   static var referalCodeFromFriend = "", userid = "";
   static Firestore db = Firestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -70,67 +67,102 @@ class _SignupPageState extends State<SignupPage>
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
     sharedPreferences.setString("UserEmail", email);
+    Analytics.setUserId(userid);
   }
 
   void signUpInwithEmail(BuildContext context) async {
+    bool flag = false;
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Creating Account..");
+    progressDialog.show();
 
-    try {
-      progressDialog.show();
-
-      user = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: _password,
-      );
-      print("Email Verification");
-      progressDialog.setMessage("Please Verify Email");
-      //await user.sendEmailVerification();
-
-      user = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: _password,
-      );
-      userid = user.uid;
-     _preferences(userid);
-      print("its is $user");
-      Toast.show("Please Verify your Email id and sign In", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
-      if (referalCodeFromFriend.isNotEmpty) {
-        await db
-            .collection("user")
-            .where("uid", isEqualTo: referalCodeFromFriend)
-            .getDocuments()
-            .then((onValue) {
-          onValue.documents.forEach((document) {
-            referePoint = document.data["points"];
-          });
-        });
-
-        var dataMap = new Map<String, dynamic>();
-        dataMap['points'] = 5000 + referePoint;
-        db
-            .collection("user")
-            .document(referalCodeFromFriend)
-            .setData(dataMap, merge: true);
-      }
-
-      createNote();
-      setState(() {
-        status = true;
+    var value;
+    await _auth.fetchSignInMethodsForEmail(email: email).then((data) {
+      print(data);
+      value = data;
+    });
+    if (value.isNotEmpty) {
+      value.forEach((result) {
+        print(result);
+        switch (result) {
+          case "ERROR_INVALID_CREDENTIAL":
+            Toast.show("Sign up failed, please try again", context,
+                gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+            progressDialog.hide();
+            break;
+          case "ERROR_USER_NOT_FOUND":
+            setState(() {
+              flag = true;
+            });
+            break;
+          default:
+            Toast.show(
+                "Email is already in use! Please Login with credientials",
+                context,
+                gravity: Toast.BOTTOM,
+                duration: Toast.LENGTH_LONG);
+            progressDialog.hide();
+        }
       });
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new RoadmapLoader(
-          status: status,
-        ),
-      ));
-    } catch (e) {
-      print("ERROR IN SIGNUP:"+e.toString());
-      //progressDialog.hide();
-      Toast.show("Sign up failed, please try again", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
-    } finally {
-      if (user != null) {}
+    } else {
+      flag = true;
+    }
+
+    if (flag) {
+      try {
+        progressDialog.show();
+        user = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: _password,
+        );
+        print("Email Verification");
+        progressDialog.setMessage("Please Verify Email");
+        //await user.sendEmailVerification();
+        user = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: _password,
+        );
+        userid = user.uid;
+        _preferences(userid);
+        print("its is $user");
+        Toast.show("Please Verify your Email id and sign In", context,
+            gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+        if (referalCodeFromFriend.isNotEmpty) {
+          await db
+              .collection("user")
+              .where("uid", isEqualTo: referalCodeFromFriend)
+              .getDocuments()
+              .then((onValue) {
+            onValue.documents.forEach((document) {
+              referePoint = document.data["points"];
+            });
+          });
+
+          var dataMap = new Map<String, dynamic>();
+          dataMap['points'] = 5000 + referePoint;
+          db
+              .collection("user")
+              .document(referalCodeFromFriend)
+              .setData(dataMap, merge: true);
+        }
+
+        createNote();
+        setState(() {
+          status = true;
+        });
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => new RoadmapLoader(
+            status: status,
+          ),
+        ));
+      } catch (e) {
+        print("ERROR IN SIGNUP:" + e.toString());
+        //progressDialog.hide();
+        Toast.show("Sign up failed, please try again", context,
+            gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+      } finally {
+        if (user != null) {}
+      }
     }
   }
 
@@ -145,7 +177,7 @@ class _SignupPageState extends State<SignupPage>
     dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
     dataMap['uid'] = userid;
     dataMap['points'] = 1000;
-    dataMap['completed'] = [1];
+    dataMap['completed'] = [1, 2];
     dataMap["payment"] = true;
     dataMap["resume"] = "";
     dataMap["hustle"] = [];
@@ -194,11 +226,11 @@ class _SignupPageState extends State<SignupPage>
     super.initState();
     prepareTestPdf();
     _messaging.getToken().then((token) {
-      // print(token);
       setState(() {
         tokenId = token;
       });
     });
+    Analytics.analyticsBehaviour("Sign_up_page", "SignUp");
   }
 
   Widget fullName(BuildContext context) => TextFormField(

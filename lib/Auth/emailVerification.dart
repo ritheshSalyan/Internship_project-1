@@ -35,7 +35,6 @@ class _EmailVerificationState extends State<EmailVerification> {
                       FirebaseUser user = await FirebaseAuth.instance.currentUser();
                       await user.reload();
                       user = await FirebaseAuth.instance.currentUser();
-                      bool flag = user.isEmailVerified;
                       print("*********************************************************${user.toString()}");
                     },
                   )

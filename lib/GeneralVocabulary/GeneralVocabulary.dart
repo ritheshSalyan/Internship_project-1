@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:folding_cell/folding_cell.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 
 class ItemList {
@@ -23,9 +24,10 @@ class _VocabularyState extends State<Vocabulary> {
   // final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     // dataRetrieve();
+    Analytics.analyticsBehaviour("At_Main_Vocabulary_Page", "GeneralVocabulary");
   }
 
   void popDialog(BuildContext context, String word, String meaning) {

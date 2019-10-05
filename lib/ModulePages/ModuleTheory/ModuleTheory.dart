@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../VideoController/VideoController.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class videoPlayerPage extends StatefulWidget {
@@ -46,7 +45,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                         builder: (_) {
                           return AlertDialog(
                             content: Text(
-                                "Are you sure you want to return to home Page?? "),
+                                "Are you sure you want to return to Home Page? "),
                             title: Text(
                               "Warning!",
                             ),

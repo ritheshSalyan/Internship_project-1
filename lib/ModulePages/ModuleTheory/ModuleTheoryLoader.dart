@@ -15,7 +15,7 @@ class TheoryLoading extends StatefulWidget {
 class _TheoryLoading extends State<TheoryLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
    
   }

@@ -1,11 +1,14 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
-import 'package:startupreneur/Auth/signin.dart';
-import 'package:startupreneur/Auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/IntroPage/IntroPageController.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 
 class homePage extends StatefulWidget {
+  homePage({Key key , this.analytics,this.observer}):super(key:key);
+  FirebaseAnalytics analytics;
+  FirebaseAnalyticsObserver observer;
   @override
   _homePageState createState() => _homePageState();
 }
@@ -16,7 +19,7 @@ class _homePageState extends State<homePage> {
     super.initState();
   }
 
-  static Future<bool> firstLogin() async {
+   Future<bool> firstLogin() async {
     sharedPreferences = await SharedPreferences.getInstance();
     try {
       var value = sharedPreferences.getString("UserId");
@@ -24,6 +27,7 @@ class _homePageState extends State<homePage> {
         print(" log");
         return false;
       }
+      // widget.analytics.setUserId(value);
       return true;
     } catch (e) {
       print(e.toString());

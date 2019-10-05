@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:startupreneur/Auth/signin.dart';
 import 'MainRoadmap.dart';
 import '../PaymentGateway/PaymentGateway.dart';
 
 class RoadmapLoader extends StatefulWidget {
 RoadmapLoader({Key key,this.status}):super(key:key);
-bool status;
+final bool status;
 
   @override
   _RoadmapLoaderState createState() => _RoadmapLoaderState();
@@ -18,7 +17,7 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
 
   Firestore db;
   SharedPreferences _sharedPreferences;
-  String UserId;
+  String userId;
   dynamic decision;
   BuildContext context;
 
@@ -30,8 +29,8 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
   Future<dynamic> preferences() async {
     _sharedPreferences = await SharedPreferences.getInstance();
     db = Firestore.instance;
-    UserId = _sharedPreferences.getString("UserId");
-    await db.collection("user").document(UserId).get().then((document) {
+    userId = _sharedPreferences.getString("UserId");
+    await db.collection("user").document(userId).get().then((document) {
       decision = document.data["payment"];
       print("decision is $decision");
     });

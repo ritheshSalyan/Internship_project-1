@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
-import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {
@@ -35,6 +35,7 @@ class _VideoPlayState extends State<VideoPlay> {
   @override
   void initState() {
     super.initState();
+    Analytics.analyticsBehaviour("Video_Story_Page", "VideoPage");
     _videoPlayerController1 = VideoPlayerController.network(
       // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d',
       widget.videoLink,
@@ -102,7 +103,7 @@ class _VideoPlayState extends State<VideoPlay> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

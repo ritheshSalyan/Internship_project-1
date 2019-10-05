@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'Discussion.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -15,8 +16,21 @@ class DiscussionLoading extends StatefulWidget {
 class _DiscussionLoading extends State<DiscussionLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  @override 
+  dispose(){
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 
   @override

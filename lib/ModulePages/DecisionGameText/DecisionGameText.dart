@@ -1,7 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
 
@@ -24,31 +22,31 @@ class DecisionGameTextPage extends StatefulWidget {
 class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   String data;
   int item = 0;
-  List<String> _listViewData = [
-    // "Swipe Right / Left to remove",
-    // "Swipe Right / Left to remove",
-  ];
+  // List<String> _listViewData = [
+  //   // "Swipe Right / Left to remove",
+  //   // "Swipe Right / Left to remove",
+  // ];
   static final _formkey = GlobalKey<FormState>();
-  _onSubmit() {
-    setState(() {
-      item;
-      if (item <= data.split(". ").length) {
-        print("data.split(" ").length = " +
-            data.split(". ").length.toString() +
-            data.split(". ").toString());
-        // for (var item in ) {
-        if (data.split(".")[item].length > 3) {
-          _listViewData.add(data.split(". ")[item] + ".");
-        }
-        item++;
+//   _onSubmit() {
+//     setState(() {
+//       item;
+//       if (item <= data.split(". ").length) {
+//         print("data.split(" ").length = " +
+//             data.split(". ").length.toString() +
+//             data.split(". ").toString());
+//         // for (var item in ) {
+//         if (data.split(".")[item].length > 3) {
+//           _listViewData.add(data.split(". ")[item] + ".");
+//         }
+//         item++;
 
-        // }
+//         // }
 
-      }
+//       }
 
-// _listViewData.add(_textController.text);
-    });
-  }
+// // _listViewData.add(_textController.text);
+//     });
+//   }
 
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
@@ -189,7 +187,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

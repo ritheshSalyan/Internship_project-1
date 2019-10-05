@@ -15,7 +15,7 @@ class ActivityLoading extends StatefulWidget {
 class _ActivityLoading extends State<ActivityLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

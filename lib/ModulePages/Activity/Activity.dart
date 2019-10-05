@@ -1,6 +1,6 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
-import '../Discussion/Discussion.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -23,6 +23,12 @@ class ActivityPage extends StatefulWidget {
 class _ActivityPageState extends State<ActivityPage> {
   static final _formkey = GlobalKey<FormState>();
 
+ @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("Category_Activity", "Category");
+  }
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
     itemInside.add(
@@ -113,7 +119,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),

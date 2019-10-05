@@ -15,7 +15,7 @@ class HustelTipLoading extends StatefulWidget {
 class _HustelTipLoading extends State<HustelTipLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

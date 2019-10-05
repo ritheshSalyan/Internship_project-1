@@ -3,7 +3,6 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/ProfilePage/friends/friend.dart';
 import 'package:startupreneur/home.dart';
-import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
@@ -26,7 +25,7 @@ class EditDetail extends StatefulWidget {
 class _EditDetailState extends State<EditDetail>
     with AutomaticKeepAliveClientMixin {
   static Friend currentuser;
-  static var _value = null;
+  // static var _value = null;
   static FirebaseUser user;
   static PDFDocument doc;
   static SharedPreferences sharedPreferences;
@@ -55,14 +54,14 @@ class _EditDetailState extends State<EditDetail>
   static var fname = "     ";
   static var email = "";
   static var mobile = "";
-  static var gender = null;
-  static var _password = "";
-  static var _confirmPassword = "";
+  static var gender;
+  // static var _password = "";
+  // static var _confirmPassword = "";
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
   static var referalCodeFromFriend = "", userid = "";
   static Firestore db = Firestore.instance;
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  // static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static File file;
 

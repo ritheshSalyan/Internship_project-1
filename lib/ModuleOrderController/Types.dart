@@ -3,16 +3,13 @@ import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
 import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import '../ModulePages/quiz/quizLoader.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
-import '../ModulePages/VideoController/VideoController.dart';
 import '../ModulePages/VideoController/VideoControllerLoader.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheoryLoader.dart';
 import '../casestudy/CaseStudyEntry.dart';
 import '../ModulePages/Activity/ActivityLoader.dart';
 import '../ModulePages/Discussion/DiscussionLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../ModulePages/Socialize/socialize.dart';
-import '../timeline/MainRoadmap.dart';
 import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -95,16 +92,16 @@ class orderManagement {
           ),
         );
       } else {
-        complete.add(arguments[0] + 1);
-        var data = Map<String, dynamic>();
-        data["completed"] = complete;
-        data["points"] = points+modulePoint;
-        await db.collection("user").document(userid).setData(data, merge: true);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SummaryPage(),
-          ),
-        );
+        // complete.add(arguments[0] + 1);
+        // var data = Map<String, dynamic>();
+        // data["completed"] = complete;
+        // data["points"] = points+modulePoint;
+        // await db.collection("user").document(userid).setData(data, merge: true);
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => SummaryPage(),
+        //   ),
+        // );
       }
     } else {
       switch (order[currentIndex]) {

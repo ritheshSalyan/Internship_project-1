@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'DecisionGame.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class DecisionGameLoading extends StatefulWidget {
   DecisionGameLoading({Key key, this.modNum,this.index}) : super(key: key);
@@ -15,7 +14,7 @@ class DecisionGameLoading extends StatefulWidget {
 class _DecisionGameLoading extends State<DecisionGameLoading> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

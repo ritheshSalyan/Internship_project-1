@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -13,18 +13,26 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   Firestore db = Firestore.instance;
-  static final _formkey = GlobalKey<FormState>();
+  // static final _formkey = GlobalKey<FormState>();
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
   List<dynamic> options = [];
-  int selectedRadio = 0;
+  int selectedRadio;
   String reason = "";
   List<String> correctAns;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
+
+
+   @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("Quiz_Page", "Quiz_Page");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,7 @@ class _QuizPageState extends State<QuizPage> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),
@@ -185,6 +193,7 @@ class _QuizPageState extends State<QuizPage> {
                                       return ListView.builder(
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
+                                        // reverse: true,
                                         itemCount: options.length,
                                         itemBuilder: (context, index) {
                                           return RadioListTile(
@@ -196,7 +205,6 @@ class _QuizPageState extends State<QuizPage> {
                                               setState(() {
                                                 selectedRadio = value;
                                                 _answerIs = (value).toString();
-                                                // _answers[_currentIndex] = value;
                                                 print("answer $_answerIs");
                                               });
                                             },

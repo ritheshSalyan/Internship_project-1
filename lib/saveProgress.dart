@@ -6,7 +6,7 @@ class SaveProgress {
   static preferences(int modNum, int index) async {
     print("SaveProgress:Inside");
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt("${modNum}", index);
+    sharedPreferences.setInt("$modNum", index);
     // sharedPreferences.setInt("${index}", index);
     print(sharedPreferences.getInt("$modNum"));
   }

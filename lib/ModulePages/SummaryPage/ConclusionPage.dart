@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'ani.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import '../../timeline/MainRoadmapLoader.dart';
 
 class SummaryPage extends StatefulWidget {
   @override
@@ -16,7 +13,7 @@ class _SummaryPageState extends State<SummaryPage>
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     _controller = AnimationController(
         duration: Duration(milliseconds: 3000), vsync: this);
