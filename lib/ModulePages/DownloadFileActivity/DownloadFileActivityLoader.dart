@@ -63,21 +63,38 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
   }
 
   static Future<String> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('downloadFileActivity');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: 1).getDocuments();
-        // .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+    CollectionReference ref =
+        Firestore.instance.collection('downloadFileActivity');
+    QuerySnapshot eventsQuery = await ref
+        .where("module", isEqualTo: modNum)
+        .where("order", isEqualTo: 1)
+        .getDocuments();
+    // .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     String title;
+    List<String> list = [];
     eventsQuery.documents.forEach((document) {
-      print("downloadFileActivity " +
-          document['file']);
+      print("downloadFileActivity " + document['file']);
 
       title = document["file"];
+      try {
+        list.addAll(convert(document["content"]));
+      } catch (e) {}
+
       // title.add(document["image"].toString());
     });
     return title;
+  }
+
+  static List<String> convert(List<dynamic> dlist) {
+    List<String> list = new List<String>();
+
+    for (var item in dlist) {
+      list.add(item.toString());
+      print(item.toString());
+    }
+    //list.add("assets/Images/think.png");
+    return list;
   }
 }

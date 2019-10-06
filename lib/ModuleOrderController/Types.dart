@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
 import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
 import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import '../ModulePages/quiz/quizLoader.dart';
@@ -40,6 +41,7 @@ enum Type {
   imagePage,
   flip,
   ideaActivity,
+  download,
 }
 
 class orderManagement {
@@ -118,7 +120,15 @@ class orderManagement {
             ),
           );
           break;
-
+         case Type.download:
+          print("Download");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  DownloadFileActivityLoader(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
         case Type.imagePage:
           print("imagePage");
           Navigator.of(context).push(

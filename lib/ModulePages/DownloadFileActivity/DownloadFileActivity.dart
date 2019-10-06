@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/upload.dart';
 import 'package:toast/toast.dart';
 // import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
@@ -83,6 +84,11 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           context,
           gravity: Toast.LENGTH_LONG,
           duration: 5);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            Upload(index: widget.order, modNum: widget.modNum),
+      ));
+
       // var req = http.Client();
       // var response =
       //     await req.send(http.Request("GET", Uri.parse(widget.file)));
@@ -163,6 +169,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
 
   @override
   Widget build(BuildContext context) {
+    // var outlineButton =
     return Scaffold(
       backgroundColor: Colors.green,
       appBar: AppBar(

@@ -176,6 +176,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
        image =  ExtendedImage.asset(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width * 0.7,
         );
       } else {
          print("Inside Network");
