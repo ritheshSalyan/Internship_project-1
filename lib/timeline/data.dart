@@ -13,6 +13,7 @@ class Doodle {
   final Text points;
   final Color color;
   List<Color> colors = [];
+  final int modNum;
 
   // final Text
   Doodle({
@@ -26,12 +27,14 @@ class Doodle {
     this.points,
     this.color,
     this.colors,
+    this.modNum,
   });
 }
 
 List<Doodle> doodles = [
   new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 1,
     name: AutoSizeText(
       "Starting Up",
       style: TextStyle(
@@ -65,6 +68,7 @@ List<Doodle> doodles = [
  
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 2,
     name: AutoSizeText(
       "Idea",
       style: TextStyle(
@@ -98,6 +102,7 @@ List<Doodle> doodles = [
   ),
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 13,
     name: AutoSizeText(
       "Market Research I",
       style: TextStyle(
@@ -109,12 +114,12 @@ List<Doodle> doodles = [
       ),
       textAlign: TextAlign.center,
     ),
-    time: "Module 14",
+    time: "Module 13",
     doodle: "assets/Images/StaringUpIcon.png",
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
-      Icons.flag,
+     FontAwesomeIcons.circle,
       color: Colors.white,
     ),
     iconBackground: Colors.green,
@@ -130,6 +135,7 @@ List<Doodle> doodles = [
   ),
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 14,
     name: AutoSizeText(
       "Market Research II",
       style: TextStyle(
@@ -141,12 +147,12 @@ List<Doodle> doodles = [
       ),
       textAlign: TextAlign.center,
     ),
-    time: "Module 15",
+    time: "Module 14",
     doodle: "assets/Images/StaringUpIcon.png",
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
-      Icons.flag,
+      FontAwesomeIcons.circle,
       color: Colors.white,
     ),
     iconBackground: Colors.green,
@@ -162,6 +168,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 3,
     name: AutoSizeText(
       "Ethical Foundations",
       style: TextStyle(
@@ -194,6 +201,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum:4,
     name: AutoSizeText(
       "Product",
       style: TextStyle(
@@ -225,6 +233,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 5,
     name: AutoSizeText(
       "Business Model",
       style: TextStyle(
@@ -235,6 +244,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+   
     time: "Module 5",
     doodle: "assets/Images/marketAnalyaisIcon.png",
     // "https://lh3.googleusercontent.com/vk5ODrDXkJXCJ9z2lMnQdMb9m5-HKxDvn_Q67J8PBKPT9n67iCQFj37tB62ARaQQKnKwig-CcBT9NODmzoqdM56_UTUKZRELLYoz1lVU=s800",
@@ -266,6 +276,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 6,
     time: "Module 6",
     doodle: "assets/Images/6.png",
     // "https://www.google.com/logos/doodles/2018/ibn-sinas-1038th-birthday-5768556863029248.2-2x.png",
@@ -298,6 +309,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 7,
     time: "Module 7",
     doodle: "assets/Images/leagal.png",
     // "https://lh3.googleusercontent.com/UBa5VOLYZNb9sqCZJeMrrS5ZW-KpDBZ7haT8aLPpHzeOZ8K_6TCP03_n-5VKIaewaRVqYkTF09OwvI4oQ2L2IqaUyWlTUkJb4E1uZF0=s660",
@@ -329,6 +341,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 8,
     time: "Module 8",
     doodle: "assets/Images/brandingIcon.png",
     // "https://lh3.googleusercontent.com/429NetsPejpMgeXqZuA15mCFLQykowhHNnbkSa1L8SHq9Kp9De-EBPlmOknzJ_HRykzt5FPhwpju_M3uKeuZlKegwdRQSzrH8NfdwR_B=s660",
@@ -360,6 +373,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 9,
     time: "Module 9",
     doodle: "assets/Images/teamIcon.png",
     // "https://lh3.googleusercontent.com/TegzHFZQYIfV4lYsaXsZ-CUE_9Lp6qbJZXpSRzTWeLkNiQh0xRbt5KsI4szxN9nUopbyH6d-8tkmV5NcUJtI0Ks79fh-D6nCrKEt5hxR=s660",
@@ -391,6 +405,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 10,
     time: "Module 10",
     doodle: "assets/Images/technologyIcon.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
@@ -422,6 +437,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 11,
     time: "Module 11",
     doodle: "assets/Images/fundingIcon.png",
     // "https://lh3.googleusercontent.com/TegzHFZQYIfV4lYsaXsZ-CUE_9Lp6qbJZXpSRzTWeLkNiQh0xRbt5KsI4szxN9nUopbyH6d-8tkmV5NcUJtI0Ks79fh-D6nCrKEt5hxR=s660",
@@ -453,6 +469,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 12,
     //Business plan and
     time: "Module 12",
     doodle: "assets/Images/gotoMarket.png",
@@ -494,7 +511,8 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    //Business plan and
+    //Business plan andm
+    modNum: -1,
     time: "Module 13",
     doodle: "assets/Images/hustel.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",

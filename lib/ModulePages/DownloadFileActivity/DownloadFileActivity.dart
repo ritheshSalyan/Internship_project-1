@@ -2,16 +2,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/upload.dart';
 import 'package:toast/toast.dart';
 // import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import '../../saveProgress.dart';
 
 class DownloadFileActivity extends StatefulWidget {
-  DownloadFileActivity({Key key, this.modNum, this.order, this.file})
+  DownloadFileActivity({Key key, this.modNum, this.order, this.file,this.content})
       : super(key: key);
   final int modNum, order;
   final String file;
+  final List<String> content;
   @override
   _DownloadFileActivityState createState() => _DownloadFileActivityState();
 }
@@ -83,6 +85,11 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           context,
           gravity: Toast.LENGTH_LONG,
           duration: 5);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            Upload(index: widget.order, modNum: widget.modNum,content: widget.content,),
+      ));
+
       // var req = http.Client();
       // var response =
       //     await req.send(http.Request("GET", Uri.parse(widget.file)));
@@ -163,6 +170,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
 
   @override
   Widget build(BuildContext context) {
+    // var outlineButton =
     return Scaffold(
       backgroundColor: Colors.green,
       appBar: AppBar(
@@ -219,7 +227,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
               right: MediaQuery.of(context).size.width * 0.02,
             ),
             child: Text(
-              "Please click on the button to download the activity and start working on it! All the best",
+              "${widget.content[1]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

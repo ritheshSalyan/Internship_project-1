@@ -398,7 +398,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Time for Socialize",
+                            "Time to Socialize",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,

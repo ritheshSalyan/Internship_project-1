@@ -46,11 +46,11 @@ class _ImagePagePageState extends State<ImagePagePage>
               children: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(
-                      // top: MediaQuery.of(context).size.height * 0.1,
+                      top: MediaQuery.of(context).size.height * 0.009,
                       bottom: MediaQuery.of(context).size.height * 0.1,
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      // crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
@@ -59,7 +59,7 @@ class _ImagePagePageState extends State<ImagePagePage>
                           style: TextStyle(
                               fontFamily: "sans-serif",
                               color: Colors.green,
-                              fontSize: 25.0,
+                              fontSize: 23.0,
                               letterSpacing: 1.2,
                               fontWeight: FontWeight.w500),
                         ),
@@ -103,7 +103,8 @@ class _ImagePagePageState extends State<ImagePagePage>
                           },
                         )
                       ],
-                    )),
+                    ),
+                    ),
                 Padding(
                   padding: EdgeInsets.only(
                       // top: MediaQuery.of(context).size.height * 0.1,
@@ -116,15 +117,15 @@ class _ImagePagePageState extends State<ImagePagePage>
                   child: (widget.title.contains("assets/Images"))
                   ?ExtendedImage.asset(
                     widget.title,
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    height: MediaQuery.of(context).size.height * 0.6,
                   ):ExtendedImage.network(
                     widget.title,
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    height: MediaQuery.of(context).size.height * 0.6,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.05,
+                    // top: MediaQuery.of(context).size.height * 0.05,
                     left: MediaQuery.of(context).size.height * 0.1,
                     right: MediaQuery.of(context).size.height * 0.1,
                   ),

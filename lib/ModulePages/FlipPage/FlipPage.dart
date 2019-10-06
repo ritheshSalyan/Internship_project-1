@@ -69,7 +69,7 @@ class _FlipPageState extends State<FlipPage> {
                           child: Padding(
                             padding: EdgeInsets.all(20),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               // textBaseline: TextBaseline.alphabetic,
                               // verticalDirection: VerticalDirection.up,
                               children: <Widget>[
@@ -77,7 +77,12 @@ class _FlipPageState extends State<FlipPage> {
                                 //   padding: EdgeInsets.only(
                                 //       top: MediaQuery.of(context).size.height * 0.4),
                                 // child:
-                                Text(
+                                 SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.1,
+                                ),
+                               Column(
+
+                                 children: <Widget>[ Text(
                                   "${data.data[0]}",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -85,21 +90,30 @@ class _FlipPageState extends State<FlipPage> {
                                     fontSize: 28.0,
                                   ),
                                 ),
-                                // ),
-                                // Padding(
-                                //   padding: EdgeInsets.only(
-                                //       top: MediaQuery.of(context).size.height * 0.3),
-                                //   child:
-                                Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Tap for Answer !!",
+
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.1,
+                                ),
+                                 Text(
+                                      "Tap Here to flip and look at the answer !!",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15.0,
                                       ),
-                                    ),
+                                    ),],
+                               ),
+
+                                // ),
+                                // Padding(
+                                //   padding: EdgeInsets.only(
+                                //       top: MediaQuery.of(context).size.height * 0.3),
+                                //   child:
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                   
                                     // ),
                                     // Padding(
                                     //   padding: EdgeInsets.only(

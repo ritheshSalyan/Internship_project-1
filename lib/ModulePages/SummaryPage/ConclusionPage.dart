@@ -70,7 +70,7 @@ class _SummaryPageState extends State<SummaryPage>
                         height: 35,
                       ),
                       Text(
-                        "You have successfully completed this module 😄",
+                        "You have successfully completed this module!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -103,7 +103,7 @@ class _SummaryPageState extends State<SummaryPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Claim my Points ",
+                            "Claim My Points ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Image.asset(

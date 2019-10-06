@@ -590,23 +590,23 @@ class _TimelinePageState extends State<TimelinePage> {
           onTap: () async {
             print("value of i is $i");
             if (check(i)) {
-              print(" true $i");
+              print(" true ${doodle.modNum}");
               // val = completedCourse[k];
               print("val is $val");
-              int progressNum = await SaveProgress.getProgerss(i + 1);
+              int progressNum = await SaveProgress.getProgerss(doodle.modNum);
               print("PROGRESS NUM $progressNum");
               if (progressNum == 0) {
-                if (i == 11) {
+                if (doodle.modNum == 12) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          ModuleOverviewLoading(modNum: i + 1),
+                          ModuleOverviewLoading(modNum: doodle.modNum),
                     ),
                   );
-                } else if (i != 12) {
+                } else if (doodle.modNum != 12) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => QuoteLoading(modNum: i + 1),
+                      builder: (context) => QuoteLoading(modNum: doodle.modNum),
                     ),
                   );
                 } else {
@@ -634,9 +634,9 @@ class _TimelinePageState extends State<TimelinePage> {
                             onPressed: () {
                               Navigator.of(context).pop(true);
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.getEventsFromFirestore(i + 1)
+                              SaveProgress.getEventsFromFirestore(doodle.modNum)
                                   .then((_) {
-                                List<int> arguments = [i + 1, progressNum];
+                                List<int> arguments = [doodle.modNum, progressNum];
                                 orderManagement.moveNextIndex(
                                     context, arguments);
                               });
@@ -653,14 +653,14 @@ class _TimelinePageState extends State<TimelinePage> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ModuleOverviewLoading(modNum: i + 1),
+                                        ModuleOverviewLoading(modNum: doodle.modNum),
                                   ),
                                 );
                               } else if (i != 12) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        QuoteLoading(modNum: i + 1),
+                                        QuoteLoading(modNum: doodle.modNum),
                                   ),
                                 );
                               } else {

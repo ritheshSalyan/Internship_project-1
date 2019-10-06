@@ -22,54 +22,14 @@ class _QuoteState extends State<Quote> {
           // alignment: Alignment.bottomRight,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              // crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Padding(
             padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.1,
+              left: MediaQuery.of(context).size.width * 0.01,
+              right:  MediaQuery.of(context).size.width * 0.01,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Material(
-                      color: Colors.black.withOpacity(0),
-                      child: Text(
-                        widget.quote[0],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          // fontStyle: FontStyle.italic,
-                          letterSpacing: 1.5,
-                          fontSize: 25,
-                          color: Colors.white,
-
-                        ),
-                      ),
-                    ),
-                    Material(
-                      color: Colors.black.withOpacity(0),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.03),
-                        child: Text(
-                          widget.quote[1],
-                          style: TextStyle(
-                              letterSpacing: 1.5,
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-               
-              ],
-            ),
+            child: buildColumn(context),
           ),
            Padding(
                   padding: EdgeInsets.only(
@@ -115,5 +75,50 @@ class _QuoteState extends State<Quote> {
         ),
       ],
     );
+  }
+
+  Column buildColumn(BuildContext context) {
+    return Column(
+            // mainAxisAlignment: MainAxisAlignment.end,
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Material(
+                    color: Colors.black.withOpacity(0),
+                    child: Text(
+                      widget.quote[0],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        // fontStyle: FontStyle.italic,
+                        letterSpacing: 1.5,
+                        fontSize: 25,
+                        color: Colors.white,
+
+                      ),
+                    ),
+                  ),
+                  Material(
+                    color: Colors.black.withOpacity(0),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.03),
+                      child: Text(
+                        widget.quote[1],
+                        style: TextStyle(
+                            letterSpacing: 1.5,
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+             
+            ],
+          );
   }
 }

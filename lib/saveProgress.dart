@@ -109,7 +109,10 @@ class SaveProgress {
           print("heading");
           typeList.add(Type.heading);
           break;
-
+         case "Type.download":
+          print("heading");
+          typeList.add(Type.download);
+          break;
         case "Type.flip":
           print("flip");
           typeList.add(Type.flip);

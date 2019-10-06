@@ -187,9 +187,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   //   padding: EdgeInsets.only(
                   //       top: MediaQuery.of(context).size.height * 0.3),
                   //   child:
-                  Column(
-                    children: <Widget>[
-                      Text(
+                   Text(
                         "Tap to Learn!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -197,6 +195,11 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           fontSize: 15.0,
                         ),
                       ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                     
                       // ),
                       // Padding(
                       //   padding: EdgeInsets.only(

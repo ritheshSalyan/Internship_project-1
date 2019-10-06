@@ -149,6 +149,8 @@ class _VideoPlayState extends State<VideoPlay> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.05),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
                     children: <Widget>[
                       Text(
                         widget.title,

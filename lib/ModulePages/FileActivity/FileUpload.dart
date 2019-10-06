@@ -200,7 +200,7 @@ class FileUploadState extends State<FileUpload> {
     }
     slides.add(
       new Container(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         color: Colors.green,
         child: SingleChildScrollView(
           child: Column(
