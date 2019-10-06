@@ -119,7 +119,7 @@ List<Doodle> doodles = [
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
-      Icons.flag,
+     FontAwesomeIcons.circle,
       color: Colors.white,
     ),
     iconBackground: Colors.green,
@@ -152,7 +152,7 @@ List<Doodle> doodles = [
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
-      Icons.flag,
+      FontAwesomeIcons.circle,
       color: Colors.white,
     ),
     iconBackground: Colors.green,

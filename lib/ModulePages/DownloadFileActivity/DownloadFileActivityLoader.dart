@@ -23,13 +23,15 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((value) {
+    getEventsFromFirestore(widget.modNum,widget.index).then((value) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => DownloadFileActivity(
             modNum: widget.modNum,
             order: widget.index,
-            file: value,
+            file: value[0],
+            content: value,
+
           ),
         ),
       );
@@ -62,12 +64,12 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
     );
   }
 
-  static Future<String> getEventsFromFirestore(int modNum) async {
+  static Future<List<String>> getEventsFromFirestore(int modNum,int order) async {
     CollectionReference ref =
         Firestore.instance.collection('downloadFileActivity');
     QuerySnapshot eventsQuery = await ref
         .where("module", isEqualTo: modNum)
-        .where("order", isEqualTo: 1)
+        .where("order", isEqualTo: order)
         .getDocuments();
     // .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
@@ -78,13 +80,14 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
       print("downloadFileActivity " + document['file']);
 
       title = document["file"];
+      list.add(title);
       try {
         list.addAll(convert(document["content"]));
       } catch (e) {}
-
+      
       // title.add(document["image"].toString());
     });
-    return title;
+    return list;
   }
 
   static List<String> convert(List<dynamic> dlist) {

@@ -9,10 +9,11 @@ import 'package:dio/dio.dart';
 import '../../saveProgress.dart';
 
 class DownloadFileActivity extends StatefulWidget {
-  DownloadFileActivity({Key key, this.modNum, this.order, this.file})
+  DownloadFileActivity({Key key, this.modNum, this.order, this.file,this.content})
       : super(key: key);
   final int modNum, order;
   final String file;
+  final List<String> content;
   @override
   _DownloadFileActivityState createState() => _DownloadFileActivityState();
 }
@@ -86,7 +87,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           duration: 5);
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
-            Upload(index: widget.order, modNum: widget.modNum),
+            Upload(index: widget.order, modNum: widget.modNum,content: widget.content,),
       ));
 
       // var req = http.Client();
@@ -226,7 +227,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
               right: MediaQuery.of(context).size.width * 0.02,
             ),
             child: Text(
-              "Please click on the button to download the activity and start working on it! All the best",
+              "${widget.content[1]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

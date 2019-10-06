@@ -11,7 +11,8 @@ import 'package:toast/toast.dart';
 import 'package:path/path.dart' as p;
 class Upload extends StatefulWidget {
   final int modNum,index;
-  Upload({Key key,this.modNum,this.index}):super(key:key);
+  List<String> content;
+  Upload({Key key,this.modNum,this.index,this.content}):super(key:key);
   @override
   _UploadState createState() => _UploadState();
 }
@@ -87,7 +88,7 @@ class _UploadState extends State<Upload> {
               right: MediaQuery.of(context).size.width * 0.02,
             ),
             child: Text(
-              "Please Complete the task and Upload your file",
+              "${widget.content[2]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -146,7 +147,7 @@ class _UploadState extends State<Upload> {
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
         .child(uid)
-        .child("${widget.modNum}_activity." + extenstion);
+        .child("${widget.modNum}_upload_${widget.index}." + extenstion);
 
     task = storageRef.putFile(file);
     //  if(task.isInProgress){
