@@ -38,7 +38,7 @@ class _DataListingLoaderState extends State<DataListingLoader> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading... Please Wait !",
+                "Loading... Please Wait",
                 style: TextStyle(
                   color: Colors.black,
                 ),

@@ -46,7 +46,7 @@ class _DecisionGameLoading extends State<DecisionGameLoading> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading... Please Wait !",
+                "Loading... Please Wait",
                 style: TextStyle(
                   color: Colors.black,
                 ),

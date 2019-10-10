@@ -424,7 +424,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Text(
-                                  "Speak to at least one person each in your network who is currently working in a job or doing their own startup and ask them about their experiences.\n\n Share the top 3 pros and cons of being in a job and starting up, here:",
+                                  "Speak to at least one person each in your network who is currently working in a job or doing their own startup and ask them about their experiences.\n\nShare the top 3 pros and cons of being in a job and starting up, here:",
                                   style: TextStyle(fontSize: 18.0),
                                 ),
                               ),

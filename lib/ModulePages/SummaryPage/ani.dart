@@ -9,24 +9,25 @@ class MyHomePage1 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage1> {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.green,
-      body: FlareActor("assets/animation/Cup3.flr",
+      body: FlareActor(
+        "assets/animation/Cup3.flr",
         alignment: Alignment.center,
         fit: BoxFit.contain,
         animation: "cup",
-        callback: (a){
-            print("On success Animation");
-             Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => RoadmapLoader(),
-          ),
-        );
+        callback: (a) {
+          print("On success Animation");
+
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => RoadmapLoader()),
+            ModalRoute.withName("TimelinePage"),
+          );
         },
-        ),
+      ),
     );
     // return SplashScreen(
     //   "assets/animation/Cup3.flr",
