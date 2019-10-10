@@ -20,10 +20,11 @@ class _MyHomePageState extends State<MyHomePage1> {
         animation: "cup",
         callback: (a){
             print("On success Animation");
-             Navigator.of(context).pushReplacement(
+             Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => RoadmapLoader(),
           ),
+           ModalRoute.withName("TimelinePage")
         );
         },
         ),

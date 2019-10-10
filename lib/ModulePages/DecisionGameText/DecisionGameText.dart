@@ -26,7 +26,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   //   // "Swipe Right / Left to remove",
   //   // "Swipe Right / Left to remove",
   // ];
-  static final _formkey = GlobalKey<FormState>();
+   final _formkey = GlobalKey<FormState>();
 //   _onSubmit() {
 //     setState(() {
 //       item;

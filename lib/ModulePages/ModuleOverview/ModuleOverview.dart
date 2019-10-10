@@ -155,7 +155,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             backgroundColor: Colors.green,
             pinned: true,
             title: Text(
-              "Course Overview",
+              "Module Overview",
               style: TextStyle(color: Colors.white),
             ),
             // flexibleSpace: FlexibleSpaceBar(

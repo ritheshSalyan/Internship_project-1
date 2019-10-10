@@ -11,6 +11,7 @@ class Doodle {
   final Icon icon;
   final Image pointsIcon;
   final Text points;
+  String modName;
   final Color color;
   List<Color> colors = [];
   final int modNum;
@@ -21,6 +22,7 @@ class Doodle {
     this.time,
     this.content,
     this.doodle,
+    this.modName,
     this.icon,
     this.iconBackground,
     this.pointsIcon,
@@ -31,10 +33,13 @@ class Doodle {
   });
 }
 
+ 
+
 List<Doodle> doodles = [
   new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 1,
+    modName: "Starting Up",
     name: AutoSizeText(
       "Starting Up",
       style: TextStyle(
@@ -69,6 +74,7 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 2,
+    modName: "Idea",
     name: AutoSizeText(
       "Idea",
       style: TextStyle(
@@ -103,6 +109,7 @@ List<Doodle> doodles = [
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 13,
+    modName: "Market Research I",
     name: AutoSizeText(
       "Market Research I",
       style: TextStyle(
@@ -115,14 +122,14 @@ List<Doodle> doodles = [
       textAlign: TextAlign.center,
     ),
     time: "Module 13",
-    doodle: "assets/Images/StaringUpIcon.png",
+    doodle: "assets/Images/analysis.png",
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
      FontAwesomeIcons.circle,
-      color: Colors.white,
+      color: Colors.green,
     ),
-    iconBackground: Colors.green,
+    iconBackground: Colors.grey[50],
     pointsIcon: Image.asset(
       "assets/Images/coins.png",
       height: 20,
@@ -136,6 +143,7 @@ List<Doodle> doodles = [
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 14,
+    modName: "Market Research II",
     name: AutoSizeText(
       "Market Research II",
       style: TextStyle(
@@ -148,14 +156,14 @@ List<Doodle> doodles = [
       textAlign: TextAlign.center,
     ),
     time: "Module 14",
-    doodle: "assets/Images/StaringUpIcon.png",
+    doodle: "assets/Images/analysis.png",
     // doodle: "assets/Images/gcloud.png",
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
       FontAwesomeIcons.circle,
-      color: Colors.white,
+      color: Colors.green,
     ),
-    iconBackground: Colors.green,
+    iconBackground: Colors.grey[50],
     pointsIcon: Image.asset(
       "assets/Images/coins.png",
       height: 20,
@@ -169,6 +177,7 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 3,
+    modName: "Ethical Foundations",
     name: AutoSizeText(
       "Ethical Foundations",
       style: TextStyle(
@@ -202,6 +211,7 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum:4,
+    modName: "Product",
     name: AutoSizeText(
       "Product",
       style: TextStyle(
@@ -234,6 +244,7 @@ List<Doodle> doodles = [
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
     modNum: 5,
+    modName: "Business Model",
     name: AutoSizeText(
       "Business Model",
       style: TextStyle(
@@ -266,6 +277,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modName: "Pricing",
     name: AutoSizeText(
       "Pricing",
       style: TextStyle(
@@ -298,7 +310,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
-
+    modName: "Legal and Compliance",
     name: AutoSizeText(
       "Legal and Compliance",
       style: TextStyle(
@@ -330,6 +342,7 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Branding and Marketing",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Branding and Marketing",
@@ -362,6 +375,7 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Team",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Team",
@@ -394,6 +408,7 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Technology",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Technology",
@@ -426,6 +441,7 @@ List<Doodle> doodles = [
     ),
   ),
   Doodle(
+    modName: "Funding and Financing",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Funding and Financing",
@@ -458,6 +474,7 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Go to Market",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Go to Market",
@@ -500,7 +517,7 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Color.fromRGBO(222, 30, 89, 1), Color.fromRGBO(59, 40, 127, 1)],
-
+    modName: "Store",
     name: AutoSizeText(
       "Store",
       style: TextStyle(

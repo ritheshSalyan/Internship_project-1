@@ -275,7 +275,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                         flushbarPosition: FlushbarPosition.TOP,
                         title: "Reply has been sent",
                         messageText: Column(children: <Widget>[
-                          Text("Successfully added"),
+                          // Text("Successfully added"),
                         ]),
                       )..show(context).whenComplete(() {
                           print("done and dusted - 2");

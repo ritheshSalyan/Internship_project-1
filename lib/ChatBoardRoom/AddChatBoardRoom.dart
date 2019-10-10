@@ -71,6 +71,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     message["uid"] = userId;
     message["upvoters"] = [];
     message["timestamp"] = now.millisecondsSinceEpoch;
+ 
         await db.collection("chat").add(message).then((done) {
       print(done);
       progressDialog.hide();
