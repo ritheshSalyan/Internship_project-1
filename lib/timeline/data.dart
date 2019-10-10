@@ -120,9 +120,9 @@ List<Doodle> doodles = [
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
      FontAwesomeIcons.circle,
-      color: Colors.white,
+      color: Colors.green,
     ),
-    iconBackground: Colors.green,
+    iconBackground: Colors.white,
     pointsIcon: Image.asset(
       "assets/Images/coins.png",
       height: 20,
@@ -153,9 +153,9 @@ List<Doodle> doodles = [
     // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
     icon: Icon(
       FontAwesomeIcons.circle,
-      color: Colors.white,
+      color: Colors.green,
     ),
-    iconBackground: Colors.green,
+    iconBackground: Colors.white,
     pointsIcon: Image.asset(
       "assets/Images/coins.png",
       height: 20,

@@ -9,7 +9,8 @@ import 'package:dio/dio.dart';
 import '../../saveProgress.dart';
 
 class DownloadFileActivity extends StatefulWidget {
-  DownloadFileActivity({Key key, this.modNum, this.order, this.file,this.content})
+  DownloadFileActivity(
+      {Key key, this.modNum, this.order, this.file, this.content})
       : super(key: key);
   final int modNum, order;
   final String file;
@@ -86,8 +87,11 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           gravity: Toast.LENGTH_LONG,
           duration: 5);
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            Upload(index: widget.order, modNum: widget.modNum,content: widget.content,),
+        builder: (context) => Upload(
+          index: widget.order,
+          modNum: widget.modNum,
+          content: widget.content,
+        ),
       ));
 
       // var req = http.Client();
@@ -217,6 +221,15 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
             },
           ),
         ],
+        title: Text(
+          "Activity",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

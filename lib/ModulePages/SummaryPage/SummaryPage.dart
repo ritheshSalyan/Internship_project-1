@@ -24,6 +24,7 @@ class SummaryTheoryPage extends StatefulWidget {
 class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
   String data;
   int item = 0;
+  bool isClicked = false;
   List<String> _listViewData = [
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
@@ -115,8 +116,11 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
           highlightedBorderColor: Colors.greenAccent,
           borderSide: BorderSide(color: Colors.green),
           onPressed: () {
-            List<dynamic> arguments = [widget.modNum, widget.index + 1];
+            if(!isClicked){
+              isClicked = true;
+              List<dynamic> arguments = [widget.modNum, widget.index + 1];
             orderManagement.moveNextIndex(context, arguments);
+            }
           },
           child: Text(
             widget.button,
@@ -216,11 +220,11 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                     decoration: BoxDecoration(
                       color: Colors.green,
                     ),
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.25,
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1,
+                          top: MediaQuery.of(context).size.height * 0.05,
                           left: MediaQuery.of(context).size.width * 0.02),
                       child: Text(
                         widget.title,
@@ -237,7 +241,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.2,
+                    top: MediaQuery.of(context).size.height * 0.15,
                   ),
                   child: Column(
                     children: <Widget>[
