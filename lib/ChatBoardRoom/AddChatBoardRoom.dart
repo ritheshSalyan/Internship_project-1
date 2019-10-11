@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tags/tag.dart';
+import 'package:startupreneur/models/chatBoard.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
+import 'package:uuid/uuid.dart';
 
 class AddChatBoardRoom extends StatefulWidget {
   @override
@@ -33,10 +35,10 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   bool _isChecked = false;
   static final _formkey = GlobalKey<FormState>();
   SharedPreferences sharedPreferences;
+  var uuid = new Uuid();
 
   @override
   void initState() {
-
     super.initState();
     preference();
     tags.clear();
@@ -55,28 +57,52 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
 
   void preference() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    userId = sharedPreferences.getString("UserId");
+
+    setState(() {
+      userId = sharedPreferences.getString("UserId");
+    });
   }
 
   void addDiscussion(BuildContext context) async {
+    // ChatBoardData chatBoardData = ChatBoardData();
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Adding question");
     progressDialog.show();
     db = Firestore.instance;
-    var message = Map<String, dynamic>();
-    message["question"] = text;
-    message["upvote"] = 0;
-    message["tag"] = tags[0];
-    message["answers"] = [];
-    message["uid"] = userId;
-    message["upvoters"] = [];
-    message["timestamp"] = now.millisecondsSinceEpoch;
- 
-        await db.collection("chat").add(message).then((done) {
+    var profileUrl;
+    var userName;
+    print(text);
+    print(userId);
+    print(text);
+
+    var data = await db
+        .collection("user")
+        .where("uid", isEqualTo: userId)
+        .getDocuments();
+
+    data.documents.forEach((value) {
+      profileUrl = value.data["profile"];
+      userName = value.data["name"];
+    });
+
+    ChatBoardData chatBoardData = new ChatBoardData(
+      uid: userId,
+      tag: tags[0],
+      upvote: 0,
+      upvoters: [],
+      timestamp: now.millisecondsSinceEpoch,
+      question: text,
+      uniqId: uuid.v1(),
+      profileUrl: profileUrl,
+      userName: userName,
+    );
+    var message = chatBoardData.toJson();
+    print(message);
+
+    await db.collection("chat").add(message).then((done) {
       print(done);
       progressDialog.hide();
       Navigator.of(context).pushReplacementNamed('/chat');
-      // Navigator.of(context).popUntil(ModalRoute.withName('/chat'));
     });
   }
 

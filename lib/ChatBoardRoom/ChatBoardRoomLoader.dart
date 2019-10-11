@@ -1,41 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoom.dart';
+import 'package:startupreneur/models/chatBoard.dart';
+// import 'package:firebase_database/firebase_database.dart';
 
 
-class Comments{
-  String uid;
-  String comments;
-  dynamic timestamp;
-
-  Comments({
-    this.comments,
-    this.uid,
-    this.timestamp,
-  });
-}
- 
-class ChatRoom {
-  String question;
-  String tag;
-  dynamic upvote;
-  dynamic timestamp;
-  List<dynamic> answer;
-  List<dynamic> upvoters;
-  List<Comments> comments;
-  dynamic uid;
-
-  ChatRoom({
-    this.answer,
-    this.question,
-    this.tag,
-    this.upvote,
-    this.upvoters,
-    this.timestamp,
-    this.uid,
-    this.comments,
-  });
-}
 
 class ChatBoardRoomLoader extends StatefulWidget {
   @override
@@ -44,11 +13,10 @@ class ChatBoardRoomLoader extends StatefulWidget {
 
 class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
   Firestore db;
-  List<ChatRoom> list = [];
+  List<ChatBoardData> list = [];
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -63,7 +31,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
             builder: (context) => ChatBoardRoom(
               valueData: data,
               len: data.length,
-              v:"hello",
+              v: "hello",
             ),
           ),
         );
@@ -97,22 +65,29 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
     );
   }
 
-  Future<List<dynamic>> fetchDataStorage() async {
+  Future<List<ChatBoardData>> fetchDataStorage() async {
     db = Firestore.instance;
     list.clear();
-    await db.collection("chat").orderBy("timestamp",descending: true).getDocuments().then((document) {
-      document.documents.forEach((value) {
-        list.add(new ChatRoom(
-          answer: value.data["answers"],
-          upvote: value.data["upvote"],
-          tag: value.data["tag"],
-          question: value.data["question"],
-          upvoters: value.data["upvoters"],
-          timestamp: value.data["timestamp"],
-          uid: value.data["uid"],
-          comments: value.data["Comments"],
-        ));
+    await db
+        .collection("chat")
+        .orderBy("timestamp", descending: true)
+        .getDocuments()
+        .then((documentSnapshot) {
+      documentSnapshot.documents.forEach((data) {
+        list.add(
+          ChatBoardData.fromJson(data.data),
+        );
       });
+      // list.add(new ChatRoom(
+      //   answer: value.data["answers"],
+      //   upvote: value.data["upvote"],
+      //   tag: value.data["tag"],
+      //   question: value.data["question"],
+      //   upvoters: value.data["upvoters"],
+      //   timestamp: value.data["timestamp"],
+      //   uid: value.data["uid"],
+      //   comments: value.data["Comments"],
+      // ));
     });
     // print(list[0].upvoters);
     return list;
