@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoom.dart';
 
+
+class Comments{
+  String uid;
+  String comments;
+  dynamic timestamp;
+
+  Comments({
+    this.comments,
+    this.uid,
+    this.timestamp,
+  });
+}
+ 
 class ChatRoom {
   String question;
   String tag;
@@ -9,6 +22,7 @@ class ChatRoom {
   dynamic timestamp;
   List<dynamic> answer;
   List<dynamic> upvoters;
+  List<Comments> comments;
   dynamic uid;
 
   ChatRoom({
@@ -19,6 +33,7 @@ class ChatRoom {
     this.upvoters,
     this.timestamp,
     this.uid,
+    this.comments,
   });
 }
 
@@ -42,6 +57,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
     fetchDataStorage().then(
       (data) {
         print("${data.length}");
+        // print(data);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => ChatBoardRoom(
@@ -94,6 +110,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
           upvoters: value.data["upvoters"],
           timestamp: value.data["timestamp"],
           uid: value.data["uid"],
+          comments: value.data["Comments"],
         ));
       });
     });

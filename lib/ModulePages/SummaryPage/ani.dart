@@ -18,14 +18,14 @@ class _MyHomePageState extends State<MyHomePage1> {
         alignment: Alignment.center,
         fit: BoxFit.contain,
         animation: "cup",
-        callback: (a) {
-          print("On success Animation");
-
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (BuildContext context) => RoadmapLoader()),
-            ModalRoute.withName("TimelinePage"),
-          );
+        callback: (a){
+            print("On success Animation");
+             Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => RoadmapLoader(),
+          ),
+           ModalRoute.withName("TimelinePage")
+        );
         },
       ),
     );

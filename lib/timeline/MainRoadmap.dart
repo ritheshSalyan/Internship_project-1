@@ -438,8 +438,8 @@ class _TimelinePageState extends State<TimelinePage> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>
-                              (DownloadFileActivityLoader(modNum: 14, index: 2)),
+                          builder: (context) => (DownloadFileActivityLoader(
+                              modNum: 13, index: 15)),
                         ),
                       );
                       // Navigator.of(context).pop();
@@ -596,7 +596,7 @@ class _TimelinePageState extends State<TimelinePage> {
               int progressNum = await SaveProgress.getProgerss(doodle.modNum);
               print("PROGRESS NUM $progressNum");
               if (progressNum == 0) {
-                if (doodle.modNum == 12) {
+                if (doodle.modNum == 12 || doodle.modNum == 14) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
@@ -636,7 +636,10 @@ class _TimelinePageState extends State<TimelinePage> {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               SaveProgress.getEventsFromFirestore(doodle.modNum)
                                   .then((_) {
-                                List<int> arguments = [doodle.modNum, progressNum];
+                                List<int> arguments = [
+                                  doodle.modNum,
+                                  progressNum
+                                ];
                                 orderManagement.moveNextIndex(
                                     context, arguments);
                               });
@@ -649,14 +652,14 @@ class _TimelinePageState extends State<TimelinePage> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop(true);
-                              if (i == 11) {
+                              if (doodle.modNum == 11 || doodle.modNum == 14) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        ModuleOverviewLoading(modNum: doodle.modNum),
+                                    builder: (context) => ModuleOverviewLoading(
+                                        modNum: doodle.modNum),
                                   ),
                                 );
-                              } else if (i != 12) {
+                              } else if (doodle.modNum != 12) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -754,6 +757,4 @@ class _TimelinePageState extends State<TimelinePage> {
         iconBackground: doodle.iconBackground,
         icon: doodle.icon);
   }
-
-  
 }

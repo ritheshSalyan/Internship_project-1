@@ -38,21 +38,21 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
     super.initState();
     Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
-     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    //  SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
   }
 
   
   @override 
   dispose(){
-     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]).then((_){
-      print("Dispose of oirentation done");
-    });
+    //  SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]).then((_){
+    //   print("Dispose of oirentation done");
+    // });
     super.dispose();
   }
 

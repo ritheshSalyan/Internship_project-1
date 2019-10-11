@@ -51,6 +51,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         }
       });
     });
+    // print(widget.valueData[]);
     Analytics.analyticsBehaviour("Discussion_Chat_Page", "Discussion_Page");
   }
 

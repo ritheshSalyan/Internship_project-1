@@ -36,6 +36,15 @@ class _UploadState extends State<Upload> {
       backgroundColor: Colors.green,
       appBar: AppBar(
         elevation: 0.0,
+         title: Text(
+          "Complete your Activity",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         actions: <Widget>[
           GestureDetector(
             child: Icon(Icons.home),
@@ -139,15 +148,18 @@ class _UploadState extends State<Upload> {
     );
   }
 
-   Future upload(file) async {
-    FirebaseAuth.instance.currentUser().then((user) {
-      this.uid = user.uid;
-    });
-    String extenstion = p.basename(file.path).split(".")[1];
+   Future upload(File file) async {
+   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+   this.uid = user.uid;
+    // String uri = Uri.decodeFull(file.path);
+    // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
+    // String fileName = regex.stringMatch(uri);
+    // print(fileName.split("/"));
+    String extension = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
         .child(uid)
-        .child("${widget.modNum}_upload_${widget.index}." + extenstion);
+        .child("${widget.modNum}_upload_${widget.index}." +extension);
 
     task = storageRef.putFile(file);
     //  if(task.isInProgress){
