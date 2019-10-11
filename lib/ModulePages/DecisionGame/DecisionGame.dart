@@ -37,7 +37,7 @@ class _DecisionGameState extends State<DecisionGame>
   @override
   Widget build(BuildContext context) {
     String question = "";
-    OfflineBuilder(
+   return OfflineBuilder(
       child: NoNetPage(),
       connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {

@@ -304,9 +304,8 @@ class FileUploadState extends State<FileUpload> {
   // }
 
   Future upload(file) async {
-    FirebaseAuth.instance.currentUser().then((user) {
-      this.uid = user.uid;
-    });
+   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+   this.uid = user.uid;
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
