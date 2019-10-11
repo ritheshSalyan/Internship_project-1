@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
 import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
 import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
+import 'package:startupreneur/saveProgress.dart';
 import '../ModulePages/quiz/quizLoader.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import '../ModulePages/VideoController/VideoControllerLoader.dart';
@@ -106,6 +107,7 @@ class orderManagement {
         );
       }
     } else {
+       SaveProgress.preferences(arguments[0],arguments[1]);
       switch (order[currentIndex]) {
         case Type.quote:
           print("quote");

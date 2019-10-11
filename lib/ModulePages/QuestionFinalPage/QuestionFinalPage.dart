@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/ModulePages/VideoController/VideoController.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 
 class QuestionFinalPage extends StatefulWidget {
   @override
@@ -31,159 +32,161 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-       appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+         appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            return Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipperOne(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
-                    height: 150,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "Think and answer!",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Card(
-                              elevation: 0.0,
-                              clipBehavior: Clip.antiAlias,
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  "If you want to Startup, then, what would be your reason for starting up?",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
                             ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
                           ),
                         ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              return Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
                       ),
-                      Form(
-                        key: _formkey,
-                        child: ListView(
-                          shrinkWrap: true,
+                      height: 150,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.1),
+                        child: Column(
                           children: <Widget>[
-                            TextFormField(
-                              autovalidate: true,
-                              validator: (value) =>
-                                  value.isEmpty ? "Cannot be empty" : null,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.message),
-                                  hintText: "Answers",
-                                  labelText: "Answers",
-                                  labelStyle: TextStyle(color: Colors.green),
-                                  hintStyle: TextStyle(color: Colors.grey)),
-                            )
+                            Text(
+                              "Think and answer!",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.02,
-                          top: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 2,
+                              child: Card(
+                                elevation: 0.0,
+                                clipBehavior: Clip.antiAlias,
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "If you want to Startup, then, what would be your reason for starting up?",
+                                    style: TextStyle(fontSize: 18.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        child: OutlineButton(
-                          // color: Colors.green,
-                          borderSide: BorderSide(
-                            color: Colors.green,
-                            width: 1.0,
-                          ),
-                          onPressed: () {
-                            validateAndSubmit(context);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        Form(
+                          key: _formkey,
+                          child: ListView(
+                            shrinkWrap: true,
                             children: <Widget>[
-                              Text(
-                                "Lets see !!",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              Icon(
-                                Icons.navigate_next,
-                                color: Colors.green[600],
-                              ),
+                              TextFormField(
+                                autovalidate: true,
+                                validator: (value) =>
+                                    value.isEmpty ? "Cannot be empty" : null,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.message),
+                                    hintText: "Answers",
+                                    labelText: "Answers",
+                                    labelStyle: TextStyle(color: Colors.green),
+                                    hintStyle: TextStyle(color: Colors.grey)),
+                              )
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.02,
+                            top: MediaQuery.of(context).size.width * 0.1,
+                          ),
+                          child: OutlineButton(
+                            // color: Colors.green,
+                            borderSide: BorderSide(
+                              color: Colors.green,
+                              width: 1.0,
+                            ),
+                            onPressed: () {
+                              validateAndSubmit(context);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Lets see !!",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                Icon(
+                                  Icons.navigate_next,
+                                  color: Colors.green[600],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
 
@@ -107,121 +109,131 @@ class _ActivityPageState extends State<ActivityPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-       appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(widget.modNum, widget.index);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+    return OfflineBuilder(
+       connectivityBuilder:
+          (context, ConnectivityResult connectivity, Widget child) {
+        final bool connected = connectivity != ConnectivityResult.none;
+        if (connected) {
+          return Scaffold(
+         appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.preferences(widget.modNum, widget.index);
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            return Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipperOne(),
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.green),
-                    height: 200,
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              return Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.green),
+                      height: 200,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 3,
-                            child: Card(
-                              margin: EdgeInsets.fromLTRB(5, 20, 5, 20),
-                              clipBehavior: Clip.antiAlias,
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  widget.question,
-                                  // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 3,
+                              child: Card(
+                                margin: EdgeInsets.fromLTRB(5, 20, 5, 20),
+                                clipBehavior: Clip.antiAlias,
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    widget.question,
+                                    // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                         
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            Form(
-                              autovalidate: true,
-                              key: _formkey,
-                              child: ListView(
-                                physics: ClampingScrollPhysics(),
-                                shrinkWrap: true,
-                                children: formList(context),
-                              ),
-                            ),
+                           
                           ],
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                        Card(
+                          child: Column(
+                            children: <Widget>[
+                              Form(
+                                autovalidate: true,
+                                key: _formkey,
+                                child: ListView(
+                                  physics: ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children: formList(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
-      ),
+      );
+      }
+      return child;
+          },
+      child:NoNetPage(),
     );
   }
 }

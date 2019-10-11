@@ -221,7 +221,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                "Activity",
+                                "Next",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
