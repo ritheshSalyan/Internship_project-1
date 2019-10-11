@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/upload.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/timeline/data.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -47,14 +48,14 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
         exception = "error creating";
       });
     });
-    Directory('/storage/emulated/0/Startupreneur/$modName}')
-        .create()
-        .catchError((e) {
-      print(e);
-      setState(() {
-        exception = "error creating";
-      });
-    });
+    // Directory('/storage/emulated/0/Startupreneur/$modName')
+    //     .create()
+    //     .catchError((e) {
+    //   print(e);
+    //   setState(() {
+    //     exception = "error creating";
+    //   });
+    // });
 
     String uri = Uri.decodeFull(widget.file);
     final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
@@ -62,7 +63,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
     file = File('/storage/emulated/0/Startupreneur/$modName/$fileName');
     // progressDialog.setMessage("Downloading ...");
 
-    progressDialog.show();
+    // progressDialog.show();
 
     // print("task $taskId");
     try {
@@ -74,7 +75,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
         }
       }
 
-      final taskId = await FlutterDownloader.enqueue(
+       FlutterDownloader.enqueue(
         url: '${widget.file}',
         savedDir: '/storage/emulated/0/Startupreneur/$modName',
         fileName: '$fileName',
@@ -82,11 +83,20 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
             true, // show download progress in status bar (for Android)
         openFileFromNotification:
             true, // click on notification to open downloaded file (for Android)
-      );
+      ).then(
+        (str){
+          Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Upload(
+          index: widget.order,
+          modNum: widget.modNum,
+          content: widget.content,
+        ),
+      ),);
+      },);
       FlutterDownloader.registerCallback((id, status, progress) {
        print(progress);
       });
-      print(taskId);
+      // print(taskId);
       // progressDialog.update(progress: downloadRate);
       // await dio.download(widget.file, file.path,
       //     onReceiveProgress: (res, total) {
@@ -107,13 +117,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
       //     context,
       //     gravity: Toast.LENGTH_LONG,
       //     duration: 5);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Upload(
-          index: widget.order,
-          modNum: widget.modNum,
-          content: widget.content,
-        ),
-      ));
+      
     } catch (e) {
       print(e);
       // Toast.show("$e", context, gravity: Toast.BOTTOM, duration: 5);
@@ -124,108 +128,119 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
   @override
   Widget build(BuildContext context) {
     // var outlineButton =
-    return Scaffold(
-      backgroundColor: Colors.green,
-      appBar: AppBar(
-        elevation: 0.0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(
-                                widget.modNum, widget.order);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        backgroundColor: Colors.green,
+        appBar: AppBar(
+          elevation: 0.0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.preferences(
+                                  widget.modNum, widget.order);
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.02,
-              right: MediaQuery.of(context).size.width * 0.02,
-            ),
-            child: Text(
-              "${widget.content[1]}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.1,
-              right: MediaQuery.of(context).size.width * 0.1,
-            ),
-            child: OutlineButton(
-              onPressed: () {
-                downloadFile(context);
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
               },
-              // color: Colors.white,
-              borderSide: BorderSide(
-                color: Colors.white,
+            ),
+          ],
+          title: Text(
+            "Activity",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.02,
+                right: MediaQuery.of(context).size.width * 0.02,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.file_download,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Download",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
+              child: Text(
+                "${widget.content[1]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          )
-        ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.1,
+              ),
+              child: OutlineButton(
+                onPressed: () {
+                  downloadFile(context);
+                },
+                // color: Colors.white,
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.file_download,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Download",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

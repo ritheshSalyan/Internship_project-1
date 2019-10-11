@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:toast/toast.dart';
@@ -32,109 +33,120 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
     // var outlineButton = 
-    return Scaffold(
-      backgroundColor: Colors.green,
-      appBar: AppBar(
-        elevation: 0.0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(
-                                widget.modNum, widget.index);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        backgroundColor: Colors.green,
+        appBar: AppBar(
+          elevation: 0.0,
+           title: Text(
+            "Complete your Activity",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.preferences(
+                                  widget.modNum, widget.index);
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.02,
-              right: MediaQuery.of(context).size.width * 0.02,
-            ),
-            child: Text(
-              "${widget.content[2]}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.1,
-              right: MediaQuery.of(context).size.width * 0.1,
-            ),
-            child: OutlineButton(
-              onPressed: () {
-                // downloadFile(context);
-                getFilePath();
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
               },
-              // color: Colors.white,
-              borderSide: BorderSide(
-                color: Colors.white,
+            ),
+          ],
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.02,
+                right: MediaQuery.of(context).size.width * 0.02,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.file_upload,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Upload",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
+              child: Text(
+                "${widget.content[2]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          )
-        ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.1,
+              ),
+              child: OutlineButton(
+                onPressed: () {
+                  // downloadFile(context);
+                  getFilePath();
+                },
+                // color: Colors.white,
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.file_upload,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Upload",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

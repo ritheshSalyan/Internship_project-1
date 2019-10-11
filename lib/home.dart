@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/IntroPage/IntroPageController.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 
 class homePage extends StatefulWidget {
@@ -55,9 +56,10 @@ class _homePageState extends State<homePage> {
         );
       }
     });
-    return Scaffold(
-      body: Container(
-        child: CircularProgressIndicator(),
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        body: Container(
+          child: CircularProgressIndicator(),
 //         width: double.infinity,
 //         height: double.infinity,
 //         child: Center(
@@ -132,6 +134,7 @@ class _homePageState extends State<homePage> {
 //             ],
 //           ),
 //         )),
+        ),
       ),
     );
   }

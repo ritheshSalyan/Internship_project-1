@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import '../ModuleOverview/ModuleOverviewLoading.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -15,65 +16,67 @@ class _QuoteState extends State<Quote> {
   @override
   Widget build(BuildContext context) {
     String text = (widget.modNum==12)?"Oh Yes!":"Start";
-    return PageView(
-      children: <Widget>[
-        Container(
-          color: Colors.green,
-          // alignment: Alignment.bottomRight,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.01,
-              right:  MediaQuery.of(context).size.width * 0.01,
+    return CustomeOffline(
+      onConnetivity: PageView(
+        children: <Widget>[
+          Container(
+            color: Colors.green,
+            // alignment: Alignment.bottomRight,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                // crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.01,
+                right:  MediaQuery.of(context).size.width * 0.01,
+              ),
+              child: buildColumn(context),
             ),
-            child: buildColumn(context),
-          ),
-           Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.4,
-                      left: MediaQuery.of(context).size.width * 0.64),
-                  child: FlatButton(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                         text,
-                          style: TextStyle(
-                            letterSpacing: 1.5,
-                            fontSize: 20,
-                            color: Colors.white,
-                            // fontWeight: FontWeight.w700
+             Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.4,
+                        left: MediaQuery.of(context).size.width * 0.64),
+                    child: FlatButton(
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                           text,
+                            style: TextStyle(
+                              letterSpacing: 1.5,
+                              fontSize: 20,
+                              color: Colors.white,
+                              // fontWeight: FontWeight.w700
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.navigate_next,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                      ],
+                          Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        if(widget.modNum!=12){ 
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ModuleOverviewLoading(modNum: widget.modNum),
+                            // builder: (context)=>Vocabulary(),
+                          ),
+                        );
+                        }
+                        else{
+                          orderManagement.moveNextIndex(context,[12,24]);
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if(widget.modNum!=12){ 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ModuleOverviewLoading(modNum: widget.modNum),
-                          // builder: (context)=>Vocabulary(),
-                        ),
-                      );
-                      }
-                      else{
-                        orderManagement.moveNextIndex(context,[12,24]);
-                      }
-                    },
-                  ),
-                )
-            ],
-          )
-        ),
-      ],
+                  )
+              ],
+            )
+          ),
+        ],
+      ),
     );
   }
 

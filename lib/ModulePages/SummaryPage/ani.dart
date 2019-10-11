@@ -9,12 +9,12 @@ class MyHomePage1 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage1> {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.green,
-      body: FlareActor("assets/animation/Cup3.flr",
+      body: FlareActor(
+        "assets/animation/Cup3.flr",
         alignment: Alignment.center,
         fit: BoxFit.contain,
         animation: "cup",
@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage1> {
            ModalRoute.withName("TimelinePage")
         );
         },
-        ),
+      ),
     );
     // return SplashScreen(
     //   "assets/animation/Cup3.flr",

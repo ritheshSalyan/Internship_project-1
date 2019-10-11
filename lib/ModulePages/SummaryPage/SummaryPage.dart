@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 // import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -24,6 +25,7 @@ class SummaryTheoryPage extends StatefulWidget {
 class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
   String data;
   int item = 0;
+  bool isClicked = false;
   List<String> _listViewData = [
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
@@ -115,8 +117,11 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
           highlightedBorderColor: Colors.greenAccent,
           borderSide: BorderSide(color: Colors.green),
           onPressed: () {
-            List<dynamic> arguments = [widget.modNum, widget.index + 1];
+            if(!isClicked){
+              isClicked = true;
+              List<dynamic> arguments = [widget.modNum, widget.index + 1];
             orderManagement.moveNextIndex(context, arguments);
+            }
           },
           child: Text(
             widget.button,
@@ -161,148 +166,150 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
   @override
   Widget build(BuildContext context) {
     data = widget.content;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              return Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
                       ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.05,
+                            left: MediaQuery.of(context).size.width * 0.02),
+                        child: Text(
+                          widget.title,
+                          //"Startup or Job",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "sans-serif",
+                              color: Colors.white,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.w700),
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.15,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.04,
                           ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
+                          child: Image.asset(
+                            widget.image,
+                            // "assets/Images/photo.png",
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            alignment: Alignment.center,
+                          ),
                         ),
+                        Column(
+                          // children: <Widget>[
+
+                          //    Card(
+                          //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                          //       child: Padding(
+                          //         padding: EdgeInsets.all(10.0),
+                          //         child: Text(
+                          //           widget.content,
+                          //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
+                          //           style: TextStyle(
+                          //             fontSize: 18.0,
+                          //
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+
+                          // ],
+                          children: convertTolist(),
+                        ),
+                        // FlatButton(
+                        //   onPressed: () {
+                        //     // Navigator.of(context).pushReplacement(
+                        //     //   MaterialPageRoute(
+                        //     //     builder: (context)=>SocializeTask(),
+                        //     //   )
+                        //     // );
+                        //     List<dynamic> arguments = [
+                        //       widget.modNum,
+                        //       widget.index+1
+                        //     ];
+                        //     orderManagement.moveNextIndex(context, arguments);
+                        //   },
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: <Widget>[
+                        //       Text(widget.button,
+                        //           style: TextStyle(fontWeight: FontWeight.w700)),
+                        //       Icon(Icons.navigate_next),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
-                    );
-                  });
+                    ),
+                  ),
+                ],
+              );
             },
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            return Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipperOne(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1,
-                          left: MediaQuery.of(context).size.width * 0.02),
-                      child: Text(
-                        widget.title,
-                        //"Startup or Job",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: "sans-serif",
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.2,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.04,
-                        ),
-                        child: Image.asset(
-                          widget.image,
-                          // "assets/Images/photo.png",
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          alignment: Alignment.center,
-                        ),
-                      ),
-                      Column(
-                        // children: <Widget>[
-
-                        //    Card(
-                        //       clipBehavior: Clip.antiAliasWithSaveLayer,
-                        //       child: Padding(
-                        //         padding: EdgeInsets.all(10.0),
-                        //         child: Text(
-                        //           widget.content,
-                        //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
-                        //           style: TextStyle(
-                        //             fontSize: 18.0,
-                        //
-                        //             fontWeight: FontWeight.w500,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-
-                        // ],
-                        children: convertTolist(),
-                      ),
-                      // FlatButton(
-                      //   onPressed: () {
-                      //     // Navigator.of(context).pushReplacement(
-                      //     //   MaterialPageRoute(
-                      //     //     builder: (context)=>SocializeTask(),
-                      //     //   )
-                      //     // );
-                      //     List<dynamic> arguments = [
-                      //       widget.modNum,
-                      //       widget.index+1
-                      //     ];
-                      //     orderManagement.moveNextIndex(context, arguments);
-                      //   },
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     children: <Widget>[
-                      //       Text(widget.button,
-                      //           style: TextStyle(fontWeight: FontWeight.w700)),
-                      //       Icon(Icons.navigate_next),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -303,9 +304,8 @@ class FileUploadState extends State<FileUpload> {
   // }
 
   Future upload(file) async {
-    FirebaseAuth.instance.currentUser().then((user) {
-      this.uid = user.uid;
-    });
+   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+   this.uid = user.uid;
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
@@ -367,8 +367,10 @@ class FileUploadState extends State<FileUpload> {
     //   sizeDot: 0,
     // );
     getSlides();
-    return PageView(
-      children: this.slides,
+    return CustomeOffline(
+          onConnetivity: PageView(
+        children: this.slides,
+      ),
     );
   }
 }

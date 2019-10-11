@@ -102,9 +102,9 @@ class _IdeaActivityState extends State<IdeaActivity> {
                           keyboardType: TextInputType.text,
                           obscureText: false,
                           validator: (value) {
-                            //   if (value.isEmpty) {
-                            //     return "Name field cannot be empty";
-                            //   }
+                              if (value.isEmpty) {
+                                return "Name field cannot be empty";
+                              }
                             return null;
                           },
                           onSaved: (value) {
@@ -227,7 +227,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                       progressDialog.setMessage("Uploading....");
                       print("*****************************************************INdex here ${widget.index}");
                       progressDialog.show();
-                      await getFile();
+                     await getFile();
                       List<dynamic> arguments = [
                         widget.modNum,
                        32 + 1
