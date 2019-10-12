@@ -69,7 +69,7 @@ class _FlipPageState extends State<FlipPage> {
                           child: Padding(
                             padding: EdgeInsets.all(20),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               // textBaseline: TextBaseline.alphabetic,
                               // verticalDirection: VerticalDirection.up,
                               children: <Widget>[
@@ -77,43 +77,73 @@ class _FlipPageState extends State<FlipPage> {
                                 //   padding: EdgeInsets.only(
                                 //       top: MediaQuery.of(context).size.height * 0.4),
                                 // child:
-                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.1,
-                                ),
-                               Column(
-
-                                 children: <Widget>[ Text(
-                                  "${data.data[0]}",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 28.0,
-                                  ),
-                                ),
-
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.1,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
                                 ),
-                                 Text(
-                                      "Tap Here to flip and look at the answer !!",
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      "${data.data[0]}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28.0,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1,
+                                    ),
+                                    Text(
+                                      "Tap Here to flip and look at the answer !",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15.0,
                                       ),
-                                    ),],
-                               ),
+                                    ),
+                                  ],
+                                ),
 
                                 // ),
                                 // Padding(
                                 //   padding: EdgeInsets.only(
                                 //       top: MediaQuery.of(context).size.height * 0.3),
                                 //   child:
+
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        back: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  "${data.data[1]}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.4,
+                                ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
-                                   
                                     // ),
                                     // Padding(
                                     //   padding: EdgeInsets.only(
@@ -123,7 +153,7 @@ class _FlipPageState extends State<FlipPage> {
                                     // child:
                                     OutlineButton(
                                       borderSide:
-                                          BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.green),
                                       onPressed: () {
                                         List<dynamic> arguments = [
                                           widget.modnum,
@@ -142,40 +172,21 @@ class _FlipPageState extends State<FlipPage> {
                                               "Continue",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.green,
                                                 fontSize: 15.0,
                                               ),
                                             ),
                                             Icon(
                                               Icons.navigate_next,
-                                              color: Colors.white,
+                                              color: Colors.green,
                                             ),
                                           ],
                                         ),
                                       ),
                                     ),
                                   ],
-                                )
-                                // ),
+                                ),
                               ],
-                            ),
-                          ),
-                        ),
-
-                        back: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          color: Colors.white,
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              "${data.data[1]}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                              ),
                             ),
                           ),
                         ),

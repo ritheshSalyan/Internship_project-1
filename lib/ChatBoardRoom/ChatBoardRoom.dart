@@ -183,6 +183,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                 return GestureDetector(
                   onTap: () {
                     fetchData(index, context);
+
                   },
                   // onLongPress: () {
                   //   chatSharedUser = widget.valueData[index].uid;

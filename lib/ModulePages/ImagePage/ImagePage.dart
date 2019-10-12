@@ -37,8 +37,7 @@ class _ImagePagePageState extends State<ImagePagePage>
   Widget build(BuildContext context) {
     print("Heading in ImagePage is " + widget.headding);
     return CustomeOffline(
-
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
           backgroundColor: Colors.white,
           body: Builder(
             builder: (context) {
@@ -50,20 +49,24 @@ class _ImagePagePageState extends State<ImagePagePage>
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.009,
                       bottom: MediaQuery.of(context).size.height * 0.1,
+                      left: MediaQuery.of(context).size.width*0.05,
                     ),
                     child: Row(
                       // crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          widget.headding,
-                          //"Startup or Job",
-                          style: TextStyle(
-                              fontFamily: "sans-serif",
-                              color: Colors.green,
-                              fontSize: 23.0,
-                              letterSpacing: 1.2,
-                              fontWeight: FontWeight.w500),
+                        Expanded(
+                          flex:3,
+                          child: Text(
+                            widget.headding,
+                            //"Startup or Job",
+                            style: TextStyle(
+                                fontFamily: "sans-serif",
+                                color: Colors.green,
+                                fontSize: 23.0,
+                                letterSpacing: 1.2,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                         GestureDetector(
                           child: Icon(Icons.home),

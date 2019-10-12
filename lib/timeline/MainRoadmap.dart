@@ -390,24 +390,24 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.store),
-                    title: Text(
-                      'The Startupreneur GoldMine',
-                      style: TextStyle(
-                        color: Colors.green,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (HustleStoreLoader()),
-                        ),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.store),
+                  //   title: Text(
+                  //     'The Startupreneur GoldMine',
+                  //     style: TextStyle(
+                  //       color: Colors.green,
+                  //       letterSpacing: 0.5,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).pop();
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => (HustleStoreLoader()),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: Icon(Icons.chat),
                     title: Text(
@@ -436,12 +436,12 @@ class _TimelinePageState extends State<TimelinePage> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (DownloadFileActivityLoader(
-                              modNum: 13, index: 15)),
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => (DownloadFileActivityLoader(
+                      //         modNum: 13, index: 15)),
+                      //   ),
+                      // );
                       // Navigator.of(context).pop();
                       //  Navigator.of(context).push(
                       //   MaterialPageRoute(
@@ -451,25 +451,25 @@ class _TimelinePageState extends State<TimelinePage> {
                       // );
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.info),
-                    title: Text(
-                      'How to Earn Points',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (HowToEarn()),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.info),
+                  //   title: Text(
+                  //     'How to Earn Points',
+                  //     style: TextStyle(
+                  //       letterSpacing: 0.5,
+                  //       color: Colors.green,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).pop();
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => (HowToEarn()),
+                  //         fullscreenDialog: true,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: Icon(Icons.lock_open),
                     title: Text(

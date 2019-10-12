@@ -112,6 +112,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           list[index],
           style: TextStyle(color: Colors.green),
         ),
+        trailing: Container(width: 0,height: 0,),
         children: wList(index.toString()),
       ));
     }
