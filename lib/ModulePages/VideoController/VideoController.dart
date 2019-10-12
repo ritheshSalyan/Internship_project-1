@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
-import '../../casestudy/CaseStudyEntry.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class VideoPlay extends StatefulWidget {
@@ -35,6 +36,7 @@ class _VideoPlayState extends State<VideoPlay> {
   @override
   void initState() {
     super.initState();
+    Analytics.analyticsBehaviour("Video_Story_Page", "VideoPage");
     _videoPlayerController1 = VideoPlayerController.network(
       // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d',
       widget.videoLink,
@@ -90,135 +92,139 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to home Page?? "),
-                      title: Text(
-                        "Warning!",
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            SaveProgress.preferences(widget.modNum, widget.index);
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              SaveProgress.preferences(widget.modNum, widget.index);
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              ClipPath(
+                clipper: WaveClipperOne(),
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.green),
+                  height: MediaQuery.of(context).size.height * 0.19,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.05),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+
+                      children: <Widget>[
+                        Text(
+                          widget.title,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "QuickSand",
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            ClipPath(
-              clipper: WaveClipperOne(),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.green),
-                height: MediaQuery.of(context).size.height * 0.19,
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        widget.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "QuickSand",
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.05)),
+              Center(
+                child: Chewie(
+                  controller: _chewieController,
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.05)),
-            Center(
-              child: Chewie(
-                controller: _chewieController,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.05,
-                left: MediaQuery.of(context).size.width * 0.1,
-                right: MediaQuery.of(context).size.width * 0.1,
-              ),
-              child: Center(
-                child: Text(
-                  "* Wait and watch the above video to get started!",
-                  style: TextStyle(fontSize: 18),
+                  top: MediaQuery.of(context).size.height * 0.05,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                  right: MediaQuery.of(context).size.width * 0.1,
+                ),
+                child: Center(
+                  child: Text(
+                    "* Wait and watch the above video to get started!",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * 0.1,
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width * 0.1,
+                ),
               ),
-            ),
-            OutlineButton(
-              borderSide: BorderSide(
-                color: Colors.green,
-                width: 1.5,
-              ),
-              onPressed: () {
-                // if (widget.btnTitle == "Tap to continue") {
-                //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //     builder: (context) => Loading(),
-                //   ));
-                // }
-                // else{
-                //    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //     builder: (context) => SummaryPage(),
-                //   ));
-                // }
-
-                List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                orderManagement.moveNextIndex(context, arguments);
-              },
-              child: Text(
-                widget.btnTitle,
-                style: TextStyle(
+              OutlineButton(
+                borderSide: BorderSide(
                   color: Colors.green,
-                  fontSize: 15.0,
+                  width: 1.5,
+                ),
+                onPressed: () {
+                  // if (widget.btnTitle == "Tap to continue") {
+                  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (context) => Loading(),
+                  //   ));
+                  // }
+                  // else{
+                  //    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (context) => SummaryPage(),
+                  //   ));
+                  // }
+
+                  List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                  orderManagement.moveNextIndex(context, arguments);
+                },
+                child: Text(
+                  widget.btnTitle,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 15.0,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

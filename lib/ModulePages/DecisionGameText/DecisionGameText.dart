@@ -1,7 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import '../socialize/socialize.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
 
@@ -24,31 +23,31 @@ class DecisionGameTextPage extends StatefulWidget {
 class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   String data;
   int item = 0;
-  List<String> _listViewData = [
-    // "Swipe Right / Left to remove",
-    // "Swipe Right / Left to remove",
-  ];
-  static final _formkey = GlobalKey<FormState>();
-  _onSubmit() {
-    setState(() {
-      item;
-      if (item <= data.split(". ").length) {
-        print("data.split(" ").length = " +
-            data.split(". ").length.toString() +
-            data.split(". ").toString());
-        // for (var item in ) {
-        if (data.split(".")[item].length > 3) {
-          _listViewData.add(data.split(". ")[item] + ".");
-        }
-        item++;
+  // List<String> _listViewData = [
+  //   // "Swipe Right / Left to remove",
+  //   // "Swipe Right / Left to remove",
+  // ];
+   final _formkey = GlobalKey<FormState>();
+//   _onSubmit() {
+//     setState(() {
+//       item;
+//       if (item <= data.split(". ").length) {
+//         print("data.split(" ").length = " +
+//             data.split(". ").length.toString() +
+//             data.split(". ").toString());
+//         // for (var item in ) {
+//         if (data.split(".")[item].length > 3) {
+//           _listViewData.add(data.split(". ")[item] + ".");
+//         }
+//         item++;
 
-        // }
+//         // }
 
-      }
+//       }
 
-// _listViewData.add(_textController.text);
-    });
-  }
+// // _listViewData.add(_textController.text);
+//     });
+//   }
 
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
@@ -177,84 +176,86 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   @override
   Widget build(BuildContext context) {
     data = widget.content;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to home Page?? "),
-                      title: Text(
-                        "Warning!",
+    return CustomeOffline(
+          onConnetivity: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.preferences(widget.modNum, widget.index);
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              return Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
                       ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(widget.modNum, widget.index);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.1,
+                            left: MediaQuery.of(context).size.width * 0.02),
+                        child: Column(
+                          children: <Widget>[],
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.05),
+                    child: Column(
+                      children: formList(context),
+                    ),
+                  ),
+                ],
+              );
             },
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            return Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipperOne(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.1,
-                          left: MediaQuery.of(context).size.width * 0.02),
-                      child: Column(
-                        children: <Widget>[],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05),
-                  child: Column(
-                    children: formList(context),
-                  ),
-                ),
-              ],
-            );
-          },
         ),
       ),
     );

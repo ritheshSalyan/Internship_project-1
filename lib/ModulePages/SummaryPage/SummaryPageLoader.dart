@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../ModuleOrderController/Types.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'SummaryPage.dart';
 
 
@@ -29,32 +29,34 @@ class _SummaryPageLoaderState extends State<SummaryPageLoader> {
         ),
       );
     });
-     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new CircularProgressIndicator(
-              strokeWidth: 5,
-              value: null,
-              valueColor: new AlwaysStoppedAnimation(Colors.green),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Material(
-              color: Colors.transparent,
-              child: Text(
-                "Loading... Please Wait !",
-                style: TextStyle(
-                  color: Colors.black,
+     return CustomeOffline(
+            onConnetivity: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new CircularProgressIndicator(
+                strokeWidth: 5,
+                value: null,
+                valueColor: new AlwaysStoppedAnimation(Colors.green),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Material(
+                color: Colors.transparent,
+                child: Text(
+                  "Loading... Please Wait",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+    ),
+     );
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {

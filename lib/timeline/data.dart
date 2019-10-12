@@ -11,8 +11,10 @@ class Doodle {
   final Icon icon;
   final Image pointsIcon;
   final Text points;
+  String modName;
   final Color color;
   List<Color> colors = [];
+  final int modNum;
 
   // final Text
   Doodle({
@@ -20,18 +22,24 @@ class Doodle {
     this.time,
     this.content,
     this.doodle,
+    this.modName,
     this.icon,
     this.iconBackground,
     this.pointsIcon,
     this.points,
     this.color,
     this.colors,
+    this.modNum,
   });
 }
+
+ 
 
 List<Doodle> doodles = [
   new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 1,
+    modName: "Starting Up",
     name: AutoSizeText(
       "Starting Up",
       style: TextStyle(
@@ -62,10 +70,13 @@ List<Doodle> doodles = [
     ),
     color: Colors.grey[100],
   ),
+ 
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 2,
+    modName: "Idea",
     name: AutoSizeText(
-      "Idea and Market Research",
+      "Idea",
       style: TextStyle(
 //                            color: Colors.white,
           // fontSize: 10,
@@ -95,8 +106,78 @@ List<Doodle> doodles = [
     ),
     color: Colors.grey[100],
   ),
+    new Doodle(
+    colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 13,
+    modName: "Market Research I",
+    name: AutoSizeText(
+      "Market Research I",
+      style: TextStyle(
+//                            color: Colors.white,
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    time: "Module 13",
+    doodle: "assets/Images/analysis.png",
+    // doodle: "assets/Images/gcloud.png",
+    // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
+    icon: Icon(
+     FontAwesomeIcons.circle,
+      color: Colors.green,
+    ),
+    iconBackground: Colors.grey[50],
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "${2000}",
+    ),
+    color: Colors.grey[100],
+  ),
+    new Doodle(
+    colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 14,
+    modName: "Market Research II",
+    name: AutoSizeText(
+      "Market Research II",
+      style: TextStyle(
+//                            color: Colors.white,
+        // fontSize: 16,
+        letterSpacing: 0.5,
+        // fontFamily: "Open Sans",
+        fontWeight: FontWeight.w400,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    time: "Module 14",
+    doodle: "assets/Images/analysis.png",
+    // doodle: "assets/Images/gcloud.png",
+    // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2FModule%20-%20Finance.mp4?alt=media&token=d3dff2a6-7a8e-4d3a-ad48-b92b597e357d',
+    icon: Icon(
+      FontAwesomeIcons.circle,
+      color: Colors.green,
+    ),
+    iconBackground: Colors.grey[50],
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "${2500}",
+    ),
+    color: Colors.grey[100],
+  ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 3,
+    modName: "Ethical Foundations",
     name: AutoSizeText(
       "Ethical Foundations",
       style: TextStyle(
@@ -123,12 +204,14 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${2000}",
+      "${3000}",
     ),
     color: Colors.grey[100],
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum:4,
+    modName: "Product",
     name: AutoSizeText(
       "Product",
       style: TextStyle(
@@ -154,12 +237,14 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${2500}",
+      "${3500}",
     ),
     color: Colors.grey[100],
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modNum: 5,
+    modName: "Business Model",
     name: AutoSizeText(
       "Business Model",
       style: TextStyle(
@@ -170,72 +255,10 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+   
     time: "Module 5",
     doodle: "assets/Images/marketAnalyaisIcon.png",
     // "https://lh3.googleusercontent.com/vk5ODrDXkJXCJ9z2lMnQdMb9m5-HKxDvn_Q67J8PBKPT9n67iCQFj37tB62ARaQQKnKwig-CcBT9NODmzoqdM56_UTUKZRELLYoz1lVU=s800",
-    icon: Icon(
-      FontAwesomeIcons.circle,
-      // Icons.
-      color: Colors.green,
-    ),
-    iconBackground: Colors.grey[50],
-    pointsIcon: Image.asset(
-      "assets/Images/coins.png",
-      height: 20,
-      width: 20,
-    ),
-    points: Text(
-      "${3000}",
-    ),
-    color: Colors.grey[100],
-  ),
-  Doodle(
-    colors: [Colors.grey[100], Colors.grey[100]],
-    name: AutoSizeText(
-      "Pricing",
-      style: TextStyle(
-//                            color: Colors.white,
-          // fontSize: 16,
-          letterSpacing: 0.5,
-          // fontFamily: "Open Sans",
-          fontWeight: FontWeight.w400),
-      textAlign: TextAlign.center,
-    ),
-    time: "Module 6",
-    doodle: "assets/Images/6.png",
-    // "https://www.google.com/logos/doodles/2018/ibn-sinas-1038th-birthday-5768556863029248.2-2x.png",
-    icon: Icon(
-      FontAwesomeIcons.circle,
-      // Icons.
-      color: Colors.green,
-    ),
-    iconBackground: Colors.grey[50],
-    pointsIcon: Image.asset(
-      "assets/Images/coins.png",
-      height: 20,
-      width: 20,
-    ),
-    points: Text(
-      "${3500}",
-    ),
-    color: Colors.grey[100],
-  ),
-  Doodle(
-    colors: [Colors.grey[100], Colors.grey[100]],
-
-    name: AutoSizeText(
-      "Legal and Compliance",
-      style: TextStyle(
-//                            color: Colors.white,
-          // fontSize: 16,
-          letterSpacing: 0.5,
-          // fontFamily: "Open Sans",
-          fontWeight: FontWeight.w400),
-      textAlign: TextAlign.center,
-    ),
-    time: "Module 7",
-    doodle: "assets/Images/leagal.png",
-    // "https://lh3.googleusercontent.com/UBa5VOLYZNb9sqCZJeMrrS5ZW-KpDBZ7haT8aLPpHzeOZ8K_6TCP03_n-5VKIaewaRVqYkTF09OwvI4oQ2L2IqaUyWlTUkJb4E1uZF0=s660",
     icon: Icon(
       FontAwesomeIcons.circle,
       // Icons.
@@ -254,8 +277,9 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modName: "Pricing",
     name: AutoSizeText(
-      "Branding and Marketing",
+      "Pricing",
       style: TextStyle(
 //                            color: Colors.white,
           // fontSize: 16,
@@ -264,9 +288,10 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    time: "Module 8",
-    doodle: "assets/Images/brandingIcon.png",
-    // "https://lh3.googleusercontent.com/429NetsPejpMgeXqZuA15mCFLQykowhHNnbkSa1L8SHq9Kp9De-EBPlmOknzJ_HRykzt5FPhwpju_M3uKeuZlKegwdRQSzrH8NfdwR_B=s660",
+    modNum: 6,
+    time: "Module 6",
+    doodle: "assets/Images/6.png",
+    // "https://www.google.com/logos/doodles/2018/ibn-sinas-1038th-birthday-5768556863029248.2-2x.png",
     icon: Icon(
       FontAwesomeIcons.circle,
       // Icons.
@@ -285,19 +310,21 @@ List<Doodle> doodles = [
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
+    modName: "Legal and Compliance",
     name: AutoSizeText(
-      "Team",
+      "Legal and Compliance",
       style: TextStyle(
-//           color: Colors.white,
+//                            color: Colors.white,
           // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    time: "Module 9",
-    doodle: "assets/Images/teamIcon.png",
-    // "https://lh3.googleusercontent.com/TegzHFZQYIfV4lYsaXsZ-CUE_9Lp6qbJZXpSRzTWeLkNiQh0xRbt5KsI4szxN9nUopbyH6d-8tkmV5NcUJtI0Ks79fh-D6nCrKEt5hxR=s660",
+    modNum: 7,
+    time: "Module 7",
+    doodle: "assets/Images/leagal.png",
+    // "https://lh3.googleusercontent.com/UBa5VOLYZNb9sqCZJeMrrS5ZW-KpDBZ7haT8aLPpHzeOZ8K_6TCP03_n-5VKIaewaRVqYkTF09OwvI4oQ2L2IqaUyWlTUkJb4E1uZF0=s660",
     icon: Icon(
       FontAwesomeIcons.circle,
       // Icons.
@@ -315,9 +342,10 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Branding and Marketing",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
-      "Technology",
+      "Branding and Marketing",
       style: TextStyle(
 //                            color: Colors.white,
           // fontSize: 16,
@@ -326,9 +354,10 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    time: "Module 10",
-    doodle: "assets/Images/technologyIcon.png",
-    // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
+    modNum: 8,
+    time: "Module 8",
+    doodle: "assets/Images/brandingIcon.png",
+    // "https://lh3.googleusercontent.com/429NetsPejpMgeXqZuA15mCFLQykowhHNnbkSa1L8SHq9Kp9De-EBPlmOknzJ_HRykzt5FPhwpju_M3uKeuZlKegwdRQSzrH8NfdwR_B=s660",
     icon: Icon(
       FontAwesomeIcons.circle,
       // Icons.
@@ -340,25 +369,27 @@ List<Doodle> doodles = [
       height: 20,
       width: 20,
     ),
-    color: Colors.grey[100],
     points: Text(
       "${5500}",
     ),
+    color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Team",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
-      "Funding and Financing",
+      "Team",
       style: TextStyle(
-//                            color: Colors.white,
+//           color: Colors.white,
           // fontSize: 16,
           letterSpacing: 0.5,
           // fontFamily: "Open Sans",
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    time: "Module 11",
-    doodle: "assets/Images/fundingIcon.png",
+    modNum: 9,
+    time: "Module 9",
+    doodle: "assets/Images/teamIcon.png",
     // "https://lh3.googleusercontent.com/TegzHFZQYIfV4lYsaXsZ-CUE_9Lp6qbJZXpSRzTWeLkNiQh0xRbt5KsI4szxN9nUopbyH6d-8tkmV5NcUJtI0Ks79fh-D6nCrKEt5hxR=s660",
     icon: Icon(
       FontAwesomeIcons.circle,
@@ -377,6 +408,73 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
   ),
   Doodle(
+    modName: "Technology",
+    colors: [Colors.grey[100], Colors.grey[100]],
+    name: AutoSizeText(
+      "Technology",
+      style: TextStyle(
+//                            color: Colors.white,
+          // fontSize: 16,
+          letterSpacing: 0.5,
+          // fontFamily: "Open Sans",
+          fontWeight: FontWeight.w400),
+      textAlign: TextAlign.center,
+    ),
+    modNum: 10,
+    time: "Module 10",
+    doodle: "assets/Images/technologyIcon.png",
+    // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",
+    icon: Icon(
+      FontAwesomeIcons.circle,
+      // Icons.
+      color: Colors.green,
+    ),
+    iconBackground: Colors.grey[50],
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    color: Colors.grey[100],
+    points: Text(
+      "${6500}",
+    ),
+  ),
+  Doodle(
+    modName: "Funding and Financing",
+    colors: [Colors.grey[100], Colors.grey[100]],
+    name: AutoSizeText(
+      "Funding and Financing",
+      style: TextStyle(
+//                            color: Colors.white,
+          // fontSize: 16,
+          letterSpacing: 0.5,
+          // fontFamily: "Open Sans",
+          fontWeight: FontWeight.w400),
+      textAlign: TextAlign.center,
+    ),
+    modNum: 11,
+    time: "Module 11",
+    doodle: "assets/Images/fundingIcon.png",
+    // "https://lh3.googleusercontent.com/TegzHFZQYIfV4lYsaXsZ-CUE_9Lp6qbJZXpSRzTWeLkNiQh0xRbt5KsI4szxN9nUopbyH6d-8tkmV5NcUJtI0Ks79fh-D6nCrKEt5hxR=s660",
+    icon: Icon(
+      FontAwesomeIcons.circle,
+      // Icons.
+      color: Colors.green,
+    ),
+    iconBackground: Colors.grey[50],
+    pointsIcon: Image.asset(
+      "assets/Images/coins.png",
+      height: 20,
+      width: 20,
+    ),
+    points: Text(
+      "${7000}",
+    ),
+    color: Colors.grey[100],
+  ),
+  Doodle(
+    modName: "Go to Market",
     colors: [Colors.grey[100], Colors.grey[100]],
     name: AutoSizeText(
       "Go to Market",
@@ -388,6 +486,7 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
+    modNum: 12,
     //Business plan and
     time: "Module 12",
     doodle: "assets/Images/gotoMarket.png",
@@ -412,13 +511,13 @@ List<Doodle> doodles = [
       width: 20,
     ),
     points: Text(
-      "${6500}",
+      "${7500}",
     ),
     color: Colors.grey[100],
   ),
   Doodle(
     colors: [Color.fromRGBO(222, 30, 89, 1), Color.fromRGBO(59, 40, 127, 1)],
-
+    modName: "Store",
     name: AutoSizeText(
       "Store",
       style: TextStyle(
@@ -429,7 +528,8 @@ List<Doodle> doodles = [
           fontWeight: FontWeight.w400),
       textAlign: TextAlign.center,
     ),
-    //Business plan and
+    //Business plan andm
+    modNum: -1,
     time: "Module 13",
     doodle: "assets/Images/hustel.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",

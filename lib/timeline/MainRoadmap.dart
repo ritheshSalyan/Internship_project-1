@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:startupreneur/ModulePages/FileActivity/FileUpload.dart';
-import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -46,7 +44,6 @@ class _TimelinePageState extends State<TimelinePage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   Firestore db = Firestore.instance;
   SharedPreferences sharedPreferences;
-  bool _isPlaying = false;
   int gems = 0;
   VideoPlayerController controller;
   BuildContext context;
@@ -83,7 +80,7 @@ class _TimelinePageState extends State<TimelinePage> {
     );
   }
 
-  void _Sharedpreference(BuildContext context) async {
+  void _sharedpreference(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
 
@@ -119,6 +116,8 @@ class _TimelinePageState extends State<TimelinePage> {
     _messaging.getToken().then((token) {
       print(token);
     });
+
+    Analytics.analyticsBehaviour("Main_RoadMap_TimeLine_Page", "RoadMap");
   }
 
   void preferences(BuildContext context) async {
@@ -176,7 +175,6 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.status) {
         Flushbar(
@@ -438,12 +436,12 @@ class _TimelinePageState extends State<TimelinePage> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         (FileUploadLoading(modNum: 2, index: 38)),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (DownloadFileActivityLoader(
+                              modNum: 13, index: 15)),
+                        ),
+                      );
                       // Navigator.of(context).pop();
                       //  Navigator.of(context).push(
                       //   MaterialPageRoute(
@@ -483,7 +481,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     ),
                     onTap: () {
                       _auth.signOut();
-                      _Sharedpreference(context);
+                      _sharedpreference(context);
                       //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                       //                    builder: (context) => SigninPage(),
                       //                  ));
@@ -585,32 +583,30 @@ class _TimelinePageState extends State<TimelinePage> {
 
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodles[i];
-    final textTheme = Theme.of(context).textTheme;
 
-    int k;
     var val = 1;
     return TimelineModel(
         new GestureDetector(
           onTap: () async {
             print("value of i is $i");
             if (check(i)) {
-              print(" true $i");
+              print(" true ${doodle.modNum}");
               // val = completedCourse[k];
               print("val is $val");
-              int progressNum = await SaveProgress.getProgerss(i + 1);
-              print("PROGRESS NUM ${progressNum}");
+              int progressNum = await SaveProgress.getProgerss(doodle.modNum);
+              print("PROGRESS NUM $progressNum");
               if (progressNum == 0) {
-                if (i == 11) {
+                if (doodle.modNum == 12 || doodle.modNum == 14) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          ModuleOverviewLoading(modNum: i + 1),
+                          ModuleOverviewLoading(modNum: doodle.modNum),
                     ),
                   );
-                } else if (i != 12) {
+                } else if (doodle.modNum != 12) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => QuoteLoading(modNum: i + 1),
+                      builder: (context) => QuoteLoading(modNum: doodle.modNum),
                     ),
                   );
                 } else {
@@ -627,20 +623,23 @@ class _TimelinePageState extends State<TimelinePage> {
                       return AlertDialog(
                         content: Text("Do you want to Continue ?"),
                         title: Text(
-                          "Warning!",
+                          "Continue!",
                         ),
                         actions: <Widget>[
                           FlatButton(
                             child: Text(
                               "Yes",
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(color: Colors.green),
                             ),
                             onPressed: () {
                               Navigator.of(context).pop(true);
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.getEventsFromFirestore(i + 1)
+                              SaveProgress.getEventsFromFirestore(doodle.modNum)
                                   .then((_) {
-                                List<int> arguments = [i + 1, progressNum];
+                                List<int> arguments = [
+                                  doodle.modNum,
+                                  progressNum
+                                ];
                                 orderManagement.moveNextIndex(
                                     context, arguments);
                               });
@@ -649,22 +648,22 @@ class _TimelinePageState extends State<TimelinePage> {
                           FlatButton(
                             child: Text(
                               "No",
-                              style: TextStyle(color: Colors.green),
+                              style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
                               Navigator.of(context).pop(true);
-                              if (i == 11) {
+                              if (doodle.modNum == 11 || doodle.modNum == 14) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        ModuleOverviewLoading(modNum: i + 1),
+                                    builder: (context) => ModuleOverviewLoading(
+                                        modNum: doodle.modNum),
                                   ),
                                 );
-                              } else if (i != 12) {
+                              } else if (doodle.modNum != 12) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        QuoteLoading(modNum: i + 1),
+                                        QuoteLoading(modNum: doodle.modNum),
                                   ),
                                 );
                               } else {
@@ -757,17 +756,5 @@ class _TimelinePageState extends State<TimelinePage> {
         isLast: i == doodles.length,
         iconBackground: doodle.iconBackground,
         icon: doodle.icon);
-  }
-
-  Future<dynamic> getFile() async {
-    print("Before Picking File");
-    var file = await FilePicker.getFilePath(type: FileType.ANY).then((file) {
-      print("After inside Picking file");
-      return file;
-    }).catchError((e) {
-      print("ERROR!!!!!!!!!!!" + e.toString());
-    }).timeout(Duration(seconds: 10), onTimeout: () {
-      print("Timeout*************************");
-    });
   }
 }

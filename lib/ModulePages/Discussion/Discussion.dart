@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:photo_view/photo_view.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:extended_image/extended_image.dart';
@@ -32,16 +34,45 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // "Swipe Right / Left to remove",
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
+    //  SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
+  }
+
+  @override
+  dispose() {
+    //  SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]).then((_){
+    //   print("Dispose of oirentation done");
+    // });
+    super.dispose();
+  }
+
   _onSubmit() {
+    final alphanumeric = RegExp(r'^[a-zA-Z 0-9]+$');
+
     setState(() {
-      item;
+      // item;
       if (item <= data.split(". ").length) {
-        print("data.split(', ').length = " +
-            data.split(". ").length.toString() +
-            data.split(". ").toString());
+        // print("data.split(' ').length = " +
+        //     data.split(". ").length.toString() +
+        //     data.split(". ").toString());
         // for (var item in ) {
         if (data.split(". ")[item].length > 3) {
-          _listViewData.add(data.split(". ")[item] + ".");
+          String temp = data.split(". ")[item];
+          print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
+          if (alphanumeric.hasMatch(temp[temp.length-1])) {
+            _listViewData.add(temp + ".");
+          } else {
+            _listViewData.add(temp);
+          }
         }
         item++;
 
@@ -62,7 +93,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
       //     title: Text(data),
       //   ),
       // );
-      print(_listViewData);
+      // print(_listViewData);
       return Card(
           elevation: 0,
           margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -138,191 +169,203 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget image = SizedBox(
+      height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width * 0.5,
+    );
+
+    if (widget.image != "") {
+      print("Title here ${widget.title}");
+      if ((widget.image.contains("assets/"))) {
+        print("Inside Assets");
+        image = ExtendedImage.asset(
+          widget.image,
+          height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width * 0.7,
+        );
+      } else {
+        print("Inside Network");
+        image = ExtendedImage.network(
+          widget.image,
+          height: MediaQuery.of(context).size.height * 0.2,
+        );
+      }
+    }
+    // print("Image is ${}");
     data = widget.content;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.home),
-            onTap: () {
-              showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to home Page?? "),
-                      title: Text(
-                        "Warning!",
+    return CustomeOffline(
+      onConnetivity: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            GestureDetector(
+              child: Icon(Icons.home),
+              onTap: () {
+                showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text(
+                            "Are you sure you want to return to Home Page? "),
+                        title: Text(
+                          "Warning!",
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              SaveProgress.preferences(
+                                  widget.modNum, widget.index);
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              return Stack(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: WaveClipperOne(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
                       ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            SaveProgress.preferences(widget.modNum, widget.index);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
-                        ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Builder(
-          builder: (context) {
-            return Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipperOne(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      width: double.infinity,
+                      child: Text(" "),
                     ),
-                    height: MediaQuery.of(context).size.height * 0.18,
-                    width: double.infinity,
-                    child: Text(" "),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.0),
-                  child: Column(
-                    children: <Widget>[
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //       top: MediaQuery.of(context).size.height * 0.05,
-                      //       left: MediaQuery.of(context).size.width * 0.02),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.0),
+                    child: Column(
+                      children: <Widget>[
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //       top: MediaQuery.of(context).size.height * 0.05,
+                        //       left: MediaQuery.of(context).size.width * 0.02),
                         //  Row(
                         //   mainAxisAlignment: MainAxisAlignment.center,
-                          // crossAxisAlignment: CrossAxisAlignment.center,
-                          // children: <Widget>[
-                            Text(
-                              widget.title,
-                              textAlign: TextAlign.center,
-                              //"Startup or Job",
-                              style: TextStyle(
-                                fontFamily: "sans-serif",
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                      //     ],
-                      //  // ),
-                      // ),
-                      SizedBox(height: 15,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.14),
-                            child: (widget.image != "")
-                                ? ExtendedImage.asset(
-                                    widget.image,
-                                    // "assets/Images/photo.png",
-                                    enableLoadState: true,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-//                            alignment: Alignment.center,
-                                    mode: ExtendedImageMode.Gesture,
-                                  )
-                                : SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                  ),
-                          ),
-                          (widget.image != "")
-                              ? IconButton(
-                                  icon: Icon(
-                                    Icons.zoom_out_map,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ImageViewer(image: widget.image),
-                                      fullscreenDialog: true,
-                                    ));
-                                  },
-                                )
-                              : SizedBox(),
-                        ],
-                      ),
-
-                      Column(
+                        // crossAxisAlignment: CrossAxisAlignment.center,
                         // children: <Widget>[
+                        Text(
+                          widget.title,
+                          textAlign: TextAlign.center,
+                          //"Startup or Job",
+                          style: TextStyle(
+                            fontFamily: "sans-serif",
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        //     ],
+                        //  // ),
+                        // ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.14),
+                              child: image,
+                            ),
+                            (widget.image != "")
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.zoom_out_map,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            ImageViewer(image: widget.image),
+                                        fullscreenDialog: true,
+                                      ));
+                                    },
+                                  )
+                                : SizedBox(),
+                          ],
+                        ),
 
-                        //    Card(
-                        //       clipBehavior: Clip.antiAliasWithSaveLayer,
-                        //       child: Padding(
-                        //         padding: EdgeInsets.all(10.0),
-                        //         child: Text(
-                        //           widget.content,
-                        //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
-                        //           style: TextStyle(
-                        //             fontSize: 18.0,
-                        //
-                        //             fontWeight: FontWeight.w500,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
+                        Column(
+                          // children: <Widget>[
 
-                        // ],
-                        children: convertTolist(),
-                      ),
-                      // FlatButton(
-                      //   onPressed: () {
-                      //     // Navigator.of(context).pushReplacement(
-                      //     //   MaterialPageRoute(
-                      //     //     builder: (context)=>SocializeTask(),
-                      //     //   )
-                      //     // );
-                      //     List<dynamic> arguments = [
-                      //       widget.modNum,
-                      //       widget.index+1
-                      //     ];
-                      //     orderManagement.moveNextIndex(context, arguments);
-                      //   },
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     children: <Widget>[
-                      //       Text(widget.button,
-                      //           style: TextStyle(fontWeight: FontWeight.w700)),
-                      //       Icon(Icons.navigate_next),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                          //    Card(
+                          //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                          //       child: Padding(
+                          //         padding: EdgeInsets.all(10.0),
+                          //         child: Text(
+                          //           widget.content,
+                          //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
+                          //           style: TextStyle(
+                          //             fontSize: 18.0,
+                          //
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+
+                          // ],
+                          children: convertTolist(),
+                        ),
+                        // FlatButton(
+                        //   onPressed: () {
+                        //     // Navigator.of(context).pushReplacement(
+                        //     //   MaterialPageRoute(
+                        //     //     builder: (context)=>SocializeTask(),
+                        //     //   )
+                        //     // );
+                        //     List<dynamic> arguments = [
+                        //       widget.modNum,
+                        //       widget.index+1
+                        //     ];
+                        //     orderManagement.moveNextIndex(context, arguments);
+                        //   },
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: <Widget>[
+                        //       Text(widget.button,
+                        //           style: TextStyle(fontWeight: FontWeight.w700)),
+                        //       Icon(Icons.navigate_next),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

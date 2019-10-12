@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
-import '../quiz/quiz_page.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
@@ -146,80 +146,83 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            iconTheme: IconThemeData(color: Colors.white),
-            expandedHeight: 50,
-            // backgroundColor: Theme.of(context).primaryColorDark,
-            backgroundColor: Colors.green,
-            pinned: true,
-            title: Text(
-              "Course Overview",
-              style: TextStyle(color: Colors.white),
+    return CustomeOffline(
+      
+          onConnetivity: Scaffold(
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              iconTheme: IconThemeData(color: Colors.white),
+              expandedHeight: 50,
+              // backgroundColor: Theme.of(context).primaryColorDark,
+              backgroundColor: Colors.green,
+              pinned: true,
+              title: Text(
+                "Module Overview",
+                style: TextStyle(color: Colors.white),
+              ),
+              // flexibleSpace: FlexibleSpaceBar(
+              //   background: Image.asset(
+              //     "assets/Images/${widget.modNum}.png",
+              //     fit: BoxFit.fitHeight,
+              //   ),
+              // ),
             ),
-            // flexibleSpace: FlexibleSpaceBar(
-            //   background: Image.asset(
-            //     "assets/Images/${widget.modNum}.png",
-            //     fit: BoxFit.fitHeight,
-            //   ),
-            // ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              <Widget>[
-                StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance
-                      .collection("module")
-                      .where("id", isEqualTo: widget.modNum)
-                      .snapshots(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    // if(snapshot.error){
-                    //   return Text("Error while fetching");
-                    // }
-                    switch (snapshot.data) {
-                      case null:
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: null,
-                            strokeWidth: 3,
-                            valueColor: AlwaysStoppedAnimation(
-                              Colors.green,
+            SliverList(
+              delegate: SliverChildListDelegate(
+                <Widget>[
+                  StreamBuilder<QuerySnapshot>(
+                    stream: Firestore.instance
+                        .collection("module")
+                        .where("id", isEqualTo: widget.modNum)
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      // if(snapshot.error){
+                      //   return Text("Error while fetching");
+                      // }
+                      switch (snapshot.data) {
+                        case null:
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: null,
+                              strokeWidth: 3,
+                              valueColor: AlwaysStoppedAnimation(
+                                Colors.green,
+                              ),
                             ),
-                          ),
-                        );
-                      default:
-                        snapshot.data.documents.forEach((document) {
-                          dataSnapshot = document;
-                          print(document.data["overview"]);
-                          list.clear();
-                          for (dynamic i in document.data["overview"]) {
-                            list.add(i);
-                          }
-                          //   if(orderManagement.order.isEmpty){
-                          //   orderManagement.order = convert(document.data["order"]);
+                          );
+                        default:
+                          snapshot.data.documents.forEach((document) {
+                            dataSnapshot = document;
+                            print(document.data["overview"]);
+                            list.clear();
+                            for (dynamic i in document.data["overview"]) {
+                              list.add(i);
+                            }
+                            //   if(orderManagement.order.isEmpty){
+                            //   orderManagement.order = convert(document.data["order"]);
 
-                          print("orderManagement.order " +
-                              orderManagement.order.toString());
-                          // }
-                          //=
-                          // print(
-                          //     "orderManagement.order = ${document.data}"); //[Type.overView,Type.quiz,Type.decisionGame];
-                        });
+                            print("orderManagement.order " +
+                                orderManagement.order.toString());
+                            // }
+                            //=
+                            // print(
+                            //     "orderManagement.order = ${document.data}"); //[Type.overView,Type.quiz,Type.decisionGame];
+                          });
 
-                        // orderManagement.order = [Type.overView,Type.quiz,Type.theory,Type.video];
+                          // orderManagement.order = [Type.overView,Type.quiz,Type.theory,Type.video];
 
-                        return Column(
-                          children: wExList(),
-                        );
-                    }
-                  },
-                ),
-              ],
+                          return Column(
+                            children: wExList(),
+                          );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

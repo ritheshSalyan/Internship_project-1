@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
+import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
+import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
+import 'package:startupreneur/saveProgress.dart';
 import '../ModulePages/quiz/quizLoader.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
-import '../ModulePages/VideoController/VideoController.dart';
 import '../ModulePages/VideoController/VideoControllerLoader.dart';
-import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheory.dart';
 import 'package:startupreneur/ModulePages/ModuleTheory/ModuleTheoryLoader.dart';
 import '../casestudy/CaseStudyEntry.dart';
 import '../ModulePages/Activity/ActivityLoader.dart';
 import '../ModulePages/Discussion/DiscussionLoader.dart';
 import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../ModulePages/Socialize/socialize.dart';
-import '../timeline/MainRoadmap.dart';
 import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,13 +40,16 @@ enum Type {
   uploadActivity,
   hustelTip,
   imagePage,
+  flip,
+  ideaActivity,
+  download,
 }
 
 class orderManagement {
   static List<Type> order = [];
   static List<dynamic> complete = [];
   static dynamic points ;
-  static dynamic modulePoint;
+  static dynamic modulePoint = 0;
   static int currentIndex = 0;
   static String userid = "";
   List<dynamic> arguments = [];
@@ -103,6 +107,7 @@ class orderManagement {
         );
       }
     } else {
+       SaveProgress.preferences(arguments[0],arguments[1]);
       switch (order[currentIndex]) {
         case Type.quote:
           print("quote");
@@ -117,13 +122,40 @@ class orderManagement {
             ),
           );
           break;
-
+         case Type.download:
+          print("Download");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  DownloadFileActivityLoader(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
         case Type.imagePage:
           print("imagePage");
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
                   ImagePageLoading(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
+           case Type.ideaActivity:
+          print("ideaActivity $currentIndex");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                 IdeaActivity(modNum: arguments[0], index: currentIndex),
+            ),
+          );
+          break;
+
+           case Type.flip:
+          print("flip");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                 FlipPage(modnum: arguments[0], index: currentIndex),
             ),
           );
           break;

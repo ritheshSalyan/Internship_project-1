@@ -193,7 +193,7 @@ class FriendDetailBody extends StatelessWidget {
   // }
 
   List<Widget> personalDetail(BuildContext context) {
-    double percentage = (friend.completed.length / 13) * 100;
+    double percentage = (friend.completed.length / 14) * 100;
     return <Widget>[
       Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
@@ -222,7 +222,7 @@ class FriendDetailBody extends StatelessWidget {
                     new LinearPercentIndicator(
                       width: MediaQuery.of(context).size.width * 0.8,
                       lineHeight: 20.0,
-                      percent: friend.completed.length / 13,
+                      percent: friend.completed.length / 14,
                       animation: true,
                       animationDuration: 2500,
                       center: Text("${percentage.toStringAsFixed(0)}%"),
@@ -389,7 +389,6 @@ class FriendDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     //  var textTheme = theme.textTheme;
 
     return new Column(

@@ -37,7 +37,7 @@ class AddEntryDialogState extends State<AddEntryDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     print("init ${widget.claimedUser}");
   }

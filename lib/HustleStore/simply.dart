@@ -4,15 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:startupreneur/HustleStore/detailingPage/detailing.dart';
-import 'googleCloud/googleCloudLoader.dart';
-import 'hacks/startup_hacks_loader.dart';
-import 'incubation/incubation.dart';
-import 'paymentGateway/paymentGatewayLoader.dart';
-import 'seedFunding/seedFundingLoader.dart';
-import 'template/templateLoader.dart';
-import 'internship/DataListingLoader.dart';
-import 'hyperLinkPage/hyperLinkPage.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 
 class Component {
   String name;
@@ -52,10 +44,11 @@ class _HustleStoreState extends State<HustleStore> {
   List<dynamic> list = [];
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     preferences();
     db = Firestore.instance;
+    Analytics.analyticsBehaviour("Hustle_Store_Page", "HustleStoreMainPage");
   }
 
   void preferences() async {
@@ -160,483 +153,483 @@ class _HustleStoreState extends State<HustleStore> {
                         );
                       },
                     );
-                    print(list[0].name);
+                    // print(list[0].name);
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: list.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, int index) {
                         return GestureDetector(
-                          onTap: () {
-                            print(list[index].type);
-                            switch (list[index].type) {
-                              case "funding":
-                                print("hello world");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            seedFundingLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => AddEntryDialog(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          // onTap: () {
+                          //   print(list[index].type);
+                          //   switch (list[index].type) {
+                          //     case "funding":
+                          //       print("hello world");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => AddEntryDialog(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   seedFundingLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => AddEntryDialog(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              case "template":
-                                print("Template");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                  break;
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => TemplateLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => AddEntryDialog(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                        ),
-                                        fullscreenDialog: true,
-                                        maintainState: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //       break;
+                          //     case "template":
+                          //       print("Template");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => AddEntryDialog(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //         break;
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => TemplateLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => AddEntryDialog(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //               maintainState: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              case "incubation":
-                                print("incubation");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Incubation(
-                                          title: "Incubation",
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => AddEntryDialog(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //       break;
+                          //     case "incubation":
+                          //       print("incubation");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => AddEntryDialog(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => Incubation(
+                          //                 title: "Incubation",
+                          //               ),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => AddEntryDialog(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
+                          //       break;
 
-                              case "gateway":
-                                print("gateway");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          AddEntryDialogHyperLink(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                        link:
-                                            "https://register.payumoney.com/Startupreneur_Incubator",
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            paymentGatewayLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddEntryDialogHyperLink(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                          link:
-                                              "https://register.payumoney.com/Startupreneur_Incubator",
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //     case "gateway":
+                          //       print("gateway");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) =>
+                          //                 AddEntryDialogHyperLink(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //               link:
+                          //                   "https://register.payumoney.com/Startupreneur_Incubator",
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   paymentGatewayLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   AddEntryDialogHyperLink(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //                 link:
+                          //                     "https://register.payumoney.com/Startupreneur_Incubator",
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              case "internship":
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DataListingLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => AddEntryDialog(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //       break;
+                          //     case "internship":
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => AddEntryDialog(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   DataListingLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => AddEntryDialog(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              case "credits":
-                                print("google credits");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          AddEntryDialogHyperLink(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                        link:
-                                            "https://cloud.google.com/developers/startups/",
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            googleCloudLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddEntryDialogHyperLink(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                          link:
-                                              "https://cloud.google.com/developers/startups/",
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //       break;
+                          //     case "credits":
+                          //       print("google credits");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) =>
+                          //                 AddEntryDialogHyperLink(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //               link:
+                          //                   "https://cloud.google.com/developers/startups/",
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   googleCloudLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   AddEntryDialogHyperLink(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //                 link:
+                          //                     "https://cloud.google.com/developers/startups/",
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              case "hacks":
-                                print("Hacks");
-                                claimedUser.clear();
-                                print("${list[index].claimed.length}");
-                                if (list[index].claimed.length == 0) {
-                                  print("inisde if");
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => AddEntryDialog(
-                                        points: list[index].points,
-                                        available: widget.point,
-                                        descript: list[index].description,
-                                        image: list[index].image,
-                                        title: "",
-                                        userid: userId,
-                                        claimedUser: claimedUser,
-                                        len: 12,
-                                        type: list[index].type,
-                                      ),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                } else {
-                                  print("inside else");
-                                  for (var i in list[index].claimed) {
-                                    if (userId == i) {
-                                      setState(() {
-                                        claimedUser.add(i);
-                                        flag = true;
-                                      });
-                                      break;
-                                    } else {
-                                      claimedUser.add(i);
-                                      continue;
-                                    }
-                                  }
-                                  if (flag) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            startupHacksLoader(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => AddEntryDialog(
-                                          points: list[index].points,
-                                          available: widget.point,
-                                          descript: list[index].description,
-                                          image: list[index].image,
-                                          title: "",
-                                          userid: userId,
-                                          claimedUser: claimedUser,
-                                          len: 12,
-                                          type: list[index].type,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                  }
-                                }
+                          //       break;
+                          //     case "hacks":
+                          //       print("Hacks");
+                          //       claimedUser.clear();
+                          //       print("${list[index].claimed.length}");
+                          //       if (list[index].claimed.length == 0) {
+                          //         print("inisde if");
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => AddEntryDialog(
+                          //               points: list[index].points,
+                          //               available: widget.point,
+                          //               descript: list[index].description,
+                          //               image: list[index].image,
+                          //               title: "",
+                          //               userid: userId,
+                          //               claimedUser: claimedUser,
+                          //               len: 12,
+                          //               type: list[index].type,
+                          //             ),
+                          //             fullscreenDialog: true,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         print("inside else");
+                          //         for (var i in list[index].claimed) {
+                          //           if (userId == i) {
+                          //             setState(() {
+                          //               claimedUser.add(i);
+                          //               flag = true;
+                          //             });
+                          //             break;
+                          //           } else {
+                          //             claimedUser.add(i);
+                          //             continue;
+                          //           }
+                          //         }
+                          //         if (flag) {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   startupHacksLoader(),
+                          //             ),
+                          //           );
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => AddEntryDialog(
+                          //                 points: list[index].points,
+                          //                 available: widget.point,
+                          //                 descript: list[index].description,
+                          //                 image: list[index].image,
+                          //                 title: "",
+                          //                 userid: userId,
+                          //                 claimedUser: claimedUser,
+                          //                 len: 12,
+                          //                 type: list[index].type,
+                          //               ),
+                          //               fullscreenDialog: true,
+                          //             ),
+                          //           );
+                          //         }
+                          //       }
 
-                                break;
-                              default:
-                                print("none");
-                                break;
-                            }
-                          },
+                          //       break;
+                          //     default:
+                          //       print("none");
+                          //       break;
+                          //   }
+                          // },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.3,

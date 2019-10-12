@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
-import '../ModulePages/Activity/Activity.dart';
 import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
@@ -21,10 +21,10 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
   @override
   void initState() {
     create_slides();
+    Analytics.analyticsBehaviour("Case_Study_Page", "Case_Study");
   }
 
   void create_slides() {
-    int i = 3;
     List<String> list = widget.dialogue;
     for (int i = 0; i < list.length; i++) {
       String item = list[i];
@@ -58,7 +58,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/story.png',
+                  'assets/Images/character.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,
@@ -105,7 +105,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/story.png',
+                  'assets/Images/character.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,
@@ -141,7 +141,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                   ),
                 ),
                 Image.asset(
-                  'assets/Images/story.png',
+                  'assets/Images/character.png',
                   fit: BoxFit.fitHeight,
                   // width: 200,
                   height: 350,

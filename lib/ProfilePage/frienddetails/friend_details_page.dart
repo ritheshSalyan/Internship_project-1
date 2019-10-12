@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 // import '../frienddetails/footer/friend_detail_footer.dart';
 import '../frienddetails/friend_detail_body.dart';
 import '../frienddetails/header/friend_detail_header.dart';
 import '../friends/friend.dart';
-import 'package:meta/meta.dart';
 
 class FriendDetailsPage extends StatefulWidget {
   // FriendDetailsPage(
@@ -21,6 +21,14 @@ class FriendDetailsPage extends StatefulWidget {
 }
 
 class _FriendDetailsPageState extends State<FriendDetailsPage> {
+
+  
+   @override
+  void initState() {
+    super.initState();
+    Analytics.analyticsBehaviour("User_Profile_page", "Profile_Page");
+  }
+
   @override
   Widget build(BuildContext context) {
     // var linearGradient = const BoxDecoration(

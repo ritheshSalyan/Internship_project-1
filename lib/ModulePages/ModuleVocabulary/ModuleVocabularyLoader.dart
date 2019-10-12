@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ModuleVocabulary.dart';
-import '../../ModuleOrderController/Types.dart';
 
 class ModuleVocabularyLoading extends StatefulWidget {
   ModuleVocabularyLoading({Key key, this.modNum, this.index}) : super(key: key);
@@ -17,7 +16,7 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
   static final List<String> meanings = [];
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -51,7 +50,7 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
             Material(
               color: Colors.transparent,
               child: Text(
-                "Loading... Please Wait !",
+                "Loading... Please Wait",
                 style: TextStyle(
                   color: Colors.black,
                 ),

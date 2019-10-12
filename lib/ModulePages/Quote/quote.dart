@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import '../ModuleOverview/ModuleOverviewLoading.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -15,103 +16,112 @@ class _QuoteState extends State<Quote> {
   @override
   Widget build(BuildContext context) {
     String text = (widget.modNum==12)?"Oh Yes!":"Start";
-    return PageView(
-      children: <Widget>[
-        Container(
-          color: Colors.green,
-          // alignment: Alignment.bottomRight,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.1,
-            ),
+    return CustomeOffline(
+      onConnetivity: PageView(
+        children: <Widget>[
+          Container(
+            color: Colors.green,
+            // alignment: Alignment.bottomRight,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                // crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Material(
-                      color: Colors.black.withOpacity(0),
-                      child: Text(
-                        widget.quote[0],
-                        style: TextStyle(
-                          // fontStyle: FontStyle.italic,
-                          letterSpacing: 1.5,
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Material(
-                      color: Colors.black.withOpacity(0),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.03),
-                        child: Text(
-                          widget.quote[1],
-                          style: TextStyle(
+                Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.01,
+                right:  MediaQuery.of(context).size.width * 0.01,
+              ),
+              child: buildColumn(context),
+            ),
+             Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.4,
+                        left: MediaQuery.of(context).size.width * 0.64),
+                    child: FlatButton(
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                           text,
+                            style: TextStyle(
                               letterSpacing: 1.5,
                               fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700),
-                        ),
+                              color: Colors.white,
+                              // fontWeight: FontWeight.w700
+                            ),
+                          ),
+                          Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        if(widget.modNum!=12){ 
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ModuleOverviewLoading(modNum: widget.modNum),
+                            // builder: (context)=>Vocabulary(),
+                          ),
+                        );
+                        }
+                        else{
+                          orderManagement.moveNextIndex(context,[12,24]);
+                        }
+                      },
+                    ),
+                  )
+              ],
+            )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column buildColumn(BuildContext context) {
+    return Column(
+            // mainAxisAlignment: MainAxisAlignment.end,
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Material(
+                    color: Colors.black.withOpacity(0),
+                    child: Text(
+                      widget.quote[0],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        // fontStyle: FontStyle.italic,
+                        letterSpacing: 1.5,
+                        fontSize: 25,
+                        color: Colors.white,
+
                       ),
                     ),
-                  ],
-                ),
-               
-              ],
-            ),
-          ),
-           Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.4,
-                      left: MediaQuery.of(context).size.width * 0.64),
-                  child: FlatButton(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                         text,
-                          style: TextStyle(
+                  ),
+                  Material(
+                    color: Colors.black.withOpacity(0),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.03),
+                      child: Text(
+                        widget.quote[1],
+                        style: TextStyle(
                             letterSpacing: 1.5,
                             fontSize: 20,
-                            color: Colors.white,
-                            // fontWeight: FontWeight.w700
-                          ),
-                        ),
-                        Icon(
-                          Icons.navigate_next,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                      ],
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
-                    onPressed: () {
-                      if(widget.modNum!=12){ 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ModuleOverviewLoading(modNum: widget.modNum),
-                          // builder: (context)=>Vocabulary(),
-                        ),
-                      );
-                      }
-                      else{
-                        orderManagement.moveNextIndex(context,[12,24]);
-                      }
-                    },
                   ),
-                )
+                ],
+              ),
+             
             ],
-          )
-        ),
-      ],
-    );
+          );
   }
 }

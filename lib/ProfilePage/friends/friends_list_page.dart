@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../frienddetails/friend_details_page.dart';
 import '../friends/friend.dart';
 
 class FriendsListPage extends StatefulWidget {
@@ -20,7 +19,6 @@ class _FriendsListPageState extends State<FriendsListPage> {
   }
 
   Future<void> _loadFriends() async {
-    http.Response response =
         await http.get('https://randomuser.me/api/?results=25');
 
     // setState(() {

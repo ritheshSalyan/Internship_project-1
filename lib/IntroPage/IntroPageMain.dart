@@ -2,10 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/Auth/signin.dart';
-import '../home.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import '../Auth/signin.dart';
 
 // class IntroPage extends StatefulWidget {
@@ -17,13 +15,28 @@ import '../Auth/signin.dart';
 // }
 
 // class IntroPageState extends State<IntroPage> {
-class PageStarter1State extends StatelessWidget {
+class PageStarter1State extends StatefulWidget {
   PageStarter1State({Key key, this.con}) : super(key: key);
 
   BuildContext con;
   //making list of pages needed to pass in IntroViewsFlutter constructor.
   static String third =
       "The Startupreneur is a platform for anyone wishing to explore and evaluate Entrepreneurship.\n\nWhether you want to startup right now or even after a few years. Whether you want to work with a startup or just learn about starting up, this one’s dedicated to you!.\n\nGet the opportunity to build your venture, work with startups or even get access to incubation and potential seed funding. All this and more, while you achieve your certificate to become a Startupreneur!";
+
+  @override
+  _PageStarter1StateState createState() => _PageStarter1StateState();
+}
+
+class _PageStarter1StateState extends State<PageStarter1State> {
+
+  @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("Introduction_Page", "Starting_Page");
+  }
+
+
 
   final pages = [
     // List<Slide> slides = new List();
@@ -238,45 +251,6 @@ class PageStarter1State extends StatelessWidget {
       ),
     ),
   ];
-  // Widget renderDoneBtn() {
-  //   return SingleChildScrollView(
-  //     scrollDirection: Axis.horizontal,
-  //     child:
-  //         Text(
-  //           "Lets Start",
-  //           style: TextStyle(
-  //               color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
-  //         ),
-  //         // Icon(Icons.file_upload)
-
-  //   );
-  // }
-
-  // Widget renderNextBtn() {
-  //   return SingleChildScrollView(
-  //     scrollDirection: Axis.horizontal,
-  //     child:
-  //         Text(
-  //           "Next",
-  //           style: TextStyle(
-  //               color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
-  //         ),
-  //         // Icon(Icons.file_upload)
-
-  //   );
-  // }
-
-  // Widget renderSkipBtn() {
-  //   return SingleChildScrollView(
-  //     scrollDirection: Axis.horizontal,
-  //     child: Text(
-  //       " ",
-  //       style: TextStyle(
-  //           color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
-  //     ),
-  //     // Icon(Icons.file_upload)
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

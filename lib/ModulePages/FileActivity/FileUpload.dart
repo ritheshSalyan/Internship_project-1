@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:intro_slider/dot_animation_enum.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,6 +25,14 @@ class FileUpload extends StatefulWidget {
 //------------------ Default config ------------------
 class FileUploadState extends State<FileUpload> {
   List<Container> slides = new List();
+
+
+   @override
+  void initState() {
+
+    super.initState();
+    Analytics.analyticsBehaviour("File_Uploading_Page_Module", "File_Upload_Page");
+  }
 
   File file;
   String uid;
@@ -62,10 +70,7 @@ class FileUploadState extends State<FileUpload> {
         ));
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  
 
   void getSlides() {
     var alert = GestureDetector(
@@ -76,7 +81,7 @@ class FileUploadState extends State<FileUpload> {
             builder: (_) {
               return AlertDialog(
                 content:
-                    Text("Are you sure you want to return to home Page?? "),
+                    Text("Are you sure you want to return to Home Page? "),
                 title: Text(
                   "Warning!",
                 ),
@@ -196,11 +201,11 @@ class FileUploadState extends State<FileUpload> {
     }
     slides.add(
       new Container(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         color: Colors.green,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
                Padding(
                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.1,top:MediaQuery.of(context).size.height*0.05),
@@ -299,9 +304,8 @@ class FileUploadState extends State<FileUpload> {
   // }
 
   Future upload(file) async {
-    FirebaseAuth.instance.currentUser().then((user) {
-      this.uid = user.uid;
-    });
+   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+   this.uid = user.uid;
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
@@ -334,7 +338,7 @@ class FileUploadState extends State<FileUpload> {
     String result;
     if (task.isComplete) {
       if (task.isSuccessful) {
-        String url = await task.lastSnapshot.ref.getDownloadURL();
+        await task.lastSnapshot.ref.getDownloadURL();
         // var file = FileData(task.lastSnapshot.ref.toString(),
         //     task.lastSnapshot.storageMetadata.name, url);
         result = 'Complete' + task.lastSnapshot.ref.toString();
@@ -363,8 +367,10 @@ class FileUploadState extends State<FileUpload> {
     //   sizeDot: 0,
     // );
     getSlides();
-    return PageView(
-      children: this.slides,
+    return CustomeOffline(
+          onConnetivity: PageView(
+        children: this.slides,
+      ),
     );
   }
 }

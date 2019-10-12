@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ModuleOrderController/Types.dart';
@@ -8,7 +6,7 @@ class SaveProgress {
   static preferences(int modNum, int index) async {
     print("SaveProgress:Inside");
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt("${modNum}", index);
+    sharedPreferences.setInt("$modNum", index);
     // sharedPreferences.setInt("${index}", index);
     print(sharedPreferences.getInt("$modNum"));
   }
@@ -110,6 +108,20 @@ class SaveProgress {
         case "Type.heading":
           print("heading");
           typeList.add(Type.heading);
+          break;
+         case "Type.download":
+          print("heading");
+          typeList.add(Type.download);
+          break;
+        case "Type.flip":
+          print("flip");
+          typeList.add(Type.flip);
+          break;
+
+          
+          case "Type.ideaActivity":
+          print("Type.ideaActivity");
+          typeList.add(Type.ideaActivity);
           break;
         default:
           print("Default");

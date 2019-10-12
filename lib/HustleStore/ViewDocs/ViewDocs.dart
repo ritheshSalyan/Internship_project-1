@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:page_indicator/page_indicator.dart';
 import 'package:permission/permission.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/Auth/PdfReader.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,6 +33,7 @@ class _ViewDocsState extends State<ViewDocs> {
     @override
     void initState(){
       request();
+      Analytics.analyticsBehaviour("View_Docs_Page_Hustle", "ViewDocs");
     }
     
     request() async{
@@ -122,7 +123,6 @@ class _ViewDocsState extends State<ViewDocs> {
 
     final double width = MediaQuery.of(context).size.width * 0.9;
     final double height = MediaQuery.of(context).size.height * 0.75;
-    Widget child;
     return Scaffold(
       appBar: AppBar(
         title: Text("View Documents"),

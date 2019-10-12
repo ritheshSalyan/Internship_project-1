@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:startupreneur/Analytics/Analytics.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModuleVocabulary extends StatefulWidget {
@@ -24,11 +25,13 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     controller = PageController();
     // widget.modNum ;
     print("init inisde ${widget.word}");
+
+    Analytics.analyticsBehaviour("Module_Vocabulary_Page", "Vocabulary");
   }
 
   @override
@@ -184,9 +187,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   //   padding: EdgeInsets.only(
                   //       top: MediaQuery.of(context).size.height * 0.3),
                   //   child:
-                  Column(
-                    children: <Widget>[
-                      Text(
+                   Text(
                         "Tap to Learn!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -194,6 +195,11 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           fontSize: 15.0,
                         ),
                       ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                     
                       // ),
                       // Padding(
                       //   padding: EdgeInsets.only(
@@ -215,7 +221,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                "Activity",
+                                "Next",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -279,7 +285,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   builder: (_) {
                     return AlertDialog(
                       content: Text(
-                          "Are you sure you want to return to home Page?? "),
+                          "Are you sure you want to return to Home Page? "),
                       title: Text(
                         "Warning!",
                       ),
