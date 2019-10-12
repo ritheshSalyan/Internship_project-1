@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/models/CommentsAdd.dart';
 import 'package:toast/toast.dart';
 import 'AddChatBoardRoom.dart';
 import 'ViewCommentsPage.dart';
@@ -33,6 +35,8 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   int upvote;
   int value;
   List<bool> upvoteDecision = [];
+  List<CommentsAdd> list = [];
+  CommentsAdd commentsAdd = new CommentsAdd();
 
   @override
   void initState() {
@@ -126,6 +130,30 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     // print(widget.valueData[index].upvoters[index]);
   }
 
+  void fetchData(int index, BuildContext context) async {
+    await db
+        .collection("comments")
+        .where('questionId', isEqualTo: widget.valueData[index].uniqId)
+        .getDocuments()
+        .then((data) {
+      data.documents.forEach((value) {
+        list.add(CommentsAdd.fromJson(value.data));
+      });
+    });
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => ViewCommentPage(
+          question: widget.valueData[index].question,
+          answers: list,
+          valueData: widget.valueData,
+          index: index,
+        ),
+        fullscreenDialog: false,
+      ),
+    );
+    // Navigator.push(context, )
+  }
+
   @override
   Widget build(BuildContext context) {
     return OfflineBuilder(
@@ -154,49 +182,41 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                 }
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewCommentPage(
-                          question: widget.valueData[index].question,
-                          answers: widget.valueData[index].answer,
-                        ),
-                        fullscreenDialog: false,
-                      ),
-                    );
+                    fetchData(index, context);
                   },
-                  onLongPress: () {
-                    chatSharedUser = widget.valueData[index].uid;
-                    if (userId == chatSharedUser) {
-                      Flushbar(
-                        titleText: Text(
-                          "Tools",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        messageText: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.delete_outline,
-                                  color: Colors.black),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.edit, color: Colors.black),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.share, color: Colors.black),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                        backgroundColor: Colors.transparent,
-                        duration: Duration(seconds: 5),
-                        // isDismissible: true,
-                      )..show(context);
-                    }
-                    // return val;
-                  },
+                  // onLongPress: () {
+                  //   chatSharedUser = widget.valueData[index].uid;
+                  //   if (userId == chatSharedUser) {
+                  //     Flushbar(
+                  //       titleText: Text(
+                  //         "Tools",
+                  //         style: TextStyle(color: Colors.white),
+                  //       ),
+                  //       messageText: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           IconButton(
+                  //             icon: Icon(Icons.delete_outline,
+                  //                 color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //           IconButton(
+                  //             icon: Icon(Icons.edit, color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //           IconButton(
+                  //             icon: Icon(Icons.share, color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       backgroundColor: Colors.transparent,
+                  //       duration: Duration(seconds: 5),
+                  //       // isDismissible: true,
+                  //     )..show(context);
+                  //   }
+                  //   // return val;
+                  // },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.3,
@@ -215,9 +235,16 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                               SizedBox(
                                 width: 25,
                               ),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.green,
+                              ClipOval(
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColorLight,
+                                  child: ExtendedImage.network(
+                                    widget.valueData[index].profileUrl,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 width: 10,
@@ -227,15 +254,59 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.7,
                                   child: Wrap(
+                                    // alignment: WrapAlignment.center,
                                     children: <Widget>[
-                                      AutoSizeText(
-                                        (widget.valueData[index].question ==
-                                                null)
-                                            ? "Loading ..."
-                                            : widget.valueData[index].question,
-                                        maxLines: 50,
-                                        textAlign: TextAlign.center,
+                                      ListTile(
+                                        title: Text(
+                                          (widget.valueData[index].userName ==
+                                                  null)
+                                              ? "Loading ..."
+                                              : widget
+                                                  .valueData[index].userName,
+                                          // textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        subtitle: AutoSizeText(
+                                          (widget.valueData[index].question ==
+                                                  null)
+                                              ? "Loading ..."
+                                              : widget
+                                                  .valueData[index].question,
+                                          maxLines: 50,
+                                          // textAlign: TextAlign.center,
+                                        ),
                                       ),
+                                      // Column(
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.center,
+                                      //   children: <Widget>[
+                                      //     Text(
+                                      //       (widget.valueData[index].userName ==
+                                      //               null)
+                                      //           ? "Loading ..."
+                                      //           : widget
+                                      //               .valueData[index].userName,
+                                      //       textAlign: TextAlign.center,
+                                      //       style: TextStyle(
+                                      //           color: Colors.green,
+                                      //           fontWeight: FontWeight.w700),
+                                      //     ),
+                                      //     SizedBox(
+                                      //       height: 10,
+                                      //     ),
+                                      //     AutoSizeText(
+                                      //       (widget.valueData[index].question ==
+                                      //               null)
+                                      //           ? "Loading ..."
+                                      //           : widget
+                                      //               .valueData[index].question,
+                                      //       maxLines: 50,
+                                      //       textAlign: TextAlign.center,
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -252,7 +323,29 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                 FontAwesomeIcons.comment,
                                 color: Colors.green,
                               ),
-                              Text(" ${widget.valueData[index].answer.length}"),
+                              StreamBuilder<QuerySnapshot>(
+                                  stream: db
+                                      .collection("comments")
+                                      .where("questionId",
+                                          isEqualTo:
+                                              widget.valueData[index].uniqId)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      List<CommentsAdd> list = [];
+                                      snapshot.data.documents.forEach((value) {
+                                        list.add(CommentsAdd(
+                                          uid: value.data['uid'],
+                                          comments: value.data['comments'],
+                                          timestamp: value.data['timestamp'],
+                                          questionId: value.data['questioId'],
+                                          profile: value.data['profile'],
+                                        ));
+                                      });
+                                      return Text("${list.length}");
+                                    }
+                                    return Text("0");
+                                  }),
                               SizedBox(
                                 width: 25,
                               ),

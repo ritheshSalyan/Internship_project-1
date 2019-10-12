@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -6,11 +7,17 @@ import 'package:flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/models/CommentsAdd.dart';
+import 'package:startupreneur/models/chatBoard.dart';
 
 class ViewCommentPage extends StatefulWidget {
-  ViewCommentPage({Key key, this.question, this.answers}) : super(key: key);
+  ViewCommentPage(
+      {Key key, this.question, this.answers, this.valueData, this.index})
+      : super(key: key);
   String question;
-  List<dynamic> answers;
+  List<ChatBoardData> valueData;
+  int index;
+  List<CommentsAdd> answers;
   @override
   _ViewCommentPageState createState() => _ViewCommentPageState();
 }
@@ -23,16 +30,18 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
   String documentId;
   Flushbar<List<String>> flush;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  DateTime now = DateTime.now();
   String userId;
   List<String> list = [];
   String text = "";
+  String profileLink = "";
 
   @override
   void initState() {
     super.initState();
     preferences();
     print("${widget.question}");
-    print("${widget.answers.length}");
+    print("${widget.answers}");
   }
 
   bool _validate() {
@@ -53,65 +62,36 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
   void saveData(BuildContext context) async {
     list.clear();
     db = Firestore.instance;
+    var userName;
     await db
-        .collection("chat")
-        .where("question", isEqualTo: widget.question)
+        .collection("user")
+        .where("uid", isEqualTo: userId)
         .getDocuments()
-        .then((document) {
-      document.documents.forEach((id) {
-        documentId = id.documentID;
+        .then((data) {
+      data.documents.forEach((document) {
+        setState(() {
+          profileLink = document.data["profile"];
+          userName = document.data['name'];
+        });
       });
     });
-    for (dynamic i in widget.answers) {
-      list.add(i);
-    }
-    list.add(text);
-    var data = Map<String, dynamic>();
-    data["answers"] = list;
-    await db
-        .collection("chat")
-        .document(documentId)
-        .setData(data, merge: true)
-        .then((done) {
+    CommentsAdd commentsAdd = new CommentsAdd(
+      uid: userId,
+      comments: text,
+      timestamp: now.millisecondsSinceEpoch,
+      questionId: widget.valueData[widget.index].uniqId,
+      profile: profileLink,
+      userName: userName,
+    );
+    var data = commentsAdd.toJson();
+    await db.collection("comments").add(data).then((done) {
       Navigator.of(context).pop();
-      // initState();
-      // setState(() {});
     });
   }
 
   void preferences() async {
     sharedPreferences = await SharedPreferences.getInstance();
     userId = sharedPreferences.getString("UserId");
-  }
-
-  TextFormField getFormField(String text) {
-    return TextFormField(
-      autovalidate: true,
-      validator: (value) {
-        if (value.isEmpty) {
-          return "Field cannot be empty";
-        }
-        return null;
-      },
-      onSaved: (value) {
-        setState(() {
-          text = value;
-        });
-      },
-      style: TextStyle(color: Colors.black),
-      maxLength: 300,
-      maxLines: 3,
-      maxLengthEnforced: true,
-      decoration: InputDecoration(
-        fillColor: Colors.white10,
-        filled: true,
-        border: UnderlineInputBorder(),
-        helperText: "Share Opinion",
-        helperStyle: TextStyle(color: Colors.green),
-        hintText: text,
-        hintStyle: TextStyle(color: Colors.green),
-      ),
-    );
   }
 
   @override
@@ -148,9 +128,17 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                                     SizedBox(
                                       width: 25,
                                     ),
-                                    CircleAvatar(
-                                      radius: 30,
-                                      backgroundColor: Colors.green,
+                                    ClipOval(
+                                      child: CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColorLight,
+                                        child: ExtendedImage.network(
+                                          widget.valueData[widget.index]
+                                              .profileUrl,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -162,11 +150,19 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                                                 0.7,
                                         child: Wrap(
                                           children: <Widget>[
-                                            AutoSizeText(
-                                              widget.question,
-                                              maxLines: 50,
-                                              textAlign: TextAlign.center,
-//                                overflow: TextOverflow.ellipsis,
+                                            ListTile(
+                                              title: Text(
+                                                widget.valueData[widget.index]
+                                                    .userName,
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              subtitle: AutoSizeText(
+                                                widget.question,
+                                                maxLines: 50,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -183,16 +179,40 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                           shrinkWrap: true,
                           primary: true,
                           padding: const EdgeInsets.all(8.0),
-                          itemCount: widget.answers.length,
+                          itemCount: (widget.answers.length == 0)
+                              ? 1
+                              : widget.answers.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return (widget.answers[index] == "")
-                                ? Container()
-                                : ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: Colors.green,
+                            return (widget.answers.isEmpty)
+                                ? Center(
+                                    child: Text(
+                                      "No comments yet",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                    title: Text(widget.answers[index]),
+                                  )
+                                : ListTile(
+                                    leading: ClipOval(
+                                      child: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColorLight,
+                                        child: ExtendedImage.network(
+                                          widget.answers[index].profile,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                    subtitle:
+                                        Text(widget.answers[index].comments),
+                                    title: Text(
+                                      widget.answers[index].userName,
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                                   );
                           },
                           separatorBuilder: (BuildContext context, int index) =>
@@ -237,7 +257,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                               border: UnderlineInputBorder(),
                               helperText: "Share Opinion",
                               helperStyle: TextStyle(color: Colors.green),
-                              hintText: "Share thoughts",
+                              hintText: "Share thoughts with ${widget.valueData[widget.index].userName}",
                               hintStyle: TextStyle(color: Colors.green),
                             ),
                           ),
