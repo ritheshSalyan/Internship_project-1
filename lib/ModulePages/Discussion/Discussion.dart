@@ -34,9 +34,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // "Swipe Right / Left to remove",
   ];
 
-   @override
+  @override
   void initState() {
-
     super.initState();
     Analytics.analyticsBehaviour("Discussion_Page_Module", "Discussion_Page");
     //  SystemChrome.setPreferredOrientations([
@@ -45,9 +44,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // ]);
   }
 
-  
-  @override 
-  dispose(){
+  @override
+  dispose() {
     //  SystemChrome.setPreferredOrientations([
     //   DeviceOrientation.portraitUp,
     //   DeviceOrientation.portraitDown,
@@ -57,18 +55,24 @@ class _DiscussionPageState extends State<DiscussionPage> {
     super.dispose();
   }
 
-
-
   _onSubmit() {
+    final alphanumeric = RegExp(r'^[a-zA-Z 0-9]+$');
+
     setState(() {
-      item;
+      // item;
       if (item <= data.split(". ").length) {
-        print("data.split(', ').length = " +
-            data.split(". ").length.toString() +
-            data.split(". ").toString());
+        // print("data.split(' ').length = " +
+        //     data.split(". ").length.toString() +
+        //     data.split(". ").toString());
         // for (var item in ) {
         if (data.split(". ")[item].length > 3) {
-          _listViewData.add(data.split(". ")[item] + ".");
+          String temp = data.split(". ")[item];
+          print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
+          if (alphanumeric.hasMatch(temp[temp.length-1])) {
+            _listViewData.add(temp + ".");
+          } else {
+            _listViewData.add(temp);
+          }
         }
         item++;
 
@@ -89,7 +93,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
       //     title: Text(data),
       //   ),
       // );
-      print(_listViewData);
+      // print(_listViewData);
       return Card(
           elevation: 0,
           margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -174,14 +178,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
       print("Title here ${widget.title}");
       if ((widget.image.contains("assets/"))) {
         print("Inside Assets");
-       image =  ExtendedImage.asset(
+        image = ExtendedImage.asset(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.7,
         );
       } else {
-         print("Inside Network");
-       image =  ExtendedImage.network(
+        print("Inside Network");
+        image = ExtendedImage.network(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
         );
@@ -190,7 +194,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // print("Image is ${}");
     data = widget.content;
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         appBar: AppBar(
           elevation: 0,
           actions: <Widget>[
@@ -216,8 +220,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               SaveProgress.preferences(
                                   widget.modNum, widget.index);
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
                             },
                           ),
                           FlatButton(
@@ -288,7 +292,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.14),
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.14),
                               child: image,
                             ),
                             (widget.image != "")
