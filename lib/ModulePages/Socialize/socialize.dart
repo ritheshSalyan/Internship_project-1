@@ -504,7 +504,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     duration: Duration(seconds: 2),
-                                    content: Text("Well done ! will move a head"),
+                                    content: Text("Well Done ! Let's move Ahead"),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
@@ -538,7 +538,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  "Lets move on",
+                                  "Lets Move On",
                                   style: TextStyle(color: Colors.green),
                                 ),
                                 Icon(

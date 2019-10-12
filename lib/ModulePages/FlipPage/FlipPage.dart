@@ -95,7 +95,7 @@ class _FlipPageState extends State<FlipPage> {
                                   height: MediaQuery.of(context).size.height*0.1,
                                 ),
                                  Text(
-                                      "Tap Here to flip and look at the answer !!",
+                                      "Tap Here to flip and look at the answer !",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,

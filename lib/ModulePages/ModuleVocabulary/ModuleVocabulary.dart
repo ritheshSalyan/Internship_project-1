@@ -217,7 +217,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                           orderManagement.moveNextIndex(context, arguments);
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          // width: MediaQuery.of(context).size.width * 0.25,
                           child: Row(
                             children: <Widget>[
                               Text(
