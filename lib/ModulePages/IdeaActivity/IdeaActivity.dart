@@ -17,6 +17,24 @@ class IdeaActivity extends StatefulWidget {
 
 class _IdeaActivityState extends State<IdeaActivity> {
   static String name, idea, grow, person;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
+bool _validate() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void validateForm(BuildContext context) {
+    if (_validate()) {
+      // saveData(context);
+    }
+  }
+
 
   ProgressDialog progressDialog;
   @override
@@ -99,6 +117,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         TextFormField(
+                          key: _formKey,
                           keyboardType: TextInputType.text,
                           obscureText: false,
                           validator: (value) {
@@ -128,6 +147,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                           ),
                         ),
                         TextFormField(
+                          key: _formKey,
                           keyboardType: TextInputType.text,
                           obscureText: false,
                           validator: (value) {
@@ -158,6 +178,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                           ),
                         ),
                         TextFormField(
+                          key: _formKey,
                           keyboardType: TextInputType.text,
                           obscureText: false,
                           validator: (value) {
@@ -188,6 +209,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
                           ),
                         ),
                         TextFormField(
+                          key: _formKey,
                           keyboardType: TextInputType.text,
                           obscureText: false,
                           validator: (value) {
