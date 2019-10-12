@@ -56,7 +56,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
   }
 
   _onSubmit() {
-    final alphanumeric = RegExp(r'^[a-zA-Z 0-9]+$');
+    final alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
 
     setState(() {
       // item;

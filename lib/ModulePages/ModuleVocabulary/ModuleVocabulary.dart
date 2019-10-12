@@ -25,7 +25,6 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
 
   @override
   void initState() {
-
     super.initState();
     controller = PageController();
     // widget.modNum ;
@@ -62,6 +61,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   fit: BoxFit.fitHeight,
                 ),
                 TypewriterAnimatedTextKit(
+                    duration: Duration(seconds: 8),
                     onTap: () {
                       print("Tap Event");
                     },
@@ -105,28 +105,28 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                       //   padding: EdgeInsets.only(
                       //       top: MediaQuery.of(context).size.height * 0.4),
                       //   child:
-                       AutoSizeText(
-                          widget.word[i],
-                          textAlign: TextAlign.center,
-                          maxLines: 10,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28.0,
-                          ),
+                      AutoSizeText(
+                        widget.word[i],
+                        textAlign: TextAlign.center,
+                        maxLines: 10,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28.0,
                         ),
+                      ),
                       // ),
                       // Padding(
                       //   padding: EdgeInsets.only(
                       //       top: MediaQuery.of(context).size.height * 0.3),
-                      //   child: 
+                      //   child:
                       Text(
-                          "Tap to Learn!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                          ),
+                        "Tap to Learn!",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
                         ),
+                      ),
                       // ),
                     ],
                   )),
@@ -187,19 +187,41 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   //   padding: EdgeInsets.only(
                   //       top: MediaQuery.of(context).size.height * 0.3),
                   //   child:
-                   Text(
-                        "Tap to Learn!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                        ),
-                      ),
+                  Text(
+                    "Tap to Learn!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          back: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    widget.meaning[numb - 1].replaceAll(".", ".\n\n"),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                    ),
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                     
                       // ),
                       // Padding(
                       //   padding: EdgeInsets.only(
@@ -208,7 +230,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                       //   ),
                       // child:
                       OutlineButton(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.green),
                         onPressed: () {
                           List<dynamic> arguments = [
                             widget.modNum,
@@ -224,40 +246,21 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                                 "Next",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.green,
                                   fontSize: 15.0,
                                 ),
                               ),
                               Icon(
                                 Icons.navigate_next,
-                                color: Colors.white,
+                                color: Colors.green,
                               ),
                             ],
                           ),
                         ),
                       ),
                     ],
-                  )
-                  // ),
+                  ),
                 ],
-              ),
-            ),
-          ),
-
-          back: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                widget.meaning[numb - 1].replaceAll(".", ".\n\n"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                ),
               ),
             ),
           ),
