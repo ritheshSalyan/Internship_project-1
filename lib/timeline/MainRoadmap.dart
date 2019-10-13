@@ -164,11 +164,15 @@ class _TimelinePageState extends State<TimelinePage> {
 
   bool check(int i) {
     print("Completed course" + completedCourse.toString());
-    for (int k = 0; k < completedCourse.length; k++) {
-      if (completedCourse[k] == i + 1) {
-        val = completedCourse[k];
-        return true;
-      }
+    // for (int k = 0; k < completedCourse.length; k++) {
+    //   if (completedCourse[k] == i + 1) {
+    //     val = completedCourse[k];
+    //     return true;
+    //   }
+    // }
+    if(completedCourse.contains(i)){
+      return true;
+
     }
     return false;
   }
@@ -589,7 +593,7 @@ class _TimelinePageState extends State<TimelinePage> {
         new GestureDetector(
           onTap: () async {
             print("value of i is $i");
-            if (check(i)) {
+            if (check(doodle.modNum)) {
               print(" true ${doodle.modNum}");
               // val = completedCourse[k];
               print("val is $val");

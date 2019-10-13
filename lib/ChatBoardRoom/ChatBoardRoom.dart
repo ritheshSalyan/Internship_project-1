@@ -42,7 +42,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   void initState() {
     super.initState();
     db = Firestore.instance;
-    print(widget.valueData);
+    // print(widget.valueData);
     upvoters.clear();
     preference().then((user) {
       setState(() {
@@ -50,7 +50,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
         if (widget.len != 0) {
           for (var i = 0; i < widget.len; i++) {
             upvoteDecision.add(false);
-            print(upvoteDecision[i]);
+            // print(upvoteDecision[i]);
           }
         }
       });
@@ -64,13 +64,13 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     setState(() {
       userId = sharedPreferences.getString("UserId");
     });
-    print(userId);
+    // print(userId);
     return userId;
   }
 
   void increaseUpvote(int index) async {
     upvoters.clear();
-    print("from increase $index");
+    // print("from increase $index");
     try {
       await db
           .collection("chat")
@@ -81,10 +81,10 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
           documentId = vl.documentID;
         });
       }).then((val) {
-        print("$documentId");
+        // print("$documentId");
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
     var data = Map<String, dynamic>();
     //if not null then read the complete array of upvoters and add their userid to it
@@ -109,7 +109,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       } catch (e) {}
     } else {
       //if null then just add their user account to upvoters list
-      print("imhere");
+      // print("imhere");
       upvoters.add(userId);
       data["upvote"] = widget.valueData[index].upvoters.length + 1;
       data["upvoters"] = upvoters;
@@ -169,7 +169,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
               shrinkWrap: true,
               itemCount: widget.len,
               itemBuilder: (context, int index) {
-                print(index);
+                // print(index);
                 //to check if the user already given the upvote or not
                 if (widget.valueData[index].upvoters.length != 0) {
                   value = widget.valueData[index].upvoters.length;

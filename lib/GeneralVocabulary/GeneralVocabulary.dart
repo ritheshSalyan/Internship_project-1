@@ -31,7 +31,7 @@ class _VocabularyState extends State<Vocabulary> {
   }
 
   void popDialog(BuildContext context, String word, String meaning) {
-    print("$meaning");
+    // print("$meaning");
     showDialog(
       context: context,
       builder: (context) {
@@ -123,7 +123,7 @@ class _VocabularyState extends State<Vocabulary> {
         title: Text(snapshot.data.documents[i].data["word"][index]),
       ));
     }
-    print(list);
+    // print(list);
     return list;
   }
 
@@ -152,9 +152,9 @@ class _VocabularyState extends State<Vocabulary> {
                         Firestore.instance.collection("vocabulary").snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       // return Text("value ${snapshot.data.documents[0].data["word"].length}");
-                      print("vocabulary ${snapshot.data}");
+                      // print("vocabulary ${snapshot.data}");
                       if (snapshot.hasError) {
-                        print("error");
+                        // print("error");
                         // return Text("Error ${snapshot.error}");
                       }
                       switch (snapshot.data) {

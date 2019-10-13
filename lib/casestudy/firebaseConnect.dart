@@ -32,7 +32,7 @@ eventsQuery.documents.forEach((document) {
 
     for (var item in dlist) {
        list.add(item.toString());
-       print(item.toString());
+      //  print(item.toString());
     }
     return list;
   }
@@ -42,9 +42,9 @@ eventsQuery.documents.forEach((document) {
       List<String> single = [];
 
       for(String item in dlist){
-        print("singleLine ==>"+item);
+        // print("singleLine ==>"+item);
         for (var i in item.split(". ")) {
-           print("singleLine i ==>"+i);
+          //  print("singleLine i ==>"+i);
            if(i.isNotEmpty || i == " "){
            single.add(i);
            }
