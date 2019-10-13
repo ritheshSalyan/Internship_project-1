@@ -5,6 +5,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -453,23 +454,11 @@ class _TimelinePageState extends State<TimelinePage> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => (DecisionGameTextLoading(
-                      //         modNum: 8, index: 47)),
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => (DownloadFileActivityLoader(
-                      //         modNum: 13, index: 15)),
-                      //   ),
-                      // );
-                      // Navigator.of(context).pop();
-                      //  Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         (NoNetPage()),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (HelpAndFaq()),
+                        ),
+                      );
                     },
                   ),
                   // ListTile(
