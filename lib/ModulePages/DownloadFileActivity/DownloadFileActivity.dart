@@ -175,7 +175,12 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
               },
             ),
           ],
-          title: Text(
+          // title:
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+             Text(
             "Activity",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -184,10 +189,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
               fontWeight: FontWeight.w700,
             ),
           ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).size.height*0.15,),
             Padding(
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.02,
@@ -204,7 +206,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.2,
             ),
             Padding(
               padding: EdgeInsets.only(
