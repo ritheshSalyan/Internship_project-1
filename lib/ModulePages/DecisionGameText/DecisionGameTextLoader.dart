@@ -22,7 +22,7 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
+    getEventsFromFirestore(widget.modNum,widget.index).then((title) {
       print("DecisionGameText is " + title.toString());
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -68,11 +68,11 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
      );
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum) async {
+  static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
     CollectionReference ref = Firestore.instance.collection('decisionGameText');
     QuerySnapshot eventsQuery =
         await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+        .where("order",isEqualTo: index).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];

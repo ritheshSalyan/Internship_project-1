@@ -25,7 +25,7 @@ class _DecisionGameState extends State<DecisionGame>
   );
   List<dynamic> options = [];
   List<dynamic> answers = [];
-  int selectedRadio = 0;
+  int selectedRadio;
   String reason = "";
   String correctAns = "";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();

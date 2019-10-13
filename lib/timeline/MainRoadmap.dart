@@ -5,10 +5,13 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
+import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
 import 'package:startupreneur/saveProgress.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
@@ -427,6 +430,24 @@ class _TimelinePageState extends State<TimelinePage> {
                     },
                   ),
                   ListTile(
+                    leading: Icon(Icons.folder),
+                    title: Text(
+                      'Additional Material',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (AdditionalMaterialPage()),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
                     leading: Icon(Icons.help),
                     title: Text(
                       'Help and FAQ',
@@ -436,12 +457,12 @@ class _TimelinePageState extends State<TimelinePage> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (DownloadFileActivityLoader(
-                              modNum: 13, index: 15)),
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => (DecisionGameTextLoading(
+                      //         modNum: 8, index: 47)),
+                      //   ),
+                      // );
                       // Navigator.of(context).pop();
                       //  Navigator.of(context).push(
                       //   MaterialPageRoute(
