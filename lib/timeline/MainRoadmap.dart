@@ -429,7 +429,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   ListTile(
                     leading: Icon(Icons.folder),
                     title: Text(
-                      'Additional Material',
+                      'Additional Materials',
                       style: TextStyle(
                         letterSpacing: 0.5,
                         color: Colors.green,

@@ -117,7 +117,7 @@ class _AdditionalMaterialPageState extends State<AdditionalMaterialPage> {
     return CustomeOffline(
       onConnetivity: Scaffold(
         appBar: AppBar(
-          title: Text("Additional Material"),
+          title: Text("Additional Materials"),
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream:

@@ -85,10 +85,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                         ),
                       ),
                       TextSpan(
-                        // recognizer: longPressGestureRecognizer.onLongPress,
-                        recognizer: LongPressGestureRecognizer(
-                          
-                        ),
+                        // recognizer: longPressGestureRecognizer.onLongPress,                
                         text: "startupreneur.official@gmail.com\n\n",
                         style: TextStyle(
                           color: Colors.green,
@@ -98,7 +95,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                       ),
                       TextSpan(
                         text:
-                            "We will get back to you as soon as we can, keep the journey going!\n\n",
+                            "We will get back to you as soon as we can, in the meanwhile keep the journey going!\n\n",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
