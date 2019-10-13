@@ -371,7 +371,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                             widget.valueData[index].uniqId)
                                     .snapshots(),
                                 builder: (context, snapshot) {
-                                  var value;
+                                  var value=0;
                                   if (!snapshot.hasData) {
                                     return Text("${0}");
                                   }
