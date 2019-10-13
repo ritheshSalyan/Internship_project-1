@@ -183,40 +183,41 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                 return GestureDetector(
                   onTap: () {
                     fetchData(index, context);
+
                   },
-                  onLongPress: () {
-                    chatSharedUser = widget.valueData[index].uid;
-                    if (userId == chatSharedUser) {
-                      Flushbar(
-                        titleText: Text(
-                          "Tools",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        messageText: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.delete_outline,
-                                  color: Colors.black),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.edit, color: Colors.black),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.share, color: Colors.black),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                        backgroundColor: Colors.transparent,
-                        duration: Duration(seconds: 5),
-                        // isDismissible: true,
-                      )..show(context);
-                    }
-                    // return val;
-                  },
+                  // onLongPress: () {
+                  //   chatSharedUser = widget.valueData[index].uid;
+                  //   if (userId == chatSharedUser) {
+                  //     Flushbar(
+                  //       titleText: Text(
+                  //         "Tools",
+                  //         style: TextStyle(color: Colors.white),
+                  //       ),
+                  //       messageText: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           IconButton(
+                  //             icon: Icon(Icons.delete_outline,
+                  //                 color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //           IconButton(
+                  //             icon: Icon(Icons.edit, color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //           IconButton(
+                  //             icon: Icon(Icons.share, color: Colors.black),
+                  //             onPressed: () {},
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       backgroundColor: Colors.transparent,
+                  //       duration: Duration(seconds: 5),
+                  //       // isDismissible: true,
+                  //     )..show(context);
+                  //   }
+                  //   // return val;
+                  // },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.3,
