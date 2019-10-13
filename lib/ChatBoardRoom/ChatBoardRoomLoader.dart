@@ -24,7 +24,7 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
   Widget build(BuildContext context) {
     fetchDataStorage().then(
       (data) {
-        print("${data.length}");
+        // print("${data.length}");
         // print(data);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

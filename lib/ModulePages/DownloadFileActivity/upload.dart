@@ -10,10 +10,11 @@ import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:toast/toast.dart';
 import 'package:path/path.dart' as p;
+
 class Upload extends StatefulWidget {
-  final int modNum,index;
+  final int modNum, index;
   List<String> content;
-  Upload({Key key,this.modNum,this.index,this.content}):super(key:key);
+  Upload({Key key, this.modNum, this.index, this.content}) : super(key: key);
   @override
   _UploadState createState() => _UploadState();
 }
@@ -25,28 +26,17 @@ class _UploadState extends State<Upload> {
 
   var progressDialog;
 
-
-
   File file;
 
- 
   @override
   Widget build(BuildContext context) {
-    // var outlineButton = 
+    // var outlineButton =
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         backgroundColor: Colors.green,
         appBar: AppBar(
           elevation: 0.0,
-           title: Text(
-            "Complete your Activity",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          //  title:
           actions: <Widget>[
             GestureDetector(
               child: Icon(Icons.home),
@@ -70,8 +60,8 @@ class _UploadState extends State<Upload> {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               SaveProgress.preferences(
                                   widget.modNum, widget.index);
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
                             },
                           ),
                           FlatButton(
@@ -93,6 +83,18 @@ class _UploadState extends State<Upload> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              "Complete your Activity",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.15,
+            ),
             Padding(
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.02,
@@ -109,7 +111,7 @@ class _UploadState extends State<Upload> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.2,
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -151,9 +153,9 @@ class _UploadState extends State<Upload> {
     );
   }
 
-   Future upload(File file) async {
-   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-   this.uid = user.uid;
+  Future upload(File file) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    this.uid = user.uid;
     // String uri = Uri.decodeFull(file.path);
     // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
     // String fileName = regex.stringMatch(uri);
@@ -162,7 +164,7 @@ class _UploadState extends State<Upload> {
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
         .child(uid)
-        .child("${widget.modNum}_upload_${widget.index}." +extension);
+        .child("${widget.modNum}_upload_${widget.index}." + extension);
 
     task = storageRef.putFile(file);
     //  if(task.isInProgress){

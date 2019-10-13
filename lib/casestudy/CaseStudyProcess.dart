@@ -29,7 +29,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
     for (int i = 0; i < list.length; i++) {
       String item = list[i];
       if (i == list.length - 1) {
-        print("end i = $i");
+        // print("end i = $i");
         pages.add(Container(
           alignment: Alignment.center,
           color: Colors.grey,
@@ -79,7 +79,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
           ),
         ));
       } else if (i % 2 == 1) {
-        print("odd i = $i");
+        // print("odd i = $i");
         pages.add(Container(
           alignment: Alignment.center,
           color: Colors.greenAccent,
@@ -115,7 +115,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
           ),
         ));
       } else if (i % 2 == 0) {
-        print("even i = $i");
+        // print("even i = $i");
         pages.add(Container(
           alignment: Alignment.center,
           color: Colors.white,

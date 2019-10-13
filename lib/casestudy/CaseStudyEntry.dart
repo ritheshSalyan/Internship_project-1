@@ -14,7 +14,7 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     FirebaseFetch.getEventsFromFirestore(widget.modNum).then((dialogue) {
       if (dialogue.length != 0) {
-        print("Widget.modNum is "+widget.modNum.toString());
+        // print("Widget.modNum is "+widget.modNum.toString());
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => IntroScreen_Liquid(

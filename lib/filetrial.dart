@@ -12,7 +12,7 @@ class _FileTestState extends State<FileTest> {
   String filePath = "Hello";
 
   void getFile() async {
-    print("Before Picking File");
+    // print("Before Picking File");
     File file = await FilePicker.getFile(type: FileType.ANY);
     setState(() {
       filePath = file.path;

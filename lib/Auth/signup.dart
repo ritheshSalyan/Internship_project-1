@@ -78,12 +78,12 @@ class _SignupPageState extends State<SignupPage>
 
     var value;
     await _auth.fetchSignInMethodsForEmail(email: email).then((data) {
-      print(data);
+      // print(data);
       value = data;
     });
     if (value.isNotEmpty) {
       value.forEach((result) {
-        print(result);
+        // print(result);
         switch (result) {
           case "ERROR_INVALID_CREDENTIAL":
             Toast.show("Sign up failed, please try again", context,
@@ -115,7 +115,7 @@ class _SignupPageState extends State<SignupPage>
           email: email,
           password: _password,
         );
-        print("Email Verification");
+        // print("Email Verification");
         progressDialog.setMessage("Please Verify Email");
         //await user.sendEmailVerification();
         user = await _auth.signInWithEmailAndPassword(
@@ -124,7 +124,7 @@ class _SignupPageState extends State<SignupPage>
         );
         userid = user.uid;
         _preferences(userid);
-        print("its is $user");
+        // print("its is $user");
         Toast.show("Please Verify your Email id and sign In", context,
             gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
         if (referalCodeFromFriend.isNotEmpty) {
@@ -585,7 +585,7 @@ class _SignupPageState extends State<SignupPage>
                       onChanged: (value) {
                         setState(() {
                           gender = value;
-                          print("$gender");
+                          // print("$gender");
                         });
                       },
                       items: ['Male', 'Female', 'Others'].map((String value) {
@@ -656,7 +656,7 @@ class _SignupPageState extends State<SignupPage>
                               ),
                             );
                           }
-                          print("$typeOfOccupations");
+                          // print("$typeOfOccupations");
                         });
                       },
                       items: [
@@ -704,7 +704,7 @@ class _SignupPageState extends State<SignupPage>
                           onChanged: (value) {
                             setState(() {
                               isChecked = value;
-                              print("$isChecked");
+                              // print("$isChecked");
                             });
                           },
                         ),

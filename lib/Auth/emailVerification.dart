@@ -13,7 +13,7 @@ class _EmailVerificationState extends State<EmailVerification> {
   @override
   Widget build(BuildContext context) {
     // verify(widget.user);
-    print("object");
+    // print("object");
     return Scaffold(
       appBar: AppBar(title: Text("Login Screen")),
       body: Center(
@@ -21,7 +21,7 @@ class _EmailVerificationState extends State<EmailVerification> {
             stream: FirebaseAuth.instance.currentUser().asStream(),
             builder:
                 (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-              print("********************" + snapshot.toString());
+              // print("********************" + snapshot.toString());
               if (!snapshot.hasData) {
                 return Text("You are not logged In");
               }
