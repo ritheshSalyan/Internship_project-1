@@ -621,9 +621,9 @@ class _TimelinePageState extends State<TimelinePage> {
                     context: context,
                     builder: (_) {
                       return AlertDialog(
-                        content: Text("Do you want to Continue ?"),
+                        content: Text("Do you want to resume this Module?"),
                         title: Text(
-                          "Continue!",
+                          "Continue",
                         ),
                         actions: <Widget>[
                           FlatButton(
