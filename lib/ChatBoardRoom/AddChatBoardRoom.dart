@@ -31,6 +31,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   bool _isTapped10 = false;
   bool _isTapped11 = false;
   bool _isTapped12 = false;
+  bool _isTapped13 = false;
+  bool _isTapped14 = false;
   bool _isTappedG = false;
   bool _isChecked = false;
   static final _formkey = GlobalKey<FormState>();
@@ -196,6 +198,9 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                             _isTapped9 = false;
                                             _isTapped10 = false;
                                             _isTapped11 = false;
+                                            _isTapped12 = false;
+                                            _isTapped13 = false;
+                                            _isTapped14 = false;
                                             _isTappedG = false;
                                           });
                                         },
@@ -562,8 +567,52 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
+                            ActionChip(
+                              elevation: 5.0,
+                              label: Text("Module 13"),
+                              onPressed: () {
+                                setState(() {
+                                  if (_isChecked) {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("One tag can be selected"),
+                                    ));
+                                  } else {
+                                    tags.add("Module 13");
+                                    _isChecked = true;
+                                    _isTapped13 = true;
+                                  }
+                                  print(tags);
+                                });
+                              },
+                              labelStyle: TextStyle(color: Colors.white),
+                              backgroundColor: (_isChecked && _isTapped13)
+                                  ? Colors.grey
+                                  : Colors.green,
+                            ),
+                            ActionChip(
+                              elevation: 5.0,
+                              label: Text("Module 14"),
+                              onPressed: () {
+                                setState(() {
+                                  if (_isChecked) {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("One tag can be selected"),
+                                    ));
+                                  } else {
+                                    tags.add("Module 14");
+                                    _isChecked = true;
+                                    _isTapped14 = true;
+                                  }
+                                  print(tags);
+                                });
+                              },
+                              labelStyle: TextStyle(color: Colors.white),
+                              backgroundColor: (_isChecked && _isTapped14)
+                                  ? Colors.grey
+                                  : Colors.green,
+                            ),
                             ActionChip(
                               elevation: 5.0,
                               label: Text("General"),
@@ -582,12 +631,39 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
-                              backgroundColor: (_isChecked && _isTappedG)
+                              backgroundColor: (_isChecked && _isTapped12)
                                   ? Colors.grey
                                   : Colors.green,
                             ),
                           ],
                         ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: <Widget>[
+                        //     ActionChip(
+                        //       elevation: 5.0,
+                        //       label: Text("General"),
+                        //       onPressed: () {
+                        //         setState(() {
+                        //           if (_isChecked) {
+                        //             Scaffold.of(context).showSnackBar(SnackBar(
+                        //               content: Text("One tag can be selected"),
+                        //             ));
+                        //           } else {
+                        //             tags.add("General");
+                        //             _isChecked = true;
+                        //             _isTappedG = true;
+                        //           }
+                        //           print(tags);
+                        //         });
+                        //       },
+                        //       labelStyle: TextStyle(color: Colors.white),
+                        //       backgroundColor: (_isChecked && _isTappedG)
+                        //           ? Colors.grey
+                        //           : Colors.green,
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

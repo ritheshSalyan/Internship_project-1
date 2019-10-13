@@ -183,7 +183,6 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                 return GestureDetector(
                   onTap: () {
                     fetchData(index, context);
-
                   },
                   // onLongPress: () {
                   //   chatSharedUser = widget.valueData[index].uid;
@@ -364,11 +363,29 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                     ? Colors.grey
                                     : Colors.green,
                               ),
-                              (value != null)
-                                  ? Text(
-                                      " ${widget.valueData[index].upvoters.length}",
-                                    )
-                                  : Text("${0}"),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: Firestore.instance
+                                    .collection("chat")
+                                    .where('uniqId',
+                                        isEqualTo:
+                                            widget.valueData[index].uniqId)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  var value;
+                                  if (!snapshot.hasData) {
+                                    return Text("${0}");
+                                  }
+                                  snapshot.data.documents.forEach((data) {
+                                      value = data.data['upvoters'].length;
+                                  });
+                                  return Text('$value');
+                                },
+                              ),
+                              // (value != null)
+                              //     ? Text(
+                              //         " ${widget.valueData[index].upvoters.length}",
+                              //       )
+                              //     : Text("${0}"),
                               SizedBox(
                                 width: 25,
                               ),

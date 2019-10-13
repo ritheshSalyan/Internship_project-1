@@ -27,7 +27,23 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   //   // "Swipe Right / Left to remove",
   //   // "Swipe Right / Left to remove",
   // ];
-   final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
+
+  bool _validateForm() {
+    final form = _formkey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  bool validateDetail(BuildContext context) {
+    if (_validateForm()) {
+      return true;
+    }
+    return false;
+  }
 //   _onSubmit() {
 //     setState(() {
 //       item;
@@ -83,10 +99,10 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
         padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
         child: Form(
           key: _formkey,
-          autovalidate: true,
+          // autovalidate: true,
           child: TextFormField(
             validator: (value) => value.isEmpty ? "Cannot be empty" : null,
-            autovalidate: true,
+            // autovalidate: true,
             minLines: 3,
             maxLength: 500,
             maxLines: 100,
@@ -134,33 +150,37 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
           //     builder: (context) => DiscussionPage(),
           //   ),
           // );
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                //answers[_answerIs],
-                widget.content,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold),
+          bool value = validateDetail(context);
+
+          if (value) {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  //answers[_answerIs],
+                  widget.content,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold),
+                ),
+                duration: Duration(hours: 1),
+                backgroundColor: Colors.green[600],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                action: SnackBarAction(
+                  textColor: Colors.white,
+                  label: "Ok",
+                  onPressed: () {
+                    // homeScaffoldKey.currentState.hideCurrentSnackBar();
+                    Scaffold.of(context).hideCurrentSnackBar();
+                    List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                    orderManagement.moveNextIndex(context, arguments);
+                  },
+                ),
               ),
-              duration: Duration(hours: 1),
-              backgroundColor: Colors.green[600],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              action: SnackBarAction(
-                textColor: Colors.white,
-                label: "Ok",
-                onPressed: () {
-                  // homeScaffoldKey.currentState.hideCurrentSnackBar();
-                  Scaffold.of(context).hideCurrentSnackBar();
-                  List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                  orderManagement.moveNextIndex(context, arguments);
-                },
-              ),
-            ),
-          );
+            );
+          }
         },
         textColor: Colors.green,
         highlightedBorderColor: Colors.green,
@@ -177,7 +197,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   Widget build(BuildContext context) {
     data = widget.content;
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         appBar: AppBar(
           elevation: 0,
           actions: <Widget>[
@@ -201,9 +221,10 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                             ),
                             onPressed: () {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.preferences(widget.modNum, widget.index);
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              SaveProgress.preferences(
+                                  widget.modNum, widget.index);
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
                             },
                           ),
                           FlatButton(

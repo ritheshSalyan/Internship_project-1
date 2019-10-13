@@ -58,7 +58,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
     // });
 
     String uri = Uri.decodeFull(widget.file);
-    final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
+    final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
     file = File('/storage/emulated/0/Startupreneur/$modName/$fileName');
     // progressDialog.setMessage("Downloading ...");

@@ -10,13 +10,81 @@ import 'package:startupreneur/saveProgress.dart';
 
 class IdeaActivity extends StatefulWidget {
   IdeaActivity({Key key, this.modNum, this.index}) : super(key: key);
-  final  int modNum, index;
+  final int modNum, index;
   @override
   _IdeaActivityState createState() => _IdeaActivityState();
 }
 
 class _IdeaActivityState extends State<IdeaActivity> {
   static String name, idea, grow, person;
+  final GlobalKey<FormState> box1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> box2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> box3 = GlobalKey<FormState>();
+  final GlobalKey<FormState> box4 = GlobalKey<FormState>();
+
+  bool _validateFromBox1() {
+    final form = box1.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  bool validateFormBox1(BuildContext context) {
+    if (_validateFromBox1()) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _validateFromBox2() {
+    final form = box2.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  bool validateFormBox2(BuildContext context) {
+    if (_validateFromBox2()) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _validateFromBox3() {
+    final form = box3.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  bool validateFormBox3(BuildContext context) {
+    if (_validateFromBox3()) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _validateFromBox4() {
+    final form = box4.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  bool validateFormBox4(BuildContext context) {
+    if (_validateFromBox4()) {
+      return true;
+    }
+    return false;
+  }
 
   ProgressDialog progressDialog;
   @override
@@ -78,165 +146,194 @@ class _IdeaActivityState extends State<IdeaActivity> {
                 ),
               ],
             ),
-            body: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(25),
-                    child: Text(
-                      "Then document your team’s idea by answering the questions below:",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.green,
-                        letterSpacing: 0.5,
+            body: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(25),
+                      child: Text(
+                        "Then document your team’s idea by answering the questions below:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.green,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          obscureText: false,
-                          validator: (value) {
-                              if (value.isEmpty) {
-                                return "Name field cannot be empty";
-                              }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            name = value;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.supervised_user_circle,
-                              color: Colors.green,
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Form(
+                            key: box1,
+                            child: TextFormField(
+                              // key: _formKey,
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Name field cannot be empty";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                name = value;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.supervised_user_circle,
+                                  color: Colors.green,
+                                ),
+                                hintText: "  ",
+                                labelText:
+                                    "Name (Add Team Members if applicable)",
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+                                hintStyle: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5),
+                              ),
                             ),
-                            hintText: "  ",
-                            labelText: "Name (Add Team Members if applicable)",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                letterSpacing: 0.5),
-                            hintStyle: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                letterSpacing: 0.5),
                           ),
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          obscureText: false,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Bussiness Idea field cannot be empty";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            idea = value;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.info_outline,
-                              color: Colors.green,
+                          Form(
+                            key: box2,
+                            child: TextFormField(
+                              // key: _formKey,
+                              // autovalidate: true,
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Bussiness Idea field cannot be empty";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                idea = value;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.info_outline,
+                                  color: Colors.green,
+                                ),
+                                hintText: " ",
+                                labelText:
+                                    "What is your Business Idea: How is it differentiated?",
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
                             ),
-                            hintText: " ",
-                            labelText:
-                                "What is your Business Idea: How is it differentiated?",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                letterSpacing: 0.5),
-                            hintStyle: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                letterSpacing: 0.5),
                           ),
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          obscureText: false,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Description field cannot be empty";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            grow = value;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.show_chart,
-                              color: Colors.green,
+                          Form(
+                            key: box3,
+                            child: TextFormField(
+                              // key: _formKey,
+                              // autovalidate: true,
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Description field cannot be empty";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                grow = value;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.show_chart,
+                                  color: Colors.green,
+                                ),
+                                hintText: " ",
+                                labelText:
+                                    "What will it take to grow the business?",
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+                                hintStyle: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5),
+                              ),
                             ),
-                            hintText: " ",
-                            labelText:
-                                "What will it take to grow the business?",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                letterSpacing: 0.5),
-                            hintStyle: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                letterSpacing: 0.5),
                           ),
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          obscureText: false,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "This field cannot be empty";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            person = value;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.question_answer,
-                              color: Colors.green,
+                          Form(
+                            key: box4,
+                            child: TextFormField(
+                              // key: _formKey,
+                              // autovalidate: true,
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "This field cannot be empty";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                person = value;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.question_answer,
+                                  color: Colors.green,
+                                ),
+                                hintText: " ",
+                                labelText:
+                                    "Why are you the person/team to do it?",
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    letterSpacing: 0.5),
+                                hintStyle: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5),
+                              ),
                             ),
-                            hintText: " ",
-                            labelText: "Why are you the person/team to do it?",
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                letterSpacing: 0.5),
-                            hintStyle: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                letterSpacing: 0.5),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  OutlineButton(
-                    child: Text("Upload"),
-                    onPressed: () async {
-                      progressDialog = new ProgressDialog(
-                          context, ProgressDialogType.Normal);
-                      progressDialog.setMessage("Uploading....");
-                      print("*****************************************************INdex here ${widget.index}");
-                      progressDialog.show();
-                     await getFile();
-                      List<dynamic> arguments = [
-                        widget.modNum,
-                       32 + 1
-                      ];
-                      orderManagement.moveNextIndex(context, arguments);
-                      progressDialog.hide();
-                    },
-                  )
-                ],
+                    OutlineButton(
+                      child: Text("Upload"),
+                      onPressed: () async {
+                        bool b1 = validateFormBox1(context);
+                        bool b2 = validateFormBox2(context);
+                        bool b3 = validateFormBox3(context);
+                        bool b4 = validateFormBox4(context);
+
+                        if (b1 && b2 && b3 && b4) {
+                          progressDialog = new ProgressDialog(
+                              context, ProgressDialogType.Normal);
+                          progressDialog.setMessage("Uploading....");
+                          print(
+                              "*****************************************************INdex here ${widget.index}");
+                          progressDialog.show();
+                          await getFile();
+                          List<dynamic> arguments = [widget.modNum, 32 + 1];
+                          orderManagement.moveNextIndex(context, arguments);
+                          progressDialog.hide();
+                        }
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           );

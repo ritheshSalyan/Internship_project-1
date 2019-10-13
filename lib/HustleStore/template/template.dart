@@ -67,7 +67,8 @@ class _TemplateDownloadState extends State<TemplateDownload> {
 
   String fileNameRetriver(int index) {
     String uri = Uri.decodeFull(widget.files[index]);
-    final RegExp regex = RegExp('([^?/]*\.(pdf))');
+        // RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
+    final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String file = regex.stringMatch(uri);
     return file;
   }
@@ -98,7 +99,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
       });
     });
     String uri = Uri.decodeFull(widget.files[index]);
-    final RegExp regex = RegExp('([^?/]*\.(pdf))');
+    final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
     file = File('/storage/emulated/0/Startupreneur/templates/$fileName');
     print("from download $fileName");
