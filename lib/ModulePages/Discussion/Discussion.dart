@@ -56,7 +56,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
   }
 
   _onSubmit() {
-    final alphanumeric = RegExp(r'^[a-zA-Z 0-9]+$');
+    final alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
 
     setState(() {
       // item;
@@ -67,7 +67,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         // for (var item in ) {
         if (data.split(". ")[item].length > 3) {
           String temp = data.split(". ")[item];
-          print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
+          // print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
           if (alphanumeric.hasMatch(temp[temp.length-1])) {
             _listViewData.add(temp + ".");
           } else {
@@ -177,14 +177,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
     if (widget.image != "") {
       print("Title here ${widget.title}");
       if ((widget.image.contains("assets/"))) {
-        print("Inside Assets");
+        // print("Inside Assets");
         image = ExtendedImage.asset(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.7,
         );
       } else {
-        print("Inside Network");
+        // print("Inside Network");
         image = ExtendedImage.network(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,

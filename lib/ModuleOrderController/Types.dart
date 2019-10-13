@@ -65,6 +65,12 @@ class orderManagement {
     userid = sharedPreferences.getString("UserId");
 
     if (currentIndex == order.length) {
+      List<dynamic> functional = [];
+     await db.collection("functionalModule").document("aoLXTWjhZUFNb1alpUHN").get().then((document) {
+        functional = new List<dynamic>.from(document.data["module"]);
+      
+        print("complete $complete");
+      });
       await db.collection("user").document(userid).get().then((document) {
         complete = new List<dynamic>.from(document.data["completed"]);
         points = document.data["points"];
@@ -87,7 +93,8 @@ class orderManagement {
       //     ),
       //   );
       // }
-      if (complete.contains(arguments[0] + 1)) {
+      if(functional.contains( arguments[0])){
+if ((complete.contains(arguments[0] + 1))) {
         print("already there");
          Navigator.of(context).push(
           MaterialPageRoute(
@@ -95,7 +102,16 @@ class orderManagement {
           ),
         );
       } else {
+        if(arguments[0]==2){
+             complete.add(13);
+
+        }
+        if(arguments[0]==14){
+           complete.add(3);
+        }
+        else{
         complete.add(arguments[0] + 1);
+        }
         var data = Map<String, dynamic>();
         data["completed"] = complete;
         data["points"] = points+modulePoint;
@@ -106,6 +122,8 @@ class orderManagement {
           ),
         );
       }
+      }
+      
     } else {
        SaveProgress.preferences(arguments[0],arguments[1]);
       switch (order[currentIndex]) {

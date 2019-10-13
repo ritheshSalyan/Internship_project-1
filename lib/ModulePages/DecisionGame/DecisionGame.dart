@@ -37,7 +37,7 @@ class _DecisionGameState extends State<DecisionGame>
   @override
   Widget build(BuildContext context) {
     String question = "";
-   return OfflineBuilder(
+    return OfflineBuilder(
       child: NoNetPage(),
       connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {
@@ -245,31 +245,20 @@ class _DecisionGameState extends State<DecisionGame>
                                     Scaffold.of(context).showSnackBar(
                                       SnackBar(
                                         content: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.5,
-                                          child: Column(
-                                            children: <Widget>[
-                                              Image.asset(
-                                                'assets/Images/dec.png',
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.2,
-                                              ),
-                                              AutoSizeText(
-                                                answers[_answerIs],
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  // fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                // minFontSize: ,
-                                                maxLines: 10,
-                                              ),
-                                            ],
+                                          // height: MediaQuery.of(context)
+                                          //         .size
+                                          //         .height *
+                                          //     0.5,
+                                          child: AutoSizeText(
+                                            answers[_answerIs],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              // fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            // minFontSize: ,
+                                            maxLines: 10,
                                           ),
                                         ),
                                         duration: Duration(hours: 1),

@@ -5,9 +5,6 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
-import 'package:startupreneur/ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
-import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
-import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -29,7 +26,6 @@ import '../ModuleOrderController/Types.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:startupreneur/how_to_earn/how_to_earn.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -393,24 +389,24 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.store),
-                    title: Text(
-                      'The Startupreneur GoldMine',
-                      style: TextStyle(
-                        color: Colors.green,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (HustleStoreLoader()),
-                        ),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.store),
+                  //   title: Text(
+                  //     'The Startupreneur GoldMine',
+                  //     style: TextStyle(
+                  //       color: Colors.green,
+                  //       letterSpacing: 0.5,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).pop();
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => (HustleStoreLoader()),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: Icon(Icons.chat),
                     title: Text(
@@ -461,6 +457,10 @@ class _TimelinePageState extends State<TimelinePage> {
                       //   MaterialPageRoute(
                       //     builder: (context) => (DecisionGameTextLoading(
                       //         modNum: 8, index: 47)),
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => (DownloadFileActivityLoader(
+                      //         modNum: 13, index: 15)),
                       //   ),
                       // );
                       // Navigator.of(context).pop();
@@ -472,25 +472,25 @@ class _TimelinePageState extends State<TimelinePage> {
                       // );
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.info),
-                    title: Text(
-                      'How to Earn Points',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (HowToEarn()),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.info),
+                  //   title: Text(
+                  //     'How to Earn Points',
+                  //     style: TextStyle(
+                  //       letterSpacing: 0.5,
+                  //       color: Colors.green,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).pop();
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => (HowToEarn()),
+                  //         fullscreenDialog: true,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   ListTile(
                     leading: Icon(Icons.lock_open),
                     title: Text(
