@@ -47,7 +47,7 @@ class _SigninPageState extends State<SigninPage> {
     sharedPreferences.setString("UserId", userId);
     sharedPreferences.setString("UserEmail", _email);
     Analytics.setUserId(userId);
-    print(sharedPreferences.getString("UserId"));
+    // print(sharedPreferences.getString("UserId"));
     var data = Map<String, dynamic>();
     data["mobToken"] = tokenId;
     await db.collection("pushToken").document(userId).setData(data);
@@ -99,7 +99,7 @@ class _SigninPageState extends State<SigninPage> {
 
   static otpValidation(BuildContext context) async {
     if (_otpvalidate()) {
-      print("$_otpEmail");
+      // print("$_otpEmail");
       Toast.show("Password Reset Mail has been sent", context,duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
       await _auth.sendPasswordResetEmail(email: _otpEmail);

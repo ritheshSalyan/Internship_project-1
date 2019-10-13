@@ -3,6 +3,7 @@ import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActiv
 import 'package:startupreneur/ModulePages/FlipPage/FlipPage.dart';
 import 'package:startupreneur/ModulePages/IdeaActivity/IdeaActivity.dart';
 import 'package:startupreneur/saveProgress.dart';
+import 'package:startupreneur/timeline/data.dart';
 import '../ModulePages/quiz/quizLoader.dart';
 import '../ModulePages/SummaryPage/ConclusionPage.dart';
 import '../ModulePages/VideoController/VideoControllerLoader.dart';
@@ -48,14 +49,13 @@ enum Type {
 class orderManagement {
   static List<Type> order = [];
   static List<dynamic> complete = [];
-  static dynamic points ;
+  static dynamic points;
   static dynamic modulePoint = 0;
   static int currentIndex = 0;
   static String userid = "";
   List<dynamic> arguments = [];
   static Firestore db = Firestore.instance;
   static SharedPreferences sharedPreferences;
-
 
   static void moveNextIndex(BuildContext context, arguments) async {
     currentIndex = arguments[1];
@@ -66,9 +66,13 @@ class orderManagement {
 
     if (currentIndex == order.length) {
       List<dynamic> functional = [];
-     await db.collection("functionalModule").document("aoLXTWjhZUFNb1alpUHN").get().then((document) {
+      await db
+          .collection("functionalModule")
+          .document("aoLXTWjhZUFNb1alpUHN")
+          .get()
+          .then((document) {
         functional = new List<dynamic>.from(document.data["module"]);
-      
+
         print("complete $complete");
       });
       await db.collection("user").document(userid).get().then((document) {
@@ -76,9 +80,13 @@ class orderManagement {
         points = document.data["points"];
         print("complete $complete");
       });
-      await db.collection("points").where("module",isEqualTo:arguments[0]).getDocuments().then((document){
-        document.documents.forEach((val){
-          modulePoint  =  val.data["point"];
+      await db
+          .collection("points")
+          .where("module", isEqualTo: arguments[0])
+          .getDocuments()
+          .then((document) {
+        document.documents.forEach((val) {
+          modulePoint = val.data["point"];
         });
       });
 
@@ -93,39 +101,47 @@ class orderManagement {
       //     ),
       //   );
       // }
-      if(functional.contains( arguments[0])){
-if ((complete.contains(arguments[0] + 1))) {
-        print("already there");
+      if (functional
+          .contains(moduleOrder[moduleOrder.indexOf(arguments[0]) + 1])) {
+        if ((complete
+            .contains(moduleOrder[moduleOrder.indexOf(arguments[0]) + 1]))) {
+          print("already there");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => SummaryPage(),
+            ),
+          );
+        } else {
+          if (arguments[0] == 2) {
+            complete.add(13);
+          } else if (arguments[0] == 14) {
+            complete.add(3);
+          } else {
+            complete.add(arguments[0] + 1);
+          }
+          var data = Map<String, dynamic>();
+          data["completed"] = complete;
+          data["points"] = points + modulePoint;
+          await db
+              .collection("user")
+              .document(userid)
+              .setData(data, merge: true);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => SummaryPage(),
+            ),
+          );
+        }
+      }
+      else{
          Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SummaryPage(),
-          ),
-        );
-      } else {
-        if(arguments[0]==2){
-             complete.add(13);
-
-        }
-        if(arguments[0]==14){
-           complete.add(3);
-        }
-        else{
-        complete.add(arguments[0] + 1);
-        }
-        var data = Map<String, dynamic>();
-        data["completed"] = complete;
-        data["points"] = points+modulePoint;
-        await db.collection("user").document(userid).setData(data, merge: true);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SummaryPage(),
-          ),
-        );
+            MaterialPageRoute(
+              builder: (context) => SummaryPage(),
+            ),
+          );
       }
-      }
-      
     } else {
-       SaveProgress.preferences(arguments[0],arguments[1]);
+      SaveProgress.preferences(arguments[0], arguments[1]);
       switch (order[currentIndex]) {
         case Type.quote:
           print("quote");
@@ -140,12 +156,12 @@ if ((complete.contains(arguments[0] + 1))) {
             ),
           );
           break;
-         case Type.download:
+        case Type.download:
           print("Download");
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) =>
-                  DownloadFileActivityLoader(modNum: arguments[0], index: currentIndex),
+              builder: (context) => DownloadFileActivityLoader(
+                  modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
@@ -158,22 +174,22 @@ if ((complete.contains(arguments[0] + 1))) {
             ),
           );
           break;
-           case Type.ideaActivity:
+        case Type.ideaActivity:
           print("ideaActivity $currentIndex");
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                 IdeaActivity(modNum: arguments[0], index: currentIndex),
+                  IdeaActivity(modNum: arguments[0], index: currentIndex),
             ),
           );
           break;
 
-           case Type.flip:
+        case Type.flip:
           print("flip");
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                 FlipPage(modnum: arguments[0], index: currentIndex),
+                  FlipPage(modnum: arguments[0], index: currentIndex),
             ),
           );
           break;

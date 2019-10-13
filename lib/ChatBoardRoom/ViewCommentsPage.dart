@@ -40,8 +40,8 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
   void initState() {
     super.initState();
     preferences();
-    print("${widget.question}");
-    print("${widget.answers}");
+    // print("${widget.question}");
+    // print("${widget.answers}");
   }
 
   bool _validate() {
@@ -226,7 +226,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
 //          flushBar(context);
-                  print("hello");
+                  // print("hello");
                   flush = Flushbar<List<String>>(
                     userInputForm: Form(
                       autovalidate: true,
@@ -287,7 +287,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                     // isDismissible: false,
                     backgroundColor: Colors.grey[200],
                   )..show(context).whenComplete(() {
-                      print("done and dusted - 1");
+                      // print("done and dusted - 1");
                       flush = Flushbar<List<String>>(
                         backgroundColor: Colors.green,
                         isDismissible: true,
@@ -298,7 +298,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                           // Text("Successfully added"),
                         ]),
                       )..show(context).whenComplete(() {
-                          print("done and dusted - 2");
+                          // print("done and dusted - 2");
                           Navigator.of(context).pushReplacementNamed('/chat');
                         });
                     });

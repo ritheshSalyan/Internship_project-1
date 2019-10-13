@@ -44,7 +44,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     super.initState();
     preference();
     tags.clear();
-    print(now.millisecondsSinceEpoch);
+    // print(now.millisecondsSinceEpoch);
   }
 
   static bool _validate() {
@@ -73,9 +73,9 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     db = Firestore.instance;
     var profileUrl;
     var userName;
-    print(text);
-    print(userId);
-    print(text);
+    // print(text);
+    // print(userId);
+    // print(text);
 
     var data = await db
         .collection("user")
@@ -99,10 +99,10 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
       userName: userName,
     );
     var message = chatBoardData.toJson();
-    print(message);
+    // print(message);
 
     await db.collection("chat").add(message).then((done) {
-      print(done);
+      // print(done);
       progressDialog.hide();
       Navigator.of(context).pushReplacementNamed('/chat');
     });
@@ -112,7 +112,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     if (_validate()) {
       addDiscussion(context);
     }
-    print("text is $text");
+    // print("text is $text");
   }
 
   @override
@@ -144,13 +144,13 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                 keyboardType: TextInputType.text,
                                 onSaved: (value) {
                                   setState(() {
-                                    print("$value");
+                                    // print("$value");
                                     text = value;
                                   });
                                 },
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    print("empty");
+                                    // print("empty");
                                     return "Field cannot be empty";
                                   }
                                   return null;
@@ -299,7 +299,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped1 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -321,7 +321,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped2 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -343,7 +343,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped3 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -370,7 +370,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped4 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -392,7 +392,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped5 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -414,7 +414,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped6 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -441,7 +441,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped7 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -463,7 +463,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped8 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -485,7 +485,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped9 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -512,7 +512,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped10 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -534,7 +534,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped11 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -556,7 +556,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTapped12 = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
@@ -627,7 +627,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     _isChecked = true;
                                     _isTappedG = true;
                                   }
-                                  print(tags);
+                                  // print(tags);
                                 });
                               },
                               labelStyle: TextStyle(color: Colors.white),
