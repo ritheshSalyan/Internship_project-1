@@ -89,7 +89,7 @@ class _IncubationState extends State<Incubation> {
         )..show(context);
       }
       String uri = Uri.decodeFull(resumeDownload);
-      final RegExp regex = RegExp('([^?/]*\.(pdf))');
+      final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
       fileName = regex.stringMatch(uri);
 //      progressDialog.update(message: "Loading Resume`");
       tempDir = Directory.systemTemp;

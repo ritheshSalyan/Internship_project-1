@@ -73,6 +73,7 @@ dependencies:
   firebase_analytics: ^5.0.2
   smart_flare: ^0.2.6
   csv: ^4.0.3
+  archive: ^2.0.10
   flutter_downloader: ^1.2.2
 
 

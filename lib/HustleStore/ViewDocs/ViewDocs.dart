@@ -44,7 +44,7 @@ class _ViewDocsState extends State<ViewDocs> {
 
   String fileNameRetriver(int index) {
     String uri = Uri.decodeFull(widget.doc[index]);
-    final RegExp regex = RegExp('([^?/]*\.(pdf))');
+    final RegExp regex =RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String file = regex.stringMatch(uri);
     return file;
   }
@@ -64,7 +64,7 @@ class _ViewDocsState extends State<ViewDocs> {
     //   Directory('/storage/emulated/0/Startupreneur/cache').create();
     // });
     String uri = Uri.decodeFull(widget.doc[index]);
-    final RegExp regex = RegExp('([^?/]*\.(pdf))');
+    final RegExp regex =RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
     // final dir = ('/storage/emulated/0/Startupreneur/cache');
     final dir = ((await getExternalStorageDirectory()).path);
