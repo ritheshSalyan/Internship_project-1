@@ -1,3 +1,6 @@
+# flutter pub get
+# flutter pub run flutter_launcher_icons:main
+
 name: startupreneur
 description: A new Flutter project.
 
@@ -85,7 +88,7 @@ dev_dependencies:
 flutter_icons:
   android: true 
   ios: true
-  image_path: "assets/Images/logo1.png"
+  image_path: "assets/Images/app_logo.jpg"
   adaptive_icon_background: "#ffffff"
 
 

@@ -16,7 +16,7 @@
     <application
 
         android:name="io.flutter.app.FlutterApplication"
-        android:label="startupreneur"
+        android:label="The Startupreneur"
         android:icon="@mipmap/ic_launcher"
         >
         <activity

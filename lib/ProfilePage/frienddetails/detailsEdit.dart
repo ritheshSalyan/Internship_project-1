@@ -116,7 +116,7 @@ class _EditDetailState extends State<EditDetail>
     dataMap['mobile'] = mobile;
     // dataMap['gender'] = gender;
     dataMap['institutionOrCompany'] = institutionOrCompany;
-    dataMap['typeOfOccupations'] = typeOfOccupations;
+    dataMap['ventureName'] = typeOfOccupations;
     //dataMap['referalCodeFromFriend'] = referalCodeFromFriend;
     // dataMap['uid'] = userid;
     // dataMap['points'] = 0;
@@ -246,7 +246,7 @@ class _EditDetailState extends State<EditDetail>
       textEditingController1.text = currentuser.name;
       textEditingController2.text = currentuser.email;
       textEditingController3.text = currentuser.mobile;
-      textEditingController5.text = currentuser.occupation;
+      textEditingController5.text = currentuser.ventureName;
       textEditingController4.text = currentuser.institution;
       print("init state");
     });
@@ -265,7 +265,7 @@ class _EditDetailState extends State<EditDetail>
         },
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
+          prefixIcon: Icon(Icons.perm_identity, color: Colors.green),
           hintText: "eg. Bob Marley",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
           labelText: "Full Name *",
@@ -360,10 +360,10 @@ class _EditDetailState extends State<EditDetail>
         },
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.work, color: Colors.green),
-          hintText: "eg Student,business etc",
+          prefixIcon: Icon(Icons.supervised_user_circle, color: Colors.green),
+          hintText: "eg The Startupreneur, etc",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-          labelText: "Occupation *",
+          labelText: "Venture Name *",
           labelStyle: TextStyle(color: Colors.black, fontSize: 12),
 
           // focusedBorder: OutlineInputBorder(

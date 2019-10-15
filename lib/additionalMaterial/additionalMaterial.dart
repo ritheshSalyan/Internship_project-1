@@ -9,6 +9,8 @@ import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/models/additionalMaterial.dart';
 import 'package:toast/toast.dart';
 
+import '../OfflineBuilderWidget.dart';
+
 class AdditionalMaterialPage extends StatefulWidget {
   @override
   _AdditionalMaterialPageState createState() => _AdditionalMaterialPageState();
@@ -63,7 +65,7 @@ class _AdditionalMaterialPageState extends State<AdditionalMaterialPage> {
       await FlutterDownloader.enqueue(
         url: filePath,
         savedDir:
-            '/storage/emulated/0/Startupreneur/AdditionalMaterial/$modName',
+            '/storage/emulated/0/Startupreneur/AdditionalMaterial/$modName/',
         fileName: fileName,
         showNotification: true,
         openFileFromNotification: true,

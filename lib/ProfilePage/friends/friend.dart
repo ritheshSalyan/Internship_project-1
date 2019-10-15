@@ -12,6 +12,8 @@ class Friend {
     @required this.gender,
     @required this.points,
     @required this.uid,
+    @required this.sid,
+    @required this.ventureName,
 
   });
 
@@ -25,29 +27,7 @@ final String institution;
 final List<dynamic> completed;
 final dynamic points;
 final String uid;
+final String sid;
+final String ventureName;
 
-  // static List<Friend> allFromResponse(String response) {
-  //   var decodedJson = json.decode(response).cast<String, dynamic>();
-
-  //   return decodedJson['results']
-  //       .cast<Map<String, dynamic>>()
-  //       .map((obj) => Friend.fromMap(obj))
-  //       .toList()
-  //       .cast<Friend>();
-  // }
-
-  // static Friend fromMap(Map map) {
-  //   var name = map['name'];
-
-  //   return new Friend(
-  //     avatar: map['picture']['large'],
-  //     name: '${_capitalize(name['first'])} ${_capitalize(name['last'])}',
-  //     email: map['email'],
-  //     location: _capitalize(map['location']['state']),
-  //   );
-  // }
-
-  // static String _capitalize(String input) {
-  //   return input.substring(0, 1).toUpperCase() + input.substring(1);
-  // }
 }

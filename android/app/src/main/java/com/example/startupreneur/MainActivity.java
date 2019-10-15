@@ -34,7 +34,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   ProgressDialog dialog;
   boolean val = false;
   Result result;
-  Context context;
+  // Context context;
 
    private static final int STORAGE_PERMISSION_CODE = 101;
 
@@ -44,7 +44,7 @@ public class MainActivity extends FlutterActivity implements PaymentResultListen
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
-    Context context;
+    // Context context;
     // getWindow().addFlags(LayoutParams.FLAG_SECURE);
     // AppCenter.start(getApplication(), "696a4582-dec3-47fd-8b0b-b5db09558f99", Analytics.class);
     // Analytics.trackEvent("My custom event");

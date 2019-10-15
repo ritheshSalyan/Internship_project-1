@@ -103,6 +103,8 @@ eventsQuery.documents.forEach((document) {
     gender: document.data["gender"].toString(),
    avatar: avatar,
     uid:document.data["uid"].toString(),
+    sid:document.data["sid"].toString(),
+    ventureName: document.data['ventureName'].toString(),
   );
   // for (var item in document["Profile" ]) {
   //    //title.add(item.toString());

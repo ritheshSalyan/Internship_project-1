@@ -296,6 +296,24 @@ class FriendDetailBody extends StatelessWidget {
                                   padding: EdgeInsets.only(left: 10, top: 10),
                                   child: new Row(
                                     children: <Widget>[
+                                      Icon(Icons.perm_identity, color: Colors.green),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          friend.sid,
+                                          style: TextStyle(
+                                              // fontFamily: "Open Sans",
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10, top: 10),
+                                  child: new Row(
+                                    children: <Widget>[
                                       Icon(Icons.phone_android,
                                           color: Colors.green),
                                       Padding(
@@ -352,11 +370,11 @@ class FriendDetailBody extends StatelessWidget {
                                   padding: EdgeInsets.only(left: 10, top: 10),
                                   child: new Row(
                                     children: <Widget>[
-                                      Icon(Icons.work, color: Colors.green),
+                                      Icon(Icons.supervised_user_circle, color: Colors.green),
                                       Padding(
                                         padding: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          friend.occupation,
+                                          friend.ventureName,
                                           style: TextStyle(
                                               // fontFamily: "Open Sans",
                                               color: Colors.black,
