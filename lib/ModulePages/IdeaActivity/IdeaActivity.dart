@@ -345,7 +345,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
 
   static void getFile() async {
     StorageReference storageReference =
-        FirebaseStorage.instance.ref().child("ActivityUpload/Idea.csv");
+        FirebaseStorage.instance.ref().child("userUpload").child("ActivityUpload/Idea.csv");
     await downloadFile(storageReference);
   }
 

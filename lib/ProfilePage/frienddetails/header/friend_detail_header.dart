@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart';
 import '../../friends/friend.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -53,9 +54,13 @@ class FriendDetailHeader extends StatelessWidget  {
     //   this.uid = user.uid;
     // });
     String extenstion = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef = FirebaseStorage.instance
+    
+     String name = await User.getUserName(friend.uid);
+   
+    final StorageReference storageRef =  FirebaseStorage.instance
         .ref()
-        .child(friend.uid)
+         .child("userUpload")
+       .child("${friend.uid}_${name}")
         .child("profile." + extenstion);
 
     StorageUploadTask task = storageRef.putFile(file);
