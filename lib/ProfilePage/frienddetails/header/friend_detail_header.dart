@@ -55,6 +55,7 @@ class FriendDetailHeader extends StatelessWidget  {
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
+        .child("userUpload")
         .child(friend.uid)
         .child("profile." + extenstion);
 

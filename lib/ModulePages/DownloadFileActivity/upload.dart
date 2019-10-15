@@ -163,6 +163,7 @@ class _UploadState extends State<Upload> {
     String extension = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
+        .child("userUpload")
         .child(uid)
         .child("${widget.modNum}_upload_${widget.index}." + extension);
 

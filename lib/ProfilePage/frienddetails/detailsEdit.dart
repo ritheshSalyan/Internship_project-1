@@ -186,6 +186,7 @@ class _EditDetailState extends State<EditDetail>
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
+        .child("userUpload")
         .child(currentuser.uid)
         .child("resume." + extenstion);
 

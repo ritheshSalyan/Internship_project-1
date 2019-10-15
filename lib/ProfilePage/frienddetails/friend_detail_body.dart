@@ -42,8 +42,8 @@ class FriendDetailBody extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding:
-                  EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), //MediaQuery.of(context).size.height * 0.1
-//              child: Text("Module $item: " + doodles[item - 1].name),
+                  EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), 
+               
             child: Row(
               children: <Widget>[
                 Text("Module $i: "),

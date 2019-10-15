@@ -309,6 +309,7 @@ class FileUploadState extends State<FileUpload> {
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
+        
         .child(uid)
         .child("${widget.modNum}_activity." + extenstion);
 
