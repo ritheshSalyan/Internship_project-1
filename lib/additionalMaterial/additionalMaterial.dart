@@ -53,13 +53,27 @@ class _AdditionalMaterialPageState extends State<AdditionalMaterialPage> {
       } else {
         print("im here");
         Directory(
+                '/storage/emulated/0/Startupreneur/AdditionalMaterial/')
+            .create().catchError((e){
+              print(e);
+            });
+            Directory(
                 '/storage/emulated/0/Startupreneur/AdditionalMaterial/$modName/')
-            .create();
+            .create().catchError((e){
+              print(e);
+            });
       }
     }).catchError((e) {
-      Directory(
-              '/storage/emulated/0/Startupreneur/AdditionalMaterial/$modName/')
-          .create();
+       Directory(
+                '/storage/emulated/0/Startupreneur/AdditionalMaterial/')
+            .create().catchError((e){
+              print(e);
+            });
+            Directory(
+                '/storage/emulated/0/Startupreneur/AdditionalMaterial/$modName/')
+            .create().catchError((e){
+              print(e);
+            });
     });
     try {
       await FlutterDownloader.enqueue(

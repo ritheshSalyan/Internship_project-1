@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
@@ -160,10 +161,12 @@ class _UploadState extends State<Upload> {
     // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
     // String fileName = regex.stringMatch(uri);
     // print(fileName.split("/"));
+    String name = await User.getUserName(uid);
     String extension = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
-        .child(uid)
+        .child("userUpload")
+        .child("${uid}_${name}")
         .child("${widget.modNum}_upload_${widget.index}." + extension);
 
     task = storageRef.putFile(file);

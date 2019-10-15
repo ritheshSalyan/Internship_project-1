@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/ProfilePage/friends/friend.dart';
 import 'package:startupreneur/home.dart';
@@ -181,12 +182,14 @@ class _EditDetailState extends State<EditDetail>
 
   Future upload(BuildContext context) async {
     // FirebaseAuth.instance.currentUser().then((user) {
-    //   this.uid = user.uid;
+      // this.uid = user.uid;
     // });
+     String name = await User.getUserName(user.uid);
     String extenstion = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef = FirebaseStorage.instance
+    final StorageReference storageRef =  FirebaseStorage.instance
         .ref()
-        .child(currentuser.uid)
+         .child("userUpload")
+       .child("${user.uid}_${name}")
         .child("resume." + extenstion);
 
     StorageUploadTask task = storageRef.putFile(file);
