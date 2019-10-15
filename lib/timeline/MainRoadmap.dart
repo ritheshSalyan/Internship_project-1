@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivity.dart';
+import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
+import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -460,7 +463,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => (HelpAndFaq()),
+                          builder: (context) => (DownloadFileActivityLoader(modNum: 14,index: 10,)),
                         ),
                       );
                     },
@@ -471,7 +474,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   //     'How to Earn Points',
                   //     style: TextStyle(
                   //       letterSpacing: 0.5,
-                  //       color: Colors.green,
+                  //       color: Colors.green, 
                   //     ),
                   //   ),
                   //   onTap: () {

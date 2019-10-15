@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
@@ -306,11 +307,12 @@ class FileUploadState extends State<FileUpload> {
   Future upload(file) async {
    FirebaseUser user = await FirebaseAuth.instance.currentUser();
    this.uid = user.uid;
+   String name = await User.getUserName(uid);
     String extenstion = p.basename(file.path).split(".")[1];
     final StorageReference storageRef = FirebaseStorage.instance
         .ref()
-        
-        .child(uid)
+         .child("userUpload")
+       .child("${uid}_${name}")
         .child("${widget.modNum}_activity." + extenstion);
 
     task = storageRef.putFile(file);
