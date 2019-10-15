@@ -31,7 +31,10 @@ class FriendDetailBody extends StatelessWidget {
     completed.add(SizedBox(
       height: 10,
     ));
+    int i = 0;
     for (int item in friend.completed) {
+      i++;
+      // print("*******************"+); 
       completed.add(Padding(
         padding: EdgeInsets.all(10),
         child: Card(
@@ -43,8 +46,8 @@ class FriendDetailBody extends StatelessWidget {
 //              child: Text("Module $item: " + doodles[item - 1].name),
             child: Row(
               children: <Widget>[
-                Text("Module $item: "),
-                doodles[item-1].name,
+                Text("Module $i: "),
+                doodles[i-1].name, 
                 SizedBox(
                   width: 0.1,
                 ),

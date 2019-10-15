@@ -14,6 +14,7 @@ class _SocializeTaskState extends State<SocializeTask> {
   static final _formkey = GlobalKey<FormState>();
   var _job = false;
   var _startup = false;
+  int index ;
 
   bool _validate() {
     final form = _formkey.currentState;
@@ -333,8 +334,17 @@ class _SocializeTaskState extends State<SocializeTask> {
     );
   }
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     setState(() {
+     index = widget.index; 
+    });
+  }
   @override
   Widget build(BuildContext context) {
+   
     return CustomeOffline(
           onConnetivity: Scaffold(
         appBar: AppBar(
@@ -504,7 +514,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
                                     duration: Duration(seconds: 2),
-                                    content: Text("Well Done ! Let's move Ahead"),
+                                    content: Text("Well Done ! Let's Move Ahead"),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
@@ -517,7 +527,7 @@ class _SocializeTaskState extends State<SocializeTask> {
                                     // );
                                     List<dynamic> arguments = [
                                       widget.modNum,
-                                      33
+                                      index+1
                                     ];
                                     orderManagement.moveNextIndex(
                                         context, arguments);
