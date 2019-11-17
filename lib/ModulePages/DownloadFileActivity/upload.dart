@@ -102,7 +102,7 @@ class _UploadState extends State<Upload> {
                 right: MediaQuery.of(context).size.width * 0.02,
               ),
               child: Text(
-                "${widget.content[2]}",
+               "${widget.content[2].replaceAll(RegExp(r'\. '), ".\n")}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

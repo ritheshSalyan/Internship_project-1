@@ -313,7 +313,7 @@ class FileUploadState extends State<FileUpload> {
         .ref()
          .child("userUpload")
        .child("${uid}_${name}")
-        .child("${widget.modNum}_activity." + extenstion);
+        .child("${widget.modNum}_activity_${widget.index}." + extenstion);
 
     task = storageRef.putFile(file);
     //  if(task.isInProgress){

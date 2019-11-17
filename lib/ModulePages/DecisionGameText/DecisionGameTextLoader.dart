@@ -25,13 +25,14 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
   Widget build(BuildContext context) {
     getEventsFromFirestore(widget.modNum,widget.index).then((title) {
       print("DecisionGameText is " + title.toString());
-      Navigator.of(context).pushReplacement(
+     if(title.isNotEmpty){
+        Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => DecisionGameTextPage(
            index:widget.index,
             modNum: widget.modNum,
-            title: title[0],
-            content: title[1],
+            title: title.isNotEmpty?title[0]:" ",
+            content:  title.isNotEmpty?title[1]:" ",
             button: "Next",
             id:documentId,
             // button: title[2],
@@ -39,6 +40,7 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
           ),
         ),
       );
+     }
     });
      return CustomeOffline(
             onConnetivity: Scaffold(
@@ -78,19 +80,24 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
+   eventsQuery.documents.forEach((document)  {
       print("DecisionGameText " +
           document.toString());
           documentId = document.documentID;
 
-      title = convert(document["content"]);
+      title.addAll(convert(document["content"]));
+     
       // title.add(document["image"].toString());
     });
-
-    return title;
+    print("Title in Decisitin game *********************************************************  "+title.toString());
+     return title;
+    // if(title.isNotEmpty){
+      
+    // }
+    
   }
   
-  static List<String> convert(List<dynamic> dlist){
+  static List<String> convert(List<dynamic> dlist)  {
 
     List<String> list = new List<String>();
 
