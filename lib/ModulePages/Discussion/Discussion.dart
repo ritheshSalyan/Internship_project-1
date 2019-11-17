@@ -175,7 +175,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
     );
 
     if (widget.image != "") {
-      print("Title here ${widget.title}");
+      print("Title here ${widget.image}");
       if ((widget.image.contains("assets/"))) {
         // print("Inside Assets");
         image = ExtendedImage.asset(

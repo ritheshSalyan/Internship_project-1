@@ -80,12 +80,11 @@ class _HustelTipPageState extends State<HustelTipPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Row(children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.1,
-                        left: MediaQuery.of(context).size.height * 0.02,
-                      ),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Hustle Tip",
                         style: TextStyle(
