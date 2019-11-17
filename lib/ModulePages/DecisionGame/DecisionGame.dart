@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -30,9 +31,26 @@ class _DecisionGameState extends State<DecisionGame>
   String correctAns = "";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   int _answerIs = 0;
+  int attempts = 1;
+  String documentId;
+  SharedPreferences sharedPreferences;
 
   @override
   bool get wantKeepAlive => true;
+
+  void addToCollection() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    var userId = sharedPreferences.getString("UserId");
+    var data = Map<String, dynamic>();
+    data['answer'] = options[_answerIs];
+    data['attempts'] = attempts;
+    Firestore.instance
+        .collection("decisionGame")
+        .document(documentId)
+        .collection("answers")
+        .document(userId)
+        .setData(data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +160,7 @@ class _DecisionGameState extends State<DecisionGame>
                                             snapshot.data.documents
                                                 .forEach((document) {
                                               question = document["question"];
+                                              documentId = document.documentID;
                                             });
                                             return Text(
                                               question,
@@ -271,6 +290,7 @@ class _DecisionGameState extends State<DecisionGame>
                                           textColor: Colors.white,
                                           label: "Ok",
                                           onPressed: () {
+                                            addToCollection();
                                             // homeScaffoldKey.currentState.hideCurrentSnackBar();
                                             Scaffold.of(context)
                                                 .hideCurrentSnackBar();

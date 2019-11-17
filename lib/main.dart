@@ -15,9 +15,9 @@ void main() async {
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
+  }, onError: Crashlytics.instance.recordError);
     runApp(MyApp());
 
-  }, onError: Crashlytics.instance.recordError);
 
 }
 class MyApp extends StatefulWidget{
@@ -30,9 +30,8 @@ class _MyAppState extends State<MyApp> {
   FirebaseAnalytics analytics = FirebaseAnalytics();
   FirebaseAnalyticsObserver observer;
 
-  @override
+  @override 
   void initState() {
-
     super.initState();
     request();
   }

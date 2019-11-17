@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
+import 'package:startupreneur/Mentorfeedback/mentorFeedback.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivity.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
 import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
@@ -376,26 +377,26 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.book,
-                    ),
-                    title: Text(
-                      'Startup Dictionary',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (Vocabulary()),
-                        ),
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.book,
+                  //   ),
+                  //   title: Text(
+                  //     'Startup Dictionary',
+                  //     style: TextStyle(
+                  //       letterSpacing: 0.5,
+                  //       color: Colors.green,
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.of(context).pop();
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => (Vocabulary()),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   // ListTile(
                   //   leading: Icon(Icons.store),
                   //   title: Text(
@@ -467,25 +468,72 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  // ListTile(
-                  //   leading: Icon(Icons.info),
-                  //   title: Text(
-                  //     'How to Earn Points',
-                  //     style: TextStyle(
-                  //       letterSpacing: 0.5,
-                  //       color: Colors.green,
-                  //     ),
-                  //   ),
-                  //   onTap: () {
-                  //     Navigator.of(context).pop();
-                  //     Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (context) => (HowToEarn()),
-                  //         fullscreenDialog: true,
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
+                  ListTile(
+                    leading: Icon(Icons.textsms),
+                    title: Text(
+                      'Feedback',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    trailing: StreamBuilder(
+                        stream: Firestore.instance
+                            .collection("mentorFeedbackLMS")
+                            .where("read", isEqualTo: false)
+                            .where("userId", isEqualTo: uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            print(snapshot.data.documents.length);
+                            return RawMaterialButton(
+                              onPressed: () {},
+                              child: Text(
+                                "${snapshot.data.documents.length}",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              ),
+                              shape: new CircleBorder(),
+                              elevation: 0.1,
+                              fillColor: Colors.green,
+                              constraints: BoxConstraints(
+                                maxHeight: 75,
+                                maxWidth: 75,
+                                minHeight: 25,
+                                minWidth: 25,
+                              ),
+                              // padding: const EdgeInsets.all(0.0),
+                            );
+                          }
+                          return RawMaterialButton(
+                            onPressed: () {},
+                            child: Text(
+                              "0",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
+                            ),
+                            shape: new CircleBorder(),
+                            elevation: 0.1,
+                            fillColor: Colors.green,
+                            constraints: BoxConstraints(
+                              maxHeight: 75,
+                              maxWidth: 75,
+                              minHeight: 25,
+                              minWidth: 25,
+                            ),
+                            // padding: const EdgeInsets.all(0.0),
+                          );
+                        }),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (MentorFeedback(
+                            uid: uid,
+                          )),
+                        ),
+                      );
+                    },
+                  ),
                   ListTile(
                     leading: Icon(Icons.lock_open),
                     title: Text(

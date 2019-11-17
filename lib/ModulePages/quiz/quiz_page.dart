@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,9 @@ class _QuizPageState extends State<QuizPage> {
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
+  SharedPreferences sharedPreferences;
+  int attempts=0;
+  String documentId;
   List<dynamic> options = [];
   int selectedRadio;
   String reason = "";
@@ -27,65 +31,79 @@ class _QuizPageState extends State<QuizPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
-
-   @override
+  @override
   void initState() {
-
     super.initState();
     Analytics.analyticsBehaviour("Quiz_Page", "Quiz_Page");
+  }
+
+  void addToCollection() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    var userId = sharedPreferences.getString("UserId");
+    var data = Map<String, dynamic>();
+    data['answer'] = options[int.parse(_answerIs)];
+    data['attempts'] = attempts;
+    Firestore.instance
+        .collection("quiz")
+        .document(documentId)
+        .collection("answers")
+        .document(userId)
+        .setData(data);
   }
 
   @override
   Widget build(BuildContext context) {
     String question = "";
     return CustomeOffline(
-          onConnetivity: WillPopScope(
+      onConnetivity: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
-           appBar: AppBar(
-          // backgroundColor: Colors.white,
-          elevation: 0,
-          actions: <Widget>[
-            GestureDetector(
-              child: Icon(Icons.home,),
-              onTap: () {
-                showDialog<bool>(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        content: Text(
-                            "Are you sure you want to return to Home Page? "),
-                        title: Text(
-                          "Warning!",
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              "Yes",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onPressed: () {
-                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
-                            },
+          appBar: AppBar(
+            // backgroundColor: Colors.white,
+            elevation: 0,
+            actions: <Widget>[
+              GestureDetector(
+                child: Icon(
+                  Icons.home,
+                ),
+                onTap: () {
+                  showDialog<bool>(
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          content: Text(
+                              "Are you sure you want to return to Home Page? "),
+                          title: Text(
+                            "Warning!",
                           ),
-                          FlatButton(
-                            child: Text(
-                              "No",
-                              style: TextStyle(color: Colors.green),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () {
+                                // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                Navigator.of(context).popUntil(
+                                    ModalRoute.withName("TimelinePage"));
+                              },
                             ),
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
-            ),
-          ],
-        ),
+                            FlatButton(
+                              child: Text(
+                                "No",
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context, false);
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                },
+              ),
+            ],
+          ),
           key: _key,
           body: Builder(
             builder: (context) {
@@ -110,8 +128,8 @@ class _QuizPageState extends State<QuizPage> {
                               SizedBox(width: 16.0),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).size.height * 0.1),
+                                    top: MediaQuery.of(context).size.height *
+                                        0.1),
                               ),
                               Expanded(
                                 child: StreamBuilder<QuerySnapshot>(
@@ -133,17 +151,18 @@ class _QuizPageState extends State<QuizPage> {
                                         snapshot.data.documents
                                             .forEach((document) {
                                           question = document["question"];
+                                          documentId = document.documentID;
                                         });
                                         // return Row(
                                         //   children: <Widget>[
-                                          return  Text(
-                                              question,
-                                              textAlign: TextAlign.left,
-                                              style: _questionStyle,
-                                            );
-                                          
-                                        //   ],
-                                        // );
+                                        return Text(
+                                          question,
+                                          textAlign: TextAlign.left,
+                                          style: _questionStyle,
+                                        );
+
+                                      //   ],
+                                      // );
                                     }
                                   },
                                 ),
@@ -188,7 +207,8 @@ class _QuizPageState extends State<QuizPage> {
                                             reason = reason;
                                           }
                                           // print(correctAns);
-                                          for (dynamic i in document["option"]) {
+                                          for (dynamic i
+                                              in document["option"]) {
                                             options.add(i);
                                           }
                                         });
@@ -206,8 +226,9 @@ class _QuizPageState extends State<QuizPage> {
                                               onChanged: (value) {
                                                 setState(() {
                                                   selectedRadio = value;
-                                                  _answerIs = (value).toString();
-                                                  print("answer $_answerIs");
+                                                  _answerIs =
+                                                      (value).toString();
+                                                  print("answer ${options[int.parse(_answerIs)]}");
                                                 });
                                               },
                                             );
@@ -248,19 +269,21 @@ class _QuizPageState extends State<QuizPage> {
                                       ),
                                       backgroundColor: Colors.green[600],
                                       shape: BeveledRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                       duration: Duration(hours: 1),
                                       action: SnackBarAction(
                                         textColor: Colors.white,
                                         label: "Ok",
                                         onPressed: () {
+                                          addToCollection();
                                           // homeScaffoldKey.currentState.hideCurrentSnackBar();
                                           Scaffold.of(context)
                                               .hideCurrentSnackBar();
                                           List<dynamic> arguments = [
                                             widget.modNum,
-                                            widget.index 
+                                            widget.index
                                           ];
                                           orderManagement.moveNextIndex(
                                               context, arguments);
@@ -268,16 +291,19 @@ class _QuizPageState extends State<QuizPage> {
                                       ),
                                     ),
                                   );
-                                  Future.delayed(Duration(seconds: 3)).then((o) {
-                                    // List<dynamic> arguments = [
-                                    //   widget.modNum,
-                                    //   widget.index
-                                    // ];
-                                    // print("Inside Quiz" + arguments.toString());
-                                    // orderManagement.moveNextIndex(
-                                    //     context, arguments);
-                                  });
+                                  // Future.delayed(Duration(seconds: 3)).then((o) {
+                                  //   // List<dynamic> arguments = [
+                                  //   //   widget.modNum,
+                                  //   //   widget.index
+                                  //   // ];
+                                  //   // print("Inside Quiz" + arguments.toString());
+                                  //   // orderManagement.moveNextIndex(
+                                  //   //     context, arguments);
+                                  // });
                                 } else {
+                                  setState(() {
+                                    attempts += 1;
+                                  });
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -289,7 +315,8 @@ class _QuizPageState extends State<QuizPage> {
                                       ),
                                       backgroundColor: Colors.red[600],
                                       shape: BeveledRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                       duration: Duration(seconds: 1),
                                     ),

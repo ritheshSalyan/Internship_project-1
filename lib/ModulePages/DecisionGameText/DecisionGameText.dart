@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -12,9 +14,9 @@ class DecisionGameTextPage extends StatefulWidget {
       this.modNum,
       this.title,
       this.index,
-      this.image})
+      this.image,this.id})
       : super(key: key);
-  String content, button, title, image;
+  String content, button, title, image,id;
   int modNum, index;
   @override
   _DecisionGameTextPageState createState() => _DecisionGameTextPageState();
@@ -23,6 +25,7 @@ class DecisionGameTextPage extends StatefulWidget {
 class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   String data;
   int item = 0;
+  String documentId;
   // List<String> _listViewData = [
   //   // "Swipe Right / Left to remove",
   //   // "Swipe Right / Left to remove",
@@ -36,6 +39,20 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
       return true;
     }
     return false;
+  }
+
+  void addToCollection() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var userId = sharedPreferences.getString("UserId");
+    var uploadData = Map<String, dynamic>();
+    uploadData['answer'] = data;
+    // data['attempts'] = attempts;
+    Firestore.instance
+        .collection("decisionGameText")
+        .document(widget.id)
+        .collection("answers")
+        .document(userId)
+        .setData(uploadData);
   }
 
   bool validateDetail(BuildContext context) {
@@ -102,6 +119,9 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
           // autovalidate: true,
           child: TextFormField(
             validator: (value) => value.isEmpty ? "Cannot be empty" : null,
+            onChanged: (value) {
+              data = value;
+            },
             // autovalidate: true,
             minLines: 3,
             maxLength: 500,
@@ -172,6 +192,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                   textColor: Colors.white,
                   label: "Ok",
                   onPressed: () {
+                    addToCollection();
                     // homeScaffoldKey.currentState.hideCurrentSnackBar();
                     Scaffold.of(context).hideCurrentSnackBar();
                     List<dynamic> arguments = [widget.modNum, widget.index + 1];
@@ -195,7 +216,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
 
   @override
   Widget build(BuildContext context) {
-    data = widget.content;
+    // data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
         appBar: AppBar(

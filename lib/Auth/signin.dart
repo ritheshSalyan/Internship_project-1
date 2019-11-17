@@ -59,6 +59,7 @@ class _SigninPageState extends State<SigninPage> {
     progressDialog.setMessage("Signing in ..");
     try {
       progressDialog.show();
+      // _auth.
       user = await _auth.signInWithEmailAndPassword(
         email: _email,
         password: _password,
