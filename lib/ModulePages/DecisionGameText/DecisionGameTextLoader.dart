@@ -14,6 +14,7 @@ class DecisionGameTextLoading extends StatefulWidget {
 }
 
 class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
+  static String documentId;
   @override
   void initState() {
 
@@ -32,6 +33,7 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
             title: title[0],
             content: title[1],
             button: "Next",
+            id:documentId,
             // button: title[2],
             // image: title[3],
           ),
@@ -79,6 +81,7 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
     eventsQuery.documents.forEach((document) {
       print("DecisionGameText " +
           document.toString());
+          documentId = document.documentID;
 
       title = convert(document["content"]);
       // title.add(document["image"].toString());
