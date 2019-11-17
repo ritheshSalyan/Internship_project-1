@@ -407,7 +407,7 @@ class _SigninPageState extends State<SigninPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      createAccountLink(context),
+                      // createAccountLink(context),
                     ],
                   ),
                 ),

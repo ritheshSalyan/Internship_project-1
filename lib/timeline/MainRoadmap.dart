@@ -173,9 +173,8 @@ class _TimelinePageState extends State<TimelinePage> {
     //     return true;
     //   }
     // }
-    if(completedCourse.contains(i)){
+    if (completedCourse.contains(i)) {
       return true;
-
     }
     return false;
   }
@@ -463,7 +462,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => (DownloadFileActivityLoader(modNum: 14,index: 10,)),
+                          builder: (context) => (HelpAndFaq()),
                         ),
                       );
                     },
@@ -474,7 +473,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   //     'How to Earn Points',
                   //     style: TextStyle(
                   //       letterSpacing: 0.5,
-                  //       color: Colors.green, 
+                  //       color: Colors.green,
                   //     ),
                   //   ),
                   //   onTap: () {

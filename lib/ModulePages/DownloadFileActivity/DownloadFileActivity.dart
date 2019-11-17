@@ -177,71 +177,73 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           ],
           // title:
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-             Text(
-            "Activity",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.15,),
-            Padding(
-              padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.02,
-                right: MediaQuery.of(context).size.width * 0.02,
+        body: SingleChildScrollView(
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               Text(
+              "Activity",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
-              child: Text(
-                "${widget.content[1]}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height*0.15,),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.02,
+                  right: MediaQuery.of(context).size.width * 0.02,
+                ),
+                child: Text(
+                  "${widget.content[1].replaceAll(RegExp(r'\. '), ".\n")}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle( 
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.1,
-                right: MediaQuery.of(context).size.width * 0.1,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
               ),
-              child: OutlineButton(
-                onPressed: () {
-                  downloadFile(context);
-                },
-                // color: Colors.white,
-                borderSide: BorderSide(
-                  color: Colors.white,
+              Padding(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.1,
+                  right: MediaQuery.of(context).size.width * 0.1,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.file_download,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      "Download",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
+                child: OutlineButton(
+                  onPressed: () {
+                    downloadFile(context);
+                  },
+                  // color: Colors.white,
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.file_download,
                         color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
                       ),
-                    ),
-                  ],
+                      Text(
+                        "Download",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
