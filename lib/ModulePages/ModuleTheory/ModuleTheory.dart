@@ -23,7 +23,17 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
   @override
   Widget build(BuildContext context) {
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
+        bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index + 1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -118,14 +128,17 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.height * 0.3,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.3,
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                        top: MediaQuery.of(context).size.height *
-                                            0.1),
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.1),
                                     child: RaisedButton(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                       color: Colors.green,
                                       onPressed: () {

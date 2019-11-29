@@ -14,10 +14,12 @@ import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.d
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
+import 'package:startupreneur/models/notificationModel.dart';
 import 'package:startupreneur/saveProgress.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
+import '../globalKeys.dart';
 import 'data.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -32,6 +34,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'notifications.dart';
 
 class TimelinePage extends StatefulWidget {
   TimelinePage({Key key, this.title, this.userEmail, this.status})
@@ -55,6 +59,7 @@ class _TimelinePageState extends State<TimelinePage> {
   FirebaseUser user;
   String value = "";
   String uid = "";
+  // static var date;
   bool position = true;
   var val = 1;
   bool timeSet = false;
@@ -104,6 +109,8 @@ class _TimelinePageState extends State<TimelinePage> {
 
   void initState() {
     super.initState();
+    Global.date = DateTime.now().millisecondsSinceEpoch;
+    print(Global.date);
     preferences(context);
     Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
       if (!yes) {
@@ -269,25 +276,125 @@ class _TimelinePageState extends State<TimelinePage> {
               backgroundColor: Theme.of(context).primaryColorDark,
               elevation: 10.0,
               actions: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Image.asset(
-                      "assets/Images/coins.png",
-                      height: 15,
-                      width: 15,
-                    ),
-                    Text(
-                      " $gems",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                    ),
-                  ],
-                )
+                StreamBuilder(
+                    stream: Firestore.instance
+                        .collection('notification')
+                        .where("timestamp", isGreaterThanOrEqualTo: Global.date)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      print(snapshot.hasData);
+                      if (snapshot.hasData) {
+                        List<NotificationModel> notify = [];
+                        return Stack(
+                          children: <Widget>[
+                            IconButton(
+                              onPressed: () {
+                                snapshot.data.documents.forEach(
+                                  (data) {
+                                    notify.add(
+                                      NotificationModel(
+                                        msg: data.data['msg'],
+                                        timestamp: data.data['timestamp'],
+                                        type: data.data['type'],
+                                      ),
+                                    );
+                                  },
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NotificationDetail(
+                                      listData: notify,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.notifications,
+                                color: Colors.green,
+                              ),
+                            ),
+                            new Positioned(
+                              right: 11,
+                              top: 11,
+                              child: new Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 14,
+                                  minHeight: 14,
+                                ),
+                                child: Text(
+                                  '${snapshot.data.documents.length}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      return Stack(
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.notifications,
+                              color: Colors.green,
+                            ),
+                          ),
+                          new Positioned(
+                            right: 11,
+                            top: 11,
+                            child: new Container(
+                              padding: EdgeInsets.all(2),
+                              decoration: new BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              constraints: BoxConstraints(
+                                minWidth: 14,
+                                minHeight: 14,
+                              ),
+                              child: Text(
+                                '0',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+
+                // Row(
+                //   children: <Widget>[
+                //     Image.asset(
+                //       "assets/Images/coins.png",
+                //       height: 15,
+                //       width: 15,
+                //     ),
+                //     Text(
+                //       " $gems",
+                //       style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 12,
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: EdgeInsets.only(right: 20),
+                //     ),
+                //   ],
+                // )
               ],
             ),
             drawer: Drawer(

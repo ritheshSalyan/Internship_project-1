@@ -47,6 +47,16 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
   Widget build(BuildContext context) {
     return CustomeOffline(
           onConnetivity: Scaffold(
+             bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

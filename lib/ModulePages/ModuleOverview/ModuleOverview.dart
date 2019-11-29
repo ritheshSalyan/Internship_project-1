@@ -112,7 +112,10 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           list[index],
           style: TextStyle(color: Colors.green),
         ),
-        trailing: Container(width: 0,height: 0,),
+        trailing: Container(
+          width: 0,
+          height: 0,
+        ),
         children: wList(index.toString()),
       ));
     }
@@ -148,8 +151,19 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   @override
   Widget build(BuildContext context) {
     return CustomeOffline(
-      
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
+        bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -160,7 +174,9 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
               pinned: true,
               title: Text(
                 "Module Overview",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
               // flexibleSpace: FlexibleSpaceBar(
               //   background: Image.asset(

@@ -34,6 +34,16 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
   Widget build(BuildContext context) {
     return CustomeOffline(
           onConnetivity: Scaffold(
+        //      bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //       "${}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
          appBar: AppBar(
           elevation: 0,
           actions: <Widget>[

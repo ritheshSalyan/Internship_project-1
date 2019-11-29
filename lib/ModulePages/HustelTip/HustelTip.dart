@@ -25,7 +25,6 @@ class _HustelTipPageState extends State<HustelTipPage>
 
   @override
   void initState() {
-
     super.initState();
     Analytics.analyticsBehaviour("Hustle_Tip_Page", "Hustle_Tip");
   }
@@ -38,7 +37,17 @@ class _HustelTipPageState extends State<HustelTipPage>
   @override
   Widget build(BuildContext context) {
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
+          bottomSheet: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "${widget.index + 1}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
           backgroundColor: Colors.white,
           body: Builder(
             builder: (context) {
