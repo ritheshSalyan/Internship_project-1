@@ -305,7 +305,9 @@ class _TimelinePageState extends State<TimelinePage> {
                                   MaterialPageRoute(
                                     builder: (context) => NotificationDetail(
                                       listData: notify,
+                                      uid: uid,
                                     ),
+                                    fullscreenDialog: true,
                                   ),
                                 );
                               },

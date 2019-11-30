@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/Mentorfeedback/mentorFeedback.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/models/notificationModel.dart';
 
 class NotificationDetail extends StatefulWidget {
   List<NotificationModel> listData;
-  NotificationDetail({Key key, this.listData}) : super(key: key);
+  String uid;
+  NotificationDetail({Key key, this.listData, this.uid}) : super(key: key);
   @override
   _NotificationDetailState createState() => _NotificationDetailState();
 }
@@ -32,11 +35,30 @@ class _NotificationDetailState extends State<NotificationDetail> {
               physics: BouncingScrollPhysics(),
               itemCount: widget.listData.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 8,
-                  child: ListTile(
-                    title: Text("${widget.listData[index].msg}"),
-                    subtitle: Text("${widget.listData[index].type}"),
+                return GestureDetector(
+                  onTap: () {
+                    if (widget.listData[index].type == "Discussion") {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatBoardRoomLoader()));
+                    } else if (widget.listData[index].type == "Comments") {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatBoardRoomLoader()));
+                    } else {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MentorFeedback(
+                            uid: widget.uid,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Card(
+                    elevation: 8,
+                    child: ListTile(
+                      title: Text("${widget.listData[index].msg}"),
+                      subtitle: Text("${widget.listData[index].type}"),
+                    ),
                   ),
                 );
               },
