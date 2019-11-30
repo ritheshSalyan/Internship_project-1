@@ -58,6 +58,16 @@ class _QuizPageState extends State<QuizPage> {
       onConnetivity: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
+           bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
           appBar: AppBar(
             // backgroundColor: Colors.white,
             elevation: 0,

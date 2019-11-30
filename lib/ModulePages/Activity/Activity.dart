@@ -115,6 +115,16 @@ class _ActivityPageState extends State<ActivityPage> {
         final bool connected = connectivity != ConnectivityResult.none;
         if (connected) {
           return Scaffold(
+             bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
          appBar: AppBar(
           elevation: 0,
           actions: <Widget>[

@@ -96,6 +96,16 @@ class _IdeaActivityState extends State<IdeaActivity> {
         final connected = connection != ConnectivityResult.none;
         if (connected) {
           child = Scaffold(
+            bottomSheet: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  "${widget.index + 1}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green),
+                ),
+              ],
+            ),
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
@@ -344,8 +354,10 @@ class _IdeaActivityState extends State<IdeaActivity> {
   }
 
   static void getFile() async {
-    StorageReference storageReference =
-        FirebaseStorage.instance.ref().child("userUpload").child("ActivityUpload/Idea.csv");
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child("userUpload")
+        .child("ActivityUpload/Idea.csv");
     await downloadFile(storageReference);
   }
 

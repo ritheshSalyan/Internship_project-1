@@ -130,6 +130,16 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
     // var outlineButton =
     return CustomeOffline(
           onConnetivity: Scaffold(
+             bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.order+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
         backgroundColor: Colors.green,
         appBar: AppBar(
           elevation: 0.0,

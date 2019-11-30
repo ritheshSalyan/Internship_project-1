@@ -52,6 +52,16 @@ class _FlipPageState extends State<FlipPage> {
         final bool connected = connectivity != ConnectivityResult.none;
         if (connected) {
           child = Scaffold(
+            bottomSheet: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  "${widget.index + 1}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green),
+                ),
+              ],
+            ),
             body: StreamBuilder(
               stream: getEventsFromFirestore(widget.modnum, widget.index)
                   .asStream(),
@@ -138,7 +148,8 @@ class _FlipPageState extends State<FlipPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.4,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,

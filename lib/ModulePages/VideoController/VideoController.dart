@@ -43,7 +43,7 @@ class _VideoPlayState extends State<VideoPlay> {
     );
     _chewieController = ChewieController(
       autoInitialize: true,
-      allowedScreenSleep: false,
+      allowedScreenSleep: true,
       deviceOrientationsAfterFullScreen: const [DeviceOrientation.portraitUp],
       videoPlayerController: _videoPlayerController1,
       placeholder: Center(
@@ -94,6 +94,16 @@ class _VideoPlayState extends State<VideoPlay> {
   Widget build(BuildContext context) {
     return CustomeOffline(
           onConnetivity: Scaffold(
+             bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "${widget.index+1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
+            ),
+          ],
+        ),
         appBar: AppBar(
           elevation: 0,
           actions: <Widget>[
