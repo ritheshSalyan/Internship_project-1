@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/upload.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/timeline/data.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -134,7 +135,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "${widget.order+1}",
+               "${widget.order+1}/${Module.moduleLength}",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.green),
             ),

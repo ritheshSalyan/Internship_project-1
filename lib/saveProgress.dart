@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/globalKeys.dart';
 import 'ModuleOrderController/Types.dart';
 
 class SaveProgress {
@@ -142,6 +143,7 @@ class SaveProgress {
       orderManagement.order = convert(document.data["order"]);
 
       print("orderManagement.order " + orderManagement.order.toString());
+      Module.moduleLength = orderManagement.order.length;
       //  }
     });
   }

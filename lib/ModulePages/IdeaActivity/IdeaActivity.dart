@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
 
@@ -100,7 +101,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(
-                  "${widget.index + 1}",
+                   "${widget.index+1}/${Module.moduleLength}",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.green),
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class FlipPage extends StatefulWidget {
@@ -56,7 +57,7 @@ class _FlipPageState extends State<FlipPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(
-                  "${widget.index + 1}",
+                   "${widget.index+1}/${Module.moduleLength}",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.green),
                 ),
