@@ -5,6 +5,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModuleVocabulary extends StatefulWidget {
@@ -277,7 +278,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Text(
-            "${widget.index + 1}",
+            "${widget.index+1}/${Module.moduleLength}",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.green),
           ),

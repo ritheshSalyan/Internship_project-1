@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class SocializeTask extends StatefulWidget {
@@ -351,7 +352,7 @@ class _SocializeTaskState extends State<SocializeTask> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "${widget.index+1}",
+               "${widget.index+1}/${Module.moduleLength}",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.green),
             ),

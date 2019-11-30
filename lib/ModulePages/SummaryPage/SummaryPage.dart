@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 // import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -172,7 +173,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "${widget.index+1}",
+              "${widget.index+1}/${Module.moduleLength}",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.green),
             ),

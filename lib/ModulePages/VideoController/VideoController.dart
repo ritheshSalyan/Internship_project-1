@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -98,7 +99,7 @@ class _VideoPlayState extends State<VideoPlay> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "${widget.index+1}",
+               "${widget.index+1}/${Module.moduleLength}",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.green),
             ),

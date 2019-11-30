@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class HustelTipPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _HustelTipPageState extends State<HustelTipPage>
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                "${widget.index + 1}",
+                "${widget.index+1}/${Module.moduleLength}",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.green),
               ),
@@ -89,12 +90,11 @@ class _HustelTipPageState extends State<HustelTipPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Row(children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.1,
-                        left: MediaQuery.of(context).size.height * 0.02,
-                      ),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Hustle Tip",
                         style: TextStyle(

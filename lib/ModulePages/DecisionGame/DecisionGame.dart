@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
 
@@ -68,7 +69,7 @@ class _DecisionGameState extends State<DecisionGame>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
-                    "${widget.order + 1}",
+                     "${widget.order+1}/${Module.moduleLength}",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.green),
                   ),

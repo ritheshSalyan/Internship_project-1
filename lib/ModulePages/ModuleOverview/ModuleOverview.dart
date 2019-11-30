@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class ModulePageIntro extends StatefulWidget {
@@ -158,7 +159,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "${widget.index+1}",
+              "${widget.index+1}/${Module.moduleLength}",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.green),
             ),
