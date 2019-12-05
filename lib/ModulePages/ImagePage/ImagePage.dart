@@ -86,6 +86,7 @@ class _ImagePagePageState extends State<ImagePagePage>
                           flex: 3,
                           child: Text(
                             widget.headding,
+                            textAlign: TextAlign.center,
                             //"Startup or Job",
                             style: TextStyle(
                                 fontFamily: "sans-serif",
