@@ -69,7 +69,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         if (data.split(". ")[item].length > 3) {
           String temp = data.split(". ")[item];
           // print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
-          if (alphanumeric.hasMatch(temp[temp.length-1])) {
+          if (alphanumeric.hasMatch(temp[temp.length - 1])) {
             _listViewData.add(temp + ".");
           } else {
             _listViewData.add(temp);
@@ -190,7 +190,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.7,
-        fit: BoxFit.contain,
+          fit: BoxFit.contain,
         );
       }
     }
@@ -198,21 +198,41 @@ class _DiscussionPageState extends State<DiscussionPage> {
     data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
-         bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
+        //  bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //        "Page ${widget.index+1}/${Module.moduleLength}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            bottom: 5.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Page ${widget.index + 1}/${Module.moduleLength}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
         ),
+
         appBar: AppBar(
           elevation: 0,
           actions: <Widget>[
             GestureDetector(
-              child: Icon(Icons.home),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(Icons.home),
+              ),
               onTap: () {
                 showDialog<bool>(
                     context: context,

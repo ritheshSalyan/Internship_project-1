@@ -148,6 +148,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                   ),
                   maxLines: 20,
                   maxFontSize: 28,
+                  minFontSize: 16,
                 ),
               ),
             ),
@@ -274,16 +275,16 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Text(
-            "${widget.index+1}/${Module.moduleLength}",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.green),
-          ),
-        ],
-      ),
+      // bottomSheet: Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //   children: <Widget>[
+      //     Text(
+      //       "Page ${widget.index+1}/${Module.moduleLength}",
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(color: Colors.green),
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
         // backgroundColor: Colors.white,
         elevation: 0,

@@ -18,7 +18,7 @@ class _MentorFeedbackState extends State<MentorFeedback> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mentor Feedback"),
+        title: Text("Evaluation and Feedback"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance

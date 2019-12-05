@@ -53,16 +53,16 @@ class _FlipPageState extends State<FlipPage> {
         final bool connected = connectivity != ConnectivityResult.none;
         if (connected) {
           child = Scaffold(
-            bottomSheet: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                   "${widget.index+1}/${Module.moduleLength}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.green),
-                ),
-              ],
-            ),
+            // bottomSheet: Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: <Widget>[
+            //     Text(
+            //        "Page ${widget.index+1}/${Module.moduleLength}",
+            //       textAlign: TextAlign.center,
+            //       style: TextStyle(color: Colors.green),
+            //     ),
+            //   ],
+            // ),
             body: StreamBuilder(
               stream: getEventsFromFirestore(widget.modnum, widget.index)
                   .asStream(),

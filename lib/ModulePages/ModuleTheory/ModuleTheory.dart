@@ -25,15 +25,31 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
   Widget build(BuildContext context) {
     return CustomeOffline(
       onConnetivity: Scaffold(
-        bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
+        // bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //        "Page ${widget.index+1}/${Module.moduleLength}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            bottom: 5.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Page ${widget.index + 1}/${Module.moduleLength}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
         ),
         body: CustomScrollView(
           slivers: <Widget>[

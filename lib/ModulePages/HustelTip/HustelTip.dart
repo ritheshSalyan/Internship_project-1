@@ -39,15 +39,31 @@ class _HustelTipPageState extends State<HustelTipPage>
   Widget build(BuildContext context) {
     return CustomeOffline(
       onConnetivity: Scaffold(
-          bottomSheet: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                "${widget.index+1}/${Module.moduleLength}",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-            ],
+          // bottomSheet: Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: <Widget>[
+          //     Text(
+          //       "Page ${widget.index+1}/${Module.moduleLength}",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(color: Colors.green),
+          //     ),
+          //   ],
+          // ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              bottom: 5.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Page ${widget.index + 1}/${Module.moduleLength}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green),
+                ),
+              ],
+            ),
           ),
           backgroundColor: Colors.white,
           body: Builder(
@@ -91,58 +107,59 @@ class _HustelTipPageState extends State<HustelTipPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Hustle Tip",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Hustle Tip",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Icon(Icons.home),
-                      onTap: () {
-                        showDialog<bool>(
-                            context: context,
-                            builder: (_) {
-                              return AlertDialog(
-                                content: Text(
-                                    "Are you sure you want to return to Home Page? "),
-                                title: Text(
-                                  "Warning!",
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(color: Colors.red),
+                        GestureDetector(
+                          child: Icon(Icons.home),
+                          onTap: () {
+                            showDialog<bool>(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    content: Text(
+                                        "Are you sure you want to return to Home Page? "),
+                                    title: Text(
+                                      "Warning!",
                                     ),
-                                    onPressed: () {
-                                      // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                      Navigator.of(context).popUntil(
-                                          ModalRoute.withName("TimelinePage"));
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(color: Colors.green),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context, false);
-                                    },
-                                  ),
-                                ],
-                              );
-                            });
-                      },
-                    )
-                  ]),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text(
+                                          "Yes",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                        onPressed: () {
+                                          // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                          Navigator.of(context).popUntil(
+                                              ModalRoute.withName(
+                                                  "TimelinePage"));
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          "No",
+                                          style: TextStyle(color: Colors.green),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context, false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                        )
+                      ]),
                   Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.12,

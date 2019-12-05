@@ -268,9 +268,12 @@ class _TimelinePageState extends State<TimelinePage> {
             backgroundColor: Colors.grey[50],
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.black),
-              title: Image.asset(
-                "assets/Images/Capture.PNG",
-                width: MediaQuery.of(context).size.width * 0.57,
+              title: Padding(
+                padding: const EdgeInsets.only(left:12.0),
+                child: Image.asset(
+                  "assets/Images/Capture.PNG",
+                  width: MediaQuery.of(context).size.width * 0.57,
+                ),
               ),
               automaticallyImplyLeading: true,
               backgroundColor: Theme.of(context).primaryColorDark,

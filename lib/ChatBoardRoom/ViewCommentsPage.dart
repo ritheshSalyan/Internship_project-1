@@ -257,7 +257,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                               border: UnderlineInputBorder(),
                               helperText: "Share Opinion",
                               helperStyle: TextStyle(color: Colors.green),
-                              hintText: "Share thoughts with ${widget.valueData[widget.index].userName}",
+                              hintText: "Share your thoughts",
                               hintStyle: TextStyle(color: Colors.green),
                             ),
                           ),

@@ -119,7 +119,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add topic"),
+          title: Text("Initiate Discussion"),
         ),
         body: Builder(
           builder: (context) {
@@ -162,7 +162,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                     FontAwesomeIcons.comment,
                                     color: Colors.green,
                                   ),
-                                  hintText: "Whats in your mind",
+                                  hintText: "What's on your Mind",
                                   hintStyle: TextStyle(color: Colors.grey),
                                 ),
                               ),
@@ -237,7 +237,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                                             width: 10,
                                           ),
                                           Text(
-                                            "Share thoughts",
+                                            "Share",
                                             style: TextStyle(
                                               color: Colors.green,
                                             ),
@@ -281,9 +281,10 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                   Card(
                     elevation: 8.0,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             ActionChip(
                               label: Text("Module 1"),
@@ -354,7 +355,9 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                           children: <Widget>[
                             ActionChip(
                               elevation: 5.0,
@@ -425,7 +428,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             ActionChip(
                               elevation: 5.0,
@@ -496,7 +500,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             ActionChip(
                               elevation: 5.0,
@@ -567,7 +572,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             ActionChip(
                               elevation: 5.0,
@@ -615,7 +621,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
                             ),
                             ActionChip(
                               elevation: 5.0,
-                              label: Text("General"),
+                              label: Text("   General   "),
                               onPressed: () {
                                 setState(() {
                                   if (_isChecked) {

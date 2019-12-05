@@ -59,7 +59,8 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
     // });
 
     String uri = Uri.decodeFull(widget.file);
-    final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
+    final RegExp regex =
+        RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
     file = File('/storage/emulated/0/Startupreneur/$modName/$fileName');
     // progressDialog.setMessage("Downloading ...");
@@ -76,7 +77,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
         }
       }
 
-       FlutterDownloader.enqueue(
+      FlutterDownloader.enqueue(
         url: '${widget.file}',
         savedDir: '/storage/emulated/0/Startupreneur/$modName',
         fileName: '$fileName',
@@ -85,17 +86,20 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
         openFileFromNotification:
             true, // click on notification to open downloaded file (for Android)
       ).then(
-        (str){
-          Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Upload(
-          index: widget.order,
-          modNum: widget.modNum,
-          content: widget.content,
-        ),
-      ),);
-      },);
+        (str) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Upload(
+                index: widget.order,
+                modNum: widget.modNum,
+                content: widget.content,
+              ),
+            ),
+          );
+        },
+      );
       FlutterDownloader.registerCallback((id, status, progress) {
-       print(progress);
+        print(progress);
       });
       // print(taskId);
       // progressDialog.update(progress: downloadRate);
@@ -118,7 +122,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
       //     context,
       //     gravity: Toast.LENGTH_LONG,
       //     duration: 5);
-      
+
     } catch (e) {
       print(e);
       // Toast.show("$e", context, gravity: Toast.BOTTOM, duration: 5);
@@ -130,16 +134,32 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
   Widget build(BuildContext context) {
     // var outlineButton =
     return CustomeOffline(
-          onConnetivity: Scaffold(
-             bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.order+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
+      onConnetivity: Scaffold(
+        //      bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //        "${widget.order+1}/${Module.moduleLength}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            bottom: 5.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Page ${widget.order + 1}/${Module.moduleLength}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.green,
         appBar: AppBar(
@@ -167,8 +187,8 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               SaveProgress.preferences(
                                   widget.modNum, widget.order);
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
                             },
                           ),
                           FlatButton(
@@ -189,19 +209,21 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
           // title:
         ),
         body: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               Text(
-              "Activity",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
+              Text(
+                "Activity",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height*0.15,),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
+              ),
               Padding(
                 padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * 0.02,
@@ -210,7 +232,7 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
                 child: Text(
                   "${widget.content[1].replaceAll(RegExp(r'\. '), ".\n")}",
                   textAlign: TextAlign.center,
-                  style: TextStyle( 
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,

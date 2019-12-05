@@ -26,12 +26,12 @@ class ActivityPage extends StatefulWidget {
 class _ActivityPageState extends State<ActivityPage> {
   static final _formkey = GlobalKey<FormState>();
 
- @override
+  @override
   void initState() {
-
     super.initState();
     Analytics.analyticsBehaviour("Category_Activity", "Category");
   }
+
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
     itemInside.add(
@@ -111,140 +111,156 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   Widget build(BuildContext context) {
     return OfflineBuilder(
-       connectivityBuilder:
+      connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {
         final bool connected = connectivity != ConnectivityResult.none;
         if (connected) {
           return Scaffold(
-             bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
-        ),
-         appBar: AppBar(
-          elevation: 0,
-          actions: <Widget>[
-            GestureDetector(
-              child: Icon(Icons.home),
-              onTap: () {
-                showDialog<bool>(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        content: Text(
-                            "Are you sure you want to return to Home Page? "),
-                        title: Text(
-                          "Warning!",
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              "Yes",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onPressed: () {
-                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.preferences(widget.modNum, widget.index);
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
-                            },
-                          ),
-                          FlatButton(
-                            child: Text(
-                              "No",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
-            ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Builder(
-            builder: (context) {
-              return Stack(
+            //      bottomSheet: Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: <Widget>[
+            //     Text(
+            //        "Page ${widget.index+1}/${Module.moduleLength}",
+            //       textAlign: TextAlign.center,
+            //       style: TextStyle(color: Colors.green),
+            //     ),
+            //   ],
+            // ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.only(
+                left: 15.0,
+                bottom: 5.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  ClipPath(
-                    clipper: WaveClipperOne(),
-                    child: Container(
-                      decoration: BoxDecoration(color: Colors.green),
-                      height: 200,
-                    ),
+                  Text(
+                    "Page ${widget.index + 1}/${Module.moduleLength}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.green),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                ],
+              ),
+            ),
+            appBar: AppBar(
+              elevation: 0,
+              actions: <Widget>[
+                GestureDetector(
+                  child: Icon(Icons.home),
+                  onTap: () {
+                    showDialog<bool>(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            content: Text(
+                                "Are you sure you want to return to Home Page? "),
+                            title: Text(
+                              "Warning!",
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                onPressed: () {
+                                  // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                  SaveProgress.preferences(
+                                      widget.modNum, widget.index);
+                                  Navigator.of(context).popUntil(
+                                      ModalRoute.withName("TimelinePage"));
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context, false);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: Builder(
+                builder: (context) {
+                  return Stack(
+                    children: <Widget>[
+                      ClipPath(
+                        clipper: WaveClipperOne(),
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.green),
+                          height: 200,
                         ),
-                        Row(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Expanded(
-                              flex: 3,
-                              child: Card(
-                                margin: EdgeInsets.fromLTRB(5, 20, 5, 20),
-                                clipBehavior: Clip.antiAlias,
-                                child: Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    widget.question,
-                                    // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 3,
+                                  child: Card(
+                                    margin: EdgeInsets.fromLTRB(5, 20, 5, 20),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Text(
+                                        widget.question,
+                                        // "Now time for a quick Google search; give at least five categories of startups by their type (hint – you can search for the categories from different startup award contests): ",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                            Card(
+                              child: Column(
+                                children: <Widget>[
+                                  Form(
+                                    autovalidate: true,
+                                    key: _formkey,
+                                    child: ListView(
+                                      physics: ClampingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      children: formList(context),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                           
                           ],
                         ),
-                        SizedBox(
-                          height: 20,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        Card(
-                          child: Column(
-                            children: <Widget>[
-                              Form(
-                                autovalidate: true,
-                                key: _formkey,
-                                child: ListView(
-                                  physics: ClampingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  children: formList(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      );
-      }
-      return child;
-          },
-      child:NoNetPage(),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
+        }
+        return child;
+      },
+      child: NoNetPage(),
     );
   }
 }

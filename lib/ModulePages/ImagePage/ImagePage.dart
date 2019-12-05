@@ -39,16 +39,32 @@ class _ImagePagePageState extends State<ImagePagePage>
     print("Heading in ImagePage is " + widget.headding);
     return CustomeOffline(
       onConnetivity: Scaffold(
-         bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
+          //  bottomSheet: Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: <Widget>[
+          //     Text(
+          //        "Page ${widget.index+1}/${Module.moduleLength}",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(color: Colors.green),
+          //     ),
+          //   ],
+          // ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              bottom: 5.0,
             ),
-          ],
-        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Page ${widget.index + 1}/${Module.moduleLength}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green),
+                ),
+              ],
+            ),
+          ),
           backgroundColor: Colors.white,
           body: Builder(
             builder: (context) {
@@ -60,14 +76,14 @@ class _ImagePagePageState extends State<ImagePagePage>
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.009,
                       bottom: MediaQuery.of(context).size.height * 0.1,
-                      left: MediaQuery.of(context).size.width*0.05,
+                      left: MediaQuery.of(context).size.width * 0.05,
                     ),
                     child: Row(
                       // crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                          flex:3,
+                          flex: 3,
                           child: Text(
                             widget.headding,
                             //"Startup or Job",

@@ -15,9 +15,10 @@ class DecisionGameTextPage extends StatefulWidget {
       this.modNum,
       this.title,
       this.index,
-      this.image,this.id})
+      this.image,
+      this.id})
       : super(key: key);
-  String content, button, title, image,id;
+  String content, button, title, image, id;
   int modNum, index;
   @override
   _DecisionGameTextPageState createState() => _DecisionGameTextPageState();
@@ -220,15 +221,31 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     // data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
-         bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
+        //  bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //        "Page ${widget.index+1}/${Module.moduleLength}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            bottom: 5.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Page ${widget.index + 1}/${Module.moduleLength}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
         ),
         appBar: AppBar(
           elevation: 0,

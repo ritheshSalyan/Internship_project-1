@@ -94,16 +94,32 @@ class _VideoPlayState extends State<VideoPlay> {
   @override
   Widget build(BuildContext context) {
     return CustomeOffline(
-          onConnetivity: Scaffold(
-             bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-               "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
+      onConnetivity: Scaffold(
+        //      bottomSheet: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: <Widget>[
+        //     Text(
+        //        "Page ${widget.index+1}/${Module.moduleLength}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.green),
+        //     ),
+        //   ],
+        // ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            bottom: 5.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Page ${widget.index + 1}/${Module.moduleLength}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
+              ),
+            ],
+          ),
         ),
         appBar: AppBar(
           elevation: 0,
@@ -127,10 +143,11 @@ class _VideoPlayState extends State<VideoPlay> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
-                              SaveProgress.preferences(widget.modNum, widget.index);
+                              SaveProgress.preferences(
+                                  widget.modNum, widget.index);
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName("TimelinePage"));
                             },
                           ),
                           FlatButton(
@@ -163,7 +180,6 @@ class _VideoPlayState extends State<VideoPlay> {
                         top: MediaQuery.of(context).size.height * 0.05),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-
                       children: <Widget>[
                         Text(
                           widget.title,

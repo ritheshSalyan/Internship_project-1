@@ -23,7 +23,7 @@ class _QuizPageState extends State<QuizPage> {
     color: Colors.white,
   );
   SharedPreferences sharedPreferences;
-  int attempts=0;
+  int attempts = 0;
   String documentId;
   List<dynamic> options = [];
   int selectedRadio;
@@ -59,16 +59,32 @@ class _QuizPageState extends State<QuizPage> {
       onConnetivity: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
-           bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              "${widget.index+1}/${Module.moduleLength}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
+          //    bottomSheet: Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: <Widget>[
+          //     Text(
+          //       "Page ${widget.index+1}/${Module.moduleLength}",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(color: Colors.green),
+          //     ),
+          //   ],
+          // ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              bottom: 5.0,
             ),
-          ],
-        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Page ${widget.index + 1}/${Module.moduleLength}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green),
+                ),
+              ],
+            ),
+          ),
           appBar: AppBar(
             // backgroundColor: Colors.white,
             elevation: 0,
@@ -239,7 +255,8 @@ class _QuizPageState extends State<QuizPage> {
                                                   selectedRadio = value;
                                                   _answerIs =
                                                       (value).toString();
-                                                  print("answer ${options[int.parse(_answerIs)]}");
+                                                  print(
+                                                      "answer ${options[int.parse(_answerIs)]}");
                                                 });
                                               },
                                             );
