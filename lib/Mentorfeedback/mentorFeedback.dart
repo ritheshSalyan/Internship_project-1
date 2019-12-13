@@ -24,7 +24,7 @@ class _MentorFeedbackState extends State<MentorFeedback> {
         stream: Firestore.instance
             .collection("mentorFeedbackLMS")
             .where("userId", isEqualTo: widget.uid)
-            // .orderBy("timestamp", descending: true)
+            .orderBy("timestamp", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           print(widget.uid);
@@ -44,7 +44,7 @@ class _MentorFeedbackState extends State<MentorFeedback> {
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                    list[index].timeStamp);
+                    list[index].timeStamp*1000);
                 var format = new DateFormat("d/M/y");
                 var dateString = format.format(date);
                 if (!list[index].read) {
@@ -87,7 +87,7 @@ class _MentorFeedbackState extends State<MentorFeedback> {
                             child: ActionChip(
                               backgroundColor: Colors.green,
                               label: Text(
-                                'Module ${list[index].moduleNumber}',
+                                '${list[index].moduleNumber}',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),

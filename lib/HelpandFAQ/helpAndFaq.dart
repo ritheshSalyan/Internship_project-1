@@ -44,6 +44,8 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Card(
               elevation: 0,
@@ -51,7 +53,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                 "Help and FAQ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -71,7 +73,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                             "We are always ready to help you out in your journey to become an Entrepreneur :)\n\n",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 18,
                           // fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -80,7 +82,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                             "For any help using this application or giving feedback on it, do drop us a line at\n\n",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 18,
                           // fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -89,7 +91,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                         text: "startupreneur.official@gmail.com\n\n",
                         style: TextStyle(
                           color: Colors.green,
-                          fontSize: 16,
+                          fontSize: 18,
                           // fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -98,7 +100,7 @@ class _HelpAndFaqState extends State<HelpAndFaq> {
                             "We will get back to you as soon as we can, in the meanwhile keep the journey going!\n\n",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 18,
                           // fontStyle: FontStyle.italic,
                         ),
                       ),

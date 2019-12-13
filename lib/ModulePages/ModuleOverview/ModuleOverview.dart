@@ -155,22 +155,22 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
       onConnetivity: Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            bottom: 5.0,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Page ${widget.index + 1}/${Module.moduleLength}",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-            ],
-          ),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: const EdgeInsets.only(
+        //     left: 15.0,
+        //     bottom: 5.0,
+        //   ),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     children: <Widget>[
+        //       Text(
+        //         "Page ${widget.index + 1}/${Module.moduleLength}",
+        //         textAlign: TextAlign.center,
+        //         style: TextStyle(color: Colors.green),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(

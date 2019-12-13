@@ -42,10 +42,12 @@ class _SigninPageState extends State<SigninPage> {
     Analytics.analyticsBehaviour("Sign_in_page", "SignIn");
   }
 
-  static preferences(String userId, String _email) async {
+  static preferences(String userId, String _email,String docId) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userId);
     sharedPreferences.setString("UserEmail", _email);
+    sharedPreferences.setString("docId", docId);
+
     Analytics.setUserId(userId);
     // print(sharedPreferences.getString("UserId"));
     var data = Map<String, dynamic>();
@@ -53,38 +55,50 @@ class _SigninPageState extends State<SigninPage> {
     await db.collection("pushToken").document(userId).setData(data);
   }
 
-  static void signUpInwithEmail(BuildContext context) async {
+  void signUpInwithEmail(BuildContext context) async {
     FirebaseUser user;
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Signing in ..");
     try {
       progressDialog.show();
       // _auth.
-      user = await _auth.signInWithEmailAndPassword(
-        email: _email,
-        password: _password,
-      );
-    //  if(user.isEmailVerified){
-        preferences(user.uid, _email);
-      progressDialog.hide();
-      print("Sign in Successfull");
-//      Navigator.of(context).pushReplacement(MaterialPageRoute(
-//        builder: (context) =>
-//            new TimelinePage(title: "Time line", userEmail: _email),
-//      ));
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => new RoadmapLoader(),
-      ));
-   //  }
-    //  else{
-
-    //    Toast.show("Please Verify Your Email id", context,duration: Toast.LENGTH_LONG);
-    //  }
+      await Firestore.instance
+          .collection("user")
+          .where("email", isEqualTo: _email)
+          .getDocuments()
+          .then((document) {
+        document.documents.forEach((data) async {
+          var id = data.documentID;
+          var isLoggedIn = data.data["isLoggedIn"];
+          if (isLoggedIn) {
+            Toast.show(
+                "Email is already logged in , please logout from other device",
+                context,
+                gravity: Toast.BOTTOM,
+                duration: Toast.LENGTH_LONG);
+            progressDialog.hide();
+          } else {
+            user = await _auth.signInWithEmailAndPassword(
+              email: _email,
+              password: _password,
+            );
+            await Firestore.instance.collection("user").document(id).setData({
+              "isLoggedIn": true,
+            }, merge: true);
+            preferences(user.uid, _email,id);
+            progressDialog.hide();
+            print("Sign in Successfull");
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => new RoadmapLoader(),
+            ));
+          }
+        });
+      });
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
       progressDialog.hide();
-      Toast.show("Email or password does not match", context,
-          gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
+      // Toast.show("Email or password does not match", context,
+      //     gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     }
   }
 
@@ -101,11 +115,10 @@ class _SigninPageState extends State<SigninPage> {
   static otpValidation(BuildContext context) async {
     if (_otpvalidate()) {
       // print("$_otpEmail");
-      Toast.show("Password Reset Mail has been sent", context,duration: Toast.LENGTH_LONG);
+      Toast.show("Password Reset Mail has been sent", context,
+          duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
       await _auth.sendPasswordResetEmail(email: _otpEmail);
-     
-      
     }
   }
 
@@ -119,7 +132,7 @@ class _SigninPageState extends State<SigninPage> {
     return false;
   }
 
-  static validateAndSubmit(BuildContext context) async {
+  validateAndSubmit(BuildContext context) async {
     if (_validate()) {
       signUpInwithEmail(context);
 //       Navigator.of(context)
@@ -368,10 +381,9 @@ class _SigninPageState extends State<SigninPage> {
                                                   buttonColor:
                                                       Color(0xffffffff),
                                                   child: OutlineButton(
-                                                      onPressed:(){
-
+                                                      onPressed: () {
                                                         otpValidation(context);
-                                                      } ,
+                                                      },
                                                       child: Text(
                                                         "Send Email",
                                                         style: TextStyle(

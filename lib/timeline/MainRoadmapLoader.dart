@@ -32,6 +32,9 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
     userId = _sharedPreferences.getString("UserId");
     await db.collection("user").document(userId).get().then((document) {
       decision = document.data["payment"];
+      _sharedPreferences.setString("institution",document.data["institutionOrCompany"]);
+      _sharedPreferences.setString("name",document.data["name"]);
+
       print("decision is $decision");
     });
     return decision;
@@ -55,7 +58,6 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
             MaterialPageRoute(
               settings: RouteSettings(name: "TimelinePage"),
               builder: (context) => TimelinePage(
-                
                 title: "RoadMap",
                 status: widget.status,
               ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
 import 'package:startupreneur/models/notificationModel.dart';
 import 'package:startupreneur/saveProgress.dart';
+import 'package:toast/toast.dart';
 import '../GeneralVocabulary/GeneralVocabulary.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
@@ -34,6 +36,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../ProfilePage/ProfilePageLoader.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'notifications.dart';
 
@@ -67,6 +71,13 @@ class _TimelinePageState extends State<TimelinePage> {
   PDFDocument doc;
   Flushbar<List<String>> flush;
   FirebaseMessaging _messaging = FirebaseMessaging();
+  double contentRating = 0;
+  double structureRating = 0;
+  double experinceRating = 0;
+  String commentText;
+  String institution;
+  final Firestore _db = Firestore.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging();
   String _url =
       "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
 
@@ -91,11 +102,29 @@ class _TimelinePageState extends State<TimelinePage> {
 
   void _sharedpreference(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
+    var docId = sharedPreferences.getString("docId");
+    print("docId is $docId");
     sharedPreferences.clear();
-
+    await Firestore.instance
+        .collection("user")
+        .document(docId)
+        .setData({"isLoggedIn": false}, merge: true);
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => SigninPage(),
     ));
+  }
+
+  Future<void> _sendFeedback() async {
+    Map<String, dynamic> data = {
+      "feedbackContent": commentText,
+      "contentRating": contentRating,
+      "structureRating": structureRating,
+      "experinceRating": experinceRating,
+      "userId": uid,
+      "institution": institution,
+      "userName": name
+    };
+    await Firestore.instance.collection("internalAppFeedback").add(data);
   }
 
   launcher(String urlLink) async {
@@ -127,8 +156,21 @@ class _TimelinePageState extends State<TimelinePage> {
     _messaging.getToken().then((token) {
       print(token);
     });
+   
 
     Analytics.analyticsBehaviour("Main_RoadMap_TimeLine_Page", "RoadMap");
+  }
+
+  navigateTo(BuildContext context,var message) {
+    print("on navigate $message");
+    Navigator.push(
+      context,     
+      MaterialPageRoute(
+        builder: (context) => MentorFeedback(
+          uid: uid,
+        ),
+      ),
+    );
   }
 
   void preferences(BuildContext context) async {
@@ -136,6 +178,7 @@ class _TimelinePageState extends State<TimelinePage> {
     setState(() {
       value = sharedPreferences.getString("UserEmail");
       uid = sharedPreferences.getString("UserId");
+      institution = sharedPreferences.getString("institution");
     });
     print("the value is $value");
     if (value == null) {
@@ -189,6 +232,21 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
+
+     _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // TODO optional
+      },
+      onResume: (Map<String, dynamic> message) async {
+        navigateTo(context,message);
+        // TODO optional
+      },
+    );
+    print("context is from build $context");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.status) {
         Flushbar(
@@ -269,7 +327,7 @@ class _TimelinePageState extends State<TimelinePage> {
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.black),
               title: Padding(
-                padding: const EdgeInsets.only(left:12.0),
+                padding: const EdgeInsets.only(left: 9.5),
                 child: Image.asset(
                   "assets/Images/Capture.PNG",
                   width: MediaQuery.of(context).size.width * 0.57,
@@ -283,6 +341,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     stream: Firestore.instance
                         .collection('notification')
                         .where("timestamp", isGreaterThanOrEqualTo: Global.date)
+                        .orderBy("timestamp")
                         .snapshots(),
                     builder: (context, snapshot) {
                       print(snapshot.hasData);
@@ -647,6 +706,37 @@ class _TimelinePageState extends State<TimelinePage> {
                     },
                   ),
                   ListTile(
+                    leading: Icon(Icons.store),
+                    title: Text(
+                      'App Feedback',
+                      style: TextStyle(
+                        color: Colors.green,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Feedback',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.green,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                            content: buildRatingView(context),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ListTile(
                     leading: Icon(Icons.lock_open),
                     title: Text(
                       'Logout',
@@ -658,9 +748,6 @@ class _TimelinePageState extends State<TimelinePage> {
                     onTap: () {
                       _auth.signOut();
                       _sharedpreference(context);
-                      //                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      //                    builder: (context) => SigninPage(),
-                      //                  ));
                     },
                   ),
                   Divider(),
@@ -746,6 +833,189 @@ class _TimelinePageState extends State<TimelinePage> {
         return child;
       },
       child: NoNetPage(),
+    );
+  }
+
+  ListView buildRatingView(BuildContext context) {
+    return ListView(
+      shrinkWrap: true,
+      children: <Widget>[
+        AutoSizeText(
+          "We would love to hear the feedback on what you think about the program, be it content, design and everything else! You can let us know your ratings and comments below.",
+          maxFontSize: 18,
+          minFontSize: 14,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            letterSpacing: 1,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Rate the Content",
+              style: TextStyle(
+                fontSize: 18,
+                // fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RatingBar(
+              allowHalfRating: true,
+              onRatingUpdate: (ratingValue) {
+                contentRating = ratingValue;
+              },
+              itemBuilder: (context, _) {
+                return Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                );
+              },
+              itemSize: 35.0,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Rate the Structure",
+              style: TextStyle(
+                fontSize: 18,
+                // fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RatingBar(
+              allowHalfRating: true,
+              onRatingUpdate: (ratingValue) {
+                structureRating = ratingValue;
+              },
+              itemBuilder: (context, _) {
+                return Icon(
+                  Icons.star,
+                  // color: Colors.green,
+                  color: Colors.amber,
+                );
+              },
+              itemSize: 35.0,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Overall Experience",
+              style: TextStyle(
+                fontSize: 18,
+                // fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RatingBar(
+              allowHalfRating: true,
+              onRatingUpdate: (ratingValue) {
+                experinceRating = ratingValue;
+              },
+              itemBuilder: (context, _) {
+                return Icon(
+                  Icons.star,
+                  // color: Colors.green,
+                  color: Colors.amber,
+                );
+              },
+              itemSize: 35.0,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Any Comments",
+              style: TextStyle(
+                fontSize: 18,
+                // fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              keyboardType: TextInputType.text,
+              maxLines: 5,
+              onChanged: (text) {
+                commentText = text;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                hintText: "Comment your Feedback",
+                hintStyle: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlineButton(
+                // color: Colors.amberAccent,
+                onPressed: () {
+                  if (contentRating == 0 ||
+                      experinceRating == 0 ||
+                      structureRating == 0) {
+                    Toast.show("Please submit your ratings as well.", context,
+                        duration: Toast.LENGTH_LONG);
+                  } else {
+                    _sendFeedback().then((_) {
+                      Toast.show(
+                          "Thank you for your Feedback! We appreciate it.",
+                          context,
+                          duration: Toast.LENGTH_LONG);
+                      commentText = null;
+                      Navigator.pop(context);
+                    });
+                  }
+                },
+                child: Text(
+                  "Submit Feedback",
+                ),
+                borderSide: BorderSide(
+                  color: Colors.green,
+                  width: 1,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

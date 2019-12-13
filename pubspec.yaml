@@ -80,7 +80,7 @@ dependencies:
   flutter_downloader: ^1.2.2
   intl: ^0.16.0
   cloud_functions: ^0.3.0+1
-
+  flutter_rating_bar: ^3.0.0
 
 
 dev_dependencies:

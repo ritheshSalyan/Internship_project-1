@@ -17,8 +17,6 @@ void main() async {
   runZoned<Future<void>>(() async {
   }, onError: Crashlytics.instance.recordError);
     runApp(MyApp());
-
-
 }
 class MyApp extends StatefulWidget{
   @override
