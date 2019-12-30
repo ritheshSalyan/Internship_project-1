@@ -14,6 +14,7 @@ import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/UserInterface/folderUI.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
 import 'package:startupreneur/models/notificationModel.dart';
 import 'package:startupreneur/saveProgress.dart';
@@ -600,6 +601,24 @@ class _TimelinePageState extends State<TimelinePage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => (ChatBoardRoomLoader()),
+                        ),
+                      );
+                    },
+                  ),
+                   ListTile(
+                    leading: Icon(Icons.business_center),
+                    title: Text(
+                      'Venture Builder',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => (FolderBuilder()),
                         ),
                       );
                     },
