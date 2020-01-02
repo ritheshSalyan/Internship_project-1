@@ -618,7 +618,9 @@ class _TimelinePageState extends State<TimelinePage> {
                       Navigator.of(context).pop();
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => (FolderBuilder()),
+                          builder: (context) => (FolderBuilder(
+                            completedCourse: completedCourse
+                          )),
                         ),
                       );
                     },

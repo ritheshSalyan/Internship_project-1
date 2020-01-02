@@ -34,7 +34,6 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
   Future<void> downloadFile(BuildContext context) async {
     ProgressDialog progressDialog = ProgressDialog(context,
         type: ProgressDialogType.Download, isDismissible: false);
-
     Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
       if (!yes) {
         print("inside failed loop $yes");
@@ -49,25 +48,11 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
         exception = "error creating";
       });
     });
-    // Directory('/storage/emulated/0/Startupreneur/$modName')
-    //     .create()
-    //     .catchError((e) {
-    //   print(e);
-    //   setState(() {
-    //     exception = "error creating";
-    //   });
-    // });
-
     String uri = Uri.decodeFull(widget.file);
     final RegExp regex =
         RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
     file = File('/storage/emulated/0/Startupreneur/$modName/$fileName');
-    // progressDialog.setMessage("Downloading ...");
-
-    // progressDialog.show();
-
-    // print("task $taskId");
     try {
       for (var i in doodles) {
         if (i.modNum == widget.modNum) {

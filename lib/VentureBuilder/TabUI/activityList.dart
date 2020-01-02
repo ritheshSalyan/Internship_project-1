@@ -21,7 +21,6 @@ class ActivityListPage extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          // print(snapshot.data.documents.length);
           return ListView.builder(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
@@ -40,7 +39,6 @@ class ActivityListPage extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    
                     print(snapshot.data.documents[index].data['Page']);
                     headings.clear();
                     intro.clear();
@@ -52,7 +50,6 @@ class ActivityListPage extends StatelessWidget {
                         .forEach((value) {
                       intro.add(value);
                     });
-
                     print("heading length ${headings.length}");
                     print("intro length ${intro.length}");
                     Navigator.of(context).push(
@@ -86,3 +83,5 @@ class ActivityListPage extends StatelessWidget {
     );
   }
 }
+
+

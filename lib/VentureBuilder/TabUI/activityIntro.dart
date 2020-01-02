@@ -42,7 +42,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                 ),
               ),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.6,
               child: Column(
                 children: <Widget>[
                   Row(
@@ -59,6 +59,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                           ),
                           child: AutoSizeText(
                             "${widget.heading[widget.index]}",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -76,7 +77,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      alignment: Alignment.center,
+                      // alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                       ),
