@@ -20,7 +20,7 @@ class ActivityListPage extends StatelessWidget {
           .where("module", isEqualTo: modNum)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData && snapshot.data.documents.length != 0) {
           return ListView.builder(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
@@ -55,12 +55,14 @@ class ActivityListPage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ListActivities(
-                          modName: modName,
-                          modNum: modNum,
-                          intro: intro,
-                          headings: headings,
-                          index: index,
-                        ),
+                            modName: modName,
+                            modNum: modNum,
+                            intro: intro,
+                            headings: headings,
+                            index: index,
+                            files: snapshot.data.documents[index].data['file'],
+                            order:
+                                snapshot.data.documents[index].data['order']),
                       ),
                     );
                   },
@@ -77,11 +79,18 @@ class ActivityListPage extends StatelessWidget {
           );
         }
         return Container(
-          child: Text("hi"),
+          alignment: Alignment.center,
+          height: MediaQuery.of(context).size.height*0.3,
+          child: Text(
+            "No Activities available",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         );
       },
     );
   }
 }
-
-
