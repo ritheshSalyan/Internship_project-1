@@ -7,7 +7,7 @@ import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
-import 'package:extended_image/extended_image.dart';
+// import 'package:extended_image/extended_image.dart';
 import '../../saveProgress.dart';
 
 class DiscussionPage extends StatefulWidget {
@@ -179,14 +179,15 @@ class _DiscussionPageState extends State<DiscussionPage> {
       print("Title here ${widget.image}");
       if ((widget.image.contains("assets/"))) {
         // print("Inside Assets");
-        image = ExtendedImage.asset(
+        image = Image.asset(
           widget.image,
+          semanticLabel: "Image",
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.7,
         );
       } else {
         // print("Inside Network");
-        image = ExtendedImage.network(
+        image = Image.network(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.7,

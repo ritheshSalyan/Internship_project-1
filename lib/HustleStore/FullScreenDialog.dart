@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'HustleStoreLoader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -29,7 +31,7 @@ class AddEntryDialog extends StatefulWidget {
 }
 
 class AddEntryDialogState extends State<AddEntryDialog> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db =fb.firestore();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -84,8 +86,8 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                                 dataSet["points"] = widget.available;
                                 db
                                     .collection("user")
-                                    .document(widget.userid)
-                                    .setData(dataSet, merge: true);
+                                    .doc(widget.userid)
+                                    .set(dataSet, fs.SetOptions(merge: true));
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>

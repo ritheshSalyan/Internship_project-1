@@ -8,7 +8,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firebase.dart';
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import '../../ModuleOrderController/Types.dart';
 //import 'package:intro_slider_example/home.dart';
@@ -32,7 +35,7 @@ class FileUploadState extends State<FileUpload> {
   void initState() {
 
     super.initState();
-    Analytics.analyticsBehaviour("File_Uploading_Page_Module", "File_Upload_Page");
+    fb.analytics().setCurrentScreen("File_Uploading_Page_Module");
   }
 
   File file;
@@ -305,22 +308,25 @@ class FileUploadState extends State<FileUpload> {
   // }
 
   Future upload(file) async {
-   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    Auth auth = fb.auth();
+   var user = await auth.currentUser;
    this.uid = user.uid;
-   String name = await User.getUserName(uid);
+  //  String name = await User.getUserName(uid);
+  String name = await user.displayName;
     String extenstion = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef = FirebaseStorage.instance
+    final fb.StorageReference storageRef =fb.storage()
         .ref()
          .child("userUpload")
        .child("${uid}_${name}")
         .child("${widget.modNum}_activity_${widget.index}." + extenstion);
 
-    task = storageRef.putFile(file);
+    var task = storageRef.put(file);
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-    StorageTaskSnapshot taskSnapshot = await task.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+   
+   var data = await task.future;
+    String downloadUrl = await data.ref.getDownloadURL().toString();
     Toast.show("Your Activity Uploaded Successfully", context,
         gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     print("On downloadUrl task" + downloadUrl);

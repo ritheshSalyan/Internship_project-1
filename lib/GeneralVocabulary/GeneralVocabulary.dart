@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 // import 'package:flip_card/flip_card.dart';
 // import 'package:folding_cell/folding_cell.dart';
 import 'package:flip_card/flip_card.dart';
@@ -18,7 +20,7 @@ class Vocabulary extends StatefulWidget {
 }
 
 class _VocabularyState extends State<Vocabulary> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db =fb.firestore();
   List<String> listGiven = [];
   List<String> listMeaning = [];
   // final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
@@ -27,7 +29,7 @@ class _VocabularyState extends State<Vocabulary> {
 
     super.initState();
     // dataRetrieve();
-    Analytics.analyticsBehaviour("At_Main_Vocabulary_Page", "GeneralVocabulary");
+    // Analytics.analyticsBehaviour("At_Main_Vocabulary_Page", "GeneralVocabulary");
   }
 
   void popDialog(BuildContext context, String word, String meaning) {
@@ -110,17 +112,17 @@ class _VocabularyState extends State<Vocabulary> {
   }
 
   List<Widget> listGenerated(BuildContext context, int index, int length,
-      AsyncSnapshot<QuerySnapshot> snapshot) {
+      AsyncSnapshot<fs.QuerySnapshot> snapshot) {
     List<Widget> list = [];
     for (int i = index; i < length; i++) {
       list.add(ListTile(
         onTap: () {
           // print(" ${snapshot.data.documents[0].data["meaning"][index]}");
-          popDialog(context, snapshot.data.documents[0].data["word"][index],
-              snapshot.data.documents[0].data["meaning"][index]);
+          popDialog(context, snapshot.data.docs[0].data()["word"][index],
+              snapshot.data.docs[0].data()["meaning"][index]);
         },
         leading: Icon(Icons.book),
-        title: Text(snapshot.data.documents[i].data["word"][index]),
+        title: Text(snapshot.data.docs[i].data()["word"][index]),
       ));
     }
     // print(list);
@@ -147,10 +149,10 @@ class _VocabularyState extends State<Vocabulary> {
             child = SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  StreamBuilder<QuerySnapshot>(
+                  StreamBuilder(
                     stream:
-                        Firestore.instance.collection("vocabulary").snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        db.collection("vocabulary").onSnapshot,
+                    builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                       // return Text("value ${snapshot.data.documents[0].data["word"].length}");
                       // print("vocabulary ${snapshot.data}");
                       if (snapshot.hasError) {
@@ -164,20 +166,20 @@ class _VocabularyState extends State<Vocabulary> {
                         default:
                           listGiven.clear();
                           for (int i = 0;
-                              i < snapshot.data.documents.length;
+                              i < snapshot.data.docs.length;
                               i++) {
                             for (String k
-                                in snapshot.data.documents[i].data["word"]) {
+                                in snapshot.data.docs[i].data()["word"]) {
                               print(k);
                               listGiven.add(k);
                             }
                           }
 
                           for (int i = 0;
-                              i < snapshot.data.documents.length;
+                              i < snapshot.data.docs.length;
                               i++) {
                             for (String k
-                                in snapshot.data.documents[i].data["meaning"]) {
+                                in snapshot.data.docs[i].data()["meaning"]) {
                               listMeaning.add(k);
                             }
                           }

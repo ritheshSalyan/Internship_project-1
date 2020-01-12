@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:startupreneur/ModulePages/UserDetail.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart' as u;
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/ProfilePage/friends/friend.dart';
 import 'package:startupreneur/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
+import 'package:firebase/firebase.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +30,7 @@ class _EditDetailState extends State<EditDetail>
     with AutomaticKeepAliveClientMixin {
   static Friend currentuser;
   // static var _value = null;
-  static FirebaseUser user;
+  // static FirebaseUser user;
   static PDFDocument doc;
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
@@ -50,6 +53,7 @@ class _EditDetailState extends State<EditDetail>
       new TextEditingController();
   static TextEditingController textEditingController8 =
       new TextEditingController();
+  static Auth auth = fb.auth();
 
   static bool isChecked = false;
   static var fname = "     ";
@@ -61,7 +65,7 @@ class _EditDetailState extends State<EditDetail>
   static var institutionOrCompany = "";
   static var typeOfOccupations = "";
   static var referalCodeFromFriend = "", userid = "";
-  static Firestore db = Firestore.instance;
+  static fs.Firestore db = fb.firestore();
   // static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static File file;
@@ -125,8 +129,8 @@ class _EditDetailState extends State<EditDetail>
     // dataMap['uid'] = userid;
     await db
         .collection("user")
-        .document(currentuser.uid)
-        .setData(dataMap, merge: true)
+        .doc(currentuser.uid)
+        .set(dataMap, fs.SetOptions(merge: true))
         .catchError((e) {
       progressDialog.hide();
       print(e);
@@ -181,23 +185,26 @@ class _EditDetailState extends State<EditDetail>
   }
 
   Future upload(BuildContext context) async {
+    Auth auth = fb.auth();
+    var user = auth.currentUser;
     // FirebaseAuth.instance.currentUser().then((user) {
-      // this.uid = user.uid;
+    // this.uid = user.uid;
     // });
-     String name = await User.getUserName(user.uid);
+    String name = await u.User.getUserName(user.uid);
     String extenstion = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef =  FirebaseStorage.instance
+    final fb.StorageReference storageRef = fb.storage()
         .ref()
-         .child("userUpload")
-       .child("${user.uid}_${name}")
+        .child("userUpload")
+        .child("${user.uid}_${name}")
         .child("resume." + extenstion);
 
-    StorageUploadTask task = storageRef.putFile(file);
+    var task = storageRef.put(file);
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-    StorageTaskSnapshot taskSnapshot = await task.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    // StorageTaskSnapshot taskSnapshot = await task.onComplete;
+    var data = await task.future;
+    String downloadUrl = await data.ref.getDownloadURL().toString();
     print("On downloadUrl task" + downloadUrl);
 
     var dataMap = new Map<String, dynamic>();
@@ -205,8 +212,8 @@ class _EditDetailState extends State<EditDetail>
 
     await db
         .collection("user")
-        .document(currentuser.uid)
-        .setData(dataMap, merge: true)
+        .doc(currentuser.uid)
+        .set(dataMap, fs.SetOptions(merge: true))
         .catchError((e) {
       progressDialog.hide();
       Toast.show("Upload failed, please try again", context,
@@ -449,77 +456,76 @@ class _EditDetailState extends State<EditDetail>
       ),
       // body:
       body: OfflineBuilder(
-        connectivityBuilder:
-            (context, ConnectivityResult connectivity, Widget child) {
-          final connected = connectivity != ConnectivityResult.none;
-          if (connected) {
-            child = Container(
-              padding: EdgeInsets.all(20),
-              width: 600,
-              child: Form(
-                key: _formkey,
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      "EDIT DETAILS",
-                      style: TextStyle(
-                          fontSize: 20,
-                          letterSpacing: 2,
-                          fontFamily: "Open Sans"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 200),
-                    ),
-                    Text(
-                      "                ",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.green,
-                          decorationThickness: 5),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    fullName(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    emailAddress(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    mobileNumber(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    occupation(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    institution_or_company(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    uploadResume(context),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    signUpButton(context),
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
+          connectivityBuilder:
+              (context, ConnectivityResult connectivity, Widget child) {
+            final connected = connectivity != ConnectivityResult.none;
+            if (connected) {
+              child = Container(
+                padding: EdgeInsets.all(20),
+                width: 600,
+                child: Form(
+                  key: _formkey,
+                  child: ListView(
+                    children: <Widget>[
+                      Text(
+                        "EDIT DETAILS",
+                        style: TextStyle(
+                            fontSize: 20,
+                            letterSpacing: 2,
+                            fontFamily: "Open Sans"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 200),
+                      ),
+                      Text(
+                        "                ",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.green,
+                            decorationThickness: 5),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      fullName(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      emailAddress(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      mobileNumber(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      occupation(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      institution_or_company(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      uploadResume(context),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
+                      signUpButton(context),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-          return child;
-        },
-        child: NoNetPage()
-      ),
+              );
+            }
+            return child;
+          },
+          child: NoNetPage()),
     );
   }
 }

@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivity.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
@@ -17,6 +19,7 @@ class DownloadFileActivityLoader extends StatefulWidget {
 }
 
 class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
+  static fs.Firestore db = fb.firestore();
   @override
   void initState() {
     super.initState();
@@ -24,7 +27,7 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum,widget.index).then((value) {
+    getEventsFromFirestore(widget.modNum, widget.index).then((value) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => DownloadFileActivity(
@@ -32,13 +35,12 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
             order: widget.index,
             file: value[0],
             content: value,
-
           ),
         ),
       );
     });
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,27 +69,27 @@ class _DownloadFileActivityLoader extends State<DownloadFileActivityLoader> {
     );
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum,int order) async {
-    CollectionReference ref =
-        Firestore.instance.collection('downloadFileActivity');
-    QuerySnapshot eventsQuery = await ref
-        .where("module", isEqualTo: modNum)
-        .where("order", isEqualTo: order)
-        .getDocuments();
+  static Future<List<String>> getEventsFromFirestore(
+      int modNum, int order) async {
+    fs.CollectionReference ref = db.collection('downloadFileActivity');
+    fs.QuerySnapshot eventsQuery = await ref
+        .where("module", "==", modNum)
+        .where("order", "==", order)
+        .get();
     // .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     String title;
     List<String> list = [];
-    eventsQuery.documents.forEach((document) {
-      print("downloadFileActivity " + document['file']);
+    eventsQuery.docs.forEach((document) {
+      print("downloadFileActivity " + document.data()['file']);
 
-      title = document["file"];
+      title = document.data()["file"];
       list.add(title);
       try {
-        list.addAll(convert(document["content"]));
+        list.addAll(convert(document.data()["content"]));
       } catch (e) {}
-      
+
       // title.add(document["image"].toString());
     });
     return list;

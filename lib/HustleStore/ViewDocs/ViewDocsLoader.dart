@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'dart:io';
 
 class ViewDocsLoader extends StatefulWidget {
@@ -12,7 +14,7 @@ class _ViewDocsLoaderState extends State<ViewDocsLoader> {
   SharedPreferences sharedPreferences;
 String userId;
 File file;
-Firestore db;
+fs.Firestore db;
 List<dynamic> files=[];
 
 @override

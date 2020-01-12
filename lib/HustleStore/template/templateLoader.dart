@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:startupreneur/HustleStore/template/template.dart';
 
 class TemplateLoader extends StatefulWidget {
@@ -13,7 +15,7 @@ class _TemplateLoaderState extends State<TemplateLoader> {
 SharedPreferences sharedPreferences;
 String userId;
 File file;
-Firestore db;
+fs.Firestore db;
 List<dynamic> files=[];
 
 
@@ -28,10 +30,10 @@ List<dynamic> files=[];
     userId = sharedPreferences.getString("UserId");
     print(userId);
 
-    db = Firestore.instance;
-    await db.collection("template").getDocuments().then((document) {
-      document.documents.forEach((file) {
-        files = file.data["files"];
+    db = fb.firestore();
+    await db.collection("template").get().then((document) {
+      document.docs.forEach((file) {
+        files = file.data()["files"];
       });
     });
     return files;

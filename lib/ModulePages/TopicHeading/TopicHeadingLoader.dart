@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'TopicHeading.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class TopicHeadingLoading extends StatefulWidget {
-  TopicHeadingLoading({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+  TopicHeadingLoading({Key key, this.modNum, this.index}) : super(key: key);
+  final int modNum, index;
   @override
   _TopicHeadingLoading createState() => _TopicHeadingLoading();
 }
@@ -16,7 +18,6 @@ class TopicHeadingLoading extends StatefulWidget {
 class _TopicHeadingLoading extends State<TopicHeadingLoading> {
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -27,16 +28,15 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => TopicHeadingPage(
-           index:widget.index,
+            index: widget.index,
             modNum: widget.modNum,
             title: title[0],
-           
           ),
         ),
       );
     });
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,31 +66,31 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('topicHeading');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+    fs.Firestore db = fb.firestore();
+    fs.CollectionReference ref = db.collection('topicHeading');
+    fs.QuerySnapshot eventsQuery = await ref
+        .where("module", "==", modNum)
+        .where("order", "==", orderManagement.currentIndex)
+        .get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
-      print("TopicHeading " +
-          document.toString());
+    eventsQuery.docs.forEach((document) {
+      print("TopicHeading " + document.toString());
 
-      title = convert(document["content"]);
+      title = convert(document.data()["content"]);
       // title.add(document["image"].toString());
     });
 
     return title;
   }
-  
-  static List<String> convert(List<dynamic> dlist){
 
+  static List<String> convert(List<dynamic> dlist) {
     List<String> list = new List<String>();
 
     for (var item in dlist) {
-       list.add(item.toString());
-       print(item.toString());
+      list.add(item.toString());
+      print(item.toString());
     }
     //list.add("assets/Images/think.png");
     return list;

@@ -1,6 +1,8 @@
-import 'package:extended_image/extended_image.dart';
+// import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -36,7 +38,7 @@ class _HustleStoreState extends State<HustleStore> {
   String userId;
   bool flag = false;
   List<dynamic> claimedUser = [];
-  Firestore db;
+  fs.Firestore db;
   List<Color> color = [
     Color.fromRGBO(222, 30, 89, 1),
     Color.fromRGBO(59, 40, 127, 1)
@@ -47,8 +49,8 @@ class _HustleStoreState extends State<HustleStore> {
 
     super.initState();
     preferences();
-    db = Firestore.instance;
-    Analytics.analyticsBehaviour("Hustle_Store_Page", "HustleStoreMainPage");
+    db = fb.firestore();
+    // Analytics.analyticsBehaviour("Hustle_Store_Page", "HustleStoreMainPage");
   }
 
   void preferences() async {
@@ -65,12 +67,12 @@ class _HustleStoreState extends State<HustleStore> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 50,
-        child: new ExtendedImage.asset(
-          logo,
-          // height: 60.0,
-          // width: 60.0,
-          enableLoadState: true,
-        ),
+        // child: new ExtendedImage.asset(
+        //   logo,
+        //   // height: 60.0,
+        //   // width: 60.0,
+        //   enableLoadState: true,
+        // ),
       ),
     );
   }
@@ -121,12 +123,12 @@ class _HustleStoreState extends State<HustleStore> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
+            StreamBuilder<fs.QuerySnapshot>(
+              stream: db
                   .collection("storeDetails")
                   .orderBy("id")
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  .onSnapshot,
+              builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                 switch (snapshot.data) {
                   case null:
                     return Center(
@@ -138,17 +140,17 @@ class _HustleStoreState extends State<HustleStore> {
                     );
                   default:
                     list.clear();
-                    snapshot.data.documents.forEach(
+                    snapshot.data.docs.forEach(
                       (document) {
-                        print(document.data["image"].runtimeType);
+                        print(document.data()["image"].runtimeType);
                         list.add(
                           Component(
-                            name: document.data["name"],
-                            image: document.data["image"],
-                            points: document.data["point"],
-                            description: document.data["description"],
-                            claimed: document.data["claimed"],
-                            type: document.data["type"],
+                            name: document.data()["name"],
+                            image: document.data()["image"],
+                            points: document.data()["point"],
+                            description: document.data()["description"],
+                            claimed: document.data()["claimed"],
+                            type: document.data()["type"],
                           ),
                         );
                       },
@@ -697,11 +699,11 @@ class _HustleStoreState extends State<HustleStore> {
                                             ),
                                             Row(
                                               children: <Widget>[
-                                                ExtendedImage.asset(
+                                                Image.asset(
                                                   "assets/Images/coins.png",
                                                   height: 20,
                                                   width: 20,
-                                                  enableLoadState: true,
+                                                  // enableLoadState: true,
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.only(

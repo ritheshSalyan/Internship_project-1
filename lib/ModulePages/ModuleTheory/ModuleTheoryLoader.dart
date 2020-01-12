@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'ModuleTheory.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -14,6 +16,7 @@ class TheoryLoading extends StatefulWidget {
 }
 
 class _TheoryLoading extends State<TheoryLoading> {
+  static fs.Firestore db = fb.firestore();
   @override
   void initState() {
     super.initState();
@@ -71,17 +74,17 @@ class _TheoryLoading extends State<TheoryLoading> {
   }
 
   static Future<String> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('module');
-    QuerySnapshot eventsQuery =
-        await ref.where("id", isEqualTo: modNum).getDocuments();
+    fs.CollectionReference ref = db.collection('module');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("id", "==", modNum).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     String title = "hello";
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       print("title " +
-          document["order${orderManagement.currentIndex}"].toString());
+          document.data()["order${orderManagement.currentIndex}"].toString());
 
-      title = document["order${orderManagement.currentIndex}"].toString();
+      title = document.data()["order${orderManagement.currentIndex}"].toString();
     });
     return title;
   }

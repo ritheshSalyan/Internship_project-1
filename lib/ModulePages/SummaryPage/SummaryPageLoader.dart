@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'SummaryPage.dart';
 
@@ -60,19 +62,20 @@ class _SummaryPageLoaderState extends State<SummaryPageLoader> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('summary');
-    QuerySnapshot eventsQuery =
-    await ref.where("module", isEqualTo: modNum)
-       .getDocuments();
+     fs.Firestore db = fb.firestore();
+    fs.CollectionReference ref = db.collection('summary');
+    fs.QuerySnapshot eventsQuery =
+    await ref.where("module","==", modNum)
+       .get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       print("Discussion " +
           document.toString());
 
-      title = convert(document["content"]);
-      title.add(document["image"].toString());
+      title = convert(document.data()["content"]);
+      title.add(document.data()["image"].toString());
     });
 
     return title;

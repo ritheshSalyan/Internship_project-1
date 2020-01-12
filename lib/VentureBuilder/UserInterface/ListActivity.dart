@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/firebase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:startupreneur/ModulePages/UserDetail.dart';
+import 'package:startupreneur/ModulePages/UserDetail.dart' as u;
 import 'package:startupreneur/VentureBuilder/TabUI/activityIntro.dart';
 import 'package:toast/toast.dart';
 import 'package:path/path.dart' as p;
@@ -102,23 +104,24 @@ class _ListActivitiesState extends State<ListActivities>
 
   //uploading activity file
   Future upload(File file, ProgressDialog progressDialog) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    Auth auth = fb.auth();
+    var user = await auth.currentUser;
     this.uid = user.uid;
     // String uri = Uri.decodeFull(file.path);
     // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
     // String fileName = regex.stringMatch(uri);
     // print(fileName.split("/"));
-    String name = await User.getUserName(uid);
+    String name = await u.User.getUserName(uid);
     String extension = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef = FirebaseStorage.instance
+    final fb.StorageReference storageRef = fb.storage()
         .ref()
         .child("userUpload")
         .child("${uid}_${name}")
         .child("${widget.modNum}_upload_${widget.order}." + extension);
 
-    task = storageRef.putFile(file);
-    StorageTaskSnapshot taskSnapshot = await task.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    var task = storageRef.put(file);
+    var taskSnapshot = await task.future;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL().toString();
     Toast.show("Your Activity Uploaded Successfully", context,
         gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     print("On downloadUrl task" + downloadUrl);

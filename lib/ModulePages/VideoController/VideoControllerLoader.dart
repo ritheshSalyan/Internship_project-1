@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'VideoController.dart';
 
@@ -66,20 +68,20 @@ class _VideoControllerLoading extends State<VideoControllerLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
-
+    fs.Firestore firestore = fb.firestore();
     print("Index in video "+index.toString());
-    CollectionReference ref = Firestore.instance.collection('videos');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: index).getDocuments();
+    fs.CollectionReference ref = firestore.collection('videos');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("module", "==", modNum)
+        .where("order","==", index).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       print("videoController " +
-          document["content"].toString());
+          document.data()["content"].toString());
 
-      title = convert(document["content"]);
+      title = convert(document.data()["content"]);
     });
     return title;
   }

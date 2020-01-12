@@ -33,7 +33,7 @@ class _ViewDocsState extends State<ViewDocs> {
     @override
     void initState(){
       request();
-      Analytics.analyticsBehaviour("View_Docs_Page_Hustle", "ViewDocs");
+      // Analytics.analyticsBehaviour("View_Docs_Page_Hustle", "ViewDocs");
     }
     
     request() async{

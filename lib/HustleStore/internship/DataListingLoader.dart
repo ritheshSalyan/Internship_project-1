@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'DataListing.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 
 class DataListingLoader extends StatefulWidget {
   @override
@@ -11,7 +13,7 @@ class DataListingLoader extends StatefulWidget {
 class _DataListingLoaderState extends State<DataListingLoader> {
  static SharedPreferences sharedPreferences;
  static String userId;
- static Firestore db = Firestore.instance;
+ static fs.Firestore db = fb.firestore();
 
   @override
   Widget build(BuildContext context) {

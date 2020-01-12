@@ -1,8 +1,8 @@
 // flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 
 import 'dart:async';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
@@ -11,11 +11,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // import 'HustleStore/HustleStore.dart';
 
-void main() async {
-  Crashlytics.instance.enableInDevMode = true;
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  runZoned<Future<void>>(() async {
-  }, onError: Crashlytics.instance.recordError);
+void main()  {
+  
     runApp(MyApp());
 }
 class MyApp extends StatefulWidget{
@@ -25,13 +22,14 @@ class MyApp extends StatefulWidget{
 
 class _MyAppState extends State<MyApp> {
   // static const platform = MethodChannel("permission");
-  FirebaseAnalytics analytics = FirebaseAnalytics();
-  FirebaseAnalyticsObserver observer;
+  // FirebaseAnalytics analytics = FirebaseAnalytics();
+  // FirebaseAnalyticsObserver observer;
 
   @override 
   void initState() {
+    print("inside init");
     super.initState();
-    request();
+    // request();
   }
 
   void request() async {
@@ -49,12 +47,12 @@ class _MyAppState extends State<MyApp> {
     //   DeviceOrientation.portraitUp,
     //   DeviceOrientation.portraitDown,
     // ]);
-    return MaterialApp(
+    return MaterialApp( 
       title: 'The Startupreneur',
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
-      ],
-      home: homePage(analytics: analytics, observer: observer),
+      // navigatorObservers: [
+      //   FirebaseAnalyticsObserver(analytics: analytics),
+      // ],
+      home: homePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,

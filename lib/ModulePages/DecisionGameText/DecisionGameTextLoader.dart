@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'DecisionGameText.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -15,6 +17,7 @@ class DecisionGameTextLoading extends StatefulWidget {
 
 class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
   static String documentId;
+  static fs.Firestore db = fb.firestore();
   @override
   void initState() {
 
@@ -73,19 +76,19 @@ class _DecisionGameTextLoading extends State<DecisionGameTextLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
-    CollectionReference ref = Firestore.instance.collection('decisionGameText');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: index).getDocuments();
+    fs.CollectionReference ref = db.collection('decisionGameText');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("module", "==", modNum)
+        .where("order","==", index).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-   eventsQuery.documents.forEach((document)  {
+   eventsQuery.docs.forEach((document)  {
       print("DecisionGameText " +
           document.toString());
-          documentId = document.documentID;
+          documentId = document.id;
 
-      title.addAll(convert(document["content"]));
+      title.addAll(convert(document.data()["content"]));
      
       // title.add(document["image"].toString());
     });

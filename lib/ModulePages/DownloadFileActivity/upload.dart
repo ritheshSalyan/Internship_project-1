@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
+import 'package:firebase/firebase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
@@ -155,26 +158,32 @@ class _UploadState extends State<Upload> {
   }
 
   Future upload(File file) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    Auth auth = fb.auth();
+    var user = await auth.currentUser;
     this.uid = user.uid;
     // String uri = Uri.decodeFull(file.path);
     // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
     // String fileName = regex.stringMatch(uri);
     // print(fileName.split("/"));
-    String name = await User.getUserName(uid);
+    String name = user.displayName;
     String extension = p.basename(file.path).split(".")[1];
-    final StorageReference storageRef = FirebaseStorage.instance
+    final fb.StorageReference storageRef = fb.storage()
         .ref()
         .child("userUpload")
         .child("${uid}_${name}")
         .child("${widget.modNum}_upload_${widget.index}." + extension);
 
-    task = storageRef.putFile(file);
+   var task = storageRef.put(file);
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-    StorageTaskSnapshot taskSnapshot = await task.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    //  await task.future.then((data){
+    //     String downloadUrl  = data.ref.getDownloadURL();
+    //     });
+
+    var data = await task.future;
+    String downloadUrl = await data.ref.getDownloadURL().toString();
+    // String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     Toast.show("Your Activity Uploaded Successfully", context,
         gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
     print("On downloadUrl task" + downloadUrl);

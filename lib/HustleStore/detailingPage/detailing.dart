@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'HustleStore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import '../HustleStoreLoader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -33,7 +35,7 @@ class AddEntryDialog extends StatefulWidget {
 }
 
 class AddEntryDialogState extends State<AddEntryDialog> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
 
   @override
   void initState() {
@@ -97,18 +99,18 @@ class AddEntryDialogState extends State<AddEntryDialog> {
                                 data["claimed"] = widget.claimedUser;
                                 db
                                     .collection("user")
-                                    .document(widget.userid)
-                                    .setData(dataSet, merge: true);
+                                    .doc(widget.userid)
+                                    .set(dataSet,fs.SetOptions(merge: true));
                                 db
                                     .collection("storeDetails")
-                                    .where("type", isEqualTo: widget.type)
-                                    .getDocuments()
+                                    .where("type", "==", widget.type)
+                                    .get()
                                     .then((doc) {
-                                  doc.documents.forEach((val) {
+                                  doc.docs.forEach((val) {
                                     db
                                         .collection("storeDetails")
-                                        .document(val.documentID)
-                                        .setData(data, merge: true);
+                                        .doc(val.id)
+                                        .set(data, fs.SetOptions(merge: true));
                                   });
                                 });
                                 Navigator.of(context).pushReplacement(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
@@ -15,7 +17,7 @@ class ModulePageIntro extends StatefulWidget {
 class _ModulePageIntroState extends State<ModulePageIntro> {
   List<dynamic> list = [];
   dynamic dataSnapshot;
-
+  static fs.Firestore db = fb.firestore();
   @override
   initState() {
     super.initState();
@@ -195,12 +197,12 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             SliverList(
               delegate: SliverChildListDelegate(
                 <Widget>[
-                  StreamBuilder<QuerySnapshot>(
-                    stream: Firestore.instance
+                  StreamBuilder<fs.QuerySnapshot>(
+                    stream: db
                         .collection("module")
-                        .where("id", isEqualTo: widget.modNum)
-                        .snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        .where("id", "==", widget.modNum)
+                        .onSnapshot,
+                    builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                       // if(snapshot.error){
                       //   return Text("Error while fetching");
                       // }
@@ -216,11 +218,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                             ),
                           );
                         default:
-                          snapshot.data.documents.forEach((document) {
+                          snapshot.data.docs.forEach((document) {
                             dataSnapshot = document;
-                            print(document.data["overview"]);
+                            print(document.data()["overview"]);
                             list.clear();
-                            for (dynamic i in document.data["overview"]) {
+                            for (dynamic i in document.data()["overview"]) {
                               list.add(i);
                             }
                             //   if(orderManagement.order.isEmpty){

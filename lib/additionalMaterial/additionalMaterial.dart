@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
@@ -21,6 +23,7 @@ class _AdditionalMaterialPageState extends State<AdditionalMaterialPage> {
   bool state = false;
   File file;
   var directory = '/storage/emulated/0/Startupreneur/AdditionalMaterial/';
+  fs.Firestore firestore = fb.firestore();
 
   Future<void> unarchiveAndSave(var zippedFile, var dir) async {
     try {
@@ -135,12 +138,11 @@ class _AdditionalMaterialPageState extends State<AdditionalMaterialPage> {
         appBar: AppBar(
           title: Text("Additional Materials"),
         ),
-        body: StreamBuilder<QuerySnapshot>(
+        body: StreamBuilder(
           stream:
-              Firestore.instance.collection("additionalMaterial").snapshots(),
+             firestore.collection("additionalMaterial").onSnapshot,
           builder: (context, snapshot) {
             list.clear();
-
             if (snapshot.hasData) {
               snapshot.data.documents.forEach((data) {
                 list.add(

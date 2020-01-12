@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -18,7 +20,7 @@ class DecisionGame extends StatefulWidget {
 
 class _DecisionGameState extends State<DecisionGame>
     with AutomaticKeepAliveClientMixin {
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
 
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
@@ -45,12 +47,12 @@ class _DecisionGameState extends State<DecisionGame>
     var data = Map<String, dynamic>();
     data['answer'] = options[_answerIs];
     data['attempts'] = attempts;
-    Firestore.instance
+   db
         .collection("decisionGame")
-        .document(documentId)
+        .doc(documentId)
         .collection("answers")
-        .document(userId)
-        .setData(data);
+        .doc(userId)
+        .set(data);
   }
 
   @override
@@ -165,16 +167,16 @@ class _DecisionGameState extends State<DecisionGame>
                                                 0.2),
                                   ),
                                   Expanded(
-                                    child: StreamBuilder<QuerySnapshot>(
-                                      stream: Firestore.instance
+                                    child: StreamBuilder<fs.QuerySnapshot>(
+                                      stream: db
                                           .collection("decisionGame")
                                           .where("module",
-                                              isEqualTo: widget.modNum)
+                                              "==", widget.modNum)
                                           .where("order",
-                                              isEqualTo: widget.order)
-                                          .snapshots(),
+                                              "==", widget.order)
+                                          .onSnapshot,
                                       builder: (context,
-                                          AsyncSnapshot<QuerySnapshot>
+                                          AsyncSnapshot<fs.QuerySnapshot>
                                               snapshot) {
                                         // if(snapshot.error){
                                         //   print("error");
@@ -184,10 +186,10 @@ class _DecisionGameState extends State<DecisionGame>
                                           case null:
                                             return CircularProgressIndicator();
                                           default:
-                                            snapshot.data.documents
+                                            snapshot.data.docs
                                                 .forEach((document) {
-                                              question = document["question"];
-                                              documentId = document.documentID;
+                                              question = document.data()["question"];
+                                              documentId = document.id;
                                             });
                                             return Text(
                                               question,
@@ -204,16 +206,16 @@ class _DecisionGameState extends State<DecisionGame>
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    StreamBuilder<QuerySnapshot>(
+                                    StreamBuilder<fs.QuerySnapshot>(
                                       stream: db
                                           .collection("decisionGame")
                                           .where("module",
-                                              isEqualTo: widget.modNum)
+                                              "==", widget.modNum)
                                           .where("order",
-                                              isEqualTo: widget.order)
-                                          .snapshots(),
+                                              "==", widget.order)
+                                          .onSnapshot,
                                       builder: (context,
-                                          AsyncSnapshot<QuerySnapshot>
+                                          AsyncSnapshot<fs.QuerySnapshot>
                                               snapshot) {
                                         switch (snapshot.data) {
                                           case null:
@@ -230,15 +232,15 @@ class _DecisionGameState extends State<DecisionGame>
                                           default:
                                             options.clear();
 
-                                            snapshot.data.documents
+                                            snapshot.data.docs
                                                 .forEach((document) {
-                                              document["answer"].toString();
+                                              document.data()["answer"].toString();
                                               for (dynamic i
-                                                  in document["options"]) {
+                                                  in document.data()["options"]) {
                                                 options.add(i);
                                               }
                                               for (dynamic y
-                                                  in document["answer"]) {
+                                                  in document.data()["answer"]) {
                                                 answers.add(y);
                                               }
                                             });

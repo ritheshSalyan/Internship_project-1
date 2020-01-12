@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 
 class Component {
   final String description;
@@ -23,15 +25,16 @@ class Component {
  List<Component> item = [];
 
 void generate(BuildContext context) async {
-  StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection("storeDetail").snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
-        snapshot.data.documents.forEach((document){
+  fs.Firestore db = fb.firestore();
+  StreamBuilder<fs.QuerySnapshot>(
+    stream: db.collection("storeDetail").onSnapshot,
+      builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot){
+        snapshot.data.docs.forEach((document){
         item = [
                Component(
-                description: document.data["name"],
-                logo: document.data["image"],
-                price: document.data["point"],
+                description: document.data()["name"],
+                logo: document.data()["image"],
+                price: document.data()["point"],
               )
           ];
         });

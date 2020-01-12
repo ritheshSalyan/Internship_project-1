@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +36,7 @@ class AddEntryDialogHyperLink extends StatefulWidget {
 }
 
 class AddEntryDialogState extends State<AddEntryDialogHyperLink> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
 
   @override
   void initState() {

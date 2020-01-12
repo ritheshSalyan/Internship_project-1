@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
+import 'package:firebase/firebase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tags/tag.dart';
 import 'package:startupreneur/models/chatBoard.dart';
@@ -16,7 +19,8 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
   List<String> tags = [];
   String text = "";
   String userId;
-  Firestore db;
+  // Firestore db;
+  fs.Firestore db = fb.firestore();
   ProgressDialog progressDialog;
   DateTime now = DateTime.now();
   bool _isTapped1 = false;
@@ -70,7 +74,7 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Adding question");
     progressDialog.show();
-    db = Firestore.instance;
+    // db = Firestore.instance;
     var profileUrl;
     var userName;
     // print(text);
@@ -79,12 +83,12 @@ class _AddChatBoardRoomState extends State<AddChatBoardRoom> {
 
     var data = await db
         .collection("user")
-        .where("uid", isEqualTo: userId)
-        .getDocuments();
+        .where("uid", "==", userId)
+        .get();
 
-    data.documents.forEach((value) {
-      profileUrl = value.data["profile"];
-      userName = value.data["name"];
+    data.docs.forEach((value) {
+      profileUrl = value.data()["profile"];
+      userName = value.data()["name"];
     });
 
     ChatBoardData chatBoardData = new ChatBoardData(

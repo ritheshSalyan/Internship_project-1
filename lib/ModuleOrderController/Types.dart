@@ -15,7 +15,9 @@ import '../ModulePages/DecisionGame/DecisionGameLoader.dart';
 import '../ModulePages/Socialize/socialize.dart';
 import '../ModulePages/ModuleVocabulary/ModuleVocabularyLoader.dart';
 import '../ModulePages/FileActivity/FileUploadLoader.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ModulePages/DecisionGameText/DecisionGameTextLoader.dart';
 import '../ModulePages/SummaryPage/SummaryPageLoader.dart';
@@ -54,7 +56,7 @@ class orderManagement {
   static int currentIndex = 0;
   static String userid = "";
   List<dynamic> arguments = [];
-  static Firestore db = Firestore.instance;
+  static fs.Firestore db = fb.firestore();
   static SharedPreferences sharedPreferences;
 
   static void moveNextIndex(BuildContext context, arguments) async {
@@ -68,25 +70,25 @@ class orderManagement {
       List<dynamic> functional = [];
       await db
           .collection("functionalModule")
-          .document("aoLXTWjhZUFNb1alpUHN")
+          .doc("aoLXTWjhZUFNb1alpUHN")
           .get()
           .then((document) {
-        functional = new List<dynamic>.from(document.data["module"]);
+        functional = new List<dynamic>.from(document.data()["module"]);
 
         print("complete $complete");
       });
-      await db.collection("user").document(userid).get().then((document) {
-        complete = new List<dynamic>.from(document.data["completed"]);
-        points = document.data["points"];
+      await db.collection("user").doc(userid).get().then((document) {
+        complete = new List<dynamic>.from(document.data()["completed"]);
+        points = document.data()["points"];
         print("complete $complete");
       });
       await db
           .collection("points")
-          .where("module", isEqualTo: arguments[0])
-          .getDocuments()
+          .where("module", "==", arguments[0])
+          .get()
           .then((document) {
-        document.documents.forEach((val) {
-          modulePoint = val.data["point"];
+        document.docs.forEach((val) {
+          modulePoint = val.data()["point"];
         });
       });
 
@@ -124,8 +126,8 @@ class orderManagement {
           data["points"] = points + modulePoint;
           await db
               .collection("user")
-              .document(userid)
-              .setData(data, merge: true);
+              .doc(userid)
+              .set(data, fs.SetOptions(merge: true));
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => SummaryPage(),

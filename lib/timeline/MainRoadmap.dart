@@ -1,21 +1,20 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
+
 import 'package:startupreneur/Mentorfeedback/mentorFeedback.dart';
-import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivity.dart';
-import 'package:startupreneur/ModulePages/DownloadFileActivity/DownloadFileActivityLoader.dart';
-import 'package:startupreneur/ModulePages/FileActivity/FileUploadLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
-import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/folderUI.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
+
 import 'package:startupreneur/models/notificationModel.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:toast/toast.dart';
@@ -29,7 +28,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import '../Auth/signin.dart';
 import 'package:video_player/video_player.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/firebase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ChatBoardRoom/ChatBoardRoomLoader.dart';
 import '../ModuleOrderController/Types.dart';
@@ -54,14 +53,14 @@ class TimelinePage extends StatefulWidget {
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  Firestore db = Firestore.instance;
+  Auth _auth = fb.auth();
+  fs.Firestore db = fb.firestore();
   SharedPreferences sharedPreferences;
   int gems = 0;
   VideoPlayerController controller;
   BuildContext context;
   List<int> completedCourse = [];
-  FirebaseUser user;
+  // FirebaseUser user;
   String value = "";
   String uid = "";
   // static var date;
@@ -77,7 +76,7 @@ class _TimelinePageState extends State<TimelinePage> {
   double experinceRating = 0;
   String commentText;
   String institution;
-  final Firestore _db = Firestore.instance;
+  // final Firestore _db = Firestore.instance;
   final FirebaseMessaging _fcm = FirebaseMessaging();
   String _url =
       "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
@@ -106,10 +105,10 @@ class _TimelinePageState extends State<TimelinePage> {
     var docId = sharedPreferences.getString("docId");
     print("docId is $docId");
     sharedPreferences.clear();
-    await Firestore.instance
+    await db
         .collection("user")
-        .document(docId)
-        .setData({"isLoggedIn": false}, merge: true);
+        .doc(docId)
+        .set({"isLoggedIn": false}, fs.SetOptions(merge: true));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => SigninPage(),
     ));
@@ -125,7 +124,7 @@ class _TimelinePageState extends State<TimelinePage> {
       "institution": institution,
       "userName": name
     };
-    await Firestore.instance.collection("internalAppFeedback").add(data);
+    await db.collection("internalAppFeedback").add(data);
   }
 
   launcher(String urlLink) async {
@@ -142,30 +141,30 @@ class _TimelinePageState extends State<TimelinePage> {
     Global.date = DateTime.now().millisecondsSinceEpoch;
     print(Global.date);
     preferences(context);
-    Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
-      if (!yes) {
-        print("inside failed loop $yes");
-        Directory('/storage/emulated/0/Startupreneur').create();
-      } else {
-        print("im here");
-        Directory('/storage/emulated/0/Startupreneur/templates').create();
-      }
-    }).catchError((e) {
-      Directory('/storage/emulated/0/Startupreneur/templates').create();
-    });
-    // widget.status = true;
-    _messaging.getToken().then((token) {
-      print(token);
-    });
-   
+    print("inside main roadmap");
+    // Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
+    //   if (!yes) {
+    //     print("inside failed loop $yes");
+    //     Directory('/storage/emulated/0/Startupreneur').create();
+    //   } else {
+    //     print("im here");
+    //     Directory('/storage/emulated/0/Startupreneur/templates').create();
+    //   }
+    // }).catchError((e) {
+    //   Directory('/storage/emulated/0/Startupreneur/templates').create();
+    // });
+    // // widget.status = true;
+    // _messaging.getToken().then((token) {
+    //   print(token);
+    // });
 
-    Analytics.analyticsBehaviour("Main_RoadMap_TimeLine_Page", "RoadMap");
+    // fb.analytics().setCurrentScreen("Main_RoadMap_TimeLine_Page");
   }
 
-  navigateTo(BuildContext context,var message) {
+  navigateTo(BuildContext context, var message) {
     print("on navigate $message");
     Navigator.push(
-      context,     
+      context,
       MaterialPageRoute(
         builder: (context) => MentorFeedback(
           uid: uid,
@@ -187,27 +186,21 @@ class _TimelinePageState extends State<TimelinePage> {
         builder: (context) => SigninPage(),
       ));
     }
-    await db
-        .collection("user")
-        .where("uid", isEqualTo: uid)
-        .getDocuments()
-        .then((document) {
-      document.documents.forEach((value) {
+    await db.collection("user").where("uid", "==", uid).get().then((document) {
+      document.docs.forEach((value) {
         setState(() {
-          gems = value["points"];
-          name = value["name"];
-          _url = value["profile"];
+          gems = value.data()["points"];
+          name = value.data()["name"];
+          _url = value.data()["profile"];
         });
       });
     });
 
-    await db
-        .collection("user")
-        .where("uid", isEqualTo: uid)
-        .getDocuments()
-        .then((document) {
-      document.documents.forEach((value) {
-        for (int i in value["completed"]) {
+    print("userid from main roadmap is $uid");
+
+    await db.collection("user").where("uid", "==", uid).get().then((document) {
+      document.docs.forEach((value) {
+        for (int i in value.data()["completed"]) {
           setState(() {
             print("done");
             completedCourse.add(i);
@@ -233,315 +226,250 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
-
-     _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // TODO optional
-      },
-      onResume: (Map<String, dynamic> message) async {
-        navigateTo(context,message);
-        // TODO optional
-      },
-    );
-    print("context is from build $context");
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.status) {
-        Flushbar(
-          titleText: Text(
-            "Welcome to Startupreneur",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-          backgroundColor: Colors.green,
-          messageText: Column(
-            children: <Widget>[
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text: "Congratulations! You have received",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                  TextSpan(
-                    text: " 1000 ",
-                    style: TextStyle(
-                      color: Colors.yellow,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "points as a registration bonus :) \n Keep Learning!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ]),
-              ),
-              OutlineButton(
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  "Yay!",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // duration: Duration(seconds: 5),
-        )..show(context);
-        setState(() {
-          widget.status = false;
-        });
-      }
-    });
+    // _fcm.configure(
+    //   onMessage: (Map<String, dynamic> message) async {
+    //     print("onMessage: $message");
+    //   },
+    //   onLaunch: (Map<String, dynamic> message) async {
+    //     print("onLaunch: $message");
+    //     // TODO optional
+    //   },
+    //   onResume: (Map<String, dynamic> message) async {
+    //     navigateTo(context, message);
+    //     // TODO optional
+    //   },
+    // );
+    // print("context is from build $context");
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (widget.status) {
+    //     Flushbar(
+    //       titleText: Text(
+    //         "Welcome to Startupreneur",
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(
+    //           color: Colors.white,
+    //           fontSize: 18,
+    //         ),
+    //       ),
+    //       backgroundColor: Colors.green,
+    //       messageText: Column(
+    //         children: <Widget>[
+    //           RichText(
+    //             text: TextSpan(children: [
+    //               TextSpan(
+    //                 text: "Congratulations! You have received",
+    //                 style: TextStyle(
+    //                   color: Colors.white,
+    //                   fontSize: 16,
+    //                 ),
+    //               ),
+    //               TextSpan(
+    //                 text: " 1000 ",
+    //                 style: TextStyle(
+    //                   color: Colors.yellow,
+    //                   fontSize: 20,
+    //                   fontWeight: FontWeight.w900,
+    //                 ),
+    //               ),
+    //               TextSpan(
+    //                 text: "points as a registration bonus :) \n Keep Learning!",
+    //                 style: TextStyle(
+    //                   color: Colors.white,
+    //                   fontSize: 16,
+    //                 ),
+    //               ),
+    //             ]),
+    //           ),
+    //           OutlineButton(
+    //             color: Colors.black,
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(20),
+    //             ),
+    //             child: Text(
+    //               "Yay!",
+    //               style: TextStyle(
+    //                 color: Colors.white,
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       // duration: Duration(seconds: 5),
+    //     )..show(context);
+    //     setState(() {
+    //       widget.status = false;
+    //     });
+    //   }
+    // });
     List<Widget> pages = [
       timelineModel(TimelinePosition.Center),
     ];
     orderManagement.currentIndex = 0;
 
-    return OfflineBuilder(
-      connectivityBuilder:
-          (context, ConnectivityResult connectivity, Widget child) {
-        final connected = connectivity != ConnectivityResult.none;
-        if (connected) {
-          child = Scaffold(
-            extendBody: true,
-            backgroundColor: Colors.grey[50],
-            appBar: AppBar(
-              iconTheme: IconThemeData(color: Colors.black),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 9.5),
-                child: Image.asset(
-                  "assets/Images/Capture.PNG",
-                  width: MediaQuery.of(context).size.width * 0.57,
-                ),
-              ),
-              automaticallyImplyLeading: true,
-              backgroundColor: Theme.of(context).primaryColorDark,
-              elevation: 10.0,
-              actions: <Widget>[
-                StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('notification')
-                        .where("timestamp", isGreaterThanOrEqualTo: Global.date)
-                        .orderBy("timestamp")
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      print(snapshot.hasData);
-                      if (snapshot.hasData) {
-                        List<NotificationModel> notify = [];
-                        return Stack(
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                snapshot.data.documents.forEach(
-                                  (data) {
-                                    notify.add(
-                                      NotificationModel(
-                                        msg: data.data['msg'],
-                                        timestamp: data.data['timestamp'],
-                                        type: data.data['type'],
-                                      ),
-                                    );
-                                  },
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NotificationDetail(
-                                      listData: notify,
-                                      uid: uid,
-                                    ),
-                                    fullscreenDialog: true,
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.notifications,
-                                color: Colors.green,
-                              ),
-                            ),
-                            new Positioned(
-                              right: 11,
-                              top: 11,
-                              child: new Container(
-                                padding: EdgeInsets.all(2),
-                                decoration: new BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(6),
+    return Scaffold(
+      extendBody: true,
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 9.5),
+          child: Image.asset(
+            "assets/Images/Capture.PNG",
+            width: MediaQuery.of(context).size.width * 0.57,
+          ),
+        ),
+        automaticallyImplyLeading: true,
+        backgroundColor: Theme.of(context).primaryColorDark,
+        elevation: 10.0,
+        actions: <Widget>[
+          StreamBuilder(
+              stream: db
+                  .collection('notification')
+                  .where("timestamp", ">=", Global.date)
+                  .orderBy("timestamp")
+                  .onSnapshot,
+              builder: (context, snapshot) {
+                print(snapshot.hasData);
+                if (snapshot.hasData) {
+                  List<NotificationModel> notify = [];
+                  return Stack(
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () {
+                          snapshot.data.docs.forEach(
+                            (data) {
+                              notify.add(
+                                NotificationModel(
+                                  msg: data.data()['msg'],
+                                  timestamp: data.data()['timestamp'],
+                                  type: data.data()['type'],
                                 ),
-                                constraints: BoxConstraints(
-                                  minWidth: 14,
-                                  minHeight: 14,
-                                ),
-                                child: Text(
-                                  '${snapshot.data.documents.length}',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
+                              );
+                            },
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationDetail(
+                                listData: notify,
+                                uid: uid,
                               ),
+                              fullscreenDialog: true,
                             ),
-                          ],
-                        );
-                      }
-                      return Stack(
-                        children: <Widget>[
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.notifications,
-                              color: Colors.green,
-                            ),
-                          ),
-                          new Positioned(
-                            right: 11,
-                            top: 11,
-                            child: new Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: new BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              constraints: BoxConstraints(
-                                minWidth: 14,
-                                minHeight: 14,
-                              ),
-                              child: Text(
-                                '0',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-
-                // Row(
-                //   children: <Widget>[
-                //     Image.asset(
-                //       "assets/Images/coins.png",
-                //       height: 15,
-                //       width: 15,
-                //     ),
-                //     Text(
-                //       " $gems",
-                //       style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //     Padding(
-                //       padding: EdgeInsets.only(right: 20),
-                //     ),
-                //   ],
-                // )
-              ],
-            ),
-            drawer: Drawer(
-              child: ListView(
-                children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    accountEmail: Row(
-                      children: <Widget>[
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: Icon(
-                        //     FontAwesomeIcons.solidGem,
-                        //     color: Colors.green,
-                        //     size: 15,
-                        //   ),
-                        // ),
-                        GestureDetector(
-                          child: Image.asset(
-                            "assets/Images/coins.png",
-                            height: 20,
-                            width: 20,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ProfileLoading(uid: uid),
-                              ),
-                            );
-                          },
+                          );
+                        },
+                        icon: Icon(
+                          Icons.notifications,
+                          color: Colors.green,
                         ),
-                        Text(
-                          " $gems",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 20),
-                        ),
-                      ],
-                    ),
-                    accountName: Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 18,
                       ),
-                    ),
-                    currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(_url),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileLoading(uid: uid),
+                      new Positioned(
+                        right: 11,
+                        top: 11,
+                        child: new Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                        );
-                      },
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                    ),
-                  ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset("assets/Images/log.png"),
-                        ],
-                      )),
-                  ListTile(
-                    leading: Icon(
-                      Icons.assignment_ind,
-                    ),
-                    title: Text(
-                      'My Dashboard',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
+                          constraints: BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Text(
+                            '${snapshot.data.docs.length}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return Stack(
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.notifications,
                         color: Colors.green,
                       ),
                     ),
+                    new Positioned(
+                      right: 11,
+                      top: 11,
+                      child: new Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: new BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: Text(
+                          '0',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+
+          // Row(
+          //   children: <Widget>[
+          //     Image.asset(
+          //       "assets/Images/coins.png",
+          //       height: 15,
+          //       width: 15,
+          //     ),
+          //     Text(
+          //       " $gems",
+          //       style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 12,
+          //       ),
+          //     ),
+          //     Padding(
+          //       padding: EdgeInsets.only(right: 20),
+          //     ),
+          //   ],
+          // )
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountEmail: Row(
+                children: <Widget>[
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: Icon(
+                  //     FontAwesomeIcons.solidGem,
+                  //     color: Colors.green,
+                  //     size: 15,
+                  //   ),
+                  // ),
+                  GestureDetector(
+                    child: Image.asset(
+                      "assets/Images/coins.png",
+                      height: 20,
+                      width: 20,
+                    ),
                     onTap: () {
-                      Navigator.of(context).pop();
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ProfileLoading(uid: uid),
@@ -549,311 +477,361 @@ class _TimelinePageState extends State<TimelinePage> {
                       );
                     },
                   ),
-                  // ListTile(
-                  //   leading: Icon(
-                  //     Icons.book,
-                  //   ),
-                  //   title: Text(
-                  //     'Startup Dictionary',
-                  //     style: TextStyle(
-                  //       letterSpacing: 0.5,
-                  //       color: Colors.green,
-                  //     ),
-                  //   ),
-                  //   onTap: () {
-                  //     Navigator.of(context).pop();
-                  //     Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (context) => (Vocabulary()),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                  // ListTile(
-                  //   leading: Icon(Icons.store),
-                  //   title: Text(
-                  //     'The Startupreneur GoldMine',
-                  //     style: TextStyle(
-                  //       color: Colors.green,
-                  //       letterSpacing: 0.5,
-                  //     ),
-                  //   ),
-                  //   onTap: () {
-                  //     Navigator.of(context).pop();
-                  //     Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (context) => (HustleStoreLoader()),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                  ListTile(
-                    leading: Icon(Icons.chat),
-                    title: Text(
-                      'Discussion Board',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (ChatBoardRoomLoader()),
-                        ),
-                      );
-                    },
+                  Text(
+                    " $gems",
+                    style: TextStyle(color: Colors.white),
                   ),
-                   ListTile(
-                    leading: Icon(Icons.business_center),
-                    title: Text(
-                      'Venture Builder',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (FolderBuilder(
-                            completedCourse: completedCourse
-                          )),
-                        ),
-                      );
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(right: 20),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.folder),
-                    title: Text(
-                      'Additional Materials',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (AdditionalMaterialPage()),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.help),
-                    title: Text(
-                      'Help and FAQ',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (HelpAndFaq()),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.textsms),
-                    title: Text(
-                      'Feedback',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                      ),
-                    ),
-                    trailing: StreamBuilder(
-                        stream: Firestore.instance
-                            .collection("mentorFeedbackLMS")
-                            .where("read", isEqualTo: false)
-                            .where("userId", isEqualTo: uid)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            print(snapshot.data.documents.length);
-                            return RawMaterialButton(
-                              onPressed: () {},
-                              child: Text(
-                                "${snapshot.data.documents.length}",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.white),
-                              ),
-                              shape: new CircleBorder(),
-                              elevation: 0.1,
-                              fillColor: Colors.green,
-                              constraints: BoxConstraints(
-                                maxHeight: 75,
-                                maxWidth: 75,
-                                minHeight: 25,
-                                minWidth: 25,
-                              ),
-                              // padding: const EdgeInsets.all(0.0),
-                            );
-                          }
-                          return RawMaterialButton(
-                            onPressed: () {},
-                            child: Text(
-                              "0",
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white),
-                            ),
-                            shape: new CircleBorder(),
-                            elevation: 0.1,
-                            fillColor: Colors.green,
-                            constraints: BoxConstraints(
-                              maxHeight: 75,
-                              maxWidth: 75,
-                              minHeight: 25,
-                              minWidth: 25,
-                            ),
-                            // padding: const EdgeInsets.all(0.0),
-                          );
-                        }),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => (MentorFeedback(
-                            uid: uid,
-                          )),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.store),
-                    title: Text(
-                      'App Feedback',
-                      style: TextStyle(
-                        color: Colors.green,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Feedback',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.green,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            content: buildRatingView(context),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.lock_open),
-                    title: Text(
-                      'Logout',
-                      style: TextStyle(
-                        color: Colors.green,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    onTap: () {
-                      _auth.signOut();
-                      _sharedpreference(context);
-                    },
-                  ),
-                  Divider(),
-                  Align(
-                    alignment: Alignment.bottomLeft * 0.4,
-                    child: Text(
-                      "The Startupreneur® All Rights Reserved",
-                      style:
-                          TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      //                  SizedBox(
-                      //                    width: MediaQuery.of(context).size.width * 0.05,
-                      //                  ),
-                      IconButton(
-                        onPressed: () {
-                          launcher(
-                              "https://www.facebook.com/thestartupreneurofficial/");
-                        },
-                        icon: Icon(
-                          FontAwesomeIcons.facebook,
-                          color: Colors.green,
-                          size: 18,
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          launcher(
-                              "https://www.linkedin.com/company/startupreneur/");
-                        },
-                        icon: Icon(
-                          FontAwesomeIcons.linkedinIn,
-                          color: Colors.green,
-                          size: 18,
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          launcher("https://twitter.com/TStartupreneur");
-                        },
-                        icon: Icon(
-                          FontAwesomeIcons.twitter,
-                          color: Colors.green,
-                          size: 18,
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          launcher("http://bit.ly/2Kp153P");
-                        },
-                        icon: Icon(
-                          FontAwesomeIcons.medium,
-                          color: Colors.green,
-                          size: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  //              SizedBox(
-                  ////                height: MediaQuery.of(context).size.height * 0.01,
-                  ////              ),
                 ],
               ),
+              accountName: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              currentAccountPicture: GestureDetector(
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(_url),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfileLoading(uid: uid),
+                    ),
+                  );
+                },
+              ),
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
             ),
-            body: Stack(
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset("assets/Images/log.png"),
+                  ],
+                )),
+            ListTile(
+              leading: Icon(
+                Icons.assignment_ind,
+              ),
+              title: Text(
+                'My Dashboard',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProfileLoading(uid: uid),
+                  ),
+                );
+              },
+            ),
+            // ListTile(
+            //   leading: Icon(
+            //     Icons.book,
+            //   ),
+            //   title: Text(
+            //     'Startup Dictionary',
+            //     style: TextStyle(
+            //       letterSpacing: 0.5,
+            //       color: Colors.green,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //         builder: (context) => (Vocabulary()),
+            //       ),
+            //     );
+            //   },
+            // ),
+            // ListTile(
+            //   leading: Icon(Icons.store),
+            //   title: Text(
+            //     'The Startupreneur GoldMine',
+            //     style: TextStyle(
+            //       color: Colors.green,
+            //       letterSpacing: 0.5,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //         builder: (context) => (HustleStoreLoader()),
+            //       ),
+            //     );
+            //   },
+            // ),
+            ListTile(
+              leading: Icon(Icons.chat),
+              title: Text(
+                'Discussion Board',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (ChatBoardRoomLoader()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.business_center),
+              title: Text(
+                'Venture Builder',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        (FolderBuilder(completedCourse: completedCourse)),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.folder),
+              title: Text(
+                'Additional Materials',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (AdditionalMaterialPage()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text(
+                'Help and FAQ',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (HelpAndFaq()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.textsms),
+              title: Text(
+                'Feedback',
+                style: TextStyle(
+                  letterSpacing: 0.5,
+                  color: Colors.green,
+                ),
+              ),
+              trailing: StreamBuilder(
+                  stream: db
+                      .collection("mentorFeedbackLMS")
+                      .where("read", "==", false)
+                      .where("userId", "==", uid)
+                      .onSnapshot,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.data.docs.length);
+                      return RawMaterialButton(
+                        onPressed: () {},
+                        child: Text(
+                          "${snapshot.data.docs.length}",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                        shape: new CircleBorder(),
+                        elevation: 0.1,
+                        fillColor: Colors.green,
+                        constraints: BoxConstraints(
+                          maxHeight: 75,
+                          maxWidth: 75,
+                          minHeight: 25,
+                          minWidth: 25,
+                        ),
+                        // padding: const EdgeInsets.all(0.0),
+                      );
+                    }
+                    return RawMaterialButton(
+                      onPressed: () {},
+                      child: Text(
+                        "0",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                      shape: new CircleBorder(),
+                      elevation: 0.1,
+                      fillColor: Colors.green,
+                      constraints: BoxConstraints(
+                        maxHeight: 75,
+                        maxWidth: 75,
+                        minHeight: 25,
+                        minWidth: 25,
+                      ),
+                      // padding: const EdgeInsets.all(0.0),
+                    );
+                  }),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => (MentorFeedback(
+                      uid: uid,
+                    )),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.store),
+              title: Text(
+                'App Feedback',
+                style: TextStyle(
+                  color: Colors.green,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(
+                        'Feedback',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.green,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      content: buildRatingView(context),
+                    );
+                  },
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lock_open),
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.green,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              onTap: () {
+                _auth.signOut();
+                _sharedpreference(context);
+              },
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.bottomLeft * 0.4,
+              child: Text(
+                "The Startupreneur® All Rights Reserved",
+                style:
+                    TextStyle(), //fontStyle: FontStyle.italic  fontWeight: FontWeight.bold,
+              ),
+            ),
+            Row(
               children: <Widget>[
-                PageView(children: pages),
+                //                  SizedBox(
+                //                    width: MediaQuery.of(context).size.width * 0.05,
+                //                  ),
+                IconButton(
+                  onPressed: () {
+                    launcher(
+                        "https://www.facebook.com/thestartupreneurofficial/");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.facebook,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("https://www.linkedin.com/company/startupreneur/");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.linkedinIn,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("https://twitter.com/TStartupreneur");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.twitter,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launcher("http://bit.ly/2Kp153P");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.medium,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                ),
               ],
             ),
-          );
-        }
-        return child;
-      },
-      child: NoNetPage(),
+            //              SizedBox(
+            ////                height: MediaQuery.of(context).size.height * 0.01,
+            ////              ),
+          ],
+        ),
+      ),
+      body: Stack(
+        children: <Widget>[
+          PageView(children: pages),
+        ],
+      ),
     );
   }
 

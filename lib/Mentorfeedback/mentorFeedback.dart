@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,34 +16,37 @@ class MentorFeedback extends StatefulWidget {
 
 class _MentorFeedbackState extends State<MentorFeedback> {
   List<MentorFeedbackModel> list = [];
+
+   fs.Firestore db = fb.firestore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Evaluation and Feedback"),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
+      body: StreamBuilder<fs.QuerySnapshot>(
+        stream: db
             .collection("mentorFeedbackLMS")
-            .where("userId", isEqualTo: widget.uid)
-            .orderBy("timestamp", descending: true)
-            .snapshots(),
+            .where("userId", "==", widget.uid)
+            .orderBy("timestamp", "desc")
+            .onSnapshot,
         builder: (context, snapshot) {
           print(widget.uid);
           if (snapshot.hasData) {
             list.clear();
-            snapshot.data.documents.forEach((data) {
+            snapshot.data.docs.forEach((data) {
               list.add(MentorFeedbackModel(
-                message: data.data["message"],
-                timeStamp: data.data["timestamp"],
-                userId: data.data["userId"],
-                uniqueId: data.data["uniqueId"],
-                read: data.data["read"],
-                moduleNumber: data.data["moduleNumber"],
+                message: data.data()["message"],
+                timeStamp: data.data()["timestamp"],
+                userId: data.data()["userId"],
+                uniqueId: data.data()["uniqueId"],
+                read: data.data()["read"],
+                moduleNumber: data.data()["moduleNumber"],
               ));
             });
             return ListView.builder(
-              itemCount: snapshot.data.documents.length,
+              itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 DateTime date = new DateTime.fromMillisecondsSinceEpoch(
                     list[index].timeStamp*1000);
@@ -56,13 +61,13 @@ class _MentorFeedbackState extends State<MentorFeedback> {
                   data["read"] = true;
                   data["moduleNumber"] = list[index].moduleNumber;
                   print(!list[index].read);
-                  final DocumentSnapshot userDoc =
-                      snapshot.data.documents[index];
-                  print(userDoc.documentID);
-                  Firestore.instance
+                  final fs.DocumentSnapshot userDoc =
+                      snapshot.data.docs[index];
+                  print(userDoc.id);
+                 db
                       .collection("mentorFeedbackLMS")
-                      .document(userDoc.documentID)
-                      .setData(data, merge: true);
+                      .doc(userDoc.id)
+                      .set(data, fs.SetOptions(merge: true));
                 }
                 return Card(
                   elevation: 5,

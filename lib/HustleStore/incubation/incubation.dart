@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/HustleStore/ViewDocs/ViewDocs.dart';
 import 'package:startupreneur/ModulePages/UserDetail.dart';
@@ -42,7 +44,7 @@ class Incubation extends StatefulWidget {
 class _IncubationState extends State<Incubation> {
   List<Internships> list = [];
   dynamic dataSnapshot;
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
   SharedPreferences sharedPreferences;
   String UserId;
   String resumeDownload;
@@ -61,7 +63,7 @@ class _IncubationState extends State<Incubation> {
     preferences();
     status = false;
 
-    Analytics.analyticsBehaviour("Incubation_Hustle_Store", "incubation_Hustle");
+    // Analytics.analyticsBehaviour("Incubation_Hustle_Store", "incubation_Hustle");
   }
 
   void preferences() async {
@@ -75,8 +77,8 @@ class _IncubationState extends State<Incubation> {
     progressDialog.setMessage("Please wait");
     try {
       progressDialog.show();
-      await db.collection("user").document(UserId).get().then((document) {
-        resumeDownload = document.data["resume"];
+      await db.collection("user").doc(UserId).get().then((document) {
+        resumeDownload = document.data()["resume"];
         print(resumeDownload);
       });
       if (resumeDownload == "") {
@@ -122,7 +124,7 @@ class _IncubationState extends State<Incubation> {
   }
 
   List<Widget> listGenerated(
-      var lengthVal, AsyncSnapshot<QuerySnapshot> snapshot) {
+      var lengthVal, AsyncSnapshot snapshot) {
 //    print("${lengthVal}");
     List<Widget> listWidget = new List<Widget>();
     listWidget.add(Column(
@@ -192,7 +194,7 @@ class _IncubationState extends State<Incubation> {
     return listWidget;
   }
 
-  List<Widget> expansionGeneration(AsyncSnapshot<QuerySnapshot> snapshot) {
+  List<Widget> expansionGeneration(AsyncSnapshot snapshot) {
     List<Widget> value = [];
     print("value of list ${list.length}");
 
@@ -274,27 +276,27 @@ class _IncubationState extends State<Incubation> {
                     ),
                   ),
                 ),
-                StreamBuilder<QuerySnapshot>(
+                StreamBuilder(
                     stream:
-                        Firestore.instance.collection("incubation").snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        db.collection("incubation").onSnapshot,
+                    builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                       switch (snapshot.data) {
                         case null:
                           print("hello null");
                           return CircularProgressIndicator();
                         default:
                           list.clear();
-                          snapshot.data.documents.forEach((document) {
+                          snapshot.data.docs.forEach((document) {
                             dataSnapshot = document;
 
                             list.add(new Internships(
-                              name: document.data["name"],
-                              description: document.data["about"],
-                              logo: document.data["logo"],
-                              location: document.data["location"],
-                              sector: document.data["sector"],
-                              email: document.data["email"],
-                              doc: document.data["document"],
+                              name: document.data()["name"],
+                              description: document.data()["about"],
+                              logo: document.data()["logo"],
+                              location: document.data()["location"],
+                              sector: document.data()["sector"],
+                              email: document.data()["email"],
+                              doc: document.data()["document"],
                             ));
                           });
 //                          print(list);
