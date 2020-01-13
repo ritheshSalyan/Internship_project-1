@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +10,8 @@ import '../../progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flushbar/flushbar.dart';
 import '../ViewDocs/ViewDocs.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 
 class Internships {
   String name;
@@ -49,7 +51,7 @@ class ListingData extends StatefulWidget {
 class _ListingDataState extends State<ListingData> {
   List<Internships> list = [];
   dynamic dataSnapshot;
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
   SharedPreferences sharedPreferences;
   String UserId;
   String resumeDownload;
@@ -73,7 +75,7 @@ class _ListingDataState extends State<ListingData> {
       widget.title = "Internship";
     }
 
-    Analytics.analyticsBehaviour("internship_Offer_Page", "Internship_Page");
+    // Analytics.analyticsBehaviour("internship_Offer_Page", "Internship_Page");
   }
 
   void preferences() async {
@@ -87,8 +89,8 @@ class _ListingDataState extends State<ListingData> {
     progressDialog.setMessage("Please wait");
     try {
       progressDialog.show();
-      await db.collection("user").document(UserId).get().then((document) {
-        resumeDownload = document.data["resume"];
+      await db.collection("user").doc(UserId).get().then((document) {
+        resumeDownload = document.data()["resume"];
         print(resumeDownload);
       });
       if (resumeDownload == "") {
@@ -133,7 +135,7 @@ class _ListingDataState extends State<ListingData> {
   }
 
   List<Widget> listGenerated(var lengthVal,
-      AsyncSnapshot<QuerySnapshot> snapshot, BuildContext context) {
+      AsyncSnapshot<fs.QuerySnapshot> snapshot, BuildContext context) {
     List<Widget> listWidget = new List<Widget>();
     listWidget.add(
       Column(
@@ -220,7 +222,7 @@ class _ListingDataState extends State<ListingData> {
   }
 
   List<Widget> expansionGeneration(
-      AsyncSnapshot<QuerySnapshot> snapshot, BuildContext context) {
+      AsyncSnapshot<fs.QuerySnapshot> snapshot, BuildContext context) {
     List<Widget> value = [];
     print("value of list ${list.length}");
     for (int i = 0; i < list.length; i++) {
@@ -298,31 +300,31 @@ class _ListingDataState extends State<ListingData> {
                     ),
                   ),
                 ),
-                StreamBuilder<QuerySnapshot>(
+                StreamBuilder<fs.QuerySnapshot>(
                   stream:
-                      Firestore.instance.collection("Internship").snapshots(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                     db.collection("Internship").onSnapshot,
+                  builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                     switch (snapshot.data) {
                       case null:
                         print("hello null");
                         return CircularProgressIndicator();
                       default:
                         list.clear();
-                        snapshot.data.documents.forEach(
+                        snapshot.data.docs.forEach(
                           (document) {
                             dataSnapshot = document;
                             list.add(
                               new Internships(
-                                name: document.data["name"],
-                                description: document.data["description"],
-                                type: document.data["type"],
-                                role: document.data["role"],
-                                logo: document.data["logo"],
-                                email: document.data["contactEmail"],
-                                duration: document.data["duration"],
-                                location: document.data["location"],
-                                compensation: document.data["compensation"],
-                                docs: document.data["document"],
+                                name: document.data()["name"],
+                                description: document.data()["description"],
+                                type: document.data()["type"],
+                                role: document.data()["role"],
+                                logo: document.data()["logo"],
+                                email: document.data()["contactEmail"],
+                                duration: document.data()["duration"],
+                                location: document.data()["location"],
+                                compensation: document.data()["compensation"],
+                                docs: document.data()["document"],
                               ),
                             );
                           },

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'HustelTip.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -14,6 +16,7 @@ class HustelTipLoading extends StatefulWidget {
 }
 
 class _HustelTipLoading extends State<HustelTipLoading> {
+  static fs.Firestore db = fb.firestore();
   @override
   void initState() {
 
@@ -66,18 +69,18 @@ class _HustelTipLoading extends State<HustelTipLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('hustelTip');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+    fs.CollectionReference ref =db.collection('hustelTip');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("module","==", modNum)
+        .where("order","==", orderManagement.currentIndex).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       print("HustelTip " +
           document.toString());
 
-      title = convert(document["content"]);
+      title = convert(document.data()["content"]);
       // title.add(document["image"].toString());
     });
 

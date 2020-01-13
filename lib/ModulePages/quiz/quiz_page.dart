@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -15,7 +17,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
   // static final _formkey = GlobalKey<FormState>();
   final TextStyle _questionStyle = TextStyle(
     fontSize: 18.0,
@@ -44,12 +46,12 @@ class _QuizPageState extends State<QuizPage> {
     var data = Map<String, dynamic>();
     data['answer'] = options[int.parse(_answerIs)];
     data['attempts'] = attempts;
-    Firestore.instance
+    db
         .collection("quiz")
-        .document(documentId)
+        .doc(documentId)
         .collection("answers")
-        .document(userId)
-        .setData(data);
+        .doc(userId)
+        .set(data);
   }
 
   @override
@@ -159,14 +161,14 @@ class _QuizPageState extends State<QuizPage> {
                                         0.1),
                               ),
                               Expanded(
-                                child: StreamBuilder<QuerySnapshot>(
-                                  stream: Firestore.instance
+                                child: StreamBuilder<fs.QuerySnapshot>(
+                                  stream:db
                                       .collection("quiz")
-                                      .where("module", isEqualTo: widget.modNum)
-                                      .where("order", isEqualTo: widget.order)
-                                      .snapshots(),
+                                      .where("module", "==", widget.modNum)
+                                      .where("order", "==", widget.order)
+                                      .onSnapshot,
                                   builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                                     // if(snapshot.error){
                                     //   print("error");
                                     // }
@@ -175,10 +177,10 @@ class _QuizPageState extends State<QuizPage> {
                                       case null:
                                         return CircularProgressIndicator();
                                       default:
-                                        snapshot.data.documents
+                                        snapshot.data.docs
                                             .forEach((document) {
-                                          question = document["question"];
-                                          documentId = document.documentID;
+                                          question = document.data()["question"];
+                                          documentId = document.id;
                                         });
                                         // return Row(
                                         //   children: <Widget>[
@@ -201,14 +203,14 @@ class _QuizPageState extends State<QuizPage> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                StreamBuilder<QuerySnapshot>(
+                                StreamBuilder<fs.QuerySnapshot>(
                                   stream: db
                                       .collection("quiz")
-                                      .where("module", isEqualTo: widget.modNum)
-                                      .where("order", isEqualTo: widget.order)
-                                      .snapshots(),
+                                      .where("module", "==", widget.modNum)
+                                      .where("order", "==", widget.order)
+                                      .onSnapshot,
                                   builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                                     switch (snapshot.data) {
                                       case null:
                                         return Center(
@@ -222,12 +224,12 @@ class _QuizPageState extends State<QuizPage> {
                                         );
                                       default:
                                         options.clear();
-                                        snapshot.data.documents
+                                        snapshot.data.docs
                                             .forEach((document) {
-                                          correctAns = document["answer"]
+                                          correctAns = document.data()["answer"]
                                               .toString()
                                               .split(",");
-                                          reason = document["reason"];
+                                          reason = document.data()["reason"];
                                           if (reason.isEmpty) {
                                             reason = "";
                                           } else {
@@ -235,7 +237,7 @@ class _QuizPageState extends State<QuizPage> {
                                           }
                                           // print(correctAns);
                                           for (dynamic i
-                                              in document["option"]) {
+                                              in document.data()["option"]) {
                                             options.add(i);
                                           }
                                         });

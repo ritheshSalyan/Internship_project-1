@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -14,20 +16,21 @@ class FlipPage extends StatefulWidget {
 }
 
 class _FlipPageState extends State<FlipPage> {
+  static fs.Firestore firestore =fb.firestore();
   static Future<List<String>> getEventsFromFirestore(
       int modNum, int index) async {
-    CollectionReference ref = Firestore.instance.collection('flipPage');
-    QuerySnapshot eventsQuery = await ref
-        .where("module", isEqualTo: modNum)
-        .where("order", isEqualTo: index)
-        .getDocuments();
+    fs.CollectionReference ref = firestore.collection('flipPage');
+    fs.QuerySnapshot eventsQuery = await ref
+        .where("module", "==", modNum)
+        .where("order", "==", index)
+        .get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       print("ImagePage " + document.toString());
 
-      title = convert(document["content"]);
+      title = convert(document.data()["content"]);
       // title.add(document["image"].toString());
     });
 

@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/ListActivity.dart';
@@ -8,17 +10,17 @@ import 'activityIntro.dart';
 class ActivityListPage extends StatelessWidget {
   ActivityListPage({this.modName, this.modNum});
   dynamic modName, modNum;
-
+  fs.Firestore db = fb.firestore();
   List intro = [];
   List headings = [];
   @override
   Widget build(BuildContext context) {
     print(modNum);
     return StreamBuilder(
-      stream: Firestore.instance
+      stream: db
           .collection("activity")
-          .where("module", isEqualTo: modNum)
-          .snapshots(),
+          .where("module", "==", modNum)
+          .onSnapshot,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data.documents.length != 0) {
           return ListView.builder(

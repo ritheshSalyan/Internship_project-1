@@ -5,8 +5,11 @@ import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/home.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
+import 'package:firebase/firebase.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import 'PdfReader.dart';
@@ -21,7 +24,9 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage>
     with AutomaticKeepAliveClientMixin {
-  static FirebaseUser user;
+  // static FirebaseUser user;
+  static Auth auth;
+ static fs.Firestore firestore = fb.firestore();
   static SharedPreferences sharedPreferences;
   static ProgressDialog progressDialog;
   static final _formkey = GlobalKey<FormState>();
@@ -55,19 +60,21 @@ class _SignupPageState extends State<SignupPage>
   static var institutionOrCompany = "";
   static var typeOfOccupations;
   static var referalCodeFromFriend = "", userid = "";
-  static Firestore db = Firestore.instance;
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  // static Firestore db = Firestore.instance;
+  // static final FirebaseAuth _auth = FirebaseAuth.instance;
   static dynamic referePoint = 0;
   PDFDocument doc;
   static String tokenId = "";
   bool status = false;
   String _documentPath = 'assets/pdf/t_and_c.pdf';
 
+  
+
   static _preferences(String userid) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userid);
     sharedPreferences.setString("UserEmail", email);
-    Analytics.setUserId(userid);
+    fb.analytics().setUserId(userid);
   }
 
   void signUpInwithEmail(BuildContext context) async {
@@ -77,7 +84,9 @@ class _SignupPageState extends State<SignupPage>
     progressDialog.show();
 
     var value;
-    await _auth.fetchSignInMethodsForEmail(email: email).then((data) {
+
+
+    await auth.fetchSignInMethodsForEmail( email).then((data) {
       // print(data);
       value = data;
     });
@@ -111,39 +120,39 @@ class _SignupPageState extends State<SignupPage>
     if (flag) {
       try {
         progressDialog.show();
-        user = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: _password,
-        );
+       var user = (await auth.createUserWithEmailAndPassword(
+          email,
+           _password,
+        )).user;
         // print("Email Verification");
         progressDialog.setMessage("Please Verify Email");
         //await user.sendEmailVerification();
-        user = await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: _password,
-        );
+        user = (await auth.signInWithEmailAndPassword(
+         email,
+           _password,
+        )).user;
         userid = user.uid;
         _preferences(userid);
         // print("its is $user");
         Toast.show("Please Verify your Email id and sign In", context,
             gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
         if (referalCodeFromFriend.isNotEmpty) {
-          await db
+          await firestore
               .collection("user")
-              .where("uid", isEqualTo: referalCodeFromFriend)
-              .getDocuments()
+              .where("uid", "==", referalCodeFromFriend)
+              .get()
               .then((onValue) {
-            onValue.documents.forEach((document) {
-              referePoint = document.data["points"];
+            onValue.docs.forEach((document) {
+              referePoint = document.data()["points"];
             });
           });
 
           var dataMap = new Map<String, dynamic>();
           dataMap['points'] = 5000 + referePoint;
-          db
+          firestore
               .collection("user")
-              .document(referalCodeFromFriend)
-              .setData(dataMap, merge: true);
+              .doc(referalCodeFromFriend)
+              .set(dataMap, fs.SetOptions(merge: true));
         }
 
         createNote();
@@ -161,7 +170,7 @@ class _SignupPageState extends State<SignupPage>
         Toast.show("Sign up failed, please try again", context,
             gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       } finally {
-        if (user != null) {}
+        if (userid != null) {}
       }
     }
   }
@@ -184,17 +193,17 @@ class _SignupPageState extends State<SignupPage>
     dataMap['profile'] =
         "https://firebasestorage.googleapis.com/v0/b/thestartupreneur-e1201.appspot.com/o/images%2Favatar.png?alt=media&token=d6c06033-ba6d-40f9-992c-b97df1899102";
     // dataMap['uid'] = userid;
-    db
+    firestore
         .collection("user")
-        .document(userid)
-        .setData(dataMap, merge: true)
+        .doc(userid)
+        .set(dataMap, fs.SetOptions(merge: true))
         .catchError((e) {
       print(e);
     });
 
     var data = Map<String, dynamic>();
     data["mobToken"] = tokenId;
-    db.collection("pushToken").document(userid).setData(data).catchError((e) {
+    firestore.collection("pushToken").doc(userid).set(data).catchError((e) {
       print(e);
     });
     // db.collection("pushToken").document(userid).add(data).catchError((e){
@@ -230,7 +239,8 @@ class _SignupPageState extends State<SignupPage>
         tokenId = token;
       });
     });
-    Analytics.analyticsBehaviour("Sign_up_page", "SignUp");
+    auth =fb.auth();
+    // Analytics.analyticsBehaviour("Sign_up_page", "SignUp");
   }
 
   Widget fullName(BuildContext context) => TextFormField(

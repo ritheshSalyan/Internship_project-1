@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoom.dart';
 import 'package:startupreneur/models/chatBoard.dart';
 // import 'package:firebase_database/firebase_database.dart';
@@ -12,7 +14,7 @@ class ChatBoardRoomLoader extends StatefulWidget {
 }
 
 class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
-  Firestore db;
+  fs.Firestore db;
   List<ChatBoardData> list = [];
 
   @override
@@ -66,16 +68,16 @@ class _ChatBoardRoomLoaderState extends State<ChatBoardRoomLoader> {
   }
 
   Future<List<ChatBoardData>> fetchDataStorage() async {
-    db = Firestore.instance;
+    db =fb.firestore();
     list.clear();
     await db
         .collection("chat")
-        .orderBy("timestamp", descending: true)
-        .getDocuments()
+        .orderBy("timestamp", "desc")
+        .get()
         .then((documentSnapshot) {
-      documentSnapshot.documents.forEach((data) {
+      documentSnapshot.docs.forEach((data) {
         list.add(
-          ChatBoardData.fromJson(data.data),
+          ChatBoardData.fromJson(data.data()),
         );
       });
       // list.add(new ChatRoom(

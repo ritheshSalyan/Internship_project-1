@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -6,12 +6,17 @@ import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'package:startupreneur/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
+import 'package:firebase/firebase.dart';
+
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import 'signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'fire';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -27,49 +32,53 @@ class _SigninPageState extends State<SigninPage> {
   static String _password = "";
   static String _otpEmail = "";
   static String tokenId = "";
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  // static final FirebaseAuth _auth = FirebaseAuth.instance;
   static SharedPreferences sharedPreferences;
-  static Firestore db = Firestore.instance;
+  // static Firestore db = Firestore.instance;
+  static Auth auth;
+  static fs.Firestore firestore = fb.firestore();
 
   @override
   void initState() {
     super.initState();
-    _messaging.getToken().then((token) {
-      setState(() {
-        tokenId = token;
-      });
-    });
-    Analytics.analyticsBehaviour("Sign_in_page", "SignIn");
+    // _messaging.getToken().then((token) {
+    //   setState(() {
+    //     tokenId = token;
+    //   });
+    // });
+    auth = fb.auth();
+    print("inside login init");
+    // fb.Analytics.getInstance().analyticsBehaviour("Sign_in_page", "SignIn");
   }
 
-  static preferences(String userId, String _email,String docId) async {
+  static preferences(String userId, String _email, String docId) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("UserId", userId);
     sharedPreferences.setString("UserEmail", _email);
     sharedPreferences.setString("docId", docId);
 
-    Analytics.setUserId(userId);
+    // Analytics.setUserId(userId);
     // print(sharedPreferences.getString("UserId"));
-    var data = Map<String, dynamic>();
-    data["mobToken"] = tokenId;
-    await db.collection("pushToken").document(userId).setData(data);
+    // var data = Map<String, dynamic>();
+    // data["mobToken"] = tokenId;
+    // await firestore.collection("pushToken").doc(userId).set(data);
   }
 
   void signUpInwithEmail(BuildContext context) async {
-    FirebaseUser user;
+    // FirebaseUser user;
     progressDialog = new ProgressDialog(context, ProgressDialogType.Normal);
     progressDialog.setMessage("Signing in ..");
     try {
       progressDialog.show();
       // _auth.
-      await Firestore.instance
+      await firestore
           .collection("user")
-          .where("email", isEqualTo: _email)
-          .getDocuments()
+          .where("email", "==", _email)
+          .get()
           .then((document) {
-        document.documents.forEach((data) async {
-          var id = data.documentID;
-          var isLoggedIn = data.data["isLoggedIn"];
+        document.docs.forEach((data) async {
+          var id = data.data();
+          var isLoggedIn = id['isLoggedIn'];
           if (isLoggedIn) {
             Toast.show(
                 "Email is already logged in , please logout from other device",
@@ -78,14 +87,17 @@ class _SigninPageState extends State<SigninPage> {
                 duration: Toast.LENGTH_LONG);
             progressDialog.hide();
           } else {
-            user = await _auth.signInWithEmailAndPassword(
-              email: _email,
-              password: _password,
+            var user = await auth.signInWithEmailAndPassword(
+              _email,
+              _password,
             );
-            await Firestore.instance.collection("user").document(id).setData({
-              "isLoggedIn": true,
-            }, merge: true);
-            preferences(user.uid, _email,id);
+            await firestore.collection("user").doc(user.user.uid).set({
+              "isLoggedIn": false,
+            }, fs.SetOptions(merge: true));
+            print(user.user.uid);
+            print(_email);
+            print(data.id);
+            preferences(user.user.uid, _email, data.id);
             progressDialog.hide();
             print("Sign in Successfull");
             Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -118,7 +130,7 @@ class _SigninPageState extends State<SigninPage> {
       Toast.show("Password Reset Mail has been sent", context,
           duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
-      await _auth.sendPasswordResetEmail(email: _otpEmail);
+      await auth.sendPasswordResetEmail(_otpEmail);
     }
   }
 
@@ -269,167 +281,153 @@ class _SigninPageState extends State<SigninPage> {
         automaticallyImplyLeading: false,
       ),
       // body:
-      body: OfflineBuilder(
-        connectivityBuilder:
-            (context, ConnectivityResult connectivity, Widget child) {
-          final connected = connectivity != ConnectivityResult.none;
-          if (connected) {
-            child = Center(
-              child: Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                height: double.infinity,
-                padding: EdgeInsets.all(20),
-                child: Form(
-                  key: _formkey,
-                  child: ListView(
-                    children: <Widget>[
-                      Text(
-                        "SIGN IN",
-                        style: TextStyle(
-                            fontSize: 20,
-                            letterSpacing: 2,
-                            fontFamily: "Open Sans"),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 200),
-                      ),
-                      Text(
-                        "           ",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.green,
-                            decorationThickness: 5),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                      ),
-                      emailField,
-                      Padding(
-                        padding: EdgeInsets.only(top: 20),
-                      ),
-                      passwordField,
-                      FlatButton(
-                        padding: EdgeInsets.only(left: 70),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  title: Text(
-                                    "Forget Password",
-                                  ),
-                                  content: Form(
-                                      key: _popupformkey,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Padding(
-                                                padding: EdgeInsets.all(0),
-                                                child: Container(
-                                                  child: TextFormField(
-                                                    validator: (value) => value
-                                                            .isEmpty
-                                                        ? "Email cannot be empty"
-                                                        : null,
-                                                    onSaved: (value) =>
-                                                        _otpEmail = value,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                        prefixIcon: Icon(
-                                                            Icons.email,
-                                                            color:
-                                                                Colors.green),
-                                                        hintText:
-                                                            "Enter email address",
-                                                        hintStyle: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 12),
-                                                        labelText:
-                                                            "Email Address",
-                                                        labelStyle: TextStyle(
-                                                            color: Colors.green,
-                                                            letterSpacing: 0.5,
-                                                            fontSize: 12),
-                                                        enabledBorder: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    10),
-                                                            borderSide: BorderSide(
-                                                                color: Colors
-                                                                    .green,
-                                                                width: 2.0)),
-                                                        focusedBorder: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    10),
-                                                            borderSide: BorderSide(
-                                                                color:
-                                                                    Colors.green))),
-                                                  ),
-                                                )),
-                                            Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 20),
-                                                child: ButtonTheme(
-                                                  minWidth: 300,
-                                                  height: 50,
-                                                  buttonColor:
-                                                      Color(0xffffffff),
-                                                  child: OutlineButton(
-                                                      onPressed: () {
-                                                        otpValidation(context);
-                                                      },
-                                                      child: Text(
-                                                        "Send Email",
-                                                        style: TextStyle(
-                                                            letterSpacing: 0.5,
-                                                            color: Colors.green,
-                                                            fontSize: 12),
-                                                      ),
-                                                      shape:
-                                                          RoundedRectangleBorder(
+      body: Center(
+        child: Card(
+          child: Container(
+            color: Colors.transparent,
+            width: MediaQuery.of(context).size.width * 0.4,
+            height: MediaQuery.of(context).size.height * 0.4,
+            padding: EdgeInsets.all(20),
+            child: Form(
+              key: _formkey,
+              child: ListView(
+                children: <Widget>[
+                  Text(
+                    "SIGN IN",
+                    style: TextStyle(
+                        fontSize: 20,
+                        letterSpacing: 2,
+                        fontFamily: "Open Sans"),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 200),
+                  ),
+                  Text(
+                    "           ",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.green,
+                        decorationThickness: 5),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 50),
+                  ),
+                  emailField,
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                  ),
+                  passwordField,
+                  FlatButton(
+                    padding: EdgeInsets.only(left: 70),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.white,
+                              title: Text(
+                                "Forget Password",
+                              ),
+                              content: Form(
+                                  key: _popupformkey,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Padding(
+                                            padding: EdgeInsets.all(0),
+                                            child: Container(
+                                              child: TextFormField(
+                                                validator: (value) => value
+                                                        .isEmpty
+                                                    ? "Email cannot be empty"
+                                                    : null,
+                                                onSaved: (value) =>
+                                                    _otpEmail = value,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                    prefixIcon: Icon(
+                                                        Icons.email,
+                                                        color: Colors.green),
+                                                    hintText:
+                                                        "Enter email address",
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 12),
+                                                    labelText: "Email Address",
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.green,
+                                                        letterSpacing: 0.5,
+                                                        fontSize: 12),
+                                                    enabledBorder: OutlineInputBorder(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(50),
-                                                      ),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green,
-                                                          width: 2.0)),
-                                                ))
-                                          ],
-                                        ),
-                                      )),
-                                );
-                              });
-                        },
-                        child: Text(
-                          "Forgot Password ?",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(fontSize: 12, letterSpacing: 0.5),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20),
-                      ),
-                      loginButton(context),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // createAccountLink(context),
-                    ],
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.green,
+                                                            width: 2.0)),
+                                                    focusedBorder: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.green))),
+                                              ),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(top: 20),
+                                            child: ButtonTheme(
+                                              minWidth: 300,
+                                              height: 50,
+                                              buttonColor: Color(0xffffffff),
+                                              child: OutlineButton(
+                                                  onPressed: () {
+                                                    otpValidation(context);
+                                                  },
+                                                  child: Text(
+                                                    "Send Email",
+                                                    style: TextStyle(
+                                                        letterSpacing: 0.5,
+                                                        color: Colors.green,
+                                                        fontSize: 12),
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                  ),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.green,
+                                                      width: 2.0)),
+                                            ))
+                                      ],
+                                    ),
+                                  )),
+                            );
+                          });
+                    },
+                    child: Text(
+                      "Forgot Password ?",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 12, letterSpacing: 0.5),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                  ),
+                  loginButton(context),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  // createAccountLink(context),
+                ],
               ),
-            );
-          }
-          return child;
-        },
-        child: NoNetPage(),
+            ),
+          ),
+        ),
       ),
     );
   }

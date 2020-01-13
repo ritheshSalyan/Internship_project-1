@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/services.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'Discussion.dart';
@@ -82,18 +84,19 @@ class _DiscussionLoading extends State<DiscussionLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('discussion');
-    QuerySnapshot eventsQuery =
-        await ref.where("module", isEqualTo: modNum)
-        .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
+    fs.Firestore db = fb.firestore();
+    fs.CollectionReference ref = db.collection('discussion');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("module", "==", modNum)
+        .where("order","==", orderManagement.currentIndex).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
-    eventsQuery.documents.forEach((document) {
-      print("Discussion " +document["order"].toString()+document["image"].toString()+document["content"].toString());
+    eventsQuery.docs.forEach((document) {
+      print("Discussion " +document.data()["order"].toString()+document.data()["image"].toString()+document.data()["content"].toString());
 
-      title = convert(document["content"]);
-      title.add(document["image"].toString());
+      title = convert(document.data()["content"]);
+      title.add(document.data()["image"].toString());
     });
 
     return title;

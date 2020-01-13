@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,10 +30,8 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   String data;
   int item = 0;
   String documentId;
-  // List<String> _listViewData = [
-  //   // "Swipe Right / Left to remove",
-  //   // "Swipe Right / Left to remove",
-  // ];
+  fs.Firestore db = fb.firestore();
+  
   final _formkey = GlobalKey<FormState>();
 
   bool _validateForm() {
@@ -49,12 +49,12 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     var uploadData = Map<String, dynamic>();
     uploadData['answer'] = data;
     // data['attempts'] = attempts;
-    Firestore.instance
+  db
         .collection("decisionGameText")
-        .document(widget.id)
+        .doc(widget.id)
         .collection("answers")
-        .document(userId)
-        .setData(uploadData);
+        .doc(userId)
+        .set(uploadData);
   }
 
   bool validateDetail(BuildContext context) {
@@ -63,26 +63,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     }
     return false;
   }
-//   _onSubmit() {
-//     setState(() {
-//       item;
-//       if (item <= data.split(". ").length) {
-//         print("data.split(" ").length = " +
-//             data.split(". ").length.toString() +
-//             data.split(". ").toString());
-//         // for (var item in ) {
-//         if (data.split(".")[item].length > 3) {
-//           _listViewData.add(data.split(". ")[item] + ".");
-//         }
-//         item++;
 
-//         // }
-
-//       }
-
-// // _listViewData.add(_textController.text);
-//     });
-//   }
 
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];

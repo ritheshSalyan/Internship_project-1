@@ -1,10 +1,12 @@
-import 'package:extended_image/extended_image.dart';
+// import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
 import 'package:startupreneur/models/CommentsAdd.dart';
@@ -26,7 +28,7 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
   String hello =
       "Racana de nobilis fermium, resuscitabo acipenser,Racana de nobilis fermium, resuscitabo acipenser, resuscitabo acipenser  resuscit acipenser ?";
   SharedPreferences sharedPreferences;
-  Firestore db;
+  fs.Firestore db;
   String documentId;
   Flushbar<List<String>> flush;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -61,17 +63,17 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
 
   void saveData(BuildContext context) async {
     list.clear();
-    db = Firestore.instance;
+    db = fb.firestore();
     var userName;
     await db
         .collection("user")
-        .where("uid", isEqualTo: userId)
-        .getDocuments()
+        .where("uid", "==", userId)
+        .get()
         .then((data) {
-      data.documents.forEach((document) {
+      data.docs.forEach((document) {
         setState(() {
-          profileLink = document.data["profile"];
-          userName = document.data['name'];
+          profileLink = document.data()["profile"];
+          userName = document.data()['name'];
         });
       });
     });
@@ -133,11 +135,11 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                                         radius: 30,
                                         backgroundColor:
                                             Theme.of(context).primaryColorLight,
-                                        child: ExtendedImage.network(
-                                          widget.valueData[widget.index]
-                                              .profileUrl,
-                                          fit: BoxFit.contain,
-                                        ),
+                                        // child: ExtendedImage.network(
+                                        //   widget.valueData[widget.index]
+                                        //       .profileUrl,
+                                        //   fit: BoxFit.contain,
+                                        // ),
                                       ),
                                     ),
                                     SizedBox(
@@ -198,10 +200,10 @@ class _ViewCommentPageState extends State<ViewCommentPage> {
                                         radius: 20,
                                         backgroundColor:
                                             Theme.of(context).primaryColorLight,
-                                        child: ExtendedImage.network(
-                                          widget.answers[index].profile,
-                                          fit: BoxFit.contain,
-                                        ),
+                                        // child: ExtendedImage.network(
+                                        //   widget.answers[index].profile,
+                                        //   fit: BoxFit.contain,
+                                        // ),
                                       ),
                                     ),
                                     subtitle:

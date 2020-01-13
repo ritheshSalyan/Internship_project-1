@@ -1,10 +1,12 @@
-import 'package:extended_image/extended_image.dart';
+// import 'package:extended_image/extended_image.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
@@ -26,7 +28,7 @@ class ChatBoardRoom extends StatefulWidget {
 
 class _ChatBoardRoomState extends State<ChatBoardRoom> {
   String tag = "Module 1";
-  Firestore db;
+  fs.Firestore db;
   dynamic chatSharedUser;
   String documentId;
   SharedPreferences sharedPreferences;
@@ -41,7 +43,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   @override
   void initState() {
     super.initState();
-    db = Firestore.instance;
+    db = fb.firestore();
     // print(widget.valueData);
     upvoters.clear();
     preference().then((user) {
@@ -56,7 +58,7 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       });
     });
     // print(widget.valueData[]);
-    Analytics.analyticsBehaviour("Discussion_Chat_Page", "Discussion_Page");
+    // Analytics.analyticsBehaviour("Discussion_Chat_Page", "Discussion_Page");
   }
 
   Future<dynamic> preference() async {
@@ -74,11 +76,11 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
     try {
       await db
           .collection("chat")
-          .where("timestamp", isEqualTo: widget.valueData[index].timestamp)
-          .getDocuments()
+          .where("timestamp", "==", widget.valueData[index].timestamp)
+          .get()
           .then((document) {
-        document.documents.forEach((vl) {
-          documentId = vl.documentID;
+        document.docs.forEach((vl) {
+          documentId = vl.id;
         });
       }).then((val) {
         // print("$documentId");
@@ -98,8 +100,8 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       try {
         await db
             .collection("chat")
-            .document(documentId)
-            .setData(data, merge: true)
+            .doc(documentId)
+            .set(data, fs.SetOptions(merge: true))
             .then((val) {
           setState(() {
             value = widget.valueData[index].upvoters.length;
@@ -116,8 +118,8 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
       try {
         await db
             .collection("chat")
-            .document(documentId)
-            .setData(data, merge: true)
+            .doc(documentId)
+            .set(data, fs.SetOptions(merge: true))
             .then((val) {
           setState(() {
             value = widget.valueData[index].upvoters.length;
@@ -133,11 +135,11 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
   void fetchData(int index, BuildContext context) async {
     await db
         .collection("comments")
-        .where('questionId', isEqualTo: widget.valueData[index].uniqId)
-        .getDocuments()
+        .where('questionId', "==", widget.valueData[index].uniqId)
+        .get()
         .then((data) {
-      data.documents.forEach((value) {
-        list.add(CommentsAdd.fromJson(value.data));
+      data.docs.forEach((value) {
+        list.add(CommentsAdd.fromJson(value.data()));
       });
     });
     Navigator.of(context).pushReplacement(
@@ -240,10 +242,10 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                   radius: 30,
                                   backgroundColor:
                                       Theme.of(context).primaryColorLight,
-                                  child: ExtendedImage.network(
-                                    widget.valueData[index].profileUrl,
-                                    fit: BoxFit.contain,
-                                  ),
+                                  // child: ExtendedImage.network(
+                                  //   widget.valueData[index].profileUrl,
+                                  //   fit: BoxFit.contain,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -323,13 +325,13 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                 FontAwesomeIcons.comment,
                                 color: Colors.green,
                               ),
-                              StreamBuilder<QuerySnapshot>(
+                              StreamBuilder(
                                   stream: db
                                       .collection("comments")
                                       .where("questionId",
-                                          isEqualTo:
+                                          "==",
                                               widget.valueData[index].uniqId)
-                                      .snapshots(),
+                                      .onSnapshot,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       List<CommentsAdd> list = [];
@@ -363,13 +365,13 @@ class _ChatBoardRoomState extends State<ChatBoardRoom> {
                                     ? Colors.grey
                                     : Colors.green,
                               ),
-                              StreamBuilder<QuerySnapshot>(
-                                stream: Firestore.instance
+                              StreamBuilder(
+                                stream: db
                                     .collection("chat")
                                     .where('uniqId',
-                                        isEqualTo:
+                                        "==",
                                             widget.valueData[index].uniqId)
-                                    .snapshots(),
+                                    .onSnapshot,
                                 builder: (context, snapshot) {
                                   var value=0;
                                   if (!snapshot.hasData) {

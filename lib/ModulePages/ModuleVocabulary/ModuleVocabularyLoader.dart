@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'ModuleVocabulary.dart';
 
 class ModuleVocabularyLoading extends StatefulWidget {
@@ -14,6 +16,7 @@ class ModuleVocabularyLoading extends StatefulWidget {
 class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
   static final List<String> words = [];
   static final List<String> meanings = [];
+  static fs.Firestore db = fb.firestore();
   @override
   void initState() {
 
@@ -70,20 +73,20 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
     // QuerySnapshot eventsQuery =
     //     await ref.where("module", isEqualTo: modNum)
     //     .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
-    await Firestore.instance
+    await db
         .collection("vocabulary")
-        .where("module", isEqualTo: modNum)
-        .getDocuments()
+        .where("module","==", modNum)
+        .get()
         .then((document) {
-      document.documents.forEach((value) {
-        print(value["word"]);
+      document.docs.forEach((value) {
+        print(value.data()["word"]);
         // words.clear();
         // meanings.clear();
-        for (String i in value["word"]) {
+        for (String i in value.data()["word"]) {
           print(i);
           words.add(i);
         }
-        for (String i in value["meaning"]) {
+        for (String i in value.data()["meaning"]) {
           meanings.add(i);
         }
       });

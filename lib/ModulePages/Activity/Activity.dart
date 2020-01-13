@@ -29,7 +29,7 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   void initState() {
     super.initState();
-    Analytics.analyticsBehaviour("Category_Activity", "Category");
+    // Analytics.analyticsBehaviour("Category_Activity", "Category");
   }
 
   List<Widget> formList(BuildContext context) {

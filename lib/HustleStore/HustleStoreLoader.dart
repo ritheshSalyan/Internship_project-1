@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'simply.dart';
 
 class HustleStoreLoader extends StatefulWidget {
@@ -12,7 +14,7 @@ class _HustleStoreLoaderState extends State<HustleStoreLoader> {
   static dynamic gems;
   static String userId = "";
   static SharedPreferences sharedPreferences;
-  static final Firestore db = Firestore.instance;
+  static final fs.Firestore db =fb.firestore();
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,12 @@ class _HustleStoreLoaderState extends State<HustleStoreLoader> {
     userId = sharedPreferences.getString("UserId");
     await db
         .collection("user")
-        .where("uid", isEqualTo: userId)
-        .getDocuments()
+        .where("uid", "==", userId)
+        .get()
         .then((document) {
-      document.documents.forEach((value) {
-        print(value["points"]);
-        gems = value["points"];
+      document.docs.forEach((value) {
+        // print(value["points"]);
+        gems = value.data()["points"];
       });
     });
   }

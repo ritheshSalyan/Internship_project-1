@@ -21,7 +21,7 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
   @override
   void initState() {
     create_slides();
-    Analytics.analyticsBehaviour("Case_Study_Page", "Case_Study");
+    // Analytics.analyticsBehaviour("Case_Study_Page", "Case_Study");
   }
 
   void create_slides() {

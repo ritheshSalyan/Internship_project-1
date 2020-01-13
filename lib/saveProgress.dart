@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'ModuleOrderController/Types.dart';
@@ -132,15 +134,16 @@ class SaveProgress {
   }
 
   static Future<void> getEventsFromFirestore(int modNum) async {
-    CollectionReference ref = Firestore.instance.collection('module');
-    QuerySnapshot eventsQuery = await ref
-        .where("id", isEqualTo: modNum)
+    fs.Firestore db =fb.firestore();
+    fs.CollectionReference ref =db.collection('module');
+    fs.QuerySnapshot eventsQuery = await ref
+        .where("id", "==", modNum)
         // .where("order",isEqualTo: orderManagement.currentIndex)
-        .getDocuments();
+        .get();
 
-    eventsQuery.documents.forEach((document) {
+    eventsQuery.docs.forEach((document) {
       //if(orderManagement.order.isEmpty){
-      orderManagement.order = convert(document.data["order"]);
+      orderManagement.order = convert(document.data()["order"]);
 
       print("orderManagement.order " + orderManagement.order.toString());
       Module.moduleLength = orderManagement.order.length;

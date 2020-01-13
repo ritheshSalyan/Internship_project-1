@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -22,7 +24,7 @@ class ModuleVocabulary extends StatefulWidget {
 class _ModuleVocabularyState extends State<ModuleVocabulary> {
   GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
   PageController controller;
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
 
   @override
   void initState() {

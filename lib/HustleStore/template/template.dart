@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -26,7 +28,7 @@ class TemplateDownload extends StatefulWidget {
 class _TemplateDownloadState extends State<TemplateDownload> {
   SharedPreferences sharedPreferences;
   String userId;
-  Firestore db;
+  fs.Firestore db;
   String downloadUrl;
   String fileName;
   BuildContext context;
@@ -50,7 +52,7 @@ class _TemplateDownloadState extends State<TemplateDownload> {
     preferences();
     request();
 
-    Analytics.analyticsBehaviour("Templates_Page_Hustle", "Template_Page");
+    // Analytics.analyticsBehaviour("Templates_Page_Hustle", "Template_Page");
   }
 
   void request() async {

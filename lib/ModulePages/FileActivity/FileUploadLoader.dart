@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'FileUpload.dart';
 import 'Page.dart';
@@ -68,22 +70,23 @@ class _FileUploadLoading extends State<FileUploadLoading> {
       int modNum, int index) async {
     print("hello");
     List<Page> title = [];
+    fs.Firestore firestore = fb.firestore();
 
-    await Firestore.instance
+    await firestore
         .collection("activity")
-        .where("module", isEqualTo: modNum)
-        .where("order", isEqualTo: index)
-        .getDocuments()
+        .where("module", "==", modNum)
+        .where("order", "==", index)
+        .get()
         .then((document) {
-      document.documents.forEach((value) {
-        print("fileupload" + value["content"].toString());
+      document.docs.forEach((value) {
+        print("fileupload" + value.data()["content"].toString());
         words.clear();
         meanings.clear();
-        for (String i in value["content"]) {
+        for (String i in value.data()["content"]) {
           print(i);
           words.add(i);
         }
-        for (String i in value["Page"]) {
+        for (String i in value.data()["Page"]) {
           meanings.add(i);
         }
       });

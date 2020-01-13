@@ -33,7 +33,7 @@ class _PageStarter1StateState extends State<PageStarter1State> {
   void initState() {
 
     super.initState();
-    Analytics.analyticsBehaviour("Introduction_Page", "Starting_Page");
+    // Analytics.analyticsBehaviour("Introduction_Page", "Starting_Page");
   }
 
 

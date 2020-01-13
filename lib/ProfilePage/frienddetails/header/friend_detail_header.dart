@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/ModulePages/UserDetail.dart';
 import '../../friends/friend.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:path/path.dart' as p;
 import 'dart:io';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
@@ -53,31 +55,33 @@ class FriendDetailHeader extends StatelessWidget  {
     // FirebaseAuth.instance.currentUser().then((user) {
     //   this.uid = user.uid;
     // });
+    fs.Firestore firestore = fb.firestore();
     String extenstion = p.basename(file.path).split(".")[1];
     
      String name = await User.getUserName(friend.uid);
    
-    final StorageReference storageRef =  FirebaseStorage.instance
+    final fb.StorageReference storageRef =  fb.storage()
         .ref()
          .child("userUpload")
        .child("${friend.uid}_${name}")
         .child("profile." + extenstion);
 
-    StorageUploadTask task = storageRef.putFile(file);
+    var task = storageRef.put(file);
     //  if(task.isInProgress){
     //    print("On Progress task");
 
-    StorageTaskSnapshot taskSnapshot = await task.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    // StorageTaskSnapshot taskSnapshot = await task.onComplete;
+    var data = await task.future;
+    String downloadUrl = await data.ref.getDownloadURL().toString();
     print("On downloadUrl task" + downloadUrl);
 
     var dataMap = new Map<String, dynamic>();
     dataMap['profile'] = downloadUrl;
 
-    await Firestore.instance
+    await firestore
         .collection("user")
-        .document(friend.uid)
-        .setData(dataMap, merge: true)
+        .doc(friend.uid)
+        .set(dataMap, fs.SetOptions(merge: true))
         .catchError((e) {
       progressDialog.hide();
       print(e);

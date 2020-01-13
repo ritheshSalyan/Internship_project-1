@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'IntroPageMain.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs ;
 
 
 class introPage extends StatefulWidget {
@@ -10,7 +12,7 @@ class introPage extends StatefulWidget {
 
 class _introPageState extends State<introPage> {
   // FirebaseAuth _auth;
-  Firestore db;
+  fs.Firestore db;
   // static SharedPreferences sharedPreferences;
 
   @override

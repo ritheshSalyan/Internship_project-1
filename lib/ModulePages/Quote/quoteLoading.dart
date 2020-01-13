@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'CaseStudyProcess.dart';
 // import 'firebaseConnect.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'quote.dart';
 
@@ -15,24 +17,21 @@ class QuoteLoading extends StatefulWidget {
 class _QuoteLoading extends State<QuoteLoading> {
   @override
   void initState() {
-
     super.initState();
-   
   }
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title){
-      print("Title is "+title.toString());
-         Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => Quote(modNum: widget.modNum,quote: title),
-      ),
-    );
-
+    getEventsFromFirestore(widget.modNum).then((title) {
+      print("Title is " + title.toString());
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => Quote(modNum: widget.modNum, quote: title),
+        ),
+      );
     });
     return CustomeOffline(
-          onConnetivity: Scaffold(
+      onConnetivity: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +46,7 @@ class _QuoteLoading extends State<QuoteLoading> {
               ),
               Material(
                 color: Colors.transparent,
-               child: Text(
+                child: Text(
                   "Loading... Please Wait",
                   style: TextStyle(
                     color: Colors.black,
@@ -62,22 +61,20 @@ class _QuoteLoading extends State<QuoteLoading> {
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
-      CollectionReference ref = Firestore.instance.collection('module');
-QuerySnapshot eventsQuery = await ref
-    .where("id", isEqualTo: modNum)
-    .getDocuments();
+    fs.Firestore db = fb.firestore();
+    fs.CollectionReference ref = db.collection('module');
+    fs.QuerySnapshot eventsQuery =
+        await ref.where("id", "==", modNum).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
-List<String> title =[];
-eventsQuery.documents.forEach((document) {
-  print("Quote "+document.toString());
+    List<String> title = [];
+    eventsQuery.docs.forEach((document) {
+      print("Quote " + document.toString());
 
-  for (var item in document["quote" ]) {
-     title.add(item.toString());
-  }
- 
-  
-});
-  return title;
+      for (var item in document.data()["quote"]) {
+        title.add(item.toString());
+      }
+    });
+    return title;
   }
 }

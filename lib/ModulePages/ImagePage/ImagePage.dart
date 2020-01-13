@@ -1,4 +1,4 @@
-import 'package:extended_image/extended_image.dart';
+// import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
@@ -148,41 +148,41 @@ class _ImagePagePageState extends State<ImagePagePage>
                     //   height: MediaQuery.of(context).size.height * 0.7,
                     // ),
                     child: (widget.title.contains("assets/Images"))
-                        ? ExtendedImage.asset(
+                        ? Image.asset(
                             widget.title,
                             height: MediaQuery.of(context).size.height * 0.6,
                             fit: BoxFit.contain,
-                            mode: ExtendedImageMode.Gesture,
-                            initGestureConfigHandler: (state) {
-                              return GestureConfig(
-                                minScale: 0.9,
-                                animationMinScale: 0.7,
-                                maxScale: 20.0,
-                                animationMaxScale: 20.5,
-                                speed: 1.0,
-                                inertialSpeed: 100.0,
-                                initialScale: 1.0,
-                                inPageView: false,
-                              );
-                            },
+                            // mode: ExtendedImageMode.Gesture,
+                            // initGestureConfigHandler: (state) {
+                            //   return GestureConfig(
+                            //     minScale: 0.9,
+                            //     animationMinScale: 0.7,
+                            //     maxScale: 20.0,
+                            //     animationMaxScale: 20.5,
+                            //     speed: 1.0,
+                            //     inertialSpeed: 100.0,
+                            //     initialScale: 1.0,
+                            //     inPageView: false,
+                            //   );
+                            // },
                           )
-                        : ExtendedImage.network(
+                        : Image.network(
                             widget.title,
                             height: MediaQuery.of(context).size.height * 0.6,
                             fit: BoxFit.contain,
-                            mode: ExtendedImageMode.Gesture,
-                            initGestureConfigHandler: (state) {
-                              return GestureConfig(
-                                minScale: 0.9,
-                                animationMinScale: 0.7,
-                                maxScale: 20.0,
-                                animationMaxScale: 20.5,
-                                speed: 1.0,
-                                inertialSpeed: 100.0,
-                                initialScale: 1.0,
-                                inPageView: false,
-                              );
-                            },
+                            // mode: ExtendedImageMode.Gesture,
+                            // initGestureConfigHandler: (state) {
+                            //   return GestureConfig(
+                            //     minScale: 0.9,
+                            //     animationMinScale: 0.7,
+                            //     maxScale: 20.0,
+                            //     animationMaxScale: 20.5,
+                            //     speed: 1.0,
+                            //     inertialSpeed: 100.0,
+                            //     initialScale: 1.0,
+                            //     inPageView: false,
+                            //   );
+                            // },
                           ),
                   ),
                   Padding(

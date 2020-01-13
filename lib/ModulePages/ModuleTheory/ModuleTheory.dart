@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
@@ -16,7 +18,7 @@ class videoPlayerPage extends StatefulWidget {
 }
 
 class _videoPlayerPageState extends State<videoPlayerPage> {
-  Firestore db = Firestore.instance;
+  fs.Firestore db = fb.firestore();
   String description = "";
   // String link =
   //     "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d";
@@ -115,18 +117,18 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             SliverList(
               delegate: SliverChildListDelegate(
                 <Widget>[
-                  StreamBuilder<QuerySnapshot>(
+                  StreamBuilder<fs.QuerySnapshot>(
                     stream: db
                         .collection("module")
-                        .where("id", isEqualTo: widget.modNum)
-                        .snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        .where("id", "==", widget.modNum)
+                        .onSnapshot,
+                    builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                       switch (snapshot.data) {
                         case null:
                           return Text("Error");
                         default:
-                          snapshot.data.documents.forEach((document) {
-                            description = document["content"];
+                          snapshot.data.docs.forEach((document) {
+                            description = document.data()["content"];
                           });
                           return Card(
                             margin: EdgeInsets.all(10.0),
