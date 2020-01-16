@@ -82,6 +82,8 @@ dependencies:
   firebase: ^7.1.0
   firebase_core: ^0.4.3+2
 
+  provider: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

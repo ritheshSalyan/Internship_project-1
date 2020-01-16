@@ -12,6 +12,8 @@ import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
 import 'package:startupreneur/Mentorfeedback/mentorFeedback.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/activityController.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/activityList.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/folderUI.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
 
@@ -50,10 +52,12 @@ class TimelinePage extends StatefulWidget {
 
   @override
   _TimelinePageState createState() => _TimelinePageState();
+
+  
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  Auth _auth = fb.auth();
+  // Auth _auth = fb.auth();
   fs.Firestore db = fb.firestore();
   SharedPreferences sharedPreferences;
   int gems = 0;
@@ -318,7 +322,7 @@ class _TimelinePageState extends State<TimelinePage> {
           padding: const EdgeInsets.only(left: 9.5),
           child: Image.asset(
             "assets/Images/Capture.PNG",
-            width: MediaQuery.of(context).size.width * 0.57,
+            width: MediaQuery.of(context).size.width * 0.2,
           ),
         ),
         automaticallyImplyLeading: true,
@@ -606,7 +610,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        (FolderBuilder(completedCourse: completedCourse)),
+                         ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, ),//FolderBuilder(completedCourse: completedCourse)),
                   ),
                 );
               },
@@ -751,7 +755,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
               ),
               onTap: () {
-                _auth.signOut();
+                // _auth.signOut();
                 _sharedpreference(context);
               },
             ),

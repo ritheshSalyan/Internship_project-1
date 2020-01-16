@@ -6,6 +6,10 @@ import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/activityController.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/activityList.dart';
+import 'package:startupreneur/VentureBuilder/UserInterface/folderUI.dart';
+import 'package:startupreneur/timeline/MainRoadmapLoader.dart';
 import 'home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -52,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
-      home: homePage(),
+      home: ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, ),//RoadmapLoader(status: true,),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,

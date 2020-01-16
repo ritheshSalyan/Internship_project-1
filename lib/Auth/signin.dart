@@ -70,7 +70,7 @@ class _SigninPageState extends State<SigninPage> {
     progressDialog.setMessage("Signing in ..");
     try {
       progressDialog.show();
-      // _auth.
+      // print("Helloo woorld");
       await firestore
           .collection("user")
           .where("email", "==", _email)
@@ -80,6 +80,7 @@ class _SigninPageState extends State<SigninPage> {
           var id = data.data();
           var isLoggedIn = id['isLoggedIn'];
           if (isLoggedIn) {
+            print("IsLoged in true");
             Toast.show(
                 "Email is already logged in , please logout from other device",
                 context,
@@ -87,11 +88,13 @@ class _SigninPageState extends State<SigninPage> {
                 duration: Toast.LENGTH_LONG);
             progressDialog.hide();
           } else {
+            print("IsLoged in false");
+
             var user = await auth.signInWithEmailAndPassword(
               _email,
               _password,
             );
-            await firestore.collection("user").doc(user.user.uid).set({
+             firestore.collection("user").doc(user.user.uid).set({
               "isLoggedIn": false,
             }, fs.SetOptions(merge: true));
             print(user.user.uid);
