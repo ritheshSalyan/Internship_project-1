@@ -25,15 +25,16 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
   Widget build(BuildContext context) {
     getEventsFromFirestore(widget.modNum).then((title) {
       print("TopicHeading is " + title.toString());
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => TopicHeadingPage(
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+          return TopicHeadingPage(
             index: widget.index,
             modNum: widget.modNum,
             title: title[0],
-          ),
-        ),
-      );
+          );
+      //   ),
+      // );
     });
     return CustomeOffline(
       onConnetivity: Scaffold(

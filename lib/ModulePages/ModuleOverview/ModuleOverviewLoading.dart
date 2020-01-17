@@ -22,14 +22,15 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
   @override
   Widget build(BuildContext context) {
     SaveProgress.getEventsFromFirestore(widget.modNum).then((value) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => ModulePageIntro(
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+         return  ModulePageIntro(
             modNum: widget.modNum,
             index: 0,
-          ),
-        ),
-      );
+          );
+      //   ),
+      // );
     });
     return CustomeOffline(
           onConnetivity: Scaffold(

@@ -2,6 +2,7 @@
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'ModuleOrderController/Types.dart';
 
@@ -147,6 +148,7 @@ class SaveProgress {
 
       print("orderManagement.order " + orderManagement.order.toString());
       Module.moduleLength = orderManagement.order.length;
+      ModuleTraverse.modOrder = orderManagement.order;
       //  }
     });
   }
