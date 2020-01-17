@@ -4,6 +4,8 @@ import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 
 class HustelTipPage extends StatefulWidget {
   HustelTipPage({
@@ -23,6 +25,7 @@ class _HustelTipPageState extends State<HustelTipPage>
     with SingleTickerProviderStateMixin {
   // AnimationController _controller;
   // Animation<double> animation;
+  fs.Firestore db = fb.firestore();
 
   @override
   void initState() {
@@ -39,16 +42,6 @@ class _HustelTipPageState extends State<HustelTipPage>
   Widget build(BuildContext context) {
     return CustomeOffline(
       onConnetivity: Scaffold(
-          // bottomSheet: Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: <Widget>[
-          //     Text(
-          //       "Page ${widget.index+1}/${Module.moduleLength}",
-          //       textAlign: TextAlign.center,
-          //       style: TextStyle(color: Colors.green),
-          //     ),
-          //   ],
-          // ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(
               left: 15.0,
@@ -68,40 +61,33 @@ class _HustelTipPageState extends State<HustelTipPage>
           backgroundColor: Colors.white,
           body: Builder(
             builder: (context) {
-              var padding2 = Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.1,
-                  left: MediaQuery.of(context).size.height * 0.01,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    AutoSizeText(
-                      widget.title,
-                      // "hello",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.green,
-                        // fontSize: 10,//30
-                        fontWeight: FontWeight.bold,
-                      ),
-                      minFontSize: 12,
-                      maxLines: 10,
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    // Text(
-                    //   "You have successfully completed this module :)",
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //     fontSize: 16,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              );
+              // var padding2 = Padding(
+              //   padding: EdgeInsets.only(
+              //     top: MediaQuery.of(context).size.height * 0.1,
+              //     left: MediaQuery.of(context).size.height * 0.01,
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       AutoSizeText(
+              //         widget.title,
+              //         // "hello",
+              //         textAlign: TextAlign.center,
+              //         style: TextStyle(
+              //           letterSpacing: 0.5,
+              //           color: Colors.green,
+              //           // fontSize: 10,//30
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //         minFontSize: 12,
+              //         maxLines: 10,
+              //       ),
+              //       SizedBox(
+              //         height: 35,
+              //       ),
+              //     ],
+              //   ),
+              // );
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +157,43 @@ class _HustelTipPageState extends State<HustelTipPage>
                       width: 150,
                     ),
                   ),
-                  padding2,
+                  StreamBuilder(
+                    stream: db
+                        .collection("hustelTip")
+                        .where("module", "==", widget.modNum)
+                        .where("order", "==", orderManagement.currentIndex)
+                        .onSnapshot,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.1,
+                            left: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              AutoSizeText(
+                                snapshot.data.docs[0].data()['content'],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  letterSpacing: 0.5,
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                minFontSize: 12,
+                                maxLines: 10,
+                              ),
+                              SizedBox(
+                                height: 35,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.05,

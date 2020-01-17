@@ -5,6 +5,8 @@ import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
 // import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 
 class SummaryTheoryPage extends StatefulWidget {
   SummaryTheoryPage(
@@ -31,6 +33,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+  fs.Firestore db = fb.firestore();
 
   _onSubmit() {
     setState(() {
@@ -53,7 +56,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     });
   }
 
-  List<Widget> convertTolist() {
+  List<Widget> convertTolist(content,button) {
     List<Widget> list = [];
     list.addAll(_listViewData.map((data) {
       // return Dismissible(
@@ -137,28 +140,6 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
           color: Colors.white,
         ),
       )));
-//      list.add(Center(
-//        child: OutlineButton(
-//          borderSide: BorderSide(color: Colors.green),
-//          onPressed: () {
-//            // Navigator.of(context).pushReplacement(
-//            //   MaterialPageRoute(
-//            //     builder: (context)=>SocializeTask(),
-//            //   )
-//            // );
-//            List<dynamic> arguments = [widget.modNum, widget.index + 1];
-//            orderManagement.moveNextIndex(context, arguments);
-//          },
-//          child: Row(
-//            mainAxisAlignment: MainAxisAlignment.end,
-//            children: <Widget>[
-//              Text(widget.button,
-//                  style: TextStyle(fontWeight: FontWeight.w700)),
-//              Icon(Icons.navigate_next),
-//            ],
-//          ),
-//        ),
-//      ));
     }
 
     return list;
@@ -169,16 +150,6 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
-        //      bottomSheet: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: <Widget>[
-        //     Text(
-        //       "Page ${widget.index+1}/${Module.moduleLength}",
-        //       textAlign: TextAlign.center,
-        //       style: TextStyle(color: Colors.green),
-        //     ),
-        //   ],
-        // ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,
@@ -241,99 +212,63 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
         body: SingleChildScrollView(
           child: Builder(
             builder: (context) {
-              return Stack(
-                children: <Widget>[
-                  ClipPath(
-                    clipper: WaveClipperOne(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
+              return StreamBuilder(
+                stream: db.collection('summary').where("module","==", widget.modNum).onSnapshot,
+                builder: (context, snapshot) {
+                  return Stack(
+                    children: <Widget>[
+                      ClipPath(
+                        clipper: WaveClipperOne(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                          ),
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.05,
+                                left: MediaQuery.of(context).size.width * 0.02),
+                            child: Text(
+                              snapshot.data.docs[0].data()['content'][0],
+                              //"Startup or Job",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: "sans-serif",
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
                       ),
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      width: double.infinity,
-                      child: Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.05,
-                            left: MediaQuery.of(context).size.width * 0.02),
-                        child: Text(
-                          widget.title,
-                          //"Startup or Job",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "sans-serif",
-                              color: Colors.white,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w700),
+                          top: MediaQuery.of(context).size.height * 0.15,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.04,
+                              ),
+                              child: Image.asset(
+                                snapshot.data.docs[0].data()['content'][3],
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                            Column(
+                              children: convertTolist( snapshot.data.docs[0].data()['content'][1], snapshot.data.docs[0].data()['content'][2],),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.15,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.04,
-                          ),
-                          child: Image.asset(
-                            widget.image,
-                            // "assets/Images/photo.png",
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.75,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                        Column(
-                          // children: <Widget>[
-
-                          //    Card(
-                          //       clipBehavior: Clip.antiAliasWithSaveLayer,
-                          //       child: Padding(
-                          //         padding: EdgeInsets.all(10.0),
-                          //         child: Text(
-                          //           widget.content,
-                          //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
-                          //           style: TextStyle(
-                          //             fontSize: 18.0,
-                          //
-                          //             fontWeight: FontWeight.w500,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-
-                          // ],
-                          children: convertTolist(),
-                        ),
-                        // FlatButton(
-                        //   onPressed: () {
-                        //     // Navigator.of(context).pushReplacement(
-                        //     //   MaterialPageRoute(
-                        //     //     builder: (context)=>SocializeTask(),
-                        //     //   )
-                        //     // );
-                        //     List<dynamic> arguments = [
-                        //       widget.modNum,
-                        //       widget.index+1
-                        //     ];
-                        //     orderManagement.moveNextIndex(context, arguments);
-                        //   },
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.end,
-                        //     children: <Widget>[
-                        //       Text(widget.button,
-                        //           style: TextStyle(fontWeight: FontWeight.w700)),
-                        //       Icon(Icons.navigate_next),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               );
             },
           ),

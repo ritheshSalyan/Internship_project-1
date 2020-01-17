@@ -116,16 +116,6 @@ class _ActivityPageState extends State<ActivityPage> {
         final bool connected = connectivity != ConnectivityResult.none;
         if (connected) {
           return Scaffold(
-            //      bottomSheet: Row(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   children: <Widget>[
-            //     Text(
-            //        "Page ${widget.index+1}/${Module.moduleLength}",
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(color: Colors.green),
-            //     ),
-            //   ],
-            // ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.only(
                 left: 15.0,

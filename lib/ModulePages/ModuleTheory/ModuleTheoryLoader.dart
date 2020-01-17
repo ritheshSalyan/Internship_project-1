@@ -29,7 +29,10 @@ class _TheoryLoading extends State<TheoryLoading> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => videoPlayerPage(
-              modNum: widget.modNum, title: title, index: widget.index),
+            modNum: widget.modNum,
+            title: title,
+            index: widget.index,
+          ),
         ),
       );
     });
@@ -75,8 +78,7 @@ class _TheoryLoading extends State<TheoryLoading> {
 
   static Future<String> getEventsFromFirestore(int modNum) async {
     fs.CollectionReference ref = db.collection('module');
-    fs.QuerySnapshot eventsQuery =
-        await ref.where("id", "==", modNum).get();
+    fs.QuerySnapshot eventsQuery = await ref.where("id", "==", modNum).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     String title = "hello";
@@ -84,7 +86,8 @@ class _TheoryLoading extends State<TheoryLoading> {
       print("title " +
           document.data()["order${orderManagement.currentIndex}"].toString());
 
-      title = document.data()["order${orderManagement.currentIndex}"].toString();
+      title =
+          document.data()["order${orderManagement.currentIndex}"].toString();
     });
     return title;
   }

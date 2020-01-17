@@ -82,14 +82,11 @@ class _SummaryPageLoaderState extends State<SummaryPageLoader> {
   }
 
   static List<String> convert(List<dynamic> dlist){
-
     List<String> list = new List<String>();
-
     for (var item in dlist) {
       list.add(item.toString());
       print(item.toString());
     }
-    //list.add("assets/Images/think.png");
     return list;
   }
 }

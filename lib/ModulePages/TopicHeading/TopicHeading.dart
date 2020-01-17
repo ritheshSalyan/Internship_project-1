@@ -128,17 +128,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // Padding(
-                  //   padding: EdgeInsets.only(
-                  //     top: MediaQuery.of(context).size.height * 0.2,
-                  //     left: MediaQuery.of(context).size.height * 0.02,
-                  //   ),
-                  //   child: Image.asset(
-                  //     "assets/Images/TopicHeading.PNG",
-                  //     height: 150,
-                  //     width: 150,
-                  //   ),
-                  // ),
+                  
                   Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.1,

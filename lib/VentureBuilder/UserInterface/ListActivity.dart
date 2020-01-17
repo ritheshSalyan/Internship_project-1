@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:html' as html;
+import 'dart:typed_data';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/firebase.dart' as fb;
@@ -14,6 +17,7 @@ import 'package:startupreneur/ModulePages/UserDetail.dart' as u;
 import 'package:startupreneur/VentureBuilder/TabUI/activityIntro.dart';
 import 'package:toast/toast.dart';
 import 'package:path/path.dart' as p;
+import 'package:flutter_file_picker/flutter_document_picker.dart';
 
 class ListActivities extends StatefulWidget {
   ListActivities({
@@ -42,33 +46,16 @@ class _ListActivitiesState extends State<ListActivities>
   StorageUploadTask task;
   var progressDialog;
   File file;
+  List<int> _selectedFile;
+  Uint8List _bytesData;
 
 // Downloading the activity file
   Future<void> downloadFile(BuildContext context) async {
-    ProgressDialog progressDialog = ProgressDialog(context,
-        type: ProgressDialogType.Download, isDismissible: false);
-    Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
-      if (!yes) {
-        print("inside failed loop $yes");
-        Directory('/storage/emulated/0/Startupreneur').create();
-      } else {
-        print("im here");
-        Directory('/storage/emulated/0/Startupreneur/${widget.modName}')
-            .create();
-      }
-    }).catchError((e) {
-      Directory('/storage/emulated/0/Startupreneur/${widget.modName}').create();
-      setState(() {
-        // exception = "error creating";
-      });
-    });
-
     String uri = Uri.decodeFull(widget.files);
     final RegExp regex =
         RegExp('([^?/]*\.(pdf|jpg|txt|docx|zip|jpeg|png|csv))');
     String fileName = regex.stringMatch(uri);
-    downloadedFile =
-        File('/storage/emulated/0/Startupreneur/${widget.modName}/$fileName');
+    downloadedFile = File('${widget.modName}/$fileName');
 
     try {
       FlutterDownloader.enqueue(
@@ -95,24 +82,24 @@ class _ListActivitiesState extends State<ListActivities>
         // }
       });
 
-      progressDialog.hide();
+      // progressDialog.hide();
     } catch (e) {
       print(e);
-      progressDialog.hide();
+      // progressDialog.hide();
     }
   }
 
   //uploading activity file
-  Future upload(File file, ProgressDialog progressDialog) async {
+  Future upload(html.File file, ProgressDialog progressDialog) async {
     Auth auth = fb.auth();
     var user = auth.currentUser;
     this.uid = user.uid;
-    // String uri = Uri.decodeFull(file.path);
-    // final RegExp regex = RegExp('([^?/]*\.(pdf|jpg|txt|docx))');
-    // String fileName = regex.stringMatch(uri);
-    // print(fileName.split("/"));
+
+    print("file is $file");
+    
     String name = await u.User.getUserName(uid);
-    String extension = p.basename(file.path).split(".")[1];
+    print(file.name.split('.'));
+    String extension = file.name.split('.')[1];
     final fb.StorageReference storageRef = fb
         .storage()
         .ref()
@@ -132,37 +119,37 @@ class _ListActivitiesState extends State<ListActivities>
   void getFilePath() async {
     //  String _filePath;
     try {
-      // String filePath = await FilePicker.getFilePath(type: FileType.ANY);
-      print("Before File picked ");
-      // File file1 = await FilePicker.getFilePath(type: FileType.ANY);
-      var file1 = await FilePicker.getFile(type: FileType.ANY);
+      html.InputElement uploadInput = html.FileUploadInputElement();
+      uploadInput.multiple = true;
+      uploadInput.draggable = true;
+      uploadInput.click();
+      uploadInput.onChange.listen((e) {
+        final files = uploadInput.files;
+        final file = files[0];
+        final reader = new html.FileReader();
 
-      progressDialog =
-          new ProgressDialog(context, type: ProgressDialogType.Normal);
-      progressDialog.style(
-        message: "Uploading...",
-      );
-      progressDialog.show();
-      print("File picked successfully");
+        print("file is $file");
 
-      if (file1 == null) {
-        progressDialog.hide();
-        return;
-      }
-      // print("File path: " + p.basename(file1.path));
-      print("File path: ${file1.path}");
+        upload(file, progressDialog);
 
-      setState(() {
-        file = file1;
+        reader.onLoadEnd.listen((e) {
+          _handleResult(reader.result);
+        });
+        reader.readAsDataUrl(file);
       });
-      await upload(file1, progressDialog);
-      progressDialog.hide();
     } catch (e) {
       Toast.show("Upload failed, please try again", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_LONG);
       print("Error while picking the file: " + e.toString());
       progressDialog.hide();
     }
+  }
+
+  void _handleResult(Object result) {
+    setState(() {
+      _bytesData = Base64Decoder().convert(result.toString().split(",").last);
+      _selectedFile = _bytesData;
+    });
   }
 
   @override
@@ -212,38 +199,39 @@ class _ListActivitiesState extends State<ListActivities>
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      width: MediaQuery.of(context).size.width*0.4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
-                         (widget.files!=null&& widget.files.isNotEmpty)? Card(
-                           
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.file_download,
-                                color: Colors.green,
-                              ),
-                              title: RaisedButton(
-                                color: Colors.green,
-                                child: Text(
-                                  "Activity Template Download",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                          (widget.files != null && widget.files.isNotEmpty)
+                              ? Card(
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.file_download,
+                                      color: Colors.green,
+                                    ),
+                                    title: RaisedButton(
+                                      color: Colors.green,
+                                      child: Text(
+                                        "Activity Template Download",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          20,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        print("inside");
+                                        downloadFile(context);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    20,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  print("inside");
-                                  downloadFile(context);
-                                },
-                              ),
-                            ),
-                          ):Container(),
+                                )
+                              : Container(),
                           Card(
                             child: ListTile(
                               leading: Icon(

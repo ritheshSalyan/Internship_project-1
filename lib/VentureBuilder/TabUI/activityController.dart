@@ -88,7 +88,6 @@ class _ActivityControllerState extends State<ActivityController> {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     activity.updateIntros(snapshot.data);
-
                                     return ListActivities(
                                         modName: activity.modName,
                                         modNum: activity.modnum,

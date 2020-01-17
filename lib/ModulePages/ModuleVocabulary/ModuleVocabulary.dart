@@ -42,7 +42,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
     super.dispose();
   }
 
-  List<Widget> generate() {
+  List<Widget> generate(List word , List meaning) {
     List<Widget> val = [];
     int numb = widget.word.length;
     print("from vocabulary $numb");
@@ -226,13 +226,6 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //     top: MediaQuery.of(context).size.height * 0.05,
-                      //     // left: MediaQuery.of(context).size.width *0.5,
-                      //   ),
-                      // child:
                       OutlineButton(
                         borderSide: BorderSide(color: Colors.green),
                         onPressed: () {
@@ -277,16 +270,6 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomSheet: Row(
-      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //   children: <Widget>[
-      //     Text(
-      //       "Page ${widget.index+1}/${Module.moduleLength}",
-      //       textAlign: TextAlign.center,
-      //       style: TextStyle(color: Colors.green),
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         // backgroundColor: Colors.white,
         elevation: 0,
@@ -294,68 +277,79 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
           GestureDetector(
             child: Icon(
               Icons.home,
-              // color: Colors.green,
             ),
             onTap: () {
               showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      content: Text(
-                          "Are you sure you want to return to Home Page? "),
-                      title: Text(
-                        "Warning!",
+                context: context,
+                builder: (_) {
+                  return AlertDialog(
+                    content:
+                        Text("Are you sure you want to return to Home Page? "),
+                    title: Text(
+                      "Warning!",
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        onPressed: () {
+                          // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                          Navigator.of(context)
+                              .popUntil(ModalRoute.withName("TimelinePage"));
+                        },
                       ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
-                          },
+                      FlatButton(
+                        child: Text(
+                          "No",
+                          style: TextStyle(color: Colors.green),
                         ),
-                        FlatButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                      ],
-                    );
-                  });
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],
       ),
-      body: Stack(
-        children: <Widget>[
-          PageIndicatorContainer(
-            indicatorColor: Colors.grey[100],
-            align: IndicatorAlign.top,
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-            indicatorSpace: 10.0,
-            indicatorSelectorColor: Colors.black,
-            shape: IndicatorShape.roundRectangleShape(size: Size(30, 10)),
-            length: widget.word.length + 1,
-            pageView: PageView(
-              physics: BouncingScrollPhysics(),
-              controller: controller,
-              onPageChanged: (int i) {
-                print(i);
-              },
-              children: generate(),
-            ),
-          ),
-        ],
-      ),
+      body: StreamBuilder(
+          stream: db
+              .collection("vocabulary")
+              .where("module", "==", widget.modNum)
+              .onSnapshot,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Stack(
+                children: <Widget>[
+                  PageIndicatorContainer(
+                    indicatorColor: Colors.grey[100],
+                    align: IndicatorAlign.top,
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.05),
+                    indicatorSpace: 10.0,
+                    indicatorSelectorColor: Colors.black,
+                    shape:
+                        IndicatorShape.roundRectangleShape(size: Size(30, 10)),
+                    length: snapshot.data.docs[0].data()['words'].length+1,
+                    pageView: PageView(
+                      physics: BouncingScrollPhysics(),
+                      controller: controller,
+                      onPageChanged: (int i) {
+                        print(i);
+                      },
+                      children: generate(snapshot.data.docs[0].data()['words'],snapshot.data.docs[0].data()['meaning']),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return Container();
+          }),
     );
   }
 }
