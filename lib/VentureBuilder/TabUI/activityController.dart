@@ -39,352 +39,353 @@ class _ActivityControllerState extends State<ActivityController> {
     Size size = MediaQuery.of(context).size;
 
     return ChangeNotifierProvider<ActivityChangeNotifier>(
-          create: (context) => ActivityChangeNotifier(
-              modnum: widget.modNum,
-              order: widget.index,
-              intro: widget.intro,
-              headings: widget.headings,
-              modName: widget.modName,
-              files: widget.files,
-              moduleOrderNo: widget.order),
-          child: Row(children: <Widget>[
-      Container(
-        width: size.width * (1 - ratio),
-        height: size.height,
-        child: Container(
+        create: (context) => ActivityChangeNotifier(
+            modnum: widget.modNum,
+            order: widget.index,
+            intro: widget.intro,
+            headings: widget.headings,
+            modName: widget.modName,
+            files: widget.files,
+            moduleOrderNo: widget.order),
+        child: Row(children: <Widget>[
+          Container(
+            width: size.width * (1 - ratio),
             height: size.height,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Consumer<ActivityChangeNotifier>(
-                    builder: (context, activity, _) {
-                  return Container(
-                    height: size.height * 0.1,
-                    child: CustomTimeLine(
-                      direction: Axis.horizontal,
-                      itemCount: moduleOrder.length,
-                      completeIndex: moduleOrder.indexOf(activity.modnum),
-                      
-                      builder: (context, i) {
-                        return Container();
-                      },
-                    ),
-                  );
-                }),
-                Container(
-                  height: size.height * 0.9,
-                  child: Stack(
-                    children: <Widget>[
-                      Consumer<ActivityChangeNotifier>(
-                        builder: (context, activity, _) {
-                          print("activity.modnum ${activity.toString()}");
-                          return StreamBuilder<Object>(
-                              stream: db
-                                  .collection("activity")
-                                  .where("module", "==", activity.modnum)
-                                  .onSnapshot,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  activity.updateIntros(snapshot.data);
-
-                                  return ListActivities(
-                                      modName: activity.modName,
-                                      modNum: activity.modnum,
-                                      intro: activity.intro,
-                                      headings: activity.headings,
-                                      index: activity.order,
-                                      files: activity.files,
-                                      order: activity.moduleOrderNo);
-                                } else {
-                                  return Center(
-                                    child: Container(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
-                              });
+            child: Container(
+              height: size.height,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Consumer<ActivityChangeNotifier>(
+                      builder: (context, activity, _) {
+                    return Container(
+                      height: size.height * 0.1,
+                      child: CustomTimeLine(
+                        direction: Axis.horizontal,
+                        itemCount: moduleOrder.length,
+                        completeIndex: moduleOrder.indexOf(activity.modnum),
+                        builder: (context, i) {
+                          return Container();
                         },
                       ),
-                      Consumer<ActivityChangeNotifier>(
+                    );
+                  }),
+                  Container(
+                    height: size.height * 0.9,
+                    child: Stack(
+                      children: <Widget>[
+                        Consumer<ActivityChangeNotifier>(
                           builder: (context, activity, _) {
-                        return Align(
-                          alignment: Alignment.bottomRight,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              OutlineButton(
-                                borderSide: BorderSide(
-                                  color: Colors.green,
-                                  width: 2.0,
+                            print("activity.modnum ${activity.toString()}");
+                            return StreamBuilder<Object>(
+                                stream: db
+                                    .collection("activity")
+                                    .where("module", "==", activity.modnum)
+                                    .onSnapshot,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    activity.updateIntros(snapshot.data);
+                                    return ListActivities(
+                                        modName: activity.modName,
+                                        modNum: activity.modnum,
+                                        intro: activity.intro,
+                                        headings: activity.headings,
+                                        index: activity.order,
+                                        files: activity.files,
+                                        order: activity.moduleOrderNo);
+                                  } else {
+                                    return Center(
+                                      child: Container(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  }
+                                });
+                          },
+                        ),
+                        Consumer<ActivityChangeNotifier>(
+                            builder: (context, activity, _) {
+                          return Align(
+                            alignment: Alignment.bottomRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                OutlineButton(
+                                  borderSide: BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  onPressed: () {
+                                    activity.decreaseOrder();
+                                  },
+                                  child: Text(
+                                    "Previous Activity",
+                                  ),
                                 ),
-                                onPressed: () {
-                                  activity.decreaseOrder();
-                                },
-                                child: Text(
-                                  "Previous Activity",
+                                OutlineButton(
+                                  borderSide: BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  onPressed: () {
+                                    activity.moveNext();
+                                  },
+                                  child: Text(
+                                    "Next Activity",
+                                  ),
                                 ),
-                              ),
-                              OutlineButton(
-                                borderSide: BorderSide(
-                                  color: Colors.green,
-                                  width: 2.0,
-                                ),
-                                onPressed: () {
-                                  activity.moveNext();
-                                },
-                                child: Text(
-                                  "Next Activity",
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      })
+                              ],
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            //   ),
+          ),
+          Consumer<ActivityChangeNotifier>(
+            builder: (context, activity, _) {
+              return Container(
+                width: size.width * ratio,
+                color: Colors.red,
+                child: centerTimeline(
+                    context, moduleOrder.indexOf(activity.modnum)),
+              );
+            },
+          ),
+        ]));
+  }
+
+  Widget centerTimeline(BuildContext context, int i) {
+    var doodle = doodles[i];
+    return Material(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              color: Colors.grey[50],
+              height: 210.0,
+              width: 145.0,
+              child: GradientCard(
+                gradient: LinearGradient(colors: doodle.colors),
+                //                    color: doodle.color,
+                margin: EdgeInsets.all(0),
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Colors.green,
+                    // width: 3,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                // shape:Border.all(width: 3,
+                // color: Colors.green),
+                // margin: EdgeInsets.symmetric(vertical: 16.0),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      // Image.network(doodle.doodle),
+                      Image.asset(
+                        doodle.doodle,
+                        height: MediaQuery.of(context).size.height * 0.09,
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      doodle.name,
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          doodle.pointsIcon,
+                          Text(" "),
+                          doodle.points,
+                        ],
+                      ),
                     ],
                   ),
                 ),
-              ],
+              ),
+              //                )
             ),
-          ),
-      //   ),
+          ],
+        ),
       ),
-      Consumer<ActivityChangeNotifier>(
-            builder:(context,activity,_){
-              return Container(
-          width: size.width * ratio,
-          color: Colors.red,
-          child: centerTimeline(context,moduleOrder.indexOf(activity.modnum)),
-        );
-            },
-      ),
-    ]));
-  }
-  
-  Widget centerTimeline(BuildContext context,int i){
- var doodle = doodles[i];
- return Card(
-   child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Container(
-                  color: Colors.grey[50],
-                  height: 210.0,
-                  width: 145.0,
-                  child: GradientCard(
-                    gradient: LinearGradient(colors: doodle.colors),
-                    //                    color: doodle.color,
-                    margin: EdgeInsets.all(0),
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.green,
-                        // width: 3,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    // shape:Border.all(width: 3,
-                    // color: Colors.green),
-                    // margin: EdgeInsets.symmetric(vertical: 16.0),
-                    clipBehavior: Clip.antiAlias,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          // Image.network(doodle.doodle),
-                          Image.asset(
-                            doodle.doodle,
-                            height: MediaQuery.of(context).size.height * 0.09,
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          doodle.name,
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              doodle.pointsIcon,
-                              Text(" "),
-                              doodle.points,
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //                )
-                ),
-                
-              ],
-            ),
- );
-  // return TimelineModel(
-  //       new GestureDetector(
-  //         onTap: () async {
-  //           print("value of i is $i");
-  //           // if (check(doodle.modNum)) {
-  //             print(" true ${doodle.modNum}");
-  //             // val = completedCourse[k];
-  //             // print("val is $val");
-  //             int progressNum = await SaveProgress.getProgerss(doodle.modNum);
-  //             print("PROGRESS NUM $progressNum");
-  //             if (progressNum == 0) {
-  //               if (doodle.modNum == 12 || doodle.modNum == 14) {
-  //                 Navigator.of(context).push(
-  //                   MaterialPageRoute(
-  //                     builder: (context) =>
-  //                         ModuleOverviewLoading(modNum: doodle.modNum),
-  //                   ),
-  //                 );
-  //               } else if (doodle.modNum != 12) {
-  //                 Navigator.of(context).push(
-  //                   MaterialPageRoute(
-  //                     builder: (context) => QuoteLoading(modNum: doodle.modNum),
-  //                   ),
-  //                 );
-  //               } else {
-  //                 Navigator.of(context).push(
-  //                   MaterialPageRoute(
-  //                     builder: (context) => (HustleStoreLoader()),
-  //                   ),
-  //                 );
-  //               }
-  //             } else {
-  //               showDialog<bool>(
-  //                   context: context,
-  //                   builder: (_) {
-  //                     return AlertDialog(
-  //                       content: Text("Do you want to resume this Module?"),
-  //                       title: Text(
-  //                         "Continue",
-  //                       ),
-  //                       actions: <Widget>[
-  //                         FlatButton(
-  //                           child: Text(
-  //                             "Yes",
-  //                             style: TextStyle(color: Colors.green),
-  //                           ),
-  //                           onPressed: () {
-  //                             Navigator.of(context).pop(true);
-  //                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-  //                             SaveProgress.getEventsFromFirestore(doodle.modNum)
-  //                                 .then((_) {
-  //                               List<int> arguments = [
-  //                                 doodle.modNum,
-  //                                 progressNum
-  //                               ];
-  //                               orderManagement.moveNextIndex(
-  //                                   context, arguments);
-  //                             });
-  //                           },
-  //                         ),
-  //                         FlatButton(
-  //                           child: Text(
-  //                             "No",
-  //                             style: TextStyle(color: Colors.red),
-  //                           ),
-  //                           onPressed: () {
-  //                             Navigator.of(context).pop(true);
-  //                             if (doodle.modNum == 11 || doodle.modNum == 14) {
-  //                               Navigator.of(context).push(
-  //                                 MaterialPageRoute(
-  //                                   builder: (context) => ModuleOverviewLoading(
-  //                                       modNum: doodle.modNum),
-  //                                 ),
-  //                               );
-  //                             } else if (doodle.modNum != 12) {
-  //                               Navigator.of(context).push(
-  //                                 MaterialPageRoute(
-  //                                   builder: (context) =>
-  //                                       QuoteLoading(modNum: doodle.modNum),
-  //                                 ),
-  //                               );
-  //                             } else {
-  //                               Navigator.of(context).push(
-  //                                 MaterialPageRoute(
-  //                                   builder: (context) => (HustleStoreLoader()),
-  //                                 ),
-  //                               );
-  //                             }
-  //                           },
-  //                         ),
-  //                       ],
-  //                     );
-  //                   });
-  //             }
-  //           // } else {
-  //           //   print(" false");
-  //           // }
-  //         },
-  //         child: Stack(
-  //           alignment: Alignment.center,
-  //           children: <Widget>[
-  //             Container(
-  //               color: Colors.grey[50],
-  //               height: 210.0,
-  //               width: 145.0,
-  //               child: GradientCard(
-  //                 gradient: LinearGradient(colors: doodle.colors),
-  //                 //                    color: doodle.color,
-  //                 margin: EdgeInsets.all(0),
-  //                 elevation: 10,
-  //                 shape: RoundedRectangleBorder(
-  //                   side: BorderSide(
-  //                     color: Colors.green,
-  //                     // width: 3,
-  //                     width: 2,
-  //                   ),
-  //                   borderRadius: BorderRadius.circular(12),
-  //                 ),
-  //                 // shape:Border.all(width: 3,
-  //                 // color: Colors.green),
-  //                 // margin: EdgeInsets.symmetric(vertical: 16.0),
-  //                 clipBehavior: Clip.antiAlias,
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(16.0),
-  //                   child: Column(
-  //                     mainAxisSize: MainAxisSize.min,
-  //                     children: <Widget>[
-  //                       // Image.network(doodle.doodle),
-  //                       Image.asset(
-  //                         doodle.doodle,
-  //                         height: MediaQuery.of(context).size.height * 0.09,
-  //                       ),
-  //                       const SizedBox(
-  //                         height: 8.0,
-  //                       ),
-  //                       doodle.name,
-  //                       const SizedBox(
-  //                         height: 8.0,
-  //                       ),
-  //                       Row(
-  //                         mainAxisAlignment: MainAxisAlignment.center,
-  //                         children: <Widget>[
-  //                           doodle.pointsIcon,
-  //                           Text(" "),
-  //                           doodle.points,
-  //                         ],
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //               //                )
-  //             ),
-              
-  //           ],
-  //         ),
-  //       ),
-  //       position:
-  //           i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
-  //       isFirst: i == 0,
-  //       isLast: i == doodles.length,
-  //       iconBackground: doodle.iconBackground,
-  //       icon: doodle.icon);
+    );
+    // return TimelineModel(
+    //       new GestureDetector(
+    //         onTap: () async {
+    //           print("value of i is $i");
+    //           // if (check(doodle.modNum)) {
+    //             print(" true ${doodle.modNum}");
+    //             // val = completedCourse[k];
+    //             // print("val is $val");
+    //             int progressNum = await SaveProgress.getProgerss(doodle.modNum);
+    //             print("PROGRESS NUM $progressNum");
+    //             if (progressNum == 0) {
+    //               if (doodle.modNum == 12 || doodle.modNum == 14) {
+    //                 Navigator.of(context).push(
+    //                   MaterialPageRoute(
+    //                     builder: (context) =>
+    //                         ModuleOverviewLoading(modNum: doodle.modNum),
+    //                   ),
+    //                 );
+    //               } else if (doodle.modNum != 12) {
+    //                 Navigator.of(context).push(
+    //                   MaterialPageRoute(
+    //                     builder: (context) => QuoteLoading(modNum: doodle.modNum),
+    //                   ),
+    //                 );
+    //               } else {
+    //                 Navigator.of(context).push(
+    //                   MaterialPageRoute(
+    //                     builder: (context) => (HustleStoreLoader()),
+    //                   ),
+    //                 );
+    //               }
+    //             } else {
+    //               showDialog<bool>(
+    //                   context: context,
+    //                   builder: (_) {
+    //                     return AlertDialog(
+    //                       content: Text("Do you want to resume this Module?"),
+    //                       title: Text(
+    //                         "Continue",
+    //                       ),
+    //                       actions: <Widget>[
+    //                         FlatButton(
+    //                           child: Text(
+    //                             "Yes",
+    //                             style: TextStyle(color: Colors.green),
+    //                           ),
+    //                           onPressed: () {
+    //                             Navigator.of(context).pop(true);
+    //                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+    //                             SaveProgress.getEventsFromFirestore(doodle.modNum)
+    //                                 .then((_) {
+    //                               List<int> arguments = [
+    //                                 doodle.modNum,
+    //                                 progressNum
+    //                               ];
+    //                               orderManagement.moveNextIndex(
+    //                                   context, arguments);
+    //                             });
+    //                           },
+    //                         ),
+    //                         FlatButton(
+    //                           child: Text(
+    //                             "No",
+    //                             style: TextStyle(color: Colors.red),
+    //                           ),
+    //                           onPressed: () {
+    //                             Navigator.of(context).pop(true);
+    //                             if (doodle.modNum == 11 || doodle.modNum == 14) {
+    //                               Navigator.of(context).push(
+    //                                 MaterialPageRoute(
+    //                                   builder: (context) => ModuleOverviewLoading(
+    //                                       modNum: doodle.modNum),
+    //                                 ),
+    //                               );
+    //                             } else if (doodle.modNum != 12) {
+    //                               Navigator.of(context).push(
+    //                                 MaterialPageRoute(
+    //                                   builder: (context) =>
+    //                                       QuoteLoading(modNum: doodle.modNum),
+    //                                 ),
+    //                               );
+    //                             } else {
+    //                               Navigator.of(context).push(
+    //                                 MaterialPageRoute(
+    //                                   builder: (context) => (HustleStoreLoader()),
+    //                                 ),
+    //                               );
+    //                             }
+    //                           },
+    //                         ),
+    //                       ],
+    //                     );
+    //                   });
+    //             }
+    //           // } else {
+    //           //   print(" false");
+    //           // }
+    //         },
+    //         child: Stack(
+    //           alignment: Alignment.center,
+    //           children: <Widget>[
+    //             Container(
+    //               color: Colors.grey[50],
+    //               height: 210.0,
+    //               width: 145.0,
+    //               child: GradientCard(
+    //                 gradient: LinearGradient(colors: doodle.colors),
+    //                 //                    color: doodle.color,
+    //                 margin: EdgeInsets.all(0),
+    //                 elevation: 10,
+    //                 shape: RoundedRectangleBorder(
+    //                   side: BorderSide(
+    //                     color: Colors.green,
+    //                     // width: 3,
+    //                     width: 2,
+    //                   ),
+    //                   borderRadius: BorderRadius.circular(12),
+    //                 ),
+    //                 // shape:Border.all(width: 3,
+    //                 // color: Colors.green),
+    //                 // margin: EdgeInsets.symmetric(vertical: 16.0),
+    //                 clipBehavior: Clip.antiAlias,
+    //                 child: Padding(
+    //                   padding: const EdgeInsets.all(16.0),
+    //                   child: Column(
+    //                     mainAxisSize: MainAxisSize.min,
+    //                     children: <Widget>[
+    //                       // Image.network(doodle.doodle),
+    //                       Image.asset(
+    //                         doodle.doodle,
+    //                         height: MediaQuery.of(context).size.height * 0.09,
+    //                       ),
+    //                       const SizedBox(
+    //                         height: 8.0,
+    //                       ),
+    //                       doodle.name,
+    //                       const SizedBox(
+    //                         height: 8.0,
+    //                       ),
+    //                       Row(
+    //                         mainAxisAlignment: MainAxisAlignment.center,
+    //                         children: <Widget>[
+    //                           doodle.pointsIcon,
+    //                           Text(" "),
+    //                           doodle.points,
+    //                         ],
+    //                       ),
+    //                     ],
+    //                   ),
+    //                 ),
+    //               ),
+    //               //                )
+    //             ),
+
+    //           ],
+    //         ),
+    //       ),
+    //       position:
+    //           i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
+    //       isFirst: i == 0,
+    //       isLast: i == doodles.length,
+    //       iconBackground: doodle.iconBackground,
+    //       icon: doodle.icon);
   }
 }
 
