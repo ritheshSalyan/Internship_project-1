@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
-      home: ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, ),//RoadmapLoader(status: true,),
+      home: homePage(),//RoadmapLoader(status: true,),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,

@@ -148,13 +148,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
           width: 1.5,
         ),
         onPressed: () {
-          // Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(
-          //     builder: (context) => DiscussionPage(),
-          //   ),
-          // );
           bool value = validateDetail(context);
-
           if (value) {
             Scaffold.of(context).showSnackBar(
               SnackBar(
@@ -199,19 +193,8 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
 
   @override
   Widget build(BuildContext context) {
-    // data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
-        //  bottomSheet: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: <Widget>[
-        //     Text(
-        //        "Page ${widget.index+1}/${Module.moduleLength}",
-        //       textAlign: TextAlign.center,
-        //       style: TextStyle(color: Colors.green),
-        //     ),
-        //   ],
-        // ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,

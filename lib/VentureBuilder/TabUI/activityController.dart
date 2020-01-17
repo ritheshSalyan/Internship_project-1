@@ -12,6 +12,7 @@ import 'package:startupreneur/saveProgress.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:startupreneur/timeline/data.dart';
 import 'package:timeline_list/timeline_model.dart';
+import 'package:startupreneur/ModuleOrderController/Types.dart';
 
 class ActivityController extends StatefulWidget {
   ActivityController({
@@ -167,57 +168,151 @@ class _ActivityControllerState extends State<ActivityController> {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Container(
-              color: Colors.grey[50],
-              height: 210.0,
-              width: 145.0,
-              child: GradientCard(
-                gradient: LinearGradient(colors: doodle.colors),
-                //                    color: doodle.color,
-                margin: EdgeInsets.all(0),
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Colors.green,
-                    // width: 3,
-                    width: 2,
+            GestureDetector(
+              onTap: () async {
+                print(" true ${doodle.modNum}");
+                // if (progressNum == 0) {
+                if (doodle.modNum == 12 || doodle.modNum == 14) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ModuleOverviewLoading(modNum: doodle.modNum),
+                    ),
+                  );
+                } else if (doodle.modNum != 12) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => QuoteLoading(modNum: doodle.modNum),
+                    ),
+                  );
+                } else {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => (HustleStoreLoader()),
+                    ),
+                  );
+                }
+              },
+              // else {
+              //   showDialog<bool>(
+              //       context: context,
+              //       builder: (_) {
+              //         return AlertDialog(
+              //           content: Text("Do you want to resume this Module?"),
+              //           title: Text(
+              //             "Continue",
+              //           ),
+              //           actions: <Widget>[
+              //             FlatButton(
+              //               child: Text(
+              //                 "Yes",
+              //                 style: TextStyle(color: Colors.green),
+              //               ),
+              //               onPressed: () {
+              //                 Navigator.of(context).pop(true);
+              //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+              //                 SaveProgress.getEventsFromFirestore(
+              //                         doodle.modNum)
+              //                     .then((_) {
+              //                   List<int> arguments = [
+              //                     doodle.modNum,
+              //                     progressNum
+              //                   ];
+              //                   orderManagement.moveNextIndex(
+              //                       context, arguments);
+              //                 });
+              //               },
+              //             ),
+              //             FlatButton(
+              //               child: Text(
+              //                 "No",
+              //                 style: TextStyle(color: Colors.red),
+              //               ),
+              //               onPressed: () {
+              //                 Navigator.of(context).pop(true);
+              //                 if (doodle.modNum == 11 ||
+              //                     doodle.modNum == 14) {
+              //                   Navigator.of(context).push(
+              //                     MaterialPageRoute(
+              //                       builder: (context) =>
+              //                           ModuleOverviewLoading(
+              //                               modNum: doodle.modNum),
+              //                     ),
+              //                   );
+              //                 } else if (doodle.modNum != 12) {
+              //                   Navigator.of(context).push(
+              //                     MaterialPageRoute(
+              //                       builder: (context) =>
+              //                           QuoteLoading(modNum: doodle.modNum),
+              //                     ),
+              //                   );
+              //                 } else {
+              //                   Navigator.of(context).push(
+              //                     MaterialPageRoute(
+              //                       builder: (context) =>
+              //                           (HustleStoreLoader()),
+              //                     ),
+              //                   );
+              //                 }
+              //               },
+              //             ),
+              //           ],
+              //         );
+              //       });
+              // }
+              // },
+              child: Container(
+                color: Colors.grey[50],
+                height: 210.0,
+                width: 145.0,
+                child: GradientCard(
+                  gradient: LinearGradient(colors: doodle.colors),
+                  //                    color: doodle.color,
+                  margin: EdgeInsets.all(0),
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.green,
+                      // width: 3,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                // shape:Border.all(width: 3,
-                // color: Colors.green),
-                // margin: EdgeInsets.symmetric(vertical: 16.0),
-                clipBehavior: Clip.antiAlias,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      // Image.network(doodle.doodle),
-                      Image.asset(
-                        doodle.doodle,
-                        height: MediaQuery.of(context).size.height * 0.09,
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      doodle.name,
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          doodle.pointsIcon,
-                          Text(" "),
-                          doodle.points,
-                        ],
-                      ),
-                    ],
+                  // shape:Border.all(width: 3,
+                  // color: Colors.green),
+                  // margin: EdgeInsets.symmetric(vertical: 16.0),
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        // Image.network(doodle.doodle),
+                        Image.asset(
+                          doodle.doodle,
+                          height: MediaQuery.of(context).size.height * 0.09,
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        doodle.name,
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            doodle.pointsIcon,
+                            Text(" "),
+                            doodle.points,
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+                //                )
               ),
-              //                )
             ),
           ],
         ),

@@ -81,6 +81,7 @@ dependencies:
   flutter_icons: ^1.0.0+1
   firebase: ^7.1.0
   firebase_core: ^0.4.3+2
+  flutter_file_picker: ^0.0.3
 
   provider: ^4.0.1
 

@@ -9,6 +9,8 @@ import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 // import 'package:extended_image/extended_image.dart';
 import '../../saveProgress.dart';
+import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase/firestore.dart' as fs;
 
 class DiscussionPage extends StatefulWidget {
   DiscussionPage(
@@ -34,6 +36,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
     // "Swipe Right / Left to remove",
     // "Swipe Right / Left to remove",
   ];
+  fs.Firestore db = fb.firestore();
 
   @override
   void initState() {
@@ -88,13 +91,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
   List<Widget> convertTolist() {
     List<Widget> list = [];
     list.addAll(_listViewData.map((data) {
-      // return Dismissible(
-      //   key: Key(data),
-      //   child: ListTile(
-      //     title: Text(data),
-      //   ),
-      // );
-      // print(_listViewData);
       return Card(
           elevation: 0,
           margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -145,11 +141,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
       list.add(Center(
         child: FlatButton(
           onPressed: () {
-            // Navigator.of(context).pushReplacement(
-            //   MaterialPageRoute(
-            //     builder: (context)=>SocializeTask(),
-            //   )
-            // );
             List<dynamic> arguments = [widget.modNum, widget.index + 1];
             orderManagement.moveNextIndex(context, arguments);
           },
@@ -178,7 +169,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
     if (widget.image != "") {
       print("Title here ${widget.image}");
       if ((widget.image.contains("assets/"))) {
-        // print("Inside Assets");
         image = Image.asset(
           widget.image,
           semanticLabel: "Image",
@@ -199,16 +189,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
     data = widget.content;
     return CustomeOffline(
       onConnetivity: Scaffold(
-        //  bottomSheet: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: <Widget>[
-        //     Text(
-        //        "Page ${widget.index+1}/${Module.moduleLength}",
-        //       textAlign: TextAlign.center,
-        //       style: TextStyle(color: Colors.green),
-        //     ),
-        //   ],
-        // ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,
@@ -225,7 +205,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
             ],
           ),
         ),
-
         appBar: AppBar(
           elevation: 0,
           actions: <Widget>[
@@ -251,7 +230,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
-                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               SaveProgress.preferences(
                                   widget.modNum, widget.index);
                               Navigator.of(context).popUntil(
@@ -290,111 +268,81 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       child: Text(" "),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.0),
-                    child: Column(
-                      children: <Widget>[
-                        // Padding(
-                        //   padding: EdgeInsets.only(
-                        //       top: MediaQuery.of(context).size.height * 0.05,
-                        //       left: MediaQuery.of(context).size.width * 0.02),
-                        //  Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        // children: <Widget>[
-                        Text(
-                          widget.title,
-                          textAlign: TextAlign.center,
-                          //"Startup or Job",
-                          style: TextStyle(
-                            fontFamily: "sans-serif",
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.w700,
+                  StreamBuilder(
+                    stream: db
+                        .collection("discussion")
+                        .where("module", "==", widget.modNum)
+                        .where("order", "==", orderManagement.currentIndex)
+                        .onSnapshot,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.0,
                           ),
-                        ),
-                        //     ],
-                        //  // ),
-                        // ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.14),
-                              child: image,
-                            ),
-                            (widget.image != "")
-                                ? IconButton(
-                                    icon: Icon(
-                                      Icons.zoom_out_map,
-                                      color: Colors.black,
+                          child: ListView.builder(
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: <Widget>[
+                                  Text(
+                                    snapshot.data.docs[index].data()['title'],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "sans-serif",
+                                      color: Colors.white,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.w700,
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            ImageViewer(image: widget.image),
-                                        fullscreenDialog: true,
-                                      ));
-                                    },
-                                  )
-                                : SizedBox(),
-                          ],
-                        ),
-
-                        Column(
-                          // children: <Widget>[
-
-                          //    Card(
-                          //       clipBehavior: Clip.antiAliasWithSaveLayer,
-                          //       child: Padding(
-                          //         padding: EdgeInsets.all(10.0),
-                          //         child: Text(
-                          //           widget.content,
-                          //           //"Those working in startups get jealous when they see their friends drawing a great salary and having a structured life, while, those who are in jobs are upset when they see their startup friends having the flexibility and autonomy to solve problems in their own way. You probably know the workplace basics of each – large companies have set hours and are stricter, while, startups have more flexibility but are more demanding.",
-                          //           style: TextStyle(
-                          //             fontSize: 18.0,
-                          //
-                          //             fontWeight: FontWeight.w500,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-
-                          // ],
-                          children: convertTolist(),
-                        ),
-                        // FlatButton(
-                        //   onPressed: () {
-                        //     // Navigator.of(context).pushReplacement(
-                        //     //   MaterialPageRoute(
-                        //     //     builder: (context)=>SocializeTask(),
-                        //     //   )
-                        //     // );
-                        //     List<dynamic> arguments = [
-                        //       widget.modNum,
-                        //       widget.index+1
-                        //     ];
-                        //     orderManagement.moveNextIndex(context, arguments);
-                        //   },
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.end,
-                        //     children: <Widget>[
-                        //       Text(widget.button,
-                        //           style: TextStyle(fontWeight: FontWeight.w700)),
-                        //       Icon(Icons.navigate_next),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
-                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.14,
+                                        ),
+                                        child: snapshot.data.docs[index].data()['image'],
+                                      ),
+                                      (snapshot.data.docs[index].data()['image'] != "")
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.zoom_out_map,
+                                                color: Colors.black,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ImageViewer(
+                                                    image: snapshot.data.docs[index].data()['image'],
+                                                  ),
+                                                  fullscreenDialog: true,
+                                                ));
+                                              },
+                                            )
+                                          : SizedBox(),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: convertTolist(),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
                   ),
                 ],
               );

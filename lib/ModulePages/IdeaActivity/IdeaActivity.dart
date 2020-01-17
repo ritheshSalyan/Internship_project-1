@@ -97,16 +97,6 @@ class _IdeaActivityState extends State<IdeaActivity> {
         final connected = connection != ConnectivityResult.none;
         if (connected) {
           child = Scaffold(
-            // bottomSheet: Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: <Widget>[
-            //     Text(
-            //        "Page ${widget.index+1}/${Module.moduleLength}",
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(color: Colors.green),
-            //     ),
-            //   ],
-            // ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.only(
                 left: 15.0,

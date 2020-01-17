@@ -67,16 +67,6 @@ class _DecisionGameState extends State<DecisionGame>
           return WillPopScope(
             onWillPop: _onWillPop,
             child: Scaffold(
-              // bottomSheet: Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: <Widget>[
-              //     Text(
-              //        "${widget.order+1}/${Module.moduleLength}",
-              //       textAlign: TextAlign.center,
-              //       style: TextStyle(color: Colors.green),
-              //     ),
-              //   ],
-              // ),
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.only(
                   left: 15.0,
