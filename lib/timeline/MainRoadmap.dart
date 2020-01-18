@@ -610,7 +610,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                         ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, ),//FolderBuilder(completedCourse: completedCourse)),
+                         ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, buttons: [""],),//FolderBuilder(completedCourse: completedCourse)),
                   ),
                 );
               },

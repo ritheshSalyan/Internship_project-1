@@ -29,10 +29,11 @@ class ListActivities extends StatefulWidget {
     this.index,
     this.files,
     this.order,
+    this.buttons,
   }) : super(key: key);
   int modNum, index, order;
   String modName, files;
-  List intro, headings;
+  List intro, headings,buttons;
   @override
   _ListActivitiesState createState() => _ListActivitiesState();
 }
@@ -191,78 +192,80 @@ class _ListActivitiesState extends State<ListActivities>
                         return ActivityIntro(
                           intro: widget.intro,
                           heading: widget.headings,
+                          buttons: widget.buttons,
+                          files: widget.files,
                           index: index,
                         );
                       },
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          (widget.files != null && widget.files.isNotEmpty)
-                              ? Card(
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.file_download,
-                                      color: Colors.green,
-                                    ),
-                                    title: RaisedButton(
-                                      color: Colors.green,
-                                      child: Text(
-                                        "Activity Template Download",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          20,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        print("inside");
-                                        downloadFile(context);
-                                      },
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.file_upload,
-                                color: Colors.green,
-                              ),
-                              title: RaisedButton(
-                                color: Colors.green,
-                                child: Text(
-                                  "My Activity Upload",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    20,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  getFilePath();
-                                },
-                              ),
-                            ),
-                          ),
-                          // SizedBox(height: MediaQuery.of(context).size.height*0.1,)
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: Container(
+                  //     width: MediaQuery.of(context).size.width * 0.4,
+                  //     child: ListView(
+                  //       shrinkWrap: true,
+                  //       children: <Widget>[
+                  //         (widget.files != null && widget.files.isNotEmpty)
+                  //             ? Card(
+                  //                 child: ListTile(
+                  //                   leading: Icon(
+                  //                     Icons.file_download,
+                  //                     color: Colors.green,
+                  //                   ),
+                  //                   title: RaisedButton(
+                  //                     color: Colors.green,
+                  //                     child: Text(
+                  //                       "Activity Template Download",
+                  //                       style: TextStyle(
+                  //                         color: Colors.white,
+                  //                         fontWeight: FontWeight.bold,
+                  //                       ),
+                  //                     ),
+                  //                     shape: RoundedRectangleBorder(
+                  //                       borderRadius: BorderRadius.circular(
+                  //                         20,
+                  //                       ),
+                  //                     ),
+                  //                     onPressed: () {
+                  //                       print("inside");
+                  //                       downloadFile(context);
+                  //                     },
+                  //                   ),
+                  //                 ),
+                  //               )
+                  //             : Container(),
+                  //         Card(
+                  //           child: ListTile(
+                  //             leading: Icon(
+                  //               Icons.file_upload,
+                  //               color: Colors.green,
+                  //             ),
+                  //             title: RaisedButton(
+                  //               color: Colors.green,
+                  //               child: Text(
+                  //                 "My Activity Upload",
+                  //                 style: TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //               ),
+                  //               shape: RoundedRectangleBorder(
+                  //                 borderRadius: BorderRadius.circular(
+                  //                   20,
+                  //                 ),
+                  //               ),
+                  //               onPressed: () {
+                  //                 getFilePath();
+                  //               },
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         // SizedBox(height: MediaQuery.of(context).size.height*0.1,)
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // Align(
                   //         alignment: Alignment.bottomCenter,
                   //         child: GestureDetector(

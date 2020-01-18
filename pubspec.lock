@@ -700,6 +700,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.1+4"
+  video_player_platform_interface:
+    dependency: transitive
+    description:
+      name: video_player_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
+  video_player_web:
+    dependency: "direct main"
+    description:
+      name: video_player_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+1"
   xml:
     dependency: transitive
     description:

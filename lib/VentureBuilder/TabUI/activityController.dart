@@ -9,6 +9,7 @@ import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/ListActivity.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
+import 'package:startupreneur/customWidgets/RaisedButtonGradient.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:startupreneur/timeline/data.dart';
@@ -25,10 +26,11 @@ class ActivityController extends StatefulWidget {
     this.index,
     this.files,
     this.order,
+    this.buttons,
   }) : super(key: key);
   int modNum, index, order;
   String modName, files;
-  List intro, headings;
+  List intro, headings, buttons;
   @override
   _ActivityControllerState createState() => _ActivityControllerState();
 }
@@ -42,13 +44,15 @@ class _ActivityControllerState extends State<ActivityController> {
 
     return ChangeNotifierProvider<ActivityChangeNotifier>(
       create: (context) => ActivityChangeNotifier(
-          modnum: widget.modNum,
-          order: widget.index,
-          intro: widget.intro,
-          headings: widget.headings,
-          modName: widget.modName,
-          files: widget.files,
-          moduleOrderNo: widget.order),
+        modnum: widget.modNum,
+        order: widget.index,
+        intro: widget.intro,
+        headings: widget.headings,
+        modName: widget.modName,
+        files: widget.files,
+        buttons: widget.buttons,
+        moduleOrderNo: widget.order,
+      ),
       child: Row(
         children: <Widget>[
           Container(
@@ -60,19 +64,20 @@ class _ActivityControllerState extends State<ActivityController> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Consumer<ActivityChangeNotifier>(
-                      builder: (context, activity, _) {
-                    return Container(
-                      height: size.height * 0.1,
-                      child: CustomTimeLine(
-                        direction: Axis.horizontal,
-                        itemCount: moduleOrder.length,
-                        completeIndex: moduleOrder.indexOf(activity.modnum),
-                        builder: (context, i) {
-                          return Container();
-                        },
-                      ),
-                    );
-                  }),
+                    builder: (context, activity, _) {
+                      return Container(
+                        height: size.height * 0.1,
+                        child: CustomTimeLine(
+                          direction: Axis.horizontal,
+                          itemCount: moduleOrder.length,
+                          completeIndex: moduleOrder.indexOf(activity.modnum),
+                          builder: (context, i) {
+                            return Container();
+                          },
+                        ),
+                      );
+                    },
+                  ),
                   Container(
                     height: size.height * 0.9,
                     child: Stack(
@@ -89,13 +94,15 @@ class _ActivityControllerState extends State<ActivityController> {
                                   if (snapshot.hasData) {
                                     activity.updateIntros(snapshot.data);
                                     return ListActivities(
-                                        modName: activity.modName,
-                                        modNum: activity.modnum,
-                                        intro: activity.intro,
-                                        headings: activity.headings,
-                                        index: activity.order,
-                                        files: activity.files,
-                                        order: activity.moduleOrderNo);
+                                      modName: activity.modName,
+                                      modNum: activity.modnum,
+                                      intro: activity.intro,
+                                      headings: activity.headings,
+                                      index: activity.order,
+                                      files: activity.files,
+                                      buttons: activity.buttons,
+                                      order: activity.moduleOrderNo,
+                                    );
                                   } else {
                                     return Center(
                                       child: Container(
@@ -113,28 +120,36 @@ class _ActivityControllerState extends State<ActivityController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                OutlineButton(
-                                  borderSide: BorderSide(
-                                    color: Colors.green,
-                                    width: 2.0,
+                                RaisedGradientButton(
+                                  width: 200,
+                                  height: 50,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.green,
+                                      Color(0xFF30B8AA),
+                                    ],
                                   ),
                                   onPressed: () {
                                     activity.decreaseOrder();
                                   },
                                   child: Text(
-                                    "Previous Activity",
+                                    "Previous Module Activity",
                                   ),
                                 ),
-                                OutlineButton(
-                                  borderSide: BorderSide(
-                                    color: Colors.green,
-                                    width: 2.0,
+                                RaisedGradientButton(
+                                  width: 200,
+                                  height: 50,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.green,
+                                      Color(0xFF30B8AA),
+                                    ],
                                   ),
                                   onPressed: () {
                                     activity.moveNext();
                                   },
                                   child: Text(
-                                    "Next Activity",
+                                    "Previous Module Activity",
                                   ),
                                 ),
                               ],
@@ -149,25 +164,31 @@ class _ActivityControllerState extends State<ActivityController> {
             ),
             //   ),
           ),
+          // SizedBox(
+          //   width: 10,
+          // ),
           Consumer<ActivityChangeNotifier>(
             builder: (context, activity, _) {
-              print("activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
-              ModuleTraverse moduleTraverse = ModuleTraverse(modnum: activity.modnum, order: 0);
+              print(
+                  "activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
+              ModuleTraverse moduleTraverse =
+                  ModuleTraverse(modnum: activity.modnum, order: 0);
               return Container(
                 width: size.width * ratio,
                 color: Colors.red,
                 child: ChangeNotifierProvider<ModuleTraverse>(
-                  create: (_) =>moduleTraverse,
-                      // ModuleTraverse(modnum: activity.modnum, order: 0),
-                  child: Consumer<ModuleTraverse>(
-                  
-                    builder: (context, traverse,_) {
-                      traverse.updateModNum(activity.modnum);
-                      print("activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
-                      return traverse.order<1? centerTimeline(
-                          context, moduleOrder.indexOf(activity.modnum)):traverse.nextPage();
-                    }
-                  ),
+                  create: (_) => moduleTraverse,
+                  // ModuleTraverse(modnum: activity.modnum, order: 0),
+                  child:
+                      Consumer<ModuleTraverse>(builder: (context, traverse, _) {
+                    traverse.updateModNum(activity.modnum);
+                    print(
+                        "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                    return traverse.order < 1
+                        ? centerTimeline(
+                            context, moduleOrder.indexOf(activity.modnum))
+                        : traverse.nextPage();
+                  }),
                 ),
               );
             },
@@ -182,7 +203,7 @@ class _ActivityControllerState extends State<ActivityController> {
     return GestureDetector(
       onTap: () {
         print(" true ${doodle.modNum}");
-        Provider.of<ModuleTraverse>(context,listen: false).navigate();
+        Provider.of<ModuleTraverse>(context, listen: false).navigate();
 
         // val = completedCourse[k];
         // print("val is $val");
@@ -496,17 +517,21 @@ class _ActivityControllerState extends State<ActivityController> {
 class ActivityChangeNotifier with ChangeNotifier {
   int modnum, order, noOfActivity, moduleOrderNo;
   String modName, files;
+
+  ActivityChangeNotifier({
+    this.modnum,
+    this.order,
+    this.headings,
+    this.intro,
+    this.modName,
+    this.files,
+    this.buttons,
+    this.moduleOrderNo,
+  });
+
   List intro = [];
   List headings = [];
-
-  ActivityChangeNotifier(
-      {this.modnum,
-      this.order,
-      this.headings,
-      this.intro,
-      this.modName,
-      this.files,
-      this.moduleOrderNo});
+  List buttons = [];
 
   void changeModule() {
     int modindex = moduleOrder.indexOf(modnum);
@@ -559,11 +584,15 @@ class ActivityChangeNotifier with ChangeNotifier {
   }
 
   void updateIntros(fs.QuerySnapshot snapshot) {
-    print("updateIntros $order  $modnum ");
+    // print("updateIntros $order  $modnum ");
     noOfActivity = snapshot.docs.length;
-    print(snapshot.docs[order].data()['Page']);
+
+    print(snapshot.docs[order].data()['buttons']);
+
     headings.clear();
     intro.clear();
+    buttons.clear();
+
     print("snapshot.docs.length ${snapshot.docs.length}");
     snapshot.docs[order].data()['Page'].forEach((value) {
       headings.add(value);
@@ -571,6 +600,9 @@ class ActivityChangeNotifier with ChangeNotifier {
     snapshot.docs[order].data()['content'].forEach((value) {
       intro.add(value);
       // print("object $value");
+    });
+    snapshot.docs[order].data()['buttons'].forEach((value) {
+      buttons.add(value);
     });
 
     files = snapshot.docs[order].data()['file'];
