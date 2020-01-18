@@ -10,8 +10,8 @@ import 'Discussion.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class DiscussionLoading extends StatefulWidget {
-  DiscussionLoading({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+  DiscussionLoading({Key key, this.modNum, this.index}) : super(key: key);
+  final int modNum, index;
   @override
   _DiscussionLoading createState() => _DiscussionLoading();
 }
@@ -19,7 +19,6 @@ class DiscussionLoading extends StatefulWidget {
 class _DiscussionLoading extends State<DiscussionLoading> {
   @override
   void initState() {
-
     super.initState();
     //  SystemChrome.setPreferredOrientations([
     //   DeviceOrientation.portraitUp,
@@ -27,8 +26,8 @@ class _DiscussionLoading extends State<DiscussionLoading> {
     // ]);
   }
 
-  @override 
-  dispose(){
+  @override
+  dispose() {
     //  SystemChrome.setPreferredOrientations([
     //   DeviceOrientation.portraitUp,
     //   DeviceOrientation.portraitDown,
@@ -108,7 +107,10 @@ return DiscussionPage(
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.docs.forEach((document) {
-      print("Discussion " +document.data()["order"].toString()+document.data()["image"].toString()+document.data()["content"].toString());
+      print("Discussion " +
+          document.data()["order"].toString() +
+          document.data()["image"].toString() +
+          document.data()["content"].toString());
 
       title = convert(document.data()["content"]);
       title.add(document.data()["image"].toString());
@@ -116,14 +118,13 @@ return DiscussionPage(
 
     return title;
   }
-  
-  static List<String> convert(List<dynamic> dlist){
 
+  static List<String> convert(List<dynamic> dlist) {
     List<String> list = new List<String>();
 
     for (var item in dlist) {
-       list.add(item.toString());
-       print(item.toString());
+      list.add(item.toString());
+      print(item.toString());
     }
     //list.add("assets/Images/think.png");
     return list;

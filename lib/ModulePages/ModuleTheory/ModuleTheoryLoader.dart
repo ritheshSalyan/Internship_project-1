@@ -24,55 +24,65 @@ class _TheoryLoading extends State<TheoryLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      print("Title is " + title);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => videoPlayerPage(
+    // getEventsFromFirestore(widget.modNum).then((title) {
+    //   print("Title is " + title);
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => videoPlayerPage(
+    //         modNum: widget.modNum,
+    //         title: title,
+    //         index: widget.index,
+    //       ),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+      future: getEventsFromFirestore(widget.modNum),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return videoPlayerPage(
             modNum: widget.modNum,
-            title: title,
+            title: snapshot.data.data(),
             index: widget.index,
-          ),
-        ),
-      );
-    });
-    return CustomeOffline(
-      onConnetivity: Scaffold(
-        bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              "${widget.index + 1}",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
-            ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          );
+        }
+        return Scaffold(
+          bottomSheet: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 5,
-                value: null,
-                valueColor: new AlwaysStoppedAnimation(Colors.green),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  "Loading... Please Wait",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
+              Text(
+                "${widget.index + 1}",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
               ),
             ],
           ),
-        ),
-      ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new CircularProgressIndicator(
+                  strokeWidth: 5,
+                  value: null,
+                  valueColor: new AlwaysStoppedAnimation(Colors.green),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    "Loading... Please Wait",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
