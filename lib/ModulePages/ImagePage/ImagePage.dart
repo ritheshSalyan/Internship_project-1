@@ -1,6 +1,8 @@
 // import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:firebase/firebase.dart' as fb;
@@ -25,6 +27,8 @@ class _ImagePagePageState extends State<ImagePagePage>
     with SingleTickerProviderStateMixin {
   fs.Firestore db = fb.firestore();
 
+  ModuleTraverse traverse;
+
   @override
   void initState() {
     super.initState();
@@ -37,8 +41,11 @@ class _ImagePagePageState extends State<ImagePagePage>
   @override
   Widget build(BuildContext context) {
     print("Heading in ImagePage is " + widget.headding);
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    traverse =  Provider.of<ModuleTraverse>(context);
+    return
+    //  CustomeOffline(
+    //   onConnetivity:
+       Scaffold(
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(
               left: 15.0,
@@ -186,8 +193,9 @@ class _ImagePagePageState extends State<ImagePagePage>
                                       widget.modNum,
                                       widget.index + 1
                                     ];
-                                    orderManagement.moveNextIndex(
-                                        context, arguments);
+                                    // orderManagement.moveNextIndex(
+                                    //     context, arguments);
+                                    traverse.navigate();
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -209,7 +217,8 @@ class _ImagePagePageState extends State<ImagePagePage>
                 },
               );
             },
-          )),
+          )
+          // ),
     );
   }
 }

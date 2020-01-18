@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/saveProgress.dart';
 import 'package:video_player/video_player.dart';
@@ -93,8 +95,11 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    ModuleTraverse traverse =  Provider.of<ModuleTraverse>(context);
+    return
+    //  CustomeOffline(
+    //   onConnetivity: 
+      Scaffold(
         //      bottomSheet: Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceAround,
         //   children: <Widget>[
@@ -143,11 +148,12 @@ class _VideoPlayState extends State<VideoPlay> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
-                              SaveProgress.preferences(
-                                  widget.modNum, widget.index);
+                              // SaveProgress.preferences(
+                              //     widget.modNum, widget.index);
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              Navigator.of(context).popUntil(
-                                  ModalRoute.withName("TimelinePage"));
+                              // Navigator.of(context).popUntil(
+                              //     ModalRoute.withName("TimelinePage"));
+                              Provider.of<ModuleTraverse>(context).navigate();
                             },
                           ),
                           FlatButton(
@@ -239,8 +245,11 @@ class _VideoPlayState extends State<VideoPlay> {
                   //   ));
                   // }
 
-                  List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                  orderManagement.moveNextIndex(context, arguments);
+                  // List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                  // orderManagement.moveNextIndex(context, arguments);
+                             
+                                                          traverse.navigate();
+
                 },
                 child: Text(
                   widget.btnTitle,
@@ -253,7 +262,7 @@ class _VideoPlayState extends State<VideoPlay> {
             ],
           ),
         ),
-      ),
+      // ),
     );
   }
 }

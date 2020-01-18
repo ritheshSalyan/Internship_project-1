@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -34,6 +36,8 @@ class _QuizPageState extends State<QuizPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   String _answerIs = "";
 
+  ModuleTraverse traverse;
+
   @override
   void initState() {
     super.initState();
@@ -56,9 +60,12 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     String question = "";
-    return CustomeOffline(
-      onConnetivity: WillPopScope(
+    return 
+    // CustomeOffline(
+    //   onConnetivity:
+       WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
           //    bottomSheet: Row(
@@ -315,8 +322,9 @@ class _QuizPageState extends State<QuizPage> {
                                             widget.modNum,
                                             widget.index
                                           ];
-                                          orderManagement.moveNextIndex(
-                                              context, arguments);
+                                          // orderManagement.moveNextIndex(
+                                          //     context, arguments);
+                                          traverse.navigate();
                                         },
                                       ),
                                     ),
@@ -364,7 +372,7 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
         ),
-      ),
+      // ),
     );
   }
 

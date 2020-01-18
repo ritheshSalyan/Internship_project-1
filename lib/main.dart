@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
-      home: homePage(),//RoadmapLoader(status: true,),
+      home: RoadmapLoader(status: true,),//homePage(),//
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,

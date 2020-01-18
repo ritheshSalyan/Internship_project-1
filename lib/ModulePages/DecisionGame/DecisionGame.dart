@@ -5,8 +5,10 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -54,9 +56,10 @@ class _DecisionGameState extends State<DecisionGame>
         .doc(userId)
         .set(data);
   }
-
+ModuleTraverse traverse;
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     String question = "";
     return OfflineBuilder(
       child: NoNetPage(),
@@ -317,8 +320,9 @@ class _DecisionGameState extends State<DecisionGame>
                                               widget.modNum,
                                               widget.order + 1
                                             ];
-                                            orderManagement.moveNextIndex(
-                                                context, arguments);
+                                            // orderManagement.moveNextIndex(
+                                            //     context, arguments);
+                                            traverse.navigate();
                                           },
                                         ),
                                       ),

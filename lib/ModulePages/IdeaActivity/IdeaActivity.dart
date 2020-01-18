@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
@@ -22,6 +24,8 @@ class _IdeaActivityState extends State<IdeaActivity> {
   final GlobalKey<FormState> box2 = GlobalKey<FormState>();
   final GlobalKey<FormState> box3 = GlobalKey<FormState>();
   final GlobalKey<FormState> box4 = GlobalKey<FormState>();
+
+  ModuleTraverse traverse;
 
   bool _validateFromBox1() {
     final form = box1.currentState;
@@ -91,6 +95,7 @@ class _IdeaActivityState extends State<IdeaActivity> {
   @override
   Widget build(BuildContext context) {
     print("*************************************${widget.index}");
+    traverse =  Provider.of<ModuleTraverse>(context);
     return OfflineBuilder(
       child: NoNetPage(),
       connectivityBuilder: (contex, connection, child) {
@@ -344,7 +349,8 @@ class _IdeaActivityState extends State<IdeaActivity> {
                           progressDialog.show();
                           await getFile();
                           List<dynamic> arguments = [widget.modNum, 32 + 1];
-                          orderManagement.moveNextIndex(context, arguments);
+                          // orderManagement.moveNextIndex(context, arguments);
+                          traverse.navigate();
                           progressDialog.hide();
                         }
                       },

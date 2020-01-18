@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
+import 'liquid_swipe/liquid_swipe.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import '../ModuleOrderController/Types.dart';
 
 class IntroScreen_Liquid extends StatefulWidget {
@@ -69,8 +71,9 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    List<dynamic> arguments = [widget.modNum, widget.index];
-                    orderManagement.moveNextIndex(context, arguments);
+                    // List<dynamic> arguments = [widget.modNum, widget.index];
+                    // orderManagement.moveNextIndex(context, arguments);
+                    traverse.navigate();
                   },
                   color: Colors.green,
                 ),
@@ -153,28 +156,20 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
       }
     }
   }
-
+ModuleTraverse traverse;
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
+
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
          
-        body: OfflineBuilder(
-          connectivityBuilder:
-              (context, ConnectivityResult connectivity, Widget child) {
-            final connected = connectivity != ConnectivityResult.none;
-            if (connected) {
-              child = LiquidSwipe(
+        body:LiquidSwipe(
                 pages: pages,
                 fullTransitionValue: 350,
                 enableSlideIcon: true,
-              );
-            }
-            return child;
-          },
-          child: NoNetPage(),
-        ),
+              ),
       ),
     );
   }

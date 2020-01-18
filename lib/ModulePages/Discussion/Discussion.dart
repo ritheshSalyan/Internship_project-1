@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -38,6 +40,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
   ];
   fs.Firestore db = fb.firestore();
 
+  ModuleTraverse traverse;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +50,11 @@ class _DiscussionPageState extends State<DiscussionPage> {
     //   DeviceOrientation.portraitUp,
     //   DeviceOrientation.portraitDown,
     // ]);
+    item = 0;
+    _listViewData = [];
+    data = "";
+    print("INside initstate Discussion");
+    // convertTolist();
   }
 
   @override
@@ -89,7 +98,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
   }
 
   List<Widget> convertTolist() {
-    List<Widget> list = [];
+    List<Widget> list= [];
     list.addAll(_listViewData.map((data) {
       return Card(
           elevation: 0,
@@ -119,7 +128,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
       list.add(Center(
           child: Padding(
         padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
         child: OutlineButton(
           highlightedBorderColor: Colors.greenAccent,
           borderSide: BorderSide(color: Colors.green),
@@ -142,7 +151,9 @@ class _DiscussionPageState extends State<DiscussionPage> {
         child: FlatButton(
           onPressed: () {
             List<dynamic> arguments = [widget.modNum, widget.index + 1];
-            orderManagement.moveNextIndex(context, arguments);
+            // orderManagement.moveNextIndex(context, arguments);
+            data = "";
+            traverse.navigate();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -161,9 +172,10 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
   @override
   Widget build(BuildContext context) {
+    traverse = Provider.of<ModuleTraverse>(context);
     Widget image = SizedBox(
       height: MediaQuery.of(context).size.height * 0.15,
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: MediaQuery.of(context).size.width * 0.2,
     );
 
     if (widget.image != "") {
@@ -173,22 +185,30 @@ class _DiscussionPageState extends State<DiscussionPage> {
           widget.image,
           semanticLabel: "Image",
           height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: MediaQuery.of(context).size.width * 0.2,
         );
       } else {
         // print("Inside Network");
         image = Image.network(
           widget.image,
           height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: MediaQuery.of(context).size.width * 0.2,
           fit: BoxFit.contain,
         );
       }
     }
-    // print("Image is ${}");
-    data = widget.content;
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    if(data.compareTo(widget.content)!=0){
+        data = widget.content;
+        _listViewData = [];
+        item = 0;
+    }
+
+    print("data is  is $data    ++++++++++++++++++++++++ ${ data.compareTo(widget.content)}");
+    print("List VIEW DATA IS $_listViewData");
+    return
+    //  CustomeOffline(
+    //   onConnetivity: 
+      Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,
@@ -268,25 +288,12 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       child: Text(" "),
                     ),
                   ),
-                  StreamBuilder(
-                    stream: db
-                        .collection("discussion")
-                        .where("module", "==", widget.modNum)
-                        .where("order", "==", orderManagement.currentIndex)
-                        .onSnapshot,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.0,
-                          ),
-                          child: ListView.builder(
-                            itemCount: snapshot.data.docs.length,
-                            itemBuilder: (context, index) {
-                              return Column(
+                  Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Text(
-                                    snapshot.data.docs[index].data()['title'],
+                                    widget.title,
+                                    // snapshot.data.docs[index].data()['title'],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: "sans-serif",
@@ -305,51 +312,124 @@ class _DiscussionPageState extends State<DiscussionPage> {
                                     children: <Widget>[
                                       Padding(
                                         padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.14,
+                                          // left: MediaQuery.of(context)
+                                          //         .size
+                                          //         .width *
+                                          //     0.14,
                                         ),
-                                        child: snapshot.data.docs[index].data()['image'],
+                                        child: image,// snapshot.data.docs[index].data()['image'],
                                       ),
-                                      (snapshot.data.docs[index].data()['image'] != "")
-                                          ? IconButton(
-                                              icon: Icon(
-                                                Icons.zoom_out_map,
-                                                color: Colors.black,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ImageViewer(
-                                                    image: snapshot.data.docs[index].data()['image'],
-                                                  ),
-                                                  fullscreenDialog: true,
-                                                ));
-                                              },
-                                            )
-                                          : SizedBox(),
+                                      // (snapshot.data.docs[index].data()['image'] != "")
+                                      //     ? IconButton(
+                                      //         icon: Icon(
+                                      //           Icons.zoom_out_map,
+                                      //           color: Colors.black,
+                                      //         ),
+                                      //         onPressed: () {
+                                      //           Navigator.of(context)
+                                      //               .push(MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 ImageViewer(
+                                      //               image: snapshot.data.docs[index].data()['image'],
+                                      //             ),
+                                      //             fullscreenDialog: true,
+                                      //           ));
+                                      //         },
+                                      //       )
+                                      //     : SizedBox(),
                                     ],
                                   ),
                                   Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: convertTolist(),
                                   ),
                                 ],
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
+                              ),
+                  // StreamBuilder(
+                  //   stream: db
+                  //       .collection("discussion")
+                  //       .where("module", "==", widget.modNum)
+                  //       .where("order", "==", orderManagement.currentIndex)
+                  //       .onSnapshot,
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasData) {
+                  //       return Padding(
+                  //         padding: EdgeInsets.only(
+                  //           // top: MediaQuery.of(context).size.height * 0.0,
+                  //         ),
+                  //         child: ListView.builder(
+                  //           itemCount: snapshot.data.docs.length,
+                  //           shrinkWrap: true,
+                  //           itemBuilder: (context, index) {
+                  //             return Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: <Widget>[
+                  //                 Text(
+                  //                   snapshot.data.docs[index].data()['title'],
+                  //                   textAlign: TextAlign.center,
+                  //                   style: TextStyle(
+                  //                     fontFamily: "sans-serif",
+                  //                     color: Colors.white,
+                  //                     fontSize: 25.0,
+                  //                     fontWeight: FontWeight.w700,
+                  //                   ),
+                  //                 ),
+                  //                 SizedBox(
+                  //                   height: 15,
+                  //                 ),
+                  //                 Row(
+                  //                   mainAxisAlignment: MainAxisAlignment.center,
+                  //                   crossAxisAlignment:
+                  //                       CrossAxisAlignment.center,
+                  //                   children: <Widget>[
+                  //                     Padding(
+                  //                       padding: EdgeInsets.only(
+                  //                         left: MediaQuery.of(context)
+                  //                                 .size
+                  //                                 .width *
+                  //                             0.14,
+                  //                       ),
+                  //                       child: snapshot.data.docs[index].data()['image'],
+                  //                     ),
+                  //                     (snapshot.data.docs[index].data()['image'] != "")
+                  //                         ? IconButton(
+                  //                             icon: Icon(
+                  //                               Icons.zoom_out_map,
+                  //                               color: Colors.black,
+                  //                             ),
+                  //                             onPressed: () {
+                  //                               Navigator.of(context)
+                  //                                   .push(MaterialPageRoute(
+                  //                                 builder: (context) =>
+                  //                                     ImageViewer(
+                  //                                   image: snapshot.data.docs[index].data()['image'],
+                  //                                 ),
+                  //                                 fullscreenDialog: true,
+                  //                               ));
+                  //                             },
+                  //                           )
+                  //                         : SizedBox(),
+                  //                   ],
+                  //                 ),
+                  //                 Column(
+                  //                   mainAxisSize: MainAxisSize.min,
+                  //                   children: convertTolist(),
+                  //                 ),
+                  //               ],
+                  //             );
+                  //           },
+                  //         ),
+                  //       );
+                  //     }
+                  //     return Container();
+                  //   },
+                  // ),
                 ],
               );
             },
           ),
         ),
-      ),
+      // ),
     );
   }
 }

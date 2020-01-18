@@ -6,11 +6,11 @@ import 'package:firebase/firebase.dart';
 
 class FirebaseFetch {
   static fs.Firestore firestore = fb.firestore();
-  static Future<List<String>> getEventsFromFirestore(int modNum) async {
+  static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
     var ref = firestore.collection('story');
     var eventsQuery = await ref
         .where("module","==", modNum)
-        .where("order", "==", orderManagement.currentIndex)
+        .where("order", "==", index)
         .get();
 
     List<String> module = new List<String>();

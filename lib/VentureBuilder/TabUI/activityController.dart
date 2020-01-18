@@ -5,6 +5,7 @@ import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/custom_timeline.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/ListActivity.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
@@ -40,15 +41,16 @@ class _ActivityControllerState extends State<ActivityController> {
     Size size = MediaQuery.of(context).size;
 
     return ChangeNotifierProvider<ActivityChangeNotifier>(
-        create: (context) => ActivityChangeNotifier(
-            modnum: widget.modNum,
-            order: widget.index,
-            intro: widget.intro,
-            headings: widget.headings,
-            modName: widget.modName,
-            files: widget.files,
-            moduleOrderNo: widget.order),
-        child: Row(children: <Widget>[
+      create: (context) => ActivityChangeNotifier(
+          modnum: widget.modNum,
+          order: widget.index,
+          intro: widget.intro,
+          headings: widget.headings,
+          modName: widget.modName,
+          files: widget.files,
+          moduleOrderNo: widget.order),
+      child: Row(
+        children: <Widget>[
           Container(
             width: size.width * (1 - ratio),
             height: size.height,
@@ -149,173 +151,180 @@ class _ActivityControllerState extends State<ActivityController> {
           ),
           Consumer<ActivityChangeNotifier>(
             builder: (context, activity, _) {
+              print("activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
+              ModuleTraverse moduleTraverse = ModuleTraverse(modnum: activity.modnum, order: 0);
               return Container(
                 width: size.width * ratio,
                 color: Colors.red,
-                child: centerTimeline(
-                    context, moduleOrder.indexOf(activity.modnum)),
+                child: ChangeNotifierProvider<ModuleTraverse>(
+                  create: (_) =>moduleTraverse,
+                      // ModuleTraverse(modnum: activity.modnum, order: 0),
+                  child: Consumer<ModuleTraverse>(
+                  
+                    builder: (context, traverse,_) {
+                      traverse.updateModNum(activity.modnum);
+                      print("activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                      return traverse.order<1? centerTimeline(
+                          context, moduleOrder.indexOf(activity.modnum)):traverse.nextPage();
+                    }
+                  ),
+                ),
               );
             },
           ),
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget centerTimeline(BuildContext context, int i) {
     var doodle = doodles[i];
-    return Material(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () async {
-                print(" true ${doodle.modNum}");
-                // if (progressNum == 0) {
-                if (doodle.modNum == 12 || doodle.modNum == 14) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ModuleOverviewLoading(modNum: doodle.modNum),
+    return GestureDetector(
+      onTap: () {
+        print(" true ${doodle.modNum}");
+        Provider.of<ModuleTraverse>(context,listen: false).navigate();
+
+        // val = completedCourse[k];
+        // print("val is $val");
+        // int progressNum = await SaveProgress.getProgerss(doodle.modNum);
+        // print("PROGRESS NUM $progressNum");
+        // if (progressNum == 0) {
+        //   if (doodle.modNum == 12 || doodle.modNum == 14) {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (context) =>
+        //             ModuleOverviewLoading(modNum: doodle.modNum),
+        //       ),
+        //     );
+        //   } else if (doodle.modNum != 12) {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (context) => QuoteLoading(modNum: doodle.modNum),
+        //       ),
+        //     );
+        //   } else {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (context) => (HustleStoreLoader()),
+        //       ),
+        //     );
+        //   }
+        // } else {
+        //   showDialog<bool>(
+        //       context: context,
+        //       builder: (_) {
+        //         return AlertDialog(
+        //           content: Text("Do you want to resume this Module?"),
+        //           title: Text(
+        //             "Continue",
+        //           ),
+        //           actions: <Widget>[
+        //             FlatButton(
+        //               child: Text(
+        //                 "Yes",
+        //                 style: TextStyle(color: Colors.green),
+        //               ),
+        //               onPressed: () {
+        //                 Navigator.of(context).pop(true);
+        //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+        //                 SaveProgress.getEventsFromFirestore(doodle.modNum)
+        //                     .then((_) {
+        //                   List<int> arguments = [doodle.modNum, progressNum];
+        //                   orderManagement.moveNextIndex(context, arguments);
+        //                 });
+        //               },
+        //             ),
+        //             FlatButton(
+        //               child: Text(
+        //                 "No",
+        //                 style: TextStyle(color: Colors.red),
+        //               ),
+        //               onPressed: () {
+        //                 Navigator.of(context).pop(true);
+        //                 if (doodle.modNum == 11 || doodle.modNum == 14) {
+        //                   Navigator.of(context).push(
+        //                     MaterialPageRoute(
+        //                       builder: (context) =>
+        //                           ModuleOverviewLoading(modNum: doodle.modNum),
+        //                     ),
+        //                   );
+        //                 } else if (doodle.modNum != 12) {
+        //                   Navigator.of(context).push(
+        //                     MaterialPageRoute(
+        //                       builder: (context) =>
+        //                           QuoteLoading(modNum: doodle.modNum),
+        //                     ),
+        //                   );
+        //                 } else {
+        //                   Navigator.of(context).push(
+        //                     MaterialPageRoute(
+        //                       builder: (context) => (HustleStoreLoader()),
+        //                     ),
+        //                   );
+        //                 }
+        //               },
+        //             ),
+        //           ],
+        //         );
+        //       });
+        // }
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            color: Colors.grey[50],
+            height: 210.0,
+            width: 145.0,
+            child: GradientCard(
+              gradient: LinearGradient(colors: doodle.colors),
+              //                    color: doodle.color,
+              margin: EdgeInsets.all(0),
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Colors.green,
+                  // width: 3,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              // shape:Border.all(width: 3,
+              // color: Colors.green),
+              // margin: EdgeInsets.symmetric(vertical: 16.0),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    // Image.network(doodle.doodle),
+                    Image.asset(
+                      doodle.doodle,
+                      height: MediaQuery.of(context).size.height * 0.09,
                     ),
-                  );
-                } else if (doodle.modNum != 12) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => QuoteLoading(modNum: doodle.modNum),
+                    const SizedBox(
+                      height: 8.0,
                     ),
-                  );
-                } else {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => (HustleStoreLoader()),
+                    doodle.name,
+                    const SizedBox(
+                      height: 8.0,
                     ),
-                  );
-                }
-              },
-              // else {
-              //   showDialog<bool>(
-              //       context: context,
-              //       builder: (_) {
-              //         return AlertDialog(
-              //           content: Text("Do you want to resume this Module?"),
-              //           title: Text(
-              //             "Continue",
-              //           ),
-              //           actions: <Widget>[
-              //             FlatButton(
-              //               child: Text(
-              //                 "Yes",
-              //                 style: TextStyle(color: Colors.green),
-              //               ),
-              //               onPressed: () {
-              //                 Navigator.of(context).pop(true);
-              //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-              //                 SaveProgress.getEventsFromFirestore(
-              //                         doodle.modNum)
-              //                     .then((_) {
-              //                   List<int> arguments = [
-              //                     doodle.modNum,
-              //                     progressNum
-              //                   ];
-              //                   orderManagement.moveNextIndex(
-              //                       context, arguments);
-              //                 });
-              //               },
-              //             ),
-              //             FlatButton(
-              //               child: Text(
-              //                 "No",
-              //                 style: TextStyle(color: Colors.red),
-              //               ),
-              //               onPressed: () {
-              //                 Navigator.of(context).pop(true);
-              //                 if (doodle.modNum == 11 ||
-              //                     doodle.modNum == 14) {
-              //                   Navigator.of(context).push(
-              //                     MaterialPageRoute(
-              //                       builder: (context) =>
-              //                           ModuleOverviewLoading(
-              //                               modNum: doodle.modNum),
-              //                     ),
-              //                   );
-              //                 } else if (doodle.modNum != 12) {
-              //                   Navigator.of(context).push(
-              //                     MaterialPageRoute(
-              //                       builder: (context) =>
-              //                           QuoteLoading(modNum: doodle.modNum),
-              //                     ),
-              //                   );
-              //                 } else {
-              //                   Navigator.of(context).push(
-              //                     MaterialPageRoute(
-              //                       builder: (context) =>
-              //                           (HustleStoreLoader()),
-              //                     ),
-              //                   );
-              //                 }
-              //               },
-              //             ),
-              //           ],
-              //         );
-              //       });
-              // }
-              // },
-              child: Container(
-                color: Colors.grey[50],
-                height: 210.0,
-                width: 145.0,
-                child: GradientCard(
-                  gradient: LinearGradient(colors: doodle.colors),
-                  //                    color: doodle.color,
-                  margin: EdgeInsets.all(0),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.green,
-                      // width: 3,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  // shape:Border.all(width: 3,
-                  // color: Colors.green),
-                  // margin: EdgeInsets.symmetric(vertical: 16.0),
-                  clipBehavior: Clip.antiAlias,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // Image.network(doodle.doodle),
-                        Image.asset(
-                          doodle.doodle,
-                          height: MediaQuery.of(context).size.height * 0.09,
-                        ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        doodle.name,
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            doodle.pointsIcon,
-                            Text(" "),
-                            doodle.points,
-                          ],
-                        ),
+                        doodle.pointsIcon,
+                        Text(" "),
+                        doodle.points,
                       ],
                     ),
-                  ),
+                  ],
                 ),
-                //                )
               ),
             ),
-          ],
-        ),
+            //                )
+          ),
+        ],
       ),
     );
     // return TimelineModel(
@@ -323,94 +332,94 @@ class _ActivityControllerState extends State<ActivityController> {
     //         onTap: () async {
     //           print("value of i is $i");
     //           // if (check(doodle.modNum)) {
-    //             print(" true ${doodle.modNum}");
-    //             // val = completedCourse[k];
-    //             // print("val is $val");
-    //             int progressNum = await SaveProgress.getProgerss(doodle.modNum);
-    //             print("PROGRESS NUM $progressNum");
-    //             if (progressNum == 0) {
-    //               if (doodle.modNum == 12 || doodle.modNum == 14) {
-    //                 Navigator.of(context).push(
-    //                   MaterialPageRoute(
-    //                     builder: (context) =>
-    //                         ModuleOverviewLoading(modNum: doodle.modNum),
-    //                   ),
-    //                 );
-    //               } else if (doodle.modNum != 12) {
-    //                 Navigator.of(context).push(
-    //                   MaterialPageRoute(
-    //                     builder: (context) => QuoteLoading(modNum: doodle.modNum),
-    //                   ),
-    //                 );
-    //               } else {
-    //                 Navigator.of(context).push(
-    //                   MaterialPageRoute(
-    //                     builder: (context) => (HustleStoreLoader()),
-    //                   ),
-    //                 );
-    //               }
-    //             } else {
-    //               showDialog<bool>(
-    //                   context: context,
-    //                   builder: (_) {
-    //                     return AlertDialog(
-    //                       content: Text("Do you want to resume this Module?"),
-    //                       title: Text(
-    //                         "Continue",
-    //                       ),
-    //                       actions: <Widget>[
-    //                         FlatButton(
-    //                           child: Text(
-    //                             "Yes",
-    //                             style: TextStyle(color: Colors.green),
-    //                           ),
-    //                           onPressed: () {
-    //                             Navigator.of(context).pop(true);
-    //                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-    //                             SaveProgress.getEventsFromFirestore(doodle.modNum)
-    //                                 .then((_) {
-    //                               List<int> arguments = [
-    //                                 doodle.modNum,
-    //                                 progressNum
-    //                               ];
-    //                               orderManagement.moveNextIndex(
-    //                                   context, arguments);
-    //                             });
-    //                           },
-    //                         ),
-    //                         FlatButton(
-    //                           child: Text(
-    //                             "No",
-    //                             style: TextStyle(color: Colors.red),
-    //                           ),
-    //                           onPressed: () {
-    //                             Navigator.of(context).pop(true);
-    //                             if (doodle.modNum == 11 || doodle.modNum == 14) {
-    //                               Navigator.of(context).push(
-    //                                 MaterialPageRoute(
-    //                                   builder: (context) => ModuleOverviewLoading(
-    //                                       modNum: doodle.modNum),
-    //                                 ),
-    //                               );
-    //                             } else if (doodle.modNum != 12) {
-    //                               Navigator.of(context).push(
-    //                                 MaterialPageRoute(
-    //                                   builder: (context) =>
-    //                                       QuoteLoading(modNum: doodle.modNum),
-    //                                 ),
-    //                               );
-    //                             } else {
-    //                               Navigator.of(context).push(
-    //                                 MaterialPageRoute(
-    //                                   builder: (context) => (HustleStoreLoader()),
-    //                                 ),
-    //                               );
-    //                             }
-    //                           },
-    //                         ),
-    //                       ],
-    //                     );
-    //                   });
+    // print(" true ${doodle.modNum}");
+    // // val = completedCourse[k];
+    // // print("val is $val");
+    // int progressNum = await SaveProgress.getProgerss(doodle.modNum);
+    // print("PROGRESS NUM $progressNum");
+    // if (progressNum == 0) {
+    //   if (doodle.modNum == 12 || doodle.modNum == 14) {
+    //     Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //         builder: (context) =>
+    //             ModuleOverviewLoading(modNum: doodle.modNum),
+    //       ),
+    //     );
+    //   } else if (doodle.modNum != 12) {
+    //     Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //         builder: (context) => QuoteLoading(modNum: doodle.modNum),
+    //       ),
+    //     );
+    //   } else {
+    //     Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //         builder: (context) => (HustleStoreLoader()),
+    //       ),
+    //     );
+    //   }
+    // } else {
+    //   showDialog<bool>(
+    //       context: context,
+    //       builder: (_) {
+    //         return AlertDialog(
+    //           content: Text("Do you want to resume this Module?"),
+    //           title: Text(
+    //             "Continue",
+    //           ),
+    //           actions: <Widget>[
+    //             FlatButton(
+    //               child: Text(
+    //                 "Yes",
+    //                 style: TextStyle(color: Colors.green),
+    //               ),
+    //               onPressed: () {
+    //                 Navigator.of(context).pop(true);
+    //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+    //                 SaveProgress.getEventsFromFirestore(doodle.modNum)
+    //                     .then((_) {
+    //                   List<int> arguments = [
+    //                     doodle.modNum,
+    //                     progressNum
+    //                   ];
+    //                   orderManagement.moveNextIndex(
+    //                       context, arguments);
+    //                 });
+    //               },
+    //             ),
+    //             FlatButton(
+    //               child: Text(
+    //                 "No",
+    //                 style: TextStyle(color: Colors.red),
+    //               ),
+    //               onPressed: () {
+    //                 Navigator.of(context).pop(true);
+    //                 if (doodle.modNum == 11 || doodle.modNum == 14) {
+    //                   Navigator.of(context).push(
+    //                     MaterialPageRoute(
+    //                       builder: (context) => ModuleOverviewLoading(
+    //                           modNum: doodle.modNum),
+    //                     ),
+    //                   );
+    //                 } else if (doodle.modNum != 12) {
+    //                   Navigator.of(context).push(
+    //                     MaterialPageRoute(
+    //                       builder: (context) =>
+    //                           QuoteLoading(modNum: doodle.modNum),
+    //                     ),
+    //                   );
+    //                 } else {
+    //                   Navigator.of(context).push(
+    //                     MaterialPageRoute(
+    //                       builder: (context) => (HustleStoreLoader()),
+    //                     ),
+    //                   );
+    //                 }
+    //               },
+    //             ),
+    //           ],
+    //         );
+    //       });
     //             }
     //           // } else {
     //           //   print(" false");

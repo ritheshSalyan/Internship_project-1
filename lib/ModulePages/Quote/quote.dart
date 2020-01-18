@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import '../ModuleOverview/ModuleOverviewLoading.dart';
 import '../../ModuleOrderController/Types.dart';
 import 'package:firebase/firebase.dart' as fb;
@@ -17,11 +19,16 @@ class Quote extends StatefulWidget {
 class _QuoteState extends State<Quote> {
   fs.Firestore db = fb.firestore();
 
+  ModuleTraverse traverse;
+
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     String text = (widget.modNum == 12) ? "Oh Yes!" : "Start";
-    return CustomeOffline(
-      onConnetivity: PageView(
+    return 
+    // CustomeOffline(
+    //   onConnetivity:
+       PageView(
         children: <Widget>[
           Container(
               color: Colors.green,
@@ -118,7 +125,8 @@ class _QuoteState extends State<Quote> {
                             ),
                           );
                         } else {
-                          orderManagement.moveNextIndex(context, [12, 24]);
+                          // orderManagement.moveNextIndex(context, [12, 24]);
+                          traverse.navigate();
                         }
                       },
                     ),
@@ -126,7 +134,7 @@ class _QuoteState extends State<Quote> {
                 ],
               )),
         ],
-      ),
+      // ),
     );
   }
 

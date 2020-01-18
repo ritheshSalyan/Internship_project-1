@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
+import 'package:provider/provider.dart';
 import 'package:startupreneur/ModuleOrderController/Types.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -18,6 +20,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   List<dynamic> list = [];
   dynamic dataSnapshot;
   static fs.Firestore db = fb.firestore();
+
+  ModuleTraverse traverse;
   @override
   initState() {
     super.initState();
@@ -138,7 +142,33 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         color: Colors.green,
         onPressed: () {
           List<dynamic> arguments = [widget.modNum, widget.index + 1];
-          orderManagement.moveNextIndex(context, arguments);
+        
+       traverse.navigate();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          // orderManagement.moveNextIndex(context, arguments);
         },
         child: Icon(
           Icons.navigate_next,
@@ -153,8 +183,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    traverse =  Provider.of<ModuleTraverse>(context);
+    return
+    //  CustomeOffline(
+    //   onConnetivity:
+       Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
         // bottomNavigationBar: Padding(
@@ -249,7 +282,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }

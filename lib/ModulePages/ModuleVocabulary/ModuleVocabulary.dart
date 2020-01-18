@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -25,6 +27,8 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
   GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
   PageController controller;
   fs.Firestore db = fb.firestore();
+
+  ModuleTraverse traverse;
 
   @override
   void initState() {
@@ -233,7 +237,8 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
                             widget.modNum,
                             widget.index + 1
                           ];
-                          orderManagement.moveNextIndex(context, arguments);
+                          // orderManagement.moveNextIndex(context, arguments);
+                          traverse.navigate();
                         },
                         child: Container(
                           // width: MediaQuery.of(context).size.width * 0.25,
@@ -269,6 +274,7 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
 
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.white,

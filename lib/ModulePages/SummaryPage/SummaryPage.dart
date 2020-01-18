@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 // import '../socialize/socialize.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -34,6 +36,8 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
     // "Swipe Right / Left to remove",
   ];
   fs.Firestore db = fb.firestore();
+
+  ModuleTraverse traverse;
 
   _onSubmit() {
     setState(() {
@@ -124,7 +128,8 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
             if (!isClicked) {
               isClicked = true;
               List<dynamic> arguments = [widget.modNum, widget.index + 1];
-              orderManagement.moveNextIndex(context, arguments);
+              // orderManagement.moveNextIndex(context, arguments);
+              traverse.navigate();
             }
           },
           child: Text(
@@ -147,9 +152,12 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     data = widget.content;
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    return
+    //  CustomeOffline(
+    //   onConnetivity:
+       Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,
@@ -273,7 +281,7 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
             },
           ),
         ),
-      ),
+      // ),
     );
   }
 }

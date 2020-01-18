@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -20,13 +22,18 @@ class videoPlayerPage extends StatefulWidget {
 class _videoPlayerPageState extends State<videoPlayerPage> {
   fs.Firestore db = fb.firestore();
   String description = "";
+
+  ModuleTraverse traverse;
   // String link =
   //     "https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d";
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    traverse =  Provider.of<ModuleTraverse>(context);
+    return 
+    // CustomeOffline(
+    //   onConnetivity: 
+      Scaffold(
         // bottomSheet: Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceAround,
         //   children: <Widget>[
@@ -165,8 +172,9 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                           widget.modNum,
                                           widget.index + 1
                                         ];
-                                        orderManagement.moveNextIndex(
-                                            context, arguments);
+                                        // orderManagement.moveNextIndex(
+                                        //     context, arguments);
+                                        traverse.navigate();
                                       },
                                       child: Icon(
                                         Icons.navigate_next,
@@ -186,7 +194,7 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }
