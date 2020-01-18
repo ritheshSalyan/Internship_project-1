@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/saveProgress.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -43,8 +45,14 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    print("Topi headding  ${Provider.of<ModuleTraverse>(context).modnum}");
+
+    ModuleTraverse traverse = Provider.of<ModuleTraverse>(context);
+    return
+    //  CustomeOffline(
+    //   onConnetivity: 
+      Scaffold(
+        
           //      bottomSheet: Row(
           //   mainAxisAlignment: MainAxisAlignment.spaceAround,
           //   children: <Widget>[
@@ -60,6 +68,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
               left: 15.0,
               bottom: 5.0,
             ),
+            
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -174,6 +183,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                             widget.modNum,
                             widget.index + 1
                           ];
+                          traverse.navigate();
                           // orderManagement.moveNextIndex(context, arguments);
                         },
                         child: Row(
@@ -183,6 +193,7 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                               "Next",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                            // provi
                             // Image.asset(
                             //   "assets/Images/coins.png",
                             //   height: 20,
@@ -194,7 +205,8 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
                 ],
               );
             },
-          )),
+          )
+          // ),
     );
   }
 }

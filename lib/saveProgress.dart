@@ -146,9 +146,11 @@ class SaveProgress {
       //if(orderManagement.order.isEmpty){
       orderManagement.order = convert(document.data()["order"]);
 
-      print("orderManagement.order " + orderManagement.order.toString());
+      // print("orderManagement.order " + orderManagement.order.toString());
       Module.moduleLength = orderManagement.order.length;
-      ModuleTraverse.modOrder = orderManagement.order;
+      ModuleTraverse.modOrder = convert(document.data()["order"]);
+      print("ModuleTraverse.modOrder " + ModuleTraverse.modOrder.toString());
+
       //  }
     });
   }
