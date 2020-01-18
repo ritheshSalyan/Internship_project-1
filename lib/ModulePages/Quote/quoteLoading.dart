@@ -22,49 +22,56 @@ class _QuoteLoading extends State<QuoteLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      print("Title is " + title.toString());
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => Quote(modNum: widget.modNum, quote: title),
-        ),
-      );
-    });
-    return CustomeOffline(
-      onConnetivity: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 5,
-                value: null,
-                valueColor: new AlwaysStoppedAnimation(Colors.green),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  "Loading... Please Wait",
-                  style: TextStyle(
-                    color: Colors.black,
+    // getEventsFromFirestore(widget.modNum).then((title) {
+    //   print("Title is " + title.toString());
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => Quote(modNum: widget.modNum, quote: title),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+        future: getEventsFromFirestore(widget.modNum),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Quote(
+              modNum: widget.modNum,
+              quote: snapshot.data.data(),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new CircularProgressIndicator(
+                    strokeWidth: 5,
+                    value: null,
+                    valueColor: new AlwaysStoppedAnimation(Colors.green),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Loading... Please Wait",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
     fs.Firestore db = fb.firestore();
     fs.CollectionReference ref = db.collection('module');
-    fs.QuerySnapshot eventsQuery =
-        await ref.where("id", "==", modNum).get();
+    fs.QuerySnapshot eventsQuery = await ref.where("id", "==", modNum).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];

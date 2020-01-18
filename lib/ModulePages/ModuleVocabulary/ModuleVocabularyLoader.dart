@@ -19,50 +19,61 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
   static fs.Firestore db = fb.firestore();
   @override
   void initState() {
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => ModuleVocabulary(
-            index: widget.index,
-            modNum: widget.modNum,
-            word: words,
-            meaning: meanings,
-          ),
-        ),
-      );
-    });
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new CircularProgressIndicator(
-              strokeWidth: 5,
-              value: null,
-              valueColor: new AlwaysStoppedAnimation(Colors.green),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Material(
-              color: Colors.transparent,
-              child: Text(
-                "Loading... Please Wait",
-                style: TextStyle(
-                  color: Colors.black,
-                ),
+    // getEventsFromFirestore(widget.modNum).then((title) {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => ModuleVocabulary(
+    //         index: widget.index,
+    //         modNum: widget.modNum,
+    //         word: words,
+    //         meaning: meanings,
+    //       ),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+        future: getEventsFromFirestore(widget.modNum),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ModuleVocabulary(
+              index: widget.index,
+              modNum: widget.modNum,
+              word: snapshot.data.data(),
+              meaning: snapshot.data.data(),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new CircularProgressIndicator(
+                    strokeWidth: 5,
+                    value: null,
+                    valueColor: new AlwaysStoppedAnimation(Colors.green),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Loading... Please Wait",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 
   static Future<void> getEventsFromFirestore(int modNum) async {
@@ -75,7 +86,7 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
     //     .where("order",isEqualTo: orderManagement.currentIndex).getDocuments();
     await db
         .collection("vocabulary")
-        .where("module","==", modNum)
+        .where("module", "==", modNum)
         .get()
         .then((document) {
       document.docs.forEach((value) {

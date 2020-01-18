@@ -6,8 +6,8 @@ import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'DecisionGame.dart';
 
 class DecisionGameLoading extends StatefulWidget {
-  DecisionGameLoading({Key key, this.modNum,this.index}) : super(key: key);
-  final int modNum,index;
+  DecisionGameLoading({Key key, this.modNum, this.index}) : super(key: key);
+  final int modNum, index;
   @override
   _DecisionGameLoading createState() => _DecisionGameLoading();
 }
@@ -15,50 +15,57 @@ class DecisionGameLoading extends StatefulWidget {
 class _DecisionGameLoading extends State<DecisionGameLoading> {
   @override
   void initState() {
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore().then((value) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => DecisionGame(
-            modNum: widget.modNum,
-            order: widget.index,
-          ),
-        ),
-      );
-    });
-     return CustomeOffline(
-            onConnetivity: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 5,
-                value: null,
-                valueColor: new AlwaysStoppedAnimation(Colors.green),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  "Loading... Please Wait",
-                  style: TextStyle(
-                    color: Colors.black,
+    // getEventsFromFirestore().then((value) {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => DecisionGame(
+    //         modNum: widget.modNum,
+    //         order: widget.index,
+    //       ),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+        future: null,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return DecisionGame(
+              modNum: widget.modNum,
+              order: widget.index,
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new CircularProgressIndicator(
+                    strokeWidth: 5,
+                    value: null,
+                    valueColor: new AlwaysStoppedAnimation(Colors.green),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Loading... Please Wait",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-    ),
-     );
+            ),
+          );
+        });
   }
 
   static Future<void> getEventsFromFirestore() async {}

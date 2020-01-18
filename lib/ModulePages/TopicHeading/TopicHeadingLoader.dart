@@ -23,46 +23,55 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      print("TopicHeading is " + title.toString());
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => TopicHeadingPage(
-            index: widget.index,
-            modNum: widget.modNum,
-            title: title[0],
-          ),
-        ),
-      );
-    });
-    return CustomeOffline(
-      onConnetivity: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 5,
-                value: null,
-                valueColor: new AlwaysStoppedAnimation(Colors.green),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  "Loading... Please Wait",
-                  style: TextStyle(
-                    color: Colors.black,
+    // getEventsFromFirestore(widget.modNum).then((title) {
+    //   print("TopicHeading is " + title.toString());
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => TopicHeadingPage(
+    //         index: widget.index,
+    //         modNum: widget.modNum,
+    //         title: title[0],
+    //       ),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+        future: getEventsFromFirestore(widget.modNum),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return TopicHeadingPage(
+              index: widget.index,
+              modNum: widget.modNum,
+              title: snapshot.data.data(),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new CircularProgressIndicator(
+                    strokeWidth: 5,
+                    value: null,
+                    valueColor: new AlwaysStoppedAnimation(Colors.green),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Loading... Please Wait",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {

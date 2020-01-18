@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'firebaseConnect.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:firebase/firestore.dart' as fs ;
+import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'Activity.dart';
 import '../../ModuleOrderController/Types.dart';
@@ -24,53 +24,63 @@ class _ActivityLoading extends State<ActivityLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.modNum).then((title) {
-      print("Title is " + title.toString());
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => ActivityPage(
+    // getEventsFromFirestore(widget.modNum).then((title) {
+    //   print("Title is " + title.toString());
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => ActivityPage(
+    //           modNum: widget.modNum,
+    //           question: title[0],
+    //           buttonTitle: title[1],
+    //           hint: title[2],
+    //           index: widget.index + 1),
+    //     ),
+    //   );
+    // });
+    return FutureBuilder(
+        future: getEventsFromFirestore(widget.modNum),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ActivityPage(
               modNum: widget.modNum,
-              question: title[0],
-              buttonTitle: title[1],
-              hint: title[2],
-              index: widget.index + 1),
-        ),
-      );
-    });
-    return CustomeOffline(
-      onConnetivity: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 5,
-                value: null,
-                valueColor: new AlwaysStoppedAnimation(Colors.green),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: Text(
-                  "Loading... Please Wait",
-                  style: TextStyle(
-                    color: Colors.black,
+              question: snapshot.data.data(),
+              buttonTitle: snapshot.data.data(),
+              hint: snapshot.data.data(),
+              index: widget.index + 1,
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new CircularProgressIndicator(
+                    strokeWidth: 5,
+                    value: null,
+                    valueColor: new AlwaysStoppedAnimation(Colors.green),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      "Loading... Please Wait",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   static Future<List<String>> getEventsFromFirestore(int modNum) async {
     fs.CollectionReference ref = db.collection('module');
-    fs.QuerySnapshot eventsQuery =
-        await ref.where("id", "==", modNum).get();
+    fs.QuerySnapshot eventsQuery = await ref.where("id", "==", modNum).get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
