@@ -4,7 +4,9 @@ import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -17,6 +19,8 @@ class FlipPage extends StatefulWidget {
 
 class _FlipPageState extends State<FlipPage> {
   static fs.Firestore firestore =fb.firestore();
+
+  ModuleTraverse traverse;
   static Future<List<String>> getEventsFromFirestore(
       int modNum, int index) async {
     fs.CollectionReference ref = firestore.collection('flipPage');
@@ -50,6 +54,7 @@ class _FlipPageState extends State<FlipPage> {
 
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     return OfflineBuilder(
       connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {
@@ -170,12 +175,13 @@ class _FlipPageState extends State<FlipPage> {
                                       borderSide:
                                           BorderSide(color: Colors.green),
                                       onPressed: () {
-                                        List<dynamic> arguments = [
-                                          widget.modnum,
-                                          widget.index + 1
-                                        ];
-                                        orderManagement.moveNextIndex(
-                                            context, arguments);
+                                        // List<dynamic> arguments = [
+                                        //   widget.modnum,
+                                        //   widget.index + 1
+                                        // ];
+                                        // orderManagement.moveNextIndex(
+                                        //     context, arguments);
+                                        traverse.navigate();
                                       },
                                       child: Container(
                                         width:

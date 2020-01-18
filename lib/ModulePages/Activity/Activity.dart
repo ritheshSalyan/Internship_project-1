@@ -1,9 +1,11 @@
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -94,8 +96,9 @@ class _ActivityPageState extends State<ActivityPage> {
           //     builder: (context) => DiscussionPage(),
           //   ),
           // );
-          List<dynamic> arguments = [widget.modNum, widget.index];
-          orderManagement.moveNextIndex(context, arguments);
+          // List<dynamic> arguments = [widget.modNum, widget.index];
+          // orderManagement.moveNextIndex(context, arguments);
+          traverse.navigate();
         },
         textColor: Colors.green,
         highlightedBorderColor: Colors.green,
@@ -107,9 +110,10 @@ class _ActivityPageState extends State<ActivityPage> {
     ));
     return itemInside;
   }
-
+ ModuleTraverse traverse ;
   @override
   Widget build(BuildContext context) {
+         traverse =  Provider.of<ModuleTraverse>(context);
     return OfflineBuilder(
       connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {

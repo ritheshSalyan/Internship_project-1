@@ -41,7 +41,7 @@ class ModuleTraverse with ChangeNotifier {
           "ModuleTraverse modnum is  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; $modnum");
       SaveProgress.getEventsFromFirestore(modnum);
       this.modnum = modnum;
-      this.order = order;
+      this.order = 0;
       notifyListeners();
     }
   }

@@ -20,6 +20,8 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   List<dynamic> list = [];
   dynamic dataSnapshot;
   static fs.Firestore db = fb.firestore();
+
+  ModuleTraverse traverse;
   @override
   initState() {
     super.initState();
@@ -141,7 +143,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         onPressed: () {
           List<dynamic> arguments = [widget.modNum, widget.index + 1];
         
-        Provider.of<ModuleTraverse>(context).navigate();
+       traverse.navigate();
         
         
         
@@ -181,8 +183,11 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    traverse =  Provider.of<ModuleTraverse>(context);
+    return
+    //  CustomeOffline(
+    //   onConnetivity:
+       Scaffold(
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
         // bottomNavigationBar: Padding(
@@ -277,7 +282,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }

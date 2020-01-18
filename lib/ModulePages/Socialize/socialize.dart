@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -16,6 +18,8 @@ class _SocializeTaskState extends State<SocializeTask> {
   var _job = false;
   var _startup = false;
   int index;
+
+  ModuleTraverse traverse;
 
   bool _validate() {
     final form = _formkey.currentState;
@@ -346,8 +350,11 @@ class _SocializeTaskState extends State<SocializeTask> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-      onConnetivity: Scaffold(
+    traverse =  Provider.of<ModuleTraverse>(context);
+    return 
+    // CustomeOffline(
+    //   onConnetivity: 
+      Scaffold(
         //      bottomSheet: Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceAround,
         //   children: <Widget>[
@@ -557,8 +564,9 @@ class _SocializeTaskState extends State<SocializeTask> {
                                       widget.modNum,
                                       index + 1
                                     ];
-                                    orderManagement.moveNextIndex(
-                                        context, arguments);
+                                    // orderManagement.moveNextIndex(
+                                    //     context, arguments);
+                                    traverse.navigate();
                                   },
                                 );
                               } else {
@@ -595,7 +603,7 @@ class _SocializeTaskState extends State<SocializeTask> {
             },
           ),
         ),
-      ),
+      // ),
     );
   }
 }

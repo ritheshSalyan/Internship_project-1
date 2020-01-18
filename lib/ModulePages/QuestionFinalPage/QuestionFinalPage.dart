@@ -22,18 +22,21 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
 
   validateAndSubmit(BuildContext context) async {
     if (_validate()) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => new RevealPage(),
-        ),
-      );
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+         return  new RevealPage();
+      //   ),
+      // );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomeOffline(
-          onConnetivity: Scaffold(
+    return 
+    // CustomeOffline(
+    //       onConnetivity:
+           Scaffold(
         //      bottomSheet: Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceAround,
         //   children: <Widget>[
@@ -197,7 +200,7 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
               );
             },
           ),
-        ),
+        // ),
       ),
     );
   }

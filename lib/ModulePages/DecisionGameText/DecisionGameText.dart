@@ -3,8 +3,10 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
@@ -33,6 +35,8 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   fs.Firestore db = fb.firestore();
   
   final _formkey = GlobalKey<FormState>();
+
+  ModuleTraverse traverse;
 
   bool _validateForm() {
     final form = _formkey.currentState;
@@ -172,8 +176,9 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                     addToCollection();
                     // homeScaffoldKey.currentState.hideCurrentSnackBar();
                     Scaffold.of(context).hideCurrentSnackBar();
-                    List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                    orderManagement.moveNextIndex(context, arguments);
+                    // List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                    // orderManagement.moveNextIndex(context, arguments);
+                    traverse.navigate();
                   },
                 ),
               ),
@@ -193,6 +198,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    traverse =  Provider.of<ModuleTraverse>(context);
     return CustomeOffline(
       onConnetivity: Scaffold(
         bottomNavigationBar: Padding(
