@@ -134,6 +134,9 @@ class _ActivityControllerState extends State<ActivityController> {
                                   },
                                   child: Text(
                                     "Previous Module Activity",
+                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold
+                                    ),
                                   ),
                                 ),
                                 RaisedGradientButton(
@@ -149,7 +152,10 @@ class _ActivityControllerState extends State<ActivityController> {
                                     activity.moveNext();
                                   },
                                   child: Text(
-                                    "Previous Module Activity",
+                                    "Next Module Activity",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold
+                                    ),
                                   ),
                                 ),
                               ],

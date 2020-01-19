@@ -5,6 +5,7 @@ class RaisedGradientButton extends StatelessWidget {
   final Gradient gradient;
   final double width;
   final double height;
+  final Border border;
   final Function onPressed;
 
   const RaisedGradientButton({
@@ -13,6 +14,7 @@ class RaisedGradientButton extends StatelessWidget {
     this.gradient,
     this.width = double.infinity,
     this.height = 50.0,
+    this.border,
     @required this.onPressed,
   }) : super(key: key);
 
@@ -21,13 +23,17 @@ class RaisedGradientButton extends StatelessWidget {
     return Container(
       width: width,
       height: 50.0,
-      decoration: BoxDecoration(gradient: gradient, boxShadow: [
-        BoxShadow(
-          color: Colors.grey[500],
-          offset: Offset(0.0, 1.5),
-          blurRadius: 1.5,
-        ),
-      ]),
+      decoration: BoxDecoration(
+        gradient: gradient,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[500],
+            offset: Offset(0.0, 1.5),
+            blurRadius: 1.5,
+          ),
+        ],
+        border: Border.all(color: Colors.black,width: 1)
+      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

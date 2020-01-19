@@ -175,10 +175,12 @@ class _ListActivitiesState extends State<ListActivities>
               ),
               backgroundColor: Colors.white,
               elevation: 0.0,
-              title: Text(
-                "${widget.modName}",
-                style: TextStyle(
-                  color: Colors.black,
+              title: Center(
+                child: Text(
+                  "${widget.modName}",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),

@@ -52,8 +52,6 @@ class TimelinePage extends StatefulWidget {
 
   @override
   _TimelinePageState createState() => _TimelinePageState();
-
-  
 }
 
 class _TimelinePageState extends State<TimelinePage> {
@@ -317,13 +315,17 @@ class _TimelinePageState extends State<TimelinePage> {
       extendBody: true,
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
         title: Padding(
-          padding: const EdgeInsets.only(left: 9.5),
+          padding: const EdgeInsets.all(9.5),
+          child: Center(
           child: Image.asset(
             "assets/Images/Capture.PNG",
             width: MediaQuery.of(context).size.width * 0.2,
+              height: MediaQuery.of(context).size.height * 0.1,
           ),
+        ),
         ),
         automaticallyImplyLeading: true,
         backgroundColor: Theme.of(context).primaryColorDark,
@@ -609,8 +611,16 @@ class _TimelinePageState extends State<TimelinePage> {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>
-                         ActivityController(modName: "Idea",modNum: 2,intro: [""],index: 0,headings: [""],files: "",order: 0, buttons: [""],),//FolderBuilder(completedCourse: completedCourse)),
+                    builder: (context) => ActivityController(
+                      modName: "Idea",
+                      modNum: 2,
+                      intro: [""],
+                      index: 0,
+                      headings: [""],
+                      files: "",
+                      order: 0,
+                      buttons: [""],
+                    ), //FolderBuilder(completedCourse: completedCourse)),
                   ),
                 );
               },
@@ -1132,6 +1142,10 @@ class _TimelinePageState extends State<TimelinePage> {
               print(" false");
             }
           },
+          child: Padding(
+            padding: (i % 2 == 0)
+                ?  EdgeInsets.only(right: MediaQuery.of(context).size.width*0.3, top: 40.0)
+                :  EdgeInsets.only(left: MediaQuery.of(context).size.width*0.3),
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -1198,6 +1212,7 @@ class _TimelinePageState extends State<TimelinePage> {
               ),
             ],
           ),
+        ),
         ),
         position:
             i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
