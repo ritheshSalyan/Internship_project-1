@@ -98,7 +98,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
   }
 
   List<Widget> convertTolist() {
-    List<Widget> list= [];
+    List<Widget> list = [];
     list.addAll(_listViewData.map((data) {
       return Card(
           elevation: 0,
@@ -107,15 +107,16 @@ class _DiscussionPageState extends State<DiscussionPage> {
             children: <Widget>[
               Padding(
                 padding:
-                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
-                child: AutoSizeText(
+                    EdgeInsets.all(5),
+                child: Text(
                   data,
                   textAlign: TextAlign.center,
+                  
                   style: TextStyle(
                     letterSpacing: 0.5,
                     // fontFamily: "Open Sans",
                     color: Colors.black,
-                    fontSize: 17,
+                    fontSize: 18,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -139,7 +140,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
               // letterSpacing: 1.5,
               // fontFamily: "Open Sans",
               color: Colors.green,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -197,238 +198,140 @@ class _DiscussionPageState extends State<DiscussionPage> {
         );
       }
     }
-    if(data.compareTo(widget.content)!=0){
-        data = widget.content;
-        _listViewData = [];
-        item = 0;
+    if (data.compareTo(widget.content) != 0) {
+      data = widget.content;
+      _listViewData = [];
+      item = 0;
     }
 
-    print("data is  is $data    ++++++++++++++++++++++++ ${ data.compareTo(widget.content)}");
+    print(
+        "data is  is $data    ++++++++++++++++++++++++ ${data.compareTo(widget.content)}");
     print("List VIEW DATA IS $_listViewData");
     return
-    //  CustomeOffline(
-    //   onConnetivity: 
-      Scaffold(
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            bottom: 5.0,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Page ${widget.index + 1}/${Module.moduleLength}",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-            ],
-          ),
+        //  CustomeOffline(
+        //   onConnetivity:
+        Scaffold(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          left: 15.0,
+          bottom: 5.0,
         ),
-        appBar: AppBar(
-          elevation: 0,
-          actions: <Widget>[
-            GestureDetector(
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Icon(Icons.home),
-              ),
-              onTap: () {
-                showDialog<bool>(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        content: Text(
-                            "Are you sure you want to return to Home Page? "),
-                        title: Text(
-                          "Warning!",
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              "Yes",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onPressed: () {
-                              SaveProgress.preferences(
-                                  widget.modNum, widget.index);
-                              Navigator.of(context).popUntil(
-                                  ModalRoute.withName("TimelinePage"));
-                            },
-                          ),
-                          FlatButton(
-                            child: Text(
-                              "No",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Page ${widget.index + 1}/${Module.moduleLength}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Builder(
-            builder: (context) {
-              return Stack(
-                children: <Widget>[
-                  ClipPath(
-                    clipper: WaveClipperOne(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Icon(Icons.home),
+            ),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to Home Page? "),
+                      title: Text(
+                        "Warning!",
                       ),
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      width: double.infinity,
-                      child: Text(" "),
-                    ),
-                  ),
-                  Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    widget.title,
-                                    // snapshot.data.docs[index].data()['title'],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: "sans-serif",
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          // left: MediaQuery.of(context)
-                                          //         .size
-                                          //         .width *
-                                          //     0.14,
-                                        ),
-                                        child: image,// snapshot.data.docs[index].data()['image'],
-                                      ),
-                                      // (snapshot.data.docs[index].data()['image'] != "")
-                                      //     ? IconButton(
-                                      //         icon: Icon(
-                                      //           Icons.zoom_out_map,
-                                      //           color: Colors.black,
-                                      //         ),
-                                      //         onPressed: () {
-                                      //           Navigator.of(context)
-                                      //               .push(MaterialPageRoute(
-                                      //             builder: (context) =>
-                                      //                 ImageViewer(
-                                      //               image: snapshot.data.docs[index].data()['image'],
-                                      //             ),
-                                      //             fullscreenDialog: true,
-                                      //           ));
-                                      //         },
-                                      //       )
-                                      //     : SizedBox(),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: convertTolist(),
-                                  ),
-                                ],
-                              ),
-                  // StreamBuilder(
-                  //   stream: db
-                  //       .collection("discussion")
-                  //       .where("module", "==", widget.modNum)
-                  //       .where("order", "==", orderManagement.currentIndex)
-                  //       .onSnapshot,
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.hasData) {
-                  //       return Padding(
-                  //         padding: EdgeInsets.only(
-                  //           // top: MediaQuery.of(context).size.height * 0.0,
-                  //         ),
-                  //         child: ListView.builder(
-                  //           itemCount: snapshot.data.docs.length,
-                  //           shrinkWrap: true,
-                  //           itemBuilder: (context, index) {
-                  //             return Column(
-                  //               mainAxisSize: MainAxisSize.min,
-                  //               children: <Widget>[
-                  //                 Text(
-                  //                   snapshot.data.docs[index].data()['title'],
-                  //                   textAlign: TextAlign.center,
-                  //                   style: TextStyle(
-                  //                     fontFamily: "sans-serif",
-                  //                     color: Colors.white,
-                  //                     fontSize: 25.0,
-                  //                     fontWeight: FontWeight.w700,
-                  //                   ),
-                  //                 ),
-                  //                 SizedBox(
-                  //                   height: 15,
-                  //                 ),
-                  //                 Row(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   crossAxisAlignment:
-                  //                       CrossAxisAlignment.center,
-                  //                   children: <Widget>[
-                  //                     Padding(
-                  //                       padding: EdgeInsets.only(
-                  //                         left: MediaQuery.of(context)
-                  //                                 .size
-                  //                                 .width *
-                  //                             0.14,
-                  //                       ),
-                  //                       child: snapshot.data.docs[index].data()['image'],
-                  //                     ),
-                  //                     (snapshot.data.docs[index].data()['image'] != "")
-                  //                         ? IconButton(
-                  //                             icon: Icon(
-                  //                               Icons.zoom_out_map,
-                  //                               color: Colors.black,
-                  //                             ),
-                  //                             onPressed: () {
-                  //                               Navigator.of(context)
-                  //                                   .push(MaterialPageRoute(
-                  //                                 builder: (context) =>
-                  //                                     ImageViewer(
-                  //                                   image: snapshot.data.docs[index].data()['image'],
-                  //                                 ),
-                  //                                 fullscreenDialog: true,
-                  //                               ));
-                  //                             },
-                  //                           )
-                  //                         : SizedBox(),
-                  //                   ],
-                  //                 ),
-                  //                 Column(
-                  //                   mainAxisSize: MainAxisSize.min,
-                  //                   children: convertTolist(),
-                  //                 ),
-                  //               ],
-                  //             );
-                  //           },
-                  //         ),
-                  //       );
-                  //     }
-                  //     return Container();
-                  //   },
-                  // ),
-                ],
-              );
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            SaveProgress.preferences(
+                                widget.modNum, widget.index);
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName("TimelinePage"));
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                      ],
+                    );
+                  });
             },
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Builder(
+          builder: (context) {
+            return Stack(
+              children: <Widget>[
+                ClipPath(
+                  clipper: WaveClipperOne(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    width: double.infinity,
+                    child: Text(" "),
+                  ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      widget.title,
+                      // snapshot.data.docs[index].data()['title'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "sans-serif",
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                              ),
+                          child:
+                              image, // snapshot.data.docs[index].data()['image'],
+                        ),
+                        
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: convertTolist(),
+                    ),
+                  ],
+                ),
+                
+              ],
+            );
+          },
         ),
+      ),
       // ),
     );
   }

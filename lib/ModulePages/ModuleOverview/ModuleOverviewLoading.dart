@@ -33,7 +33,7 @@ class _ModuleOverviewLoading extends State<ModuleOverviewLoading> {
     return FutureBuilder(
         future: SaveProgress.getEventsFromFirestore(widget.modNum),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (!snapshot.hasData) {
             return ModulePageIntro(
               modNum: widget.modNum,
               index: 0,

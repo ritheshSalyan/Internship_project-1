@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startupreneur/Auth/signin.dart';
 import 'MainRoadmap.dart';
 import '../PaymentGateway/PaymentGateway.dart';
 
@@ -26,64 +27,62 @@ class _RoadmapLoaderState extends State<RoadmapLoader> {
     print("inside roadmap loader");
   }
 
-  Future<dynamic> preferences() async {
-    // _sharedPreferences = await SharedPreferences.getInstance();
-    // db = fb.firestore();
-    // userId = _sharedPreferences.getString("UserId");
-    // print("userId is $userId");
-    // await db.collection("user").doc(userId).get().then((document) {
-    //   print(document.data());
-    //   decision = document.data()["payment"];
-    //   print(decision);
-    //   _sharedPreferences.setString(
-    //       "institution", document.data()["institutionOrCompany"]);
-    //   _sharedPreferences.setString("name", document.data()["name"]);
-
-    //   print("decision is $decision");
-    // });
+  Future preferences() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+    db = fb.firestore();
+    userId = _sharedPreferences.getString("UserId");
+    print("userId is $userId");
+    await db.collection("user").doc(userId).get().then((document) {
+      print(document.data());
+      _sharedPreferences.setString(
+          "institution", document.data()["institutionOrCompany"]);
+      _sharedPreferences.setString("name", document.data()["name"]);
+    });
+    // return false;
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
-   
     return FutureBuilder(
-        future: preferences(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data) {
-              return TimelinePage(
-                title: "RoadMap",
-                status: widget.status,
-              );
-            }
+      future: preferences(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print("data from future is ${snapshot.data}");
+          if (snapshot.data) {
+            return TimelinePage(
+              title: "RoadMap",
+              status: widget.status,
+            );
           }
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new CircularProgressIndicator(
-                    strokeWidth: 5,
-                    value: null,
-                    valueColor: new AlwaysStoppedAnimation(Colors.green),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      "Loading... Please Wait",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+        }
+        return Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new CircularProgressIndicator(
+                  strokeWidth: 5,
+                  value: null,
+                  valueColor: new AlwaysStoppedAnimation(Colors.green),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    "Loading... Please Wait",
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

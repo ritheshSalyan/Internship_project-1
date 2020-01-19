@@ -2,9 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ActivityIntro extends StatefulWidget {
-  ActivityIntro({this.intro, this.heading, this.index,this.modName,this.modNum});
-  List intro, heading;
+  ActivityIntro({this.intro, this.heading, this.index,this.modName,this.modNum,this.files,this.buttons});
+  List intro, heading,buttons;
   int index;
+  dynamic files;
   dynamic modNum,modName;
   @override
   _ActivityIntroState createState() => _ActivityIntroState();
@@ -94,6 +95,29 @@ class _ActivityIntroState extends State<ActivityIntro> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  (widget.buttons[widget.index]!=null && widget.buttons[widget.index].isNotEmpty)?
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      // alignment: Alignment.center,
+                      onPressed: (){},
+                      child: AutoSizeText(
+                        "${widget.buttons[widget.index]}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.1,
+                        ),
+                        minFontSize: 18,
+                        maxFontSize: 25,
+                        maxLines: 15,
+                      ),
+                    ),
+                  ):Container(),
+                 
                 ],
               ),
             ),
