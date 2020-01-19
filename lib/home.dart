@@ -20,50 +20,32 @@ class _homePageState extends State<homePage> {
     print("inside homepage init");
   }
 
-  Future<bool> firstLogin() async {
+  Future firstLogin() async {
     print("inside login");
-    // sharedPreferences = await SharedPreferences.getInstance();
-    // try {
-    //   var value = sharedPreferences.getString("UserId");
-    //   print(value);
-    //   if (value == null) {
-    //     print(" log");
-    //     return false;
-    //   }
-    //   // widget.analytics.setUserId(value);
-    //   return true;
-    // } catch (e) {
-    //   print(e.toString());
-    //   // return ;
-    // }
-    return false;
+    sharedPreferences = await SharedPreferences.getInstance();
+    try {
+      var value = sharedPreferences.getString("UserId");
+      print("the value is $value");
+      if (value == null) {
+        print(" log");
+        return false;
+      } else {
+        print("inside else ");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    //  firstLogin().then((s) {
-    //   print("home page $s");
-    //   if (s==true) {
-    //     print("home hello");
-    //     Navigator.of(context).pushReplacement(
-    //       MaterialPageRoute(
-    //         builder: (context) => RoadmapLoader(),
-    //       ),
-    //     );
-    //   }
-    //   else{
-    //     Navigator.of(context).pushReplacement(
-    //       MaterialPageRoute(
-    //         builder: (context) => SigninPage(),
-    //       ),
-    //     );
-    //   }
-    // });
     return Scaffold(
       body: FutureBuilder(
         future: firstLogin(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print(snapshot.data);
             if (snapshot.data) {
               return RoadmapLoader();
             }

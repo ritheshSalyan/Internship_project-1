@@ -34,9 +34,10 @@ class _QuoteLoading extends State<QuoteLoading> {
         future: getEventsFromFirestore(widget.modNum),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print("data of future from quote ${snapshot.data}");
             return Quote(
               modNum: widget.modNum,
-              quote: snapshot.data.data(),
+              quote: snapshot.data,
             );
           }
           return Scaffold(

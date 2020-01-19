@@ -5,6 +5,7 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:startupreneur/Auth/signin.dart';
 import 'package:startupreneur/ChatBoardRoom/ChatBoardRoomLoader.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/activityController.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/activityList.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
-      home: RoadmapLoader(status: true,),//homePage(),//
+      home: homePage(),//homePage(),//
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,
