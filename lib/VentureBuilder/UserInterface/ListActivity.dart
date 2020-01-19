@@ -11,6 +11,7 @@ import 'package:firebase/firebase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/ModulePages/UserDetail.dart' as u;
@@ -29,11 +30,12 @@ class ListActivities extends StatefulWidget {
     this.index,
     this.files,
     this.order,
+    this.btnLength,
     this.buttons,
   }) : super(key: key);
-  int modNum, index, order;
+  int modNum, index, order,btnLength;
   String modName, files;
-  List intro, headings,buttons;
+  List intro, headings, buttons;
   @override
   _ListActivitiesState createState() => _ListActivitiesState();
 }
@@ -76,11 +78,6 @@ class _ListActivitiesState extends State<ListActivities>
           Toast.show("Downloading  completed", context,
               duration: Toast.LENGTH_LONG);
         }
-        // double d = data.roundToDouble();
-        // progressDialog.update(maxProgress: 100, progress: d);
-        // if (data == 100) {
-        //   progressDialog.hide();
-        // }
       });
 
       // progressDialog.hide();
@@ -97,7 +94,7 @@ class _ListActivitiesState extends State<ListActivities>
     this.uid = user.uid;
 
     print("file is $file");
-    
+
     String name = await u.User.getUserName(uid);
     print(file.name.split('.'));
     String extension = file.name.split('.')[1];
@@ -162,32 +159,34 @@ class _ListActivitiesState extends State<ListActivities>
 
   @override
   Widget build(BuildContext context) {
-    // print("Here file is ${widget.files}");
-    // print("HEre the file Condition is ${(widget.files!=null&& widget.files.isNotEmpty )}");
     return DefaultTabController(
       length: widget.intro.length,
       child: Builder(
         builder: (context) {
           return Scaffold(
-            appBar: AppBar(
-              iconTheme: IconThemeData(
-                color: Colors.black, //change your color here
-              ),
-              backgroundColor: Colors.white,
-              elevation: 0.0,
-              title: Center(
-                child: Text(
-                  "${widget.modName}",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
+            // appBar: AppBar(
+            //   iconTheme: IconThemeData(
+            //     color: Colors.black, //change your color here
+            //   ),
+            //   backgroundColor: Colors.white,
+            //   elevation: 0.0,
+            //   title: Center(
+            //     child: Text(
+            //       "${widget.modName}",
+            //       style: TextStyle(
+            //         color: Colors.black,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             body: Builder(
               builder: (context) => Stack(
                 children: [
-                  TabBarView(
+                  Swiper.children(
+                    loop: false,
+                    control: SwiperControl(
+                      color: Colors.white
+                    ),
                     children: List<Widget>.generate(
                       widget.intro.length,
                       (int index) {
@@ -197,205 +196,11 @@ class _ListActivitiesState extends State<ListActivities>
                           buttons: widget.buttons,
                           files: widget.files,
                           index: index,
+                          btnLength: widget.btnLength,
                         );
                       },
                     ),
                   ),
-                  // Align(
-                  //   alignment: Alignment.bottomCenter,
-                  //   child: Container(
-                  //     width: MediaQuery.of(context).size.width * 0.4,
-                  //     child: ListView(
-                  //       shrinkWrap: true,
-                  //       children: <Widget>[
-                  //         (widget.files != null && widget.files.isNotEmpty)
-                  //             ? Card(
-                  //                 child: ListTile(
-                  //                   leading: Icon(
-                  //                     Icons.file_download,
-                  //                     color: Colors.green,
-                  //                   ),
-                  //                   title: RaisedButton(
-                  //                     color: Colors.green,
-                  //                     child: Text(
-                  //                       "Activity Template Download",
-                  //                       style: TextStyle(
-                  //                         color: Colors.white,
-                  //                         fontWeight: FontWeight.bold,
-                  //                       ),
-                  //                     ),
-                  //                     shape: RoundedRectangleBorder(
-                  //                       borderRadius: BorderRadius.circular(
-                  //                         20,
-                  //                       ),
-                  //                     ),
-                  //                     onPressed: () {
-                  //                       print("inside");
-                  //                       downloadFile(context);
-                  //                     },
-                  //                   ),
-                  //                 ),
-                  //               )
-                  //             : Container(),
-                  //         Card(
-                  //           child: ListTile(
-                  //             leading: Icon(
-                  //               Icons.file_upload,
-                  //               color: Colors.green,
-                  //             ),
-                  //             title: RaisedButton(
-                  //               color: Colors.green,
-                  //               child: Text(
-                  //                 "My Activity Upload",
-                  //                 style: TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontWeight: FontWeight.bold,
-                  //                 ),
-                  //               ),
-                  //               shape: RoundedRectangleBorder(
-                  //                 borderRadius: BorderRadius.circular(
-                  //                   20,
-                  //                 ),
-                  //               ),
-                  //               onPressed: () {
-                  //                 getFilePath();
-                  //               },
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         // SizedBox(height: MediaQuery.of(context).size.height*0.1,)
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // Align(
-                  //         alignment: Alignment.bottomCenter,
-                  //         child: GestureDetector(
-                  //           onTap: () {
-                  //             Scaffold.of(context).showBottomSheet(
-                  //               (context) {
-                  //                 return Padding(
-                  //                   padding: const EdgeInsets.all(8.0),
-                  //                   child: Container(
-                  //                     decoration: BoxDecoration(
-                  //                       borderRadius: BorderRadius.circular(5),
-                  //                     ),
-                  //                     alignment: Alignment.bottomCenter,
-                  //                     height:
-                  //                         MediaQuery.of(context).size.height *
-                  //                             0.20,
-                  //                     // child:
-                  //                   ),
-                  //                 );
-                  //               },
-                  //             );
-                  //           },
-                  //           child: AnimatedContainer(
-                  //             decoration: BoxDecoration(),
-                  //             duration: Duration(seconds: 10),
-                  //             curve: Curves.bounceIn,
-                  //             width: MediaQuery.of(context).size.width * 0.5,
-                  //             height: MediaQuery.of(context).size.height * 0.06,
-                  //             child: ClipRRect(
-                  //               borderRadius: BorderRadius.only(
-                  //                 topLeft: Radius.circular(60),
-                  //                 topRight: Radius.circular(60.0),
-                  //                 // bottomRight: Radius.circular(50.0),
-                  //               ),
-                  //               child: Container(
-                  //                 height: 90,
-                  //                 color: Colors.green,
-                  //                 child: Center(
-                  //                   child: Text(
-                  //                     "Tap for options",
-                  //                     style: TextStyle(
-                  //                       color: Colors.white,
-                  //                       fontWeight: FontWeight.bold,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       )
-                  //     : Align(
-                  //         alignment: Alignment.bottomCenter,
-                  //         child: GestureDetector(
-                  //           onTap: () {
-                  //             Scaffold.of(context).showBottomSheet(
-                  //               (context) {
-                  //                 return Padding(
-                  //                   padding: const EdgeInsets.all(8.0),
-                  //                   child: Container(
-                  //                     decoration: BoxDecoration(
-                  //                       borderRadius: BorderRadius.circular(5),
-                  //                     ),
-                  //                     alignment: Alignment.bottomCenter,
-                  //                     height:
-                  //                         MediaQuery.of(context).size.height *
-                  //                             0.20,
-                  //                     child: Center(
-                  //                       child: Card(
-                  //                         child: ListTile(
-                  //                           leading: Icon(
-                  //                             Icons.file_upload,
-                  //                             color: Colors.green,
-                  //                           ),
-                  //                           title: RaisedButton(
-                  //                             color: Colors.green,
-                  //                             child: Text(
-                  //                               "My Activity Upload",
-                  //                               style: TextStyle(
-                  //                                 color: Colors.white,
-                  //                                 fontWeight: FontWeight.bold,
-                  //                               ),
-                  //                             ),
-                  //                             shape: RoundedRectangleBorder(
-                  //                                 borderRadius:
-                  //                                     BorderRadius.circular(
-                  //                                         20)),
-                  //                             onPressed: () {
-                  //                               getFilePath();
-                  //                             },
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 );
-                  //               },
-                  //             );
-                  //           },
-                  //           child: AnimatedContainer(
-                  //             decoration: BoxDecoration(),
-                  //             duration: Duration(seconds: 10),
-                  //             curve: Curves.bounceIn,
-                  //             width: MediaQuery.of(context).size.width * 0.5,
-                  //             height: MediaQuery.of(context).size.height * 0.06,
-                  //             child: ClipRRect(
-                  //               borderRadius: BorderRadius.only(
-                  //                 topLeft: Radius.circular(60),
-                  //                 topRight: Radius.circular(60.0),
-                  //                 // bottomRight: Radius.circular(50.0),
-                  //               ),
-                  //               child: Container(
-                  //                 height: 90,
-                  //                 color: Colors.green,
-                  //                 child: Center(
-                  //                   child: Text(
-                  //                     "Tap for options",
-                  //                     style: TextStyle(
-                  //                       color: Colors.white,
-                  //                       fontWeight: FontWeight.bold,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
                 ],
               ),
             ),

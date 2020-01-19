@@ -74,13 +74,8 @@ class _DiscussionPageState extends State<DiscussionPage> {
     setState(() {
       // item;
       if (item <= data.split(". ").length) {
-        // print("data.split(' ').length = " +
-        //     data.split(". ").length.toString() +
-        //     data.split(". ").toString());
-        // for (var item in ) {
         if (data.split(". ")[item].length > 3) {
           String temp = data.split(". ")[item];
-          // print("88888888888888888"+temp+alphanumeric.hasMatch(temp[temp.length-1]).toString());
           if (alphanumeric.hasMatch(temp[temp.length - 1])) {
             _listViewData.add(temp + ".");
           } else {
@@ -99,22 +94,24 @@ class _DiscussionPageState extends State<DiscussionPage> {
 
   List<Widget> convertTolist() {
     List<Widget> list = [];
-    list.addAll(_listViewData.map((data) {
-      return Card(
+    List<dynamic> contentList = [];
+
+    contentList = data.split('. ');
+
+    contentList.forEach((value) {
+      list.add(
+        Card(
           elevation: 0,
           margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
           child: Column(
             children: <Widget>[
               Padding(
-                padding:
-                    EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 child: Text(
-                  data,
+                  value+".",
                   textAlign: TextAlign.center,
-                  
                   style: TextStyle(
                     letterSpacing: 0.5,
-                    // fontFamily: "Open Sans",
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -122,37 +119,15 @@ class _DiscussionPageState extends State<DiscussionPage> {
                 ),
               ),
             ],
-          ));
-    }).toList());
-
-    if (item < data.split(". ").length) {
-      list.add(Center(
-          child: Padding(
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-        child: OutlineButton(
-          highlightedBorderColor: Colors.greenAccent,
-          borderSide: BorderSide(color: Colors.green),
-          onPressed: _onSubmit,
-          child: Text(
-            'Tap here to Continue',
-            style: TextStyle(
-              // letterSpacing: 1.5,
-              // fontFamily: "Open Sans",
-              color: Colors.green,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
           ),
-          color: Colors.white,
         ),
-      )));
-    } else {
-      list.add(Center(
+      );
+    });
+    list.add(
+      Center(
         child: FlatButton(
           onPressed: () {
             List<dynamic> arguments = [widget.modNum, widget.index + 1];
-            // orderManagement.moveNextIndex(context, arguments);
             data = "";
             traverse.navigate();
           },
@@ -165,8 +140,73 @@ class _DiscussionPageState extends State<DiscussionPage> {
             ],
           ),
         ),
-      ));
-    }
+      ),
+    );
+
+    // list.addAll(_listViewData.map((data) {
+    //   return Card(
+    //       elevation: 0,
+    //       margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
+    //       child: Column(
+    //         children: <Widget>[
+    //           Padding(
+    //             padding:
+    //                 EdgeInsets.all(5),
+    //             child: Text(
+    //               data,
+    //               textAlign: TextAlign.center,
+
+    //               style: TextStyle(
+    //                 letterSpacing: 0.5,
+    //                 color: Colors.black,
+    //                 fontSize: 18,
+    //                 fontWeight: FontWeight.w400,
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ));
+    // }).toList());
+
+    // if (item < data.split(". ").length) {
+    //   list.add(Center(
+    //       child: Padding(
+    //     padding:
+    //         EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
+    //     child: OutlineButton(
+    //       highlightedBorderColor: Colors.greenAccent,
+    //       borderSide: BorderSide(color: Colors.green),
+    //       onPressed: _onSubmit,
+    //       child: Text(
+    //         'Tap here to Continue',
+    //         style: TextStyle(
+    //           color: Colors.green,
+    //           fontSize: 16,
+    //           fontWeight: FontWeight.w600,
+    //         ),
+    //       ),
+    //       color: Colors.white,
+    //     ),
+    //   )));
+    // } else {
+    //   list.add(Center(
+    //     child: FlatButton(
+    //       onPressed: () {
+    //         List<dynamic> arguments = [widget.modNum, widget.index + 1];
+    //         data = "";
+    //         traverse.navigate();
+    //       },
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.end,
+    //         children: <Widget>[
+    //           Text(widget.button,
+    //               style: TextStyle(fontWeight: FontWeight.w700)),
+    //           Icon(Icons.navigate_next),
+    //         ],
+    //       ),
+    //     ),
+    //   ));
+    // }
 
     return list;
   }
@@ -312,12 +352,10 @@ class _DiscussionPageState extends State<DiscussionPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              ),
+                          padding: EdgeInsets.only(),
                           child:
                               image, // snapshot.data.docs[index].data()['image'],
                         ),
-                        
                       ],
                     ),
                     Column(
@@ -326,7 +364,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
                     ),
                   ],
                 ),
-                
               ],
             );
           },

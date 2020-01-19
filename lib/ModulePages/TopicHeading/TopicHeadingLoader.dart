@@ -28,24 +28,21 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
     //   // Navigator.of(context).pushReplacement(
     //   //   MaterialPageRoute(
     //   //     builder: (context) =>
-         
+
     //   //   ),
     //   // );
     // });
     return FutureBuilder(
-      future:  getEventsFromFirestore(widget.modNum,widget.index),
+      future: getEventsFromFirestore(widget.modNum, widget.index),
       builder: (context, snapshot) {
-      if(snapshot.hasData){
-         return TopicHeadingPage(
+        if (snapshot.hasData) {
+          return TopicHeadingPage(
             index: widget.index,
             modNum: widget.modNum,
             title: snapshot.data[0],
           );
-      }
-      else {
-        return Text("HElllo world ");
-         return CustomeOffline(
-          onConnetivity: Scaffold(
+        } else {
+          Scaffold(
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -70,13 +67,14 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
                 ],
               ),
             ),
-          ),
-        );}
-      }
+          );
+        }
+      },
     );
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
+  static Future<List<String>> getEventsFromFirestore(
+      int modNum, int index) async {
     print("Sending Firebase query in topic heading $modNum $index");
     fs.Firestore db = fb.firestore();
     fs.CollectionReference ref = db.collection('topicHeading');
@@ -84,7 +82,7 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
         .where("module", "==", modNum)
         .where("order", "==", index)
         .get();
-      print("Query from firebase ${eventsQuery.docs}");
+    print("Query from firebase ${eventsQuery.docs}");
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.docs.forEach((document) {

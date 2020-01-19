@@ -53,64 +53,68 @@ class _DiscussionLoading extends State<DiscussionLoading> {
     //   );
     // });
     return FutureBuilder(
-      future:  getEventsFromFirestore(widget.modNum,widget.index),
-      builder: (context, snapshot) {
-      if(snapshot.hasData){
-        var title = snapshot.data;
-return DiscussionPage(
-           index:widget.index,
-            modNum: widget.modNum,
-            title: title[0],
-            content: title[1],
-            button: title[2],
-            image: title[3],
-          );
-      } else{ return CustomeOffline(
+        future: getEventsFromFirestore(widget.modNum, widget.index),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var title = snapshot.data;
+            print(title[1]);
+            return DiscussionPage(
+              index: widget.index,
+              modNum: widget.modNum,
+              title: title[0],
+              content: title[1],
+              button: title[2],
+              image: title[3],
+            );
+          } else {
+            return CustomeOffline(
               onConnetivity: Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new CircularProgressIndicator(
-                    strokeWidth: 5,
-                    value: null,
-                    valueColor: new AlwaysStoppedAnimation(Colors.green),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      "Loading... Please Wait",
-                      style: TextStyle(
-                        color: Colors.black,
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new CircularProgressIndicator(
+                        strokeWidth: 5,
+                        value: null,
+                        valueColor: new AlwaysStoppedAnimation(Colors.green),
                       ),
-                    ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        child: Text(
+                          "Loading... Please Wait",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        );}
-      }
-    );
+            );
+          }
+        });
   }
 
-  static Future<List<String>> getEventsFromFirestore(int modNum,int index) async {
+  static Future<List<String>> getEventsFromFirestore(
+      int modNum, int index) async {
     fs.Firestore db = fb.firestore();
     fs.CollectionReference ref = db.collection('discussion');
-    fs.QuerySnapshot eventsQuery =
-        await ref.where("module", "==", modNum)
-        .where("order","==", index).get();
+    fs.QuerySnapshot eventsQuery = await ref
+        .where("module", "==", modNum)
+        .where("order", "==", index)
+        .get();
 
 //HashMap<String, overview> eventsHashMap = new HashMap<String, overview>();
     List<String> title = [];
     eventsQuery.docs.forEach((document) {
-      print("Discussion " +
-          document.data()["order"].toString() +
-          document.data()["image"].toString() +
-          document.data()["content"].toString());
+      // print("Discussion " +
+      //     document.data()["order"].toString() +
+      //     document.data()["image"].toString() +
+      //     document.data()["content"].toString());
 
       title = convert(document.data()["content"]);
       title.add(document.data()["image"].toString());
@@ -124,7 +128,7 @@ return DiscussionPage(
 
     for (var item in dlist) {
       list.add(item.toString());
-      print(item.toString());
+      // print(item.toString());
     }
     //list.add("assets/Images/think.png");
     return list;
