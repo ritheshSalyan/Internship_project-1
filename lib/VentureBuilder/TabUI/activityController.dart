@@ -151,11 +151,11 @@ class _ActivityControllerState extends State<ActivityController> {
           ),
           Consumer<ActivityChangeNotifier>(
             builder: (context, activity, _) {
-              print("activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
+              // print("activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
               ModuleTraverse moduleTraverse = ModuleTraverse(modnum: activity.modnum, order: 0);
               return Container(
                 width: size.width * ratio,
-                color: Colors.red,
+                // color: Colors.red,
                 child: ChangeNotifierProvider<ModuleTraverse>(
                   create: (_) =>moduleTraverse,
                       // ModuleTraverse(modnum: activity.modnum, order: 0),
@@ -163,7 +163,7 @@ class _ActivityControllerState extends State<ActivityController> {
                   
                     builder: (context, traverse,_) {
                       traverse.updateModNum(activity.modnum);
-                      print("activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                      // print("activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
                       return traverse.order<1? centerTimeline(
                           context, moduleOrder.indexOf(activity.modnum)):traverse.nextPage();
                     }
