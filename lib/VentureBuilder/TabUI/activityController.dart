@@ -37,168 +37,213 @@ class ActivityController extends StatefulWidget {
 
 class _ActivityControllerState extends State<ActivityController> {
   fs.Firestore db = fb.firestore();
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     double ratio = 0.3;
     Size size = MediaQuery.of(context).size;
 
-    return ChangeNotifierProvider<ActivityChangeNotifier>(
-      create: (context) => ActivityChangeNotifier(
-        modnum: widget.modNum,
-        order: widget.index,
-        intro: widget.intro,
-        headings: widget.headings,
-        modName: widget.modName,
-        files: widget.files,
-        buttons: widget.buttons,
-        moduleOrderNo: widget.order,
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: size.width * (1 - ratio),
-            height: size.height,
-            child: Container(
-              height: size.height,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Consumer<ActivityChangeNotifier>(
-                    builder: (context, activity, _) {
-                      return Container(
-                        height: size.height * 0.1,
-                        child: CustomTimeLine(
-                          direction: Axis.horizontal,
-                          itemCount: moduleOrder.length,
-                          completeIndex: moduleOrder.indexOf(activity.modnum),
-                          builder: (context, i) {
-                            return Container();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  Container(
-                    height: size.height * 0.9,
-                    child: Stack(
+    return Scaffold(
+        appBar: AppBar(
+          title: Center(
+            child: Image.asset(
+              "assets/Images/Capture.PNG",
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          backgroundColor: Colors.white,
+          elevation: 8.0,
+        ),
+        body: SingleChildScrollView(
+          child: ChangeNotifierProvider<ActivityChangeNotifier>(
+            create: (context) => ActivityChangeNotifier(
+              modnum: widget.modNum,
+              order: widget.index,
+              intro: widget.intro,
+              headings: widget.headings,
+              modName: widget.modName,
+              files: widget.files,
+              buttons: widget.buttons,
+              moduleOrderNo: widget.order,
+            ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: size.width * 0.6,
+                  height: size.height,
+                  child: Container(
+                    height: size.height,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Consumer<ActivityChangeNotifier>(
                           builder: (context, activity, _) {
-                            print("activity.modnum ${activity.toString()}");
-                            return StreamBuilder<Object>(
-                                stream: db
-                                    .collection("activity")
-                                    .where("module", "==", activity.modnum)
-                                    .onSnapshot,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    activity.updateIntros(snapshot.data);
-                                    return ListActivities(
-                                      modName: activity.modName,
-                                      modNum: activity.modnum,
-                                      intro: activity.intro,
-                                      headings: activity.headings,
-                                      index: activity.order,
-                                      files: activity.files,
-                                      buttons: activity.buttons,
-                                      order: activity.moduleOrderNo,
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: Container(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    );
-                                  }
-                                });
+                            return Container(
+                              padding: EdgeInsets.only(top: 5),
+                              height: size.height * 0.08,
+                              child: CustomTimeLine(
+                                doodle: doodles[activity.modnum - 1].doodle,
+                                direction: Axis.horizontal,
+                                itemCount: moduleOrder.length,
+                                completeIndex:
+                                    moduleOrder.indexOf(activity.modnum),
+                                builder: (context, i) {
+                                  return Material(
+                                    color: Colors.white,
+                                    child: Container(
+                                      child: Text("${doodles[i].modName}"),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
                           },
                         ),
-                        Consumer<ActivityChangeNotifier>(
-                            builder: (context, activity, _) {
-                          return Align(
-                            alignment: Alignment.bottomRight,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Card(
+                          elevation: 8.0,
+                          child: Container(
+                            height: size.height * 0.85,
+                            child: Stack(
                               children: <Widget>[
-                                RaisedGradientButton(
-                                  width: 200,
-                                  height: 50,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.green,
-                                      Color(0xFF30B8AA),
-                                    ],
-                                  ),
-                                  onPressed: () {
-                                    activity.decreaseOrder();
+                                Consumer<ActivityChangeNotifier>(
+                                  builder: (context, activity, _) {
+                                    print(
+                                        "activity.modnum ${activity.toString()}");
+                                    return StreamBuilder<Object>(
+                                        stream: db
+                                            .collection("activity")
+                                            .where(
+                                                "module", "==", activity.modnum)
+                                            .onSnapshot,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            activity
+                                                .updateIntros(snapshot.data);
+                                            return ListActivities(
+                                              modName: activity.modName,
+                                              modNum: activity.modnum,
+                                              intro: activity.intro,
+                                              headings: activity.headings,
+                                              index: activity.order,
+                                              files: activity.files,
+                                              buttons: activity.buttons,
+                                              btnLength: widget.buttons.length,
+                                              order: activity.moduleOrderNo,
+                                            );
+                                          } else {
+                                            return Center(
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ),
+                                            );
+                                          }
+                                        });
                                   },
-                                  child: Text(
-                                    "Previous Module Activity",
-                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  ),
                                 ),
-                                RaisedGradientButton(
-                                  width: 200,
-                                  height: 50,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.green,
-                                      Color(0xFF30B8AA),
-                                    ],
-                                  ),
-                                  onPressed: () {
-                                    activity.moveNext();
-                                  },
-                                  child: Text(
-                                    "Next Module Activity",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold
+                                Consumer<ActivityChangeNotifier>(
+                                    builder: (context, activity, _) {
+                                  return Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        RaisedGradientButton(
+                                          width: 200,
+                                          height: 50,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.green,
+                                              Color(0xFF30B8AA),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            activity.decreaseOrder();
+                                          },
+                                          child: Text(
+                                            "Previous Module Activity",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        RaisedGradientButton(
+                                          width: 200,
+                                          height: 50,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.green,
+                                              Color(0xFF30B8AA),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            activity.moveNext();
+                                          },
+                                          child: Text(
+                                            "Next Module Activity",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
+                                  );
+                                })
                               ],
                             ),
-                          );
-                        })
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            //   ),
-          ),
-          // SizedBox(
-          //   width: 10,
-          // ),
-          Consumer<ActivityChangeNotifier>(
-            builder: (context, activity, _) {
-              // print("activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
-              ModuleTraverse moduleTraverse = ModuleTraverse(modnum: activity.modnum, order: 0);
-              return Container(
-                width: size.width * ratio,
-                // color: Colors.red,
-                child: ChangeNotifierProvider<ModuleTraverse>(
-                  create: (_) =>moduleTraverse,
-                      // ModuleTraverse(modnum: activity.modnum, order: 0),
-                  child: Consumer<ModuleTraverse>(
-                  
-                    builder: (context, traverse,_) {
-                      traverse.updateModNum(activity.modnum);
-                      // print("activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
-                      return traverse.order<1? centerTimeline(
-                          context, moduleOrder.indexOf(activity.modnum)):traverse.nextPage();
-                    }
-                  ),
+                  //   ),
                 ),
-              );
-            },
+                SizedBox(
+                  width: size.width * 0.1,
+                ),
+                Consumer<ActivityChangeNotifier>(
+                  builder: (context, activity, _) {
+                    print(
+                        "activity.modnum is //////////////////////////////////////////////////////////////////////////////////////////// ${activity.modnum}");
+                    ModuleTraverse moduleTraverse =
+                        ModuleTraverse(modnum: activity.modnum, order: 0);
+                    return Card(
+                      elevation: 8.0,
+                      child: Container(
+                        width: size.width * 0.295,
+                        height: MediaQuery.of(context).size.height * 0.85,
+                        // color: Colors.red,
+                        child: ChangeNotifierProvider<ModuleTraverse>(
+                          create: (_) => moduleTraverse,
+                          // ModuleTraverse(modnum: activity.modnum, order: 0),
+                          child: Consumer<ModuleTraverse>(
+                            builder: (context, traverse, _) {
+                              traverse.updateModNum(activity.modnum);
+                              print(
+                                  "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                              return traverse.order < 1
+                                  ? centerTimeline(context,
+                                      moduleOrder.indexOf(activity.modnum))
+                                  : traverse.nextPage();
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-    );
+        ));
   }
 
   Widget centerTimeline(BuildContext context, int i) {
@@ -207,91 +252,6 @@ class _ActivityControllerState extends State<ActivityController> {
       onTap: () {
         print(" true ${doodle.modNum}");
         Provider.of<ModuleTraverse>(context, listen: false).navigate();
-
-        // val = completedCourse[k];
-        // print("val is $val");
-        // int progressNum = await SaveProgress.getProgerss(doodle.modNum);
-        // print("PROGRESS NUM $progressNum");
-        // if (progressNum == 0) {
-        //   if (doodle.modNum == 12 || doodle.modNum == 14) {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (context) =>
-        //             ModuleOverviewLoading(modNum: doodle.modNum),
-        //       ),
-        //     );
-        //   } else if (doodle.modNum != 12) {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (context) => QuoteLoading(modNum: doodle.modNum),
-        //       ),
-        //     );
-        //   } else {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (context) => (HustleStoreLoader()),
-        //       ),
-        //     );
-        //   }
-        // } else {
-        //   showDialog<bool>(
-        //       context: context,
-        //       builder: (_) {
-        //         return AlertDialog(
-        //           content: Text("Do you want to resume this Module?"),
-        //           title: Text(
-        //             "Continue",
-        //           ),
-        //           actions: <Widget>[
-        //             FlatButton(
-        //               child: Text(
-        //                 "Yes",
-        //                 style: TextStyle(color: Colors.green),
-        //               ),
-        //               onPressed: () {
-        //                 Navigator.of(context).pop(true);
-        //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-        //                 SaveProgress.getEventsFromFirestore(doodle.modNum)
-        //                     .then((_) {
-        //                   List<int> arguments = [doodle.modNum, progressNum];
-        //                   orderManagement.moveNextIndex(context, arguments);
-        //                 });
-        //               },
-        //             ),
-        //             FlatButton(
-        //               child: Text(
-        //                 "No",
-        //                 style: TextStyle(color: Colors.red),
-        //               ),
-        //               onPressed: () {
-        //                 Navigator.of(context).pop(true);
-        //                 if (doodle.modNum == 11 || doodle.modNum == 14) {
-        //                   Navigator.of(context).push(
-        //                     MaterialPageRoute(
-        //                       builder: (context) =>
-        //                           ModuleOverviewLoading(modNum: doodle.modNum),
-        //                     ),
-        //                   );
-        //                 } else if (doodle.modNum != 12) {
-        //                   Navigator.of(context).push(
-        //                     MaterialPageRoute(
-        //                       builder: (context) =>
-        //                           QuoteLoading(modNum: doodle.modNum),
-        //                     ),
-        //                   );
-        //                 } else {
-        //                   Navigator.of(context).push(
-        //                     MaterialPageRoute(
-        //                       builder: (context) => (HustleStoreLoader()),
-        //                     ),
-        //                   );
-        //                 }
-        //               },
-        //             ),
-        //           ],
-        //         );
-        //       });
-        // }
       },
       child: Stack(
         alignment: Alignment.center,
@@ -351,169 +311,6 @@ class _ActivityControllerState extends State<ActivityController> {
         ],
       ),
     );
-    // return TimelineModel(
-    //       new GestureDetector(
-    //         onTap: () async {
-    //           print("value of i is $i");
-    //           // if (check(doodle.modNum)) {
-    // print(" true ${doodle.modNum}");
-    // // val = completedCourse[k];
-    // // print("val is $val");
-    // int progressNum = await SaveProgress.getProgerss(doodle.modNum);
-    // print("PROGRESS NUM $progressNum");
-    // if (progressNum == 0) {
-    //   if (doodle.modNum == 12 || doodle.modNum == 14) {
-    //     Navigator.of(context).push(
-    //       MaterialPageRoute(
-    //         builder: (context) =>
-    //             ModuleOverviewLoading(modNum: doodle.modNum),
-    //       ),
-    //     );
-    //   } else if (doodle.modNum != 12) {
-    //     Navigator.of(context).push(
-    //       MaterialPageRoute(
-    //         builder: (context) => QuoteLoading(modNum: doodle.modNum),
-    //       ),
-    //     );
-    //   } else {
-    //     Navigator.of(context).push(
-    //       MaterialPageRoute(
-    //         builder: (context) => (HustleStoreLoader()),
-    //       ),
-    //     );
-    //   }
-    // } else {
-    //   showDialog<bool>(
-    //       context: context,
-    //       builder: (_) {
-    //         return AlertDialog(
-    //           content: Text("Do you want to resume this Module?"),
-    //           title: Text(
-    //             "Continue",
-    //           ),
-    //           actions: <Widget>[
-    //             FlatButton(
-    //               child: Text(
-    //                 "Yes",
-    //                 style: TextStyle(color: Colors.green),
-    //               ),
-    //               onPressed: () {
-    //                 Navigator.of(context).pop(true);
-    //                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-    //                 SaveProgress.getEventsFromFirestore(doodle.modNum)
-    //                     .then((_) {
-    //                   List<int> arguments = [
-    //                     doodle.modNum,
-    //                     progressNum
-    //                   ];
-    //                   orderManagement.moveNextIndex(
-    //                       context, arguments);
-    //                 });
-    //               },
-    //             ),
-    //             FlatButton(
-    //               child: Text(
-    //                 "No",
-    //                 style: TextStyle(color: Colors.red),
-    //               ),
-    //               onPressed: () {
-    //                 Navigator.of(context).pop(true);
-    //                 if (doodle.modNum == 11 || doodle.modNum == 14) {
-    //                   Navigator.of(context).push(
-    //                     MaterialPageRoute(
-    //                       builder: (context) => ModuleOverviewLoading(
-    //                           modNum: doodle.modNum),
-    //                     ),
-    //                   );
-    //                 } else if (doodle.modNum != 12) {
-    //                   Navigator.of(context).push(
-    //                     MaterialPageRoute(
-    //                       builder: (context) =>
-    //                           QuoteLoading(modNum: doodle.modNum),
-    //                     ),
-    //                   );
-    //                 } else {
-    //                   Navigator.of(context).push(
-    //                     MaterialPageRoute(
-    //                       builder: (context) => (HustleStoreLoader()),
-    //                     ),
-    //                   );
-    //                 }
-    //               },
-    //             ),
-    //           ],
-    //         );
-    //       });
-    //             }
-    //           // } else {
-    //           //   print(" false");
-    //           // }
-    //         },
-    //         child: Stack(
-    //           alignment: Alignment.center,
-    //           children: <Widget>[
-    //             Container(
-    //               color: Colors.grey[50],
-    //               height: 210.0,
-    //               width: 145.0,
-    //               child: GradientCard(
-    //                 gradient: LinearGradient(colors: doodle.colors),
-    //                 //                    color: doodle.color,
-    //                 margin: EdgeInsets.all(0),
-    //                 elevation: 10,
-    //                 shape: RoundedRectangleBorder(
-    //                   side: BorderSide(
-    //                     color: Colors.green,
-    //                     // width: 3,
-    //                     width: 2,
-    //                   ),
-    //                   borderRadius: BorderRadius.circular(12),
-    //                 ),
-    //                 // shape:Border.all(width: 3,
-    //                 // color: Colors.green),
-    //                 // margin: EdgeInsets.symmetric(vertical: 16.0),
-    //                 clipBehavior: Clip.antiAlias,
-    //                 child: Padding(
-    //                   padding: const EdgeInsets.all(16.0),
-    //                   child: Column(
-    //                     mainAxisSize: MainAxisSize.min,
-    //                     children: <Widget>[
-    //                       // Image.network(doodle.doodle),
-    //                       Image.asset(
-    //                         doodle.doodle,
-    //                         height: MediaQuery.of(context).size.height * 0.09,
-    //                       ),
-    //                       const SizedBox(
-    //                         height: 8.0,
-    //                       ),
-    //                       doodle.name,
-    //                       const SizedBox(
-    //                         height: 8.0,
-    //                       ),
-    //                       Row(
-    //                         mainAxisAlignment: MainAxisAlignment.center,
-    //                         children: <Widget>[
-    //                           doodle.pointsIcon,
-    //                           Text(" "),
-    //                           doodle.points,
-    //                         ],
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ),
-    //               ),
-    //               //                )
-    //             ),
-
-    //           ],
-    //         ),
-    //       ),
-    //       position:
-    //           i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
-    //       isFirst: i == 0,
-    //       isLast: i == doodles.length,
-    //       iconBackground: doodle.iconBackground,
-    //       icon: doodle.icon);
   }
 }
 

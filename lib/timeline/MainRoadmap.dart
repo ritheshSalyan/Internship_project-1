@@ -7,6 +7,7 @@ import 'package:firebase/firestore.dart' as fs;
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/HelpandFAQ/helpAndFaq.dart';
 
 import 'package:startupreneur/Mentorfeedback/mentorFeedback.dart';
@@ -14,6 +15,7 @@ import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.d
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/activityController.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/activityList.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/folderUI.dart';
 import 'package:startupreneur/additionalMaterial/additionalMaterial.dart';
 
@@ -78,6 +80,7 @@ class _TimelinePageState extends State<TimelinePage> {
   double experinceRating = 0;
   String commentText;
   String institution;
+  ModuleTraverse traverse = ModuleTraverse();
   // final Firestore _db = Firestore.instance;
   final FirebaseMessaging _fcm = FirebaseMessaging();
   String _url =
@@ -144,23 +147,7 @@ class _TimelinePageState extends State<TimelinePage> {
     print(Global.date);
     preferences(context);
     print("inside main roadmap");
-    // Directory('/storage/emulated/0/Startupreneur').exists().then((yes) {
-    //   if (!yes) {
-    //     print("inside failed loop $yes");
-    //     Directory('/storage/emulated/0/Startupreneur').create();
-    //   } else {
-    //     print("im here");
-    //     Directory('/storage/emulated/0/Startupreneur/templates').create();
-    //   }
-    // }).catchError((e) {
-    //   Directory('/storage/emulated/0/Startupreneur/templates').create();
-    // });
-    // // widget.status = true;
-    // _messaging.getToken().then((token) {
-    //   print(token);
-    // });
-
-    // fb.analytics().setCurrentScreen("Main_RoadMap_TimeLine_Page");
+   
   }
 
   navigateTo(BuildContext context, var message) {
@@ -174,6 +161,8 @@ class _TimelinePageState extends State<TimelinePage> {
       ),
     );
   }
+
+  ActivityChangeNotifier activity;
 
   void preferences(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -309,7 +298,10 @@ class _TimelinePageState extends State<TimelinePage> {
     List<Widget> pages = [
       timelineModel(TimelinePosition.Center),
     ];
+    activity = ActivityChangeNotifier();
     orderManagement.currentIndex = 0;
+    ModuleTraverse moduleTraverse =
+        ModuleTraverse(modnum: activity.modnum, order: 0);
 
     return Scaffold(
       extendBody: true,
@@ -320,12 +312,12 @@ class _TimelinePageState extends State<TimelinePage> {
         title: Padding(
           padding: const EdgeInsets.all(9.5),
           child: Center(
-          child: Image.asset(
-            "assets/Images/Capture.PNG",
-            width: MediaQuery.of(context).size.width * 0.2,
+            child: Image.asset(
+              "assets/Images/Capture.PNG",
+              width: MediaQuery.of(context).size.width * 0.2,
               height: MediaQuery.of(context).size.height * 0.1,
+            ),
           ),
-        ),
         ),
         automaticallyImplyLeading: true,
         backgroundColor: Theme.of(context).primaryColorDark,
@@ -843,7 +835,27 @@ class _TimelinePageState extends State<TimelinePage> {
       ),
       body: Stack(
         children: <Widget>[
-          PageView(children: pages),
+          // PageView(children: pages),
+
+          Container(
+            // width: size.width * ratio,
+            color: Colors.white,
+            child: ChangeNotifierProvider<ModuleTraverse>(
+              create: (_) => moduleTraverse,
+              // ModuleTraverse(modnum: activity.modnum, order: 0),
+              child: Consumer<ModuleTraverse>(
+                builder: (context, traverse, _) {
+                  print(
+                      "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                  return traverse.order < 1
+                      ? PageView(
+                          children: pages,
+                        )
+                      : traverse.nextPage();
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -1056,6 +1068,7 @@ class _TimelinePageState extends State<TimelinePage> {
               print("PROGRESS NUM $progressNum");
               if (progressNum == 0) {
                 if (doodle.modNum == 12 || doodle.modNum == 14) {
+                  traverse.updateModNum(activity.modnum);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
@@ -1144,75 +1157,77 @@ class _TimelinePageState extends State<TimelinePage> {
           },
           child: Padding(
             padding: (i % 2 == 0)
-                ?  EdgeInsets.only(right: MediaQuery.of(context).size.width*0.3, top: 40.0)
-                :  EdgeInsets.only(left: MediaQuery.of(context).size.width*0.3),
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Container(
-                color: Colors.grey[50],
-                height: 210.0,
-                width: 145.0,
-                child: GradientCard(
-                  gradient: LinearGradient(colors: doodle.colors),
-                  //                    color: doodle.color,
-                  margin: EdgeInsets.all(0),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.green,
-                      // width: 3,
-                      width: 2,
+                ? EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.3, top: 40.0)
+                : EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.3),
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                  color: Colors.grey[50],
+                  height: 210.0,
+                  width: 145.0,
+                  child: GradientCard(
+                    gradient: LinearGradient(colors: doodle.colors),
+                    //                    color: doodle.color,
+                    margin: EdgeInsets.all(0),
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.green,
+                        // width: 3,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
+                    // shape:Border.all(width: 3,
+                    // color: Colors.green),
+                    // margin: EdgeInsets.symmetric(vertical: 16.0),
+                    clipBehavior: Clip.antiAlias,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          // Image.network(doodle.doodle),
+                          Image.asset(
+                            doodle.doodle,
+                            height: MediaQuery.of(context).size.height * 0.09,
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          doodle.name,
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              doodle.pointsIcon,
+                              Text(" "),
+                              doodle.points,
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  // shape:Border.all(width: 3,
-                  // color: Colors.green),
-                  // margin: EdgeInsets.symmetric(vertical: 16.0),
-                  clipBehavior: Clip.antiAlias,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        // Image.network(doodle.doodle),
-                        Image.asset(
-                          doodle.doodle,
-                          height: MediaQuery.of(context).size.height * 0.09,
-                        ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        doodle.name,
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            doodle.pointsIcon,
-                            Text(" "),
-                            doodle.points,
-                          ],
-                        ),
-                      ],
-                    ),
+                  //                )
+                ),
+                Container(
+                  // color: Colors.grey[50],
+                  width: 240.0,
+                  height: 100.0,
+                  child: Opacity(
+                    opacity: 1.0,
+                    child: lockUnlock(i, completedCourse),
                   ),
                 ),
-                //                )
-              ),
-              Container(
-                // color: Colors.grey[50],
-                width: 240.0,
-                height: 100.0,
-                child: Opacity(
-                  opacity: 1.0,
-                  child: lockUnlock(i, completedCourse),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         ),
         position:
             i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,

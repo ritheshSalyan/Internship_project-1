@@ -35,15 +35,16 @@ class VideoPlay extends StatefulWidget {
 class _VideoPlayState extends State<VideoPlay> {
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
+  Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
-    Analytics.analyticsBehaviour("Video_Story_Page", "VideoPage");
+    // Analytics.analyticsBehaviour("Video_Story_Page", "VideoPage");
     _videoPlayerController1 = VideoPlayerController.network(
-      // 'https://firebasestorage.googleapis.com/v0/b/startupreneur-ace66.appspot.com/o/videos%2Fwhat%20is%20startup%20720p.mp4?alt=media&token=5761962c-27a0-4cf1-ab78-c037feff769d',
       widget.videoLink,
     );
+    _initializeVideoPlayerFuture = _videoPlayerController1.initialize();
     _chewieController = ChewieController(
       autoInitialize: true,
       allowedScreenSleep: true,
@@ -76,6 +77,7 @@ class _VideoPlayState extends State<VideoPlay> {
         );
       },
     );
+    // _initializeVideoPlayerFuture = _chewieController.i
   }
 
   @override
