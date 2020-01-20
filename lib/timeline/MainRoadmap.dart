@@ -147,7 +147,6 @@ class _TimelinePageState extends State<TimelinePage> {
     print(Global.date);
     preferences(context);
     print("inside main roadmap");
-   
   }
 
   navigateTo(BuildContext context, var message) {
@@ -612,6 +611,8 @@ class _TimelinePageState extends State<TimelinePage> {
                       files: "",
                       order: 0,
                       buttons: [""],
+                      textBox: [""],
+                      suggestion: [""],
                     ), //FolderBuilder(completedCourse: completedCourse)),
                   ),
                 );
@@ -835,24 +836,25 @@ class _TimelinePageState extends State<TimelinePage> {
       ),
       body: Stack(
         children: <Widget>[
-          // PageView(children: pages),
-
-          Container(
-            // width: size.width * ratio,
-            color: Colors.white,
-            child: ChangeNotifierProvider<ModuleTraverse>(
-              create: (_) => moduleTraverse,
-              // ModuleTraverse(modnum: activity.modnum, order: 0),
-              child: Consumer<ModuleTraverse>(
-                builder: (context, traverse, _) {
-                  print(
-                      "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
-                  return traverse.order < 1
-                      ? PageView(
-                          children: pages,
-                        )
-                      : traverse.nextPage();
-                },
+          // PageView(children: p
+          Tooltip(
+            message: "Hello world",
+            child: Container(
+              color: Colors.white,
+              child: ChangeNotifierProvider<ModuleTraverse>(
+                create: (_) => moduleTraverse,
+                // ModuleTraverse(modnum: activity.modnum, order: 0),
+                child: Consumer<ModuleTraverse>(
+                  builder: (context, traverse, _) {
+                    print(
+                        "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                    return traverse.order < 1
+                        ? PageView(
+                            children: pages,
+                          )
+                        : traverse.nextPage();
+                  },
+                ),
               ),
             ),
           ),
@@ -1071,16 +1073,48 @@ class _TimelinePageState extends State<TimelinePage> {
                   traverse.updateModNum(activity.modnum);
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ModuleOverviewLoading(modNum: doodle.modNum),
+                      builder: (context) => ActivityController(
+                        modName: doodle.modName,
+                        modNum: doodle.modNum,
+                        intro: [""],
+                        index: 0,
+                        headings: [""],
+                        files: "",
+                        order: 0,
+                        buttons: [""],
+                        textBox: [''],
+                        suggestion: [''],
+                      ), //FolderBuilder(completedCourse: completedCourse)),
                     ),
                   );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         ModuleOverviewLoading(modNum: doodle.modNum),
+                  //   ),
+                  // );
                 } else if (doodle.modNum != 12) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => QuoteLoading(modNum: doodle.modNum),
+                      builder: (context) => ActivityController(
+                        modName: doodle.modName,
+                        modNum: doodle.modNum,
+                        intro: [""],
+                        index: 0,
+                        headings: [""],
+                        files: "",
+                        order: 0,
+                        buttons: [""],
+                        textBox: [''],
+                        suggestion: [''],
+                      ), //FolderBuilder(completedCourse: completedCourse)),
                     ),
                   );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => QuoteLoading(modNum: doodle.modNum),
+                  //   ),
+                  // );
                 } else {
                   Navigator.of(context).push(
                     MaterialPageRoute(

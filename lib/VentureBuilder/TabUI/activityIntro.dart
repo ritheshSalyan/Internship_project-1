@@ -21,8 +21,10 @@ class ActivityIntro extends StatefulWidget {
     this.files,
     this.buttons,
     this.btnLength,
+    this.textBox,
+    this.suggestion,
   });
-  List intro, heading, buttons;
+  List intro, heading, buttons, textBox, suggestion;
   int index, btnLength;
   dynamic files;
   dynamic modNum, modName;
@@ -110,7 +112,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
   }
 
   void downloadFile() async {
-    var request = await http.Request('GET', Uri.parse(widget.files));  
+    var request = await http.Request('GET', Uri.parse(widget.files));
     request.headers['Access-Control-Allow-Origin'] = '*';
     await request.send();
 
@@ -175,7 +177,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: AutoSizeText(
-                        "${widget.intro[widget.index]}",
+                        "${widget.intro[widget.index].toString().replaceAll('.  ', "\n")}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -189,6 +191,33 @@ class _ActivityIntroState extends State<ActivityIntro> {
                   ),
                   SizedBox(
                     height: 50,
+                  ),
+                  (widget.textBox[widget.index] != null &&
+                          widget.textBox[widget.index].isNotEmpty)
+                      ? Card(
+                        // color: Colors.green,
+                          elevation: 8.0,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            padding:
+                                const EdgeInsets.only(left: 15.0, right: 15.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                // helperText: "Example "+widget.suggestion[widget.index],
+                                // helperStyle: TextStyle(color: Colors.grey),
+                                hintText: widget.suggestion[widget.index],
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              maxLines: 250,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 40,
                   ),
                   (widget.buttons[widget.index] != null &&
                           widget.buttons[widget.index].isNotEmpty)
