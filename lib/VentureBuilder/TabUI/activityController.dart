@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:startupreneur/HustleStore/HustleStoreLoader.dart';
 import 'package:startupreneur/ModulePages/ModuleOverview/ModuleOverviewLoading.dart';
 import 'package:startupreneur/ModulePages/Quote/quoteLoading.dart';
+import 'package:startupreneur/ModulePages/special_activities/bmc.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/custom_timeline.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/VentureBuilder/UserInterface/ListActivity.dart';
@@ -322,6 +323,7 @@ class ActivityChangeNotifier with ChangeNotifier {
   List intro = [];
   List headings = [];
   List buttons = [];
+  
 
   void changeModule() {
     int modindex = moduleOrder.indexOf(modnum);
@@ -374,7 +376,7 @@ class ActivityChangeNotifier with ChangeNotifier {
   }
 
   void updateIntros(fs.QuerySnapshot snapshot) {
-    // print("updateIntros $order  $modnum ");
+    print("updateIntros ${snapshot.docs} ");
     noOfActivity = snapshot.docs.length;
 
     print(snapshot.docs[order].data()['buttons']);
@@ -383,20 +385,28 @@ class ActivityChangeNotifier with ChangeNotifier {
     intro.clear();
     buttons.clear();
 
-    print("snapshot.docs.length ${snapshot.docs.length}");
+    print("snapshot.docs.length ${snapshot.docs[order].data()}");
+    print("Entering Page");
     snapshot.docs[order].data()['Page'].forEach((value) {
       headings.add(value);
     });
+    print("Entering content");
+
     snapshot.docs[order].data()['content'].forEach((value) {
       intro.add(value);
       // print("object $value");
     });
+    print("Entering buttons");
+
     snapshot.docs[order].data()['buttons'].forEach((value) {
       buttons.add(value);
     });
 
     files = snapshot.docs[order].data()['file'];
     moduleOrderNo = snapshot.docs[order].data()['order'];
+    special = snapshot.docs[order].data()['special'];
+    print("After chaging $special");
+    
   }
 
   @override
@@ -405,6 +415,11 @@ class ActivityChangeNotifier with ChangeNotifier {
   }
 
   Widget activityWidget() { 
+    print("ACTIVITY ************************* special =  $special");
+      if(special.toLowerCase().compareTo("bussiness model canvas")==0){
+        return BusinessModelCanvas(title: "Bussiness Model Canvas",index: order,);
+      }
+
     return ListActivities(
       modName: this.modName,
       modNum: this.modnum,
