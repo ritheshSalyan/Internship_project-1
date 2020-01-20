@@ -23,8 +23,9 @@ class ActivityIntro extends StatefulWidget {
     this.btnLength,
     this.textBox,
     this.suggestion,
+    this.tableView,
   });
-  List intro, heading, buttons, textBox, suggestion;
+  List intro, heading, buttons, textBox, suggestion, tableView;
   int index, btnLength;
   dynamic files;
   dynamic modNum, modName;
@@ -119,11 +120,79 @@ class _ActivityIntroState extends State<ActivityIntro> {
     print(request.body);
   }
 
+  List<Widget> generator() {
+    List<Widget> list = [];
+    print("index is ${widget.index}");
+    widget.tableView[widget.index - 1].forEach(
+      (key, value) {
+        print(key);
+        list.add(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: AutoSizeText(
+                    "$key",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.1,
+                    ),
+                    minFontSize: 18,
+                    maxFontSize: 25,
+                    maxLines: 15,
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 8.0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  padding: const EdgeInsets.only(
+                    left: 15.0,
+                    right: 15.0,
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: value,
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    maxLines: 3,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Text(
+            "${widget.modName}",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
@@ -137,7 +206,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                 color: Colors.green,
               ),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.75,
               child: Column(
                 children: <Widget>[
                   Row(
@@ -169,33 +238,39 @@ class _ActivityIntroState extends State<ActivityIntro> {
                   SizedBox(
                     height: 50,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      // alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: AutoSizeText(
-                        "${widget.intro[widget.index].toString().replaceAll('.  ', "\n")}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.1,
+                  (widget.intro[widget.index] != null &&
+                          widget.intro[widget.index].isNotEmpty)
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            // alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: AutoSizeText(
+                              "${widget.intro[widget.index].toString().replaceAll('.  ', "\n")}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 1.1,
+                              ),
+                              minFontSize: 18,
+                              maxFontSize: 25,
+                              maxLines: 15,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          child: Column(
+                            children: generator(),
+                          ),
                         ),
-                        minFontSize: 18,
-                        maxFontSize: 25,
-                        maxLines: 15,
-                      ),
-                    ),
-                  ),
                   SizedBox(
                     height: 50,
                   ),
                   (widget.textBox[widget.index] != null &&
                           widget.textBox[widget.index].isNotEmpty)
                       ? Card(
-                        // color: Colors.green,
                           elevation: 8.0,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
@@ -204,9 +279,9 @@ class _ActivityIntroState extends State<ActivityIntro> {
                                 const EdgeInsets.only(left: 15.0, right: 15.0),
                             child: TextField(
                               decoration: InputDecoration(
-                                // helperText: "Example "+widget.suggestion[widget.index],
-                                // helperStyle: TextStyle(color: Colors.grey),
-                                hintText: widget.suggestion[widget.index],
+                                hintText: widget.suggestion[widget.index]
+                                    .toString()
+                                    .replaceAll(".  ", "\n"),
                                 hintStyle: TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -217,7 +292,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
                         )
                       : Container(),
                   SizedBox(
-                    height: 40,
+                    height: 25,
                   ),
                   (widget.buttons[widget.index] != null &&
                           widget.buttons[widget.index].isNotEmpty)

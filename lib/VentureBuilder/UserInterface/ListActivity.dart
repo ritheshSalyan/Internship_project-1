@@ -34,10 +34,11 @@ class ListActivities extends StatefulWidget {
     this.buttons,
     this.suggestion,
     this.textBox,
+    this.tableView,
   }) : super(key: key);
   int modNum, index, order, btnLength;
   String modName, files;
-  List intro, headings, buttons,suggestion,textBox;
+  List intro, headings, buttons,suggestion,textBox,tableView;
   @override
   _ListActivitiesState createState() => _ListActivitiesState();
 }
@@ -166,31 +167,17 @@ class _ListActivitiesState extends State<ListActivities>
       child: Builder(
         builder: (context) {
           return Scaffold(
-            // appBar: AppBar(
-            //   iconTheme: IconThemeData(
-            //     color: Colors.black, //change your color here
-            //   ),
-            //   backgroundColor: Colors.white,
-            //   elevation: 0.0,
-            //   title: Center(
-            //     child: Text(
-            //       "${widget.modName}",
-            //       style: TextStyle(
-            //         color: Colors.black,
-            //       ),
-            //     ),
-            //   ),
-            // ),
             body: Builder(
               builder: (context) => Stack(
                 children: [
                   Swiper.children(
-                    loop: false,
                     control: SwiperControl(color: Colors.white),
                     children: List<Widget>.generate(
                       widget.intro.length,
                       (int index) {
                         return ActivityIntro(
+                          modName: widget.modName,
+                          modNum: widget.modNum,
                           intro: widget.intro,
                           heading: widget.headings,
                           buttons: widget.buttons,
@@ -198,7 +185,8 @@ class _ListActivitiesState extends State<ListActivities>
                           index: index,
                           btnLength: widget.btnLength,
                           textBox:widget.textBox,
-                          suggestion:widget.suggestion
+                          suggestion:widget.suggestion,
+                          tableView: widget.tableView,
                         );
                       },
                     ),

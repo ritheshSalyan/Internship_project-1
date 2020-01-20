@@ -97,173 +97,167 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   Widget build(BuildContext context) {
-    ModuleTraverse traverse =  Provider.of<ModuleTraverse>(context);
+    ModuleTraverse traverse = Provider.of<ModuleTraverse>(context);
     return
-    //  CustomeOffline(
-    //   onConnetivity: 
-      Scaffold(
-        //      bottomSheet: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: <Widget>[
-        //     Text(
-        //        "Page ${widget.index+1}/${Module.moduleLength}",
-        //       textAlign: TextAlign.center,
-        //       style: TextStyle(color: Colors.green),
-        //     ),
-        //   ],
-        // ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            bottom: 5.0,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Page ${widget.index + 1}/${Module.moduleLength}",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-            ],
-          ),
+        //  CustomeOffline(
+        //   onConnetivity:
+        Scaffold(
+      //      bottomSheet: Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //   children: <Widget>[
+      //     Text(
+      //        "Page ${widget.index+1}/${Module.moduleLength}",
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(color: Colors.green),
+      //     ),
+      //   ],
+      // ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          left: 15.0,
+          bottom: 5.0,
         ),
-        appBar: AppBar(
-          elevation: 0,
-          actions: <Widget>[
-            GestureDetector(
-              child: Icon(Icons.home),
-              onTap: () {
-                showDialog<bool>(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        content: Text(
-                            "Are you sure you want to return to Home Page? "),
-                        title: Text(
-                          "Warning!",
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              "Yes",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onPressed: () {
-                              // SaveProgress.preferences(
-                              //     widget.modNum, widget.index);
-                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              // Navigator.of(context).popUntil(
-                              //     ModalRoute.withName("TimelinePage"));
-                              Provider.of<ModuleTraverse>(context).navigate();
-                            },
-                          ),
-                          FlatButton(
-                            child: Text(
-                              "No",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Page ${widget.index + 1}/${Module.moduleLength}",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              ClipPath(
-                clipper: WaveClipperOne(),
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.green),
-                  height: MediaQuery.of(context).size.height * 0.19,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.05),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          widget.title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "QuickSand",
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.home),
+            onTap: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      content: Text(
+                          "Are you sure you want to return to Home Page? "),
+                      title: Text(
+                        "Warning!",
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.red),
                           ),
+                          onPressed: () {
+                            // SaveProgress.preferences(
+                            //     widget.modNum, widget.index);
+                            // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                            // Navigator.of(context).popUntil(
+                            //     ModalRoute.withName("TimelinePage"));
+                            Provider.of<ModuleTraverse>(context).navigate();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            "No",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
                         ),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05)),
-              Center(
-                child: Chewie(
-                  controller: _chewieController,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05,
-                  left: MediaQuery.of(context).size.width * 0.1,
-                  right: MediaQuery.of(context).size.width * 0.1,
-                ),
-                child: Center(
-                  child: Text(
-                    "* Wait and watch the above video to get started!",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width * 0.1,
-                ),
-              ),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: Colors.green,
-                  width: 1.5,
-                ),
-                onPressed: () {
-                  // if (widget.btnTitle == "Tap to continue") {
-                  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (context) => Loading(),
-                  //   ));
-                  // }
-                  // else{
-                  //    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (context) => SummaryPage(),
-                  //   ));
-                  // }
-
-                  // List<dynamic> arguments = [widget.modNum, widget.index + 1];
-                  // orderManagement.moveNextIndex(context, arguments);
-                             
-                                                          traverse.navigate();
-
-                },
-                child: Text(
-                  widget.btnTitle,
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ],
+                    );
+                  });
+            },
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ClipPath(
+              clipper: WaveClipperOne(),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.green),
+                height: MediaQuery.of(context).size.height * 0.19,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "QuickSand",
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+              ),
+            ),
+            Center(
+              child: Chewie(
+                controller: _chewieController,
+              ),
+            ),
+            Center(
+              child: Text(
+                "* Wait and watch the above video to get started!",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.width * 0.1,
+              ),
+            ),
+            OutlineButton(
+              borderSide: BorderSide(
+                color: Colors.green,
+                width: 1.5,
+              ),
+              onPressed: () {
+                // if (widget.btnTitle == "Tap to continue") {
+                //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) => Loading(),
+                //   ));
+                // }
+                // else{
+                //    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) => SummaryPage(),
+                //   ));
+                // }
+
+                // List<dynamic> arguments = [widget.modNum, widget.index + 1];
+                // orderManagement.moveNextIndex(context, arguments);
+
+                traverse.navigate();
+              },
+              child: Text(
+                widget.btnTitle,
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 15.0,
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
       // ),
     );
   }

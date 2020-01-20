@@ -18,6 +18,7 @@ class ActivityListPage extends StatelessWidget {
   List  buttons = [];
   List suggestion = [];
   List textBox = [];
+  List tableView = [];
 
 
   @override
@@ -58,6 +59,10 @@ class ActivityListPage extends StatelessWidget {
         textBox.add(value);
         print("object $value");
       });
+       snapshot.docs[index].data()['tableView'].forEach((value) {
+        tableView.add(value);
+        print("object $value");
+      });
 
 
       print("heading length ${headings.length}");
@@ -73,6 +78,7 @@ class ActivityListPage extends StatelessWidget {
               index: index,
               textBox: textBox,
               suggestion: suggestion,
+              tableView: tableView,
               files: snapshot.docs[index].data()['file'],
               order: snapshot.docs[index].data()['order']),
         ),

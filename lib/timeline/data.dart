@@ -15,6 +15,7 @@ class Doodle {
   final Color color;
   List<Color> colors = [];
   final int modNum;
+  final String modDec;
 
   // final Text
   Doodle({
@@ -30,6 +31,7 @@ class Doodle {
     this.color,
     this.colors,
     this.modNum,
+    this.modDec,
   });
 }
 
@@ -69,6 +71,7 @@ List<Doodle> doodles = [
       "${1000}",
     ),
     color: Colors.grey[100],
+    modDec: "",
   ),
  
   Doodle(
@@ -105,6 +108,7 @@ List<Doodle> doodles = [
       "${1500}",
     ),
     color: Colors.grey[100],
+    modDec: "Discover the various ways in which sustainable startup ideas are generated, understand the various techniques and how you can master the rationale behind building one."
   ),
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -139,6 +143,7 @@ List<Doodle> doodles = [
       "${2000}",
     ),
     color: Colors.grey[100],
+    modDec: "Learn how the greatest startups across the globe are adopting the ‘Disciplined Entrepreneurship’ principles using iterate, value creation and the testing approach."
   ),
     new Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -173,6 +178,7 @@ List<Doodle> doodles = [
       "${2500}",
     ),
     color: Colors.grey[100],
+    modDec: "Discover how to use design thinking to build a product that your customers love from day zero. Know, test, validate your target customers and estimate your market size and problem potential."
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -207,6 +213,7 @@ List<Doodle> doodles = [
       "${3000}",
     ),
     color: Colors.grey[100],
+    modDec: "Build a strong Ethical foundation for your startup and master the art of balancing people, planet and profits in today’s world of business impact."
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -240,6 +247,7 @@ List<Doodle> doodles = [
       "${3500}",
     ),
     color: Colors.grey[100],
+    modDec: "Learn how to build a winning product in the most time and cost efficient manner. Adapt your product to the needs of the customers by building brochures and high-level specifications to iterate on.Identifying the right product-market fit and gain your first customers and that can sustain existing customers for a long period of time."
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -274,6 +282,7 @@ List<Doodle> doodles = [
       "${4000}",
     ),
     color: Colors.grey[100],
+    modDec: "Understand the 9 building blocks of the famous ‘Business Model Canvas’ and build your dream business model that is practical, feasible and scalable.Get in-depth insights into what forms a business model that can adapt and sustain across markets and growth cycles."
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -307,6 +316,7 @@ List<Doodle> doodles = [
       "${4500}",
     ),
     color: Colors.grey[100],
+    modDec: "Discover the various pricing strategies such as skimming, bundling, etc to suit your product and learn about how billion dollar startups like Netflix have been able to get their pricing right.Build a strong brand that can attract potential customers and find out the various ways in which you can market your product to the customer through an effective sales strategy."
   ),
   Doodle(
     colors: [Colors.grey[100], Colors.grey[100]],
@@ -340,6 +350,7 @@ List<Doodle> doodles = [
       "${5000}",
     ),
     color: Colors.grey[100],
+    modDec: "Get to know the various forms of companies present in India and which one suits best for you, understand the various legal compliances involved in starting up and how you can stay on top of them without getting disrupted.  Learn how you can manage intellectual property and benefit from registering with Startup India."
   ),
   Doodle(
     modName: "Branding and Marketing",
@@ -373,6 +384,7 @@ List<Doodle> doodles = [
       "${5500}",
     ),
     color: Colors.grey[100],
+    modDec: "Build a strong brand that can attract potential customers and find out the various ways in which you can market your product to the customer through an effective sales strategy."
   ),
   Doodle(
     modName: "Team",
@@ -406,6 +418,7 @@ List<Doodle> doodles = [
       "${6000}",
     ),
     color: Colors.grey[100],
+    modDec: "Understand the ways in which you can establish a complimentary relationship with your co-founder and take the all-important decision of splitting equity among the founders.  Learn how to build a strong team and how to establish the right culture that fuels and sustains your startup growth and identify ways in which you can find the right mentors and receive expert guidance for your startup.  Master the art of hiring your early employees that can make sure you have a complete team that can handle all the critical functions."
   ),
   Doodle(
     modName: "Technology",
@@ -438,7 +451,9 @@ List<Doodle> doodles = [
     color: Colors.grey[100],
     points: Text(
       "${6500}",
+      
     ),
+    modDec: "Get up to speed with the best of emerging technologies and learn how to leverage the best technology tools in building your product.Discover realistic insights into the ‘hyped-up’ technologies and their life cycles and how to start a technology based venture even if you have a non-technical background."
   ),
   Doodle(
     modName: "Funding and Financing",
@@ -472,6 +487,7 @@ List<Doodle> doodles = [
       "${7000}",
     ),
     color: Colors.grey[100],
+    modDec: "Maintaining the capital reserves is as important as building the product for a startup.  Discover the different forms of fundraising - Bootstrapping, Angel Investment, Venture Capital, Private Equity, Grants, Loans, Crowdfunding and more.  Learn the nitty gritty of fundraising - Elevator Pitch, Pitch Deck, Key Metrics, Startup Valuation, Term Sheets, Due Diligence etc."
   ),
   Doodle(
     modName: "Go to Market",
@@ -514,6 +530,7 @@ List<Doodle> doodles = [
       "${7500}",
     ),
     color: Colors.grey[100],
+    modDec: "Prepare a comprehensive strategy for your product launch, redefine your pitch deck and get ready to enter the market!"
   ),
   Doodle(
     colors: [Color.fromRGBO(222, 30, 89, 1), Color.fromRGBO(59, 40, 127, 1)],

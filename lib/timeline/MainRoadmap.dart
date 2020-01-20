@@ -606,13 +606,14 @@ class _TimelinePageState extends State<TimelinePage> {
                       modName: "Idea",
                       modNum: 2,
                       intro: [""],
-                      index: 0,
+                      index: -1,
                       headings: [""],
                       files: "",
                       order: 0,
                       buttons: [""],
                       textBox: [""],
                       suggestion: [""],
+                      tableView: [''],
                     ), //FolderBuilder(completedCourse: completedCourse)),
                   ),
                 );
@@ -837,24 +838,21 @@ class _TimelinePageState extends State<TimelinePage> {
       body: Stack(
         children: <Widget>[
           // PageView(children: p
-          Tooltip(
-            message: "Hello world",
-            child: Container(
-              color: Colors.white,
-              child: ChangeNotifierProvider<ModuleTraverse>(
-                create: (_) => moduleTraverse,
-                // ModuleTraverse(modnum: activity.modnum, order: 0),
-                child: Consumer<ModuleTraverse>(
-                  builder: (context, traverse, _) {
-                    print(
-                        "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
-                    return traverse.order < 1
-                        ? PageView(
-                            children: pages,
-                          )
-                        : traverse.nextPage();
-                  },
-                ),
+          Container(
+            color: Colors.white,
+            child: ChangeNotifierProvider<ModuleTraverse>(
+              create: (_) => moduleTraverse,
+              // ModuleTraverse(modnum: activity.modnum, order: 0),
+              child: Consumer<ModuleTraverse>(
+                builder: (context, traverse, _) {
+                  print(
+                      "activity.modnum is ********************************************************************************************************** ${traverse.modnum}");
+                  return traverse.order < 1
+                      ? PageView(
+                          children: pages,
+                        )
+                      : traverse.nextPage();
+                },
               ),
             ),
           ),
@@ -1084,6 +1082,7 @@ class _TimelinePageState extends State<TimelinePage> {
                         buttons: [""],
                         textBox: [''],
                         suggestion: [''],
+                        tableView: [''],
                       ), //FolderBuilder(completedCourse: completedCourse)),
                     ),
                   );
@@ -1107,6 +1106,7 @@ class _TimelinePageState extends State<TimelinePage> {
                         buttons: [""],
                         textBox: [''],
                         suggestion: [''],
+                        tableView: [''],
                       ), //FolderBuilder(completedCourse: completedCourse)),
                     ),
                   );
@@ -1198,57 +1198,62 @@ class _TimelinePageState extends State<TimelinePage> {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Container(
-                  color: Colors.grey[50],
-                  height: 210.0,
-                  width: 145.0,
-                  child: GradientCard(
-                    gradient: LinearGradient(colors: doodle.colors),
-                    //                    color: doodle.color,
-                    margin: EdgeInsets.all(0),
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.green,
-                        // width: 3,
-                        width: 2,
+                Tooltip(
+                  height: MediaQuery.of(context).size.height*0.2,
+                  message: "Hello world",
+                  preferBelow: false,
+                  child: Container(
+                    color: Colors.grey[50],
+                    height: 210.0,
+                    width: 145.0,
+                    child: GradientCard(
+                      gradient: LinearGradient(colors: doodle.colors),
+                      //                    color: doodle.color,
+                      margin: EdgeInsets.all(0),
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.green,
+                          // width: 3,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    // shape:Border.all(width: 3,
-                    // color: Colors.green),
-                    // margin: EdgeInsets.symmetric(vertical: 16.0),
-                    clipBehavior: Clip.antiAlias,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          // Image.network(doodle.doodle),
-                          Image.asset(
-                            doodle.doodle,
-                            height: MediaQuery.of(context).size.height * 0.09,
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          doodle.name,
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              doodle.pointsIcon,
-                              Text(" "),
-                              doodle.points,
-                            ],
-                          ),
-                        ],
+                      // shape:Border.all(width: 3,
+                      // color: Colors.green),
+                      // margin: EdgeInsets.symmetric(vertical: 16.0),
+                      clipBehavior: Clip.antiAlias,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            // Image.network(doodle.doodle),
+                            Image.asset(
+                              doodle.doodle,
+                              height: MediaQuery.of(context).size.height * 0.09,
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            doodle.name,
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                doodle.pointsIcon,
+                                Text(" "),
+                                doodle.points,
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    //                )
                   ),
-                  //                )
                 ),
                 Container(
                   // color: Colors.grey[50],

@@ -98,7 +98,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
 
   List<Widget> wList(String index) {
     List<Widget> listWidget = new List<Widget>();
-    for (dynamic i in dataSnapshot["$index"]) {
+    for (dynamic i in dataSnapshot.data()["$index"]) {
       print("val i $i");
       listWidget.add(ListTile(
         leading: Icon(Icons.done),
@@ -110,6 +110,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
   }
 
   List<Widget> wExList() {
+    print("from wExList");
     List<Widget> listWidget = new List<Widget>();
     for (int index = 0; index < list.length; index++) {
       listWidget.add(ExpansionTile(
@@ -142,33 +143,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
         color: Colors.green,
         onPressed: () {
           List<dynamic> arguments = [widget.modNum, widget.index + 1];
-        
        traverse.navigate();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          // orderManagement.moveNextIndex(context, arguments);
         },
         child: Icon(
           Icons.navigate_next,
@@ -253,7 +228,7 @@ class _ModulePageIntroState extends State<ModulePageIntro> {
                         default:
                           snapshot.data.docs.forEach((document) {
                             dataSnapshot = document;
-                            print(document.data()["overview"]);
+                            print("Data from snapshot ${document.data()["overview"]}");
                             list.clear();
                             for (dynamic i in document.data()["overview"]) {
                               list.add(i);
