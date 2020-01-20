@@ -123,17 +123,7 @@ class _ActivityControllerState extends State<ActivityController> {
                                           if (snapshot.hasData) {
                                             activity
                                                 .updateIntros(snapshot.data);
-                                            return ListActivities(
-                                              modName: activity.modName,
-                                              modNum: activity.modnum,
-                                              intro: activity.intro,
-                                              headings: activity.headings,
-                                              index: activity.order,
-                                              files: activity.files,
-                                              buttons: activity.buttons,
-                                              btnLength: widget.buttons.length,
-                                              order: activity.moduleOrderNo,
-                                            );
+                                            return activity.activityWidget();
                                           } else {
                                             return Center(
                                               child: Container(
@@ -316,7 +306,7 @@ class _ActivityControllerState extends State<ActivityController> {
 
 class ActivityChangeNotifier with ChangeNotifier {
   int modnum, order, noOfActivity, moduleOrderNo;
-  String modName, files;
+  String modName, files,special;
 
   ActivityChangeNotifier({
     this.modnum,
@@ -412,5 +402,19 @@ class ActivityChangeNotifier with ChangeNotifier {
   @override
   String toString() {
     return "modunenum $modnum modname $modName  modorderNo $moduleOrderNo order $order";
+  }
+
+  Widget activityWidget() { 
+    return ListActivities(
+      modName: this.modName,
+      modNum: this.modnum,
+      intro: this.intro,
+      headings: this.headings,
+      index: this.order,
+      files: this.files,
+      buttons: this.buttons,
+      btnLength: this.buttons.length,
+      order: this.moduleOrderNo,
+    );
   }
 }
