@@ -32,10 +32,12 @@ class ListActivities extends StatefulWidget {
     this.order,
     this.btnLength,
     this.buttons,
+    this.suggestion,
+    this.textBox,
   }) : super(key: key);
-  int modNum, index, order,btnLength;
+  int modNum, index, order, btnLength;
   String modName, files;
-  List intro, headings, buttons;
+  List intro, headings, buttons,suggestion,textBox;
   @override
   _ListActivitiesState createState() => _ListActivitiesState();
 }
@@ -184,9 +186,7 @@ class _ListActivitiesState extends State<ListActivities>
                 children: [
                   Swiper.children(
                     loop: false,
-                    control: SwiperControl(
-                      color: Colors.white
-                    ),
+                    control: SwiperControl(color: Colors.white),
                     children: List<Widget>.generate(
                       widget.intro.length,
                       (int index) {
@@ -197,6 +197,8 @@ class _ListActivitiesState extends State<ListActivities>
                           files: widget.files,
                           index: index,
                           btnLength: widget.btnLength,
+                          textBox:widget.textBox,
+                          suggestion:widget.suggestion
                         );
                       },
                     ),

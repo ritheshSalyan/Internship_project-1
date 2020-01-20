@@ -28,10 +28,12 @@ class ActivityController extends StatefulWidget {
     this.files,
     this.order,
     this.buttons,
+    this.textBox,
+    this.suggestion,
   }) : super(key: key);
   int modNum, index, order;
   String modName, files;
-  List intro, headings, buttons;
+  List intro, headings, buttons,textBox,suggestion;
   @override
   _ActivityControllerState createState() => _ActivityControllerState();
 }
@@ -69,6 +71,8 @@ class _ActivityControllerState extends State<ActivityController> {
               modName: widget.modName,
               files: widget.files,
               buttons: widget.buttons,
+              textBox:widget.textBox,
+              suggestion:widget.suggestion,
               moduleOrderNo: widget.order,
             ),
             child: Row(
@@ -125,6 +129,7 @@ class _ActivityControllerState extends State<ActivityController> {
                                             activity
                                                 .updateIntros(snapshot.data);
                                             return activity.activityWidget();
+
                                           } else {
                                             return Center(
                                               child: Container(
@@ -318,12 +323,14 @@ class ActivityChangeNotifier with ChangeNotifier {
     this.files,
     this.buttons,
     this.moduleOrderNo,
+    this.textBox,
+    this.suggestion,
   });
 
   List intro = [];
   List headings = [];
   List buttons = [];
-  
+
 
   void changeModule() {
     int modindex = moduleOrder.indexOf(modnum);
@@ -384,6 +391,8 @@ class ActivityChangeNotifier with ChangeNotifier {
     headings.clear();
     intro.clear();
     buttons.clear();
+    textBox.clear();
+    suggestion.clear();
 
     print("snapshot.docs.length ${snapshot.docs[order].data()}");
     print("Entering Page");
@@ -400,6 +409,12 @@ class ActivityChangeNotifier with ChangeNotifier {
 
     snapshot.docs[order].data()['buttons'].forEach((value) {
       buttons.add(value);
+    });
+    snapshot.docs[order].data()['textBox'].forEach((value) {
+      textBox.add(value);
+    });
+    snapshot.docs[order].data()['suggestion'].forEach((value) {
+      suggestion.add(value);
     });
 
     files = snapshot.docs[order].data()['file'];
