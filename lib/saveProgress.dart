@@ -35,96 +35,96 @@ class SaveProgress {
     for (var item in list) {
       switch (item) {
         case "Type.quote":
-          print("quote");
+          // print("quote");
           typeList.add(Type.quote);
           break;
         case "Type.imagePage":
-          print("imagePage");
+          // print("imagePage");
           typeList.add(Type.imagePage);
           break;
         case "Type.vocabulary":
-          print("vocabulary");
+          // print("vocabulary");
           typeList.add(Type.vocabulary);
           break;
 
         case "Type.quiz":
-          print("quiz");
+          // print("quiz");
           typeList.add(Type.quiz);
           break;
 
         case "Type.activity":
-          print("activity");
+          // print("activity");
           typeList.add(Type.activity);
           break;
 
         case "Type.decisionGame":
-          print("decisionGame");
+          // print("decisionGame");
           typeList.add(Type.decisionGame);
           break;
 
         case "Type.uploadActivity":
-          print("decisionGame");
+          // print("decisionGame");
           typeList.add(Type.uploadActivity);
           break;
 
         case "Type.socialize":
-          print("socialize");
+          // print("socialize");
           typeList.add(Type.socialize);
           break;
 
         case "Type.caseStudy":
-          print("caseStudy");
+          // print("caseStudy");
           typeList.add(Type.caseStudy);
           break;
 
         case "Type.video":
-          print("video");
+          // print("video");
           typeList.add(Type.video);
           break;
 
         case "Type.overView":
-          print("overView");
+          // print("overView");
           typeList.add(Type.overView);
           break;
 
         case "Type.theory":
-          print("theory");
+          // print("theory");
           typeList.add(Type.theory);
           break;
         case "Type.hustelTip":
-          print("theory");
+          // print("theory");
           typeList.add(Type.hustelTip);
           break;
         case "Type.summary":
           typeList.add(Type.summary);
-          print("summary");
+          // print("summary");
           break;
 
         case "Type.decisionGameText":
           typeList.add(Type.decisionGameText);
-          print("decisionGameText");
+          // print("decisionGameText");
           break;
 
         case "Type.discussion":
           typeList.add(Type.discussion);
-          print("discussion");
+          // print("discussion");
           break;
         case "Type.heading":
-          print("heading");
+          // print("heading");
           typeList.add(Type.heading);
           break;
          case "Type.download":
-          print("heading");
+          // print("heading");
           typeList.add(Type.download);
           break;
         case "Type.flip":
-          print("flip");
+          // print("flip");
           typeList.add(Type.flip);
           break;
 
           
           case "Type.ideaActivity":
-          print("Type.ideaActivity");
+          // print("Type.ideaActivity");
           typeList.add(Type.ideaActivity);
           break;
         default:
@@ -149,7 +149,7 @@ class SaveProgress {
       // print("orderManagement.order " + orderManagement.order.toString());
       Module.moduleLength = orderManagement.order.length;
       ModuleTraverse.modOrder = convert(document.data()["order"]);
-      print("ModuleTraverse.modOrder " + ModuleTraverse.modOrder.toString());
+      print("ModuleTraverse.modOrder " + ModuleTraverse.modOrder.length.toString());
       
       //  }
     });
