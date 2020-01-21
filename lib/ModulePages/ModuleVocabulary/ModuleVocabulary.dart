@@ -277,6 +277,13 @@ class _ModuleVocabularyState extends State<ModuleVocabulary> {
     traverse =  Provider.of<ModuleTraverse>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.navigate_before),
+          onPressed: (){
+              traverse.navigateBack();
+          },
+        ),
         // backgroundColor: Colors.white,
         elevation: 0,
         actions: <Widget>[

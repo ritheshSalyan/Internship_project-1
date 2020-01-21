@@ -35,7 +35,7 @@ class Doodle {
   });
 }
 
- List<int> moduleOrder = [1,2,13,14,3,4,5,6,7,8,9,10,11,12];
+ List<int> moduleOrder = [1,2,13,14,3,4,5,6,7,8,9,10,11,12,15];
 
 List<Doodle> doodles = [
   new Doodle(
@@ -546,7 +546,7 @@ List<Doodle> doodles = [
       textAlign: TextAlign.center,
     ),
     //Business plan andm
-    modNum: -1,
+    modNum: 15,
     time: "Module 13",
     doodle: "assets/Images/hustel.png",
     // "https://lh3.googleusercontent.com/9tn671PjT5omvyhJ6xEIiTkkw4ck0vaTeHpyOtwCOE-SEumZbBdKLVFm2sKFRJ6Gkq_uPtYP2Fbss7yxkXgH6IJQruo4c4JT9iILFJZP8A=s660",

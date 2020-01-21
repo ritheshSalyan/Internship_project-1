@@ -1092,7 +1092,7 @@ class _TimelinePageState extends State<TimelinePage> {
                   //         ModuleOverviewLoading(modNum: doodle.modNum),
                   //   ),
                   // );
-                } else if (doodle.modNum != 12) {
+                } else if (doodle.modNum != 12 && doodle.modNum!=15) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => ActivityController(

@@ -49,17 +49,18 @@ class _DecisionGameState extends State<DecisionGame>
     var data = Map<String, dynamic>();
     data['answer'] = options[_answerIs];
     data['attempts'] = attempts;
-   db
+    db
         .collection("decisionGame")
         .doc(documentId)
         .collection("answers")
         .doc(userId)
         .set(data);
   }
-ModuleTraverse traverse;
+
+  ModuleTraverse traverse;
   @override
   Widget build(BuildContext context) {
-    traverse =  Provider.of<ModuleTraverse>(context);
+    traverse = Provider.of<ModuleTraverse>(context);
     String question = "";
     return OfflineBuilder(
       child: NoNetPage(),
@@ -87,6 +88,16 @@ ModuleTraverse traverse;
                 ),
               ),
               appBar: AppBar(
+                automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              traverse.navigateBack();
+            },
+          ),
                 elevation: 0,
                 actions: <Widget>[
                   GestureDetector(
@@ -163,10 +174,8 @@ ModuleTraverse traverse;
                                     child: StreamBuilder<fs.QuerySnapshot>(
                                       stream: db
                                           .collection("decisionGame")
-                                          .where("module",
-                                              "==", widget.modNum)
-                                          .where("order",
-                                              "==", widget.order)
+                                          .where("module", "==", widget.modNum)
+                                          .where("order", "==", widget.order)
                                           .onSnapshot,
                                       builder: (context,
                                           AsyncSnapshot<fs.QuerySnapshot>
@@ -181,7 +190,8 @@ ModuleTraverse traverse;
                                           default:
                                             snapshot.data.docs
                                                 .forEach((document) {
-                                              question = document.data()["question"];
+                                              question =
+                                                  document.data()["question"];
                                               documentId = document.id;
                                             });
                                             return Text(
@@ -202,10 +212,8 @@ ModuleTraverse traverse;
                                     StreamBuilder<fs.QuerySnapshot>(
                                       stream: db
                                           .collection("decisionGame")
-                                          .where("module",
-                                              "==", widget.modNum)
-                                          .where("order",
-                                              "==", widget.order)
+                                          .where("module", "==", widget.modNum)
+                                          .where("order", "==", widget.order)
                                           .onSnapshot,
                                       builder: (context,
                                           AsyncSnapshot<fs.QuerySnapshot>
@@ -227,13 +235,15 @@ ModuleTraverse traverse;
 
                                             snapshot.data.docs
                                                 .forEach((document) {
-                                              document.data()["answer"].toString();
-                                              for (dynamic i
-                                                  in document.data()["options"]) {
+                                              document
+                                                  .data()["answer"]
+                                                  .toString();
+                                              for (dynamic i in document
+                                                  .data()["options"]) {
                                                 options.add(i);
                                               }
-                                              for (dynamic y
-                                                  in document.data()["answer"]) {
+                                              for (dynamic y in document
+                                                  .data()["answer"]) {
                                                 answers.add(y);
                                               }
                                             });

@@ -2,13 +2,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:firebase/firestore.dart' as fs ;
+import 'package:firebase/firestore.dart' as fs;
 // import 'package:flip_card/flip_card.dart';
 // import 'package:folding_cell/folding_cell.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/NoInternetPage/NoNetPage.dart';
+import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 
 class ItemList {
   List<String> list = [];
@@ -20,13 +22,12 @@ class Vocabulary extends StatefulWidget {
 }
 
 class _VocabularyState extends State<Vocabulary> {
-  fs.Firestore db =fb.firestore();
+  fs.Firestore db = fb.firestore();
   List<String> listGiven = [];
   List<String> listMeaning = [];
   // final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   void initState() {
-
     super.initState();
     // dataRetrieve();
     // Analytics.analyticsBehaviour("At_Main_Vocabulary_Page", "GeneralVocabulary");
@@ -131,8 +132,16 @@ class _VocabularyState extends State<Vocabulary> {
 
   @override
   Widget build(BuildContext context) {
+    ModuleTraverse traverse = Provider.of<ModuleTraverse>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.navigate_before),
+          onPressed: () {
+            traverse.navigateBack();
+          },
+        ),
         title: Text(
           "Startup Dictionary",
           style: TextStyle(
@@ -150,9 +159,9 @@ class _VocabularyState extends State<Vocabulary> {
               child: Column(
                 children: <Widget>[
                   StreamBuilder(
-                    stream:
-                        db.collection("vocabulary").onSnapshot,
-                    builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
+                    stream: db.collection("vocabulary").onSnapshot,
+                    builder:
+                        (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                       // return Text("value ${snapshot.data.documents[0].data["word"].length}");
                       // print("vocabulary ${snapshot.data}");
                       if (snapshot.hasError) {
@@ -165,9 +174,7 @@ class _VocabularyState extends State<Vocabulary> {
                           break;
                         default:
                           listGiven.clear();
-                          for (int i = 0;
-                              i < snapshot.data.docs.length;
-                              i++) {
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
                             for (String k
                                 in snapshot.data.docs[i].data()["word"]) {
                               print(k);
@@ -175,9 +182,7 @@ class _VocabularyState extends State<Vocabulary> {
                             }
                           }
 
-                          for (int i = 0;
-                              i < snapshot.data.docs.length;
-                              i++) {
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
                             for (String k
                                 in snapshot.data.docs[i].data()["meaning"]) {
                               listMeaning.add(k);

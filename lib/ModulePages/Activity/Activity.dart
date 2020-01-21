@@ -110,10 +110,11 @@ class _ActivityPageState extends State<ActivityPage> {
     ));
     return itemInside;
   }
- ModuleTraverse traverse ;
+
+  ModuleTraverse traverse;
   @override
   Widget build(BuildContext context) {
-         traverse =  Provider.of<ModuleTraverse>(context);
+    traverse = Provider.of<ModuleTraverse>(context);
     return OfflineBuilder(
       connectivityBuilder:
           (context, ConnectivityResult connectivity, Widget child) {
@@ -137,6 +138,16 @@ class _ActivityPageState extends State<ActivityPage> {
               ),
             ),
             appBar: AppBar(
+              automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              traverse.navigateBack();
+            },
+          ),
               elevation: 0,
               actions: <Widget>[
                 GestureDetector(

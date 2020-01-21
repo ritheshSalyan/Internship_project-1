@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:provider/provider.dart';
@@ -292,6 +293,22 @@ class _ActivityControllerState extends State<ActivityController>
         children: <Widget>[
           Padding(
             padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: AutoSizeText(
+                "What will you learn in this Module",
+                style: TextStyle(
+                  color: Colors.green,
+                ),
+                textAlign: TextAlign.center,
+                minFontSize: 18,
+                maxFontSize: 24,
+              ),
+            ),
+          ),
+          Padding(
+            padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
             child: Align(
               alignment: Alignment.topCenter,
@@ -299,7 +316,7 @@ class _ActivityControllerState extends State<ActivityController>
                 color: Colors.grey[50],
                 // width: MediaQuery.of(context).size.width*0.5,
                 // height: MediaQuery.of(context).size.height*0.5,
-                height: 210.0,
+                height: 220.0,
                 width: 145.0,
                 child: GradientCard(
                   gradient: LinearGradient(colors: doodle.colors),
@@ -343,6 +360,25 @@ class _ActivityControllerState extends State<ActivityController>
                             doodle.points,
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            color: Colors.green,
+                            textColor: Colors.black,
+                            // hoverColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              side: BorderSide(
+                                color: Colors.green,
+                                width: 2,
+                              )
+                            ),
+                            onPressed: (){
+                              Provider.of<ModuleTraverse>(context, listen: false).navigate();
+                            },
+                            child: Text("Start"),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -353,22 +389,32 @@ class _ActivityControllerState extends State<ActivityController>
           ),
           Padding(
             padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.4),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.55,left: MediaQuery.of(context).size.height * 0.01,right: MediaQuery.of(context).size.height * 0.01,bottom: MediaQuery.of(context).size.height*0.01),
             child: Align(
               alignment: Alignment.center,
-              child: Card(
-                // elevation: 5.0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.2,
+              child: Container(
+                color: Colors.grey[50],
+                // width: MediaQuery.of(context).size.width * 0.5,
+                // height: MediaQuery.of(context).size.height * 0.5,
+                child: GradientCard(
+                  margin: EdgeInsets.all(0),
+                  gradient: LinearGradient(colors: doodle.colors),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      )),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
+                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04,left: 10,right: 10,bottom: 20),
+                    child: AutoSizeText(
                       "${doodle.modDec}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        letterSpacing: 0.5,
+                        fontWeight: FontWeight.w400,
                       ),
+                      minFontSize: 16,
                     ),
                   ),
                 ),
@@ -415,11 +461,11 @@ void showDialogHolder(BuildContext context) {
                     ),
                   ),
                   Text(
-                    "This is your Activity Screen which will involve you undertaking a series of exciting and practical activities. You can have a look at the module theory and explanation on the right side of this platform.  You will learn in-depth strategies, exciting case studies, tips and tricks about each module as you look through the theory.  Go ahead! continue your Startupreneur Journey!"
-                        .replaceAll(
-                      ".  ",
-                      "\n",
-                    ),
+                    "This is your Activity Screen which will involve you undertaking a series of exciting and practical activities. You can have a look at the module theory and explanation on the right side of this platform.\n\nYou will learn in-depth strategies, exciting case studies, tips and tricks about each module as you look through the theory.\n\nGo ahead! continue your Startupreneur Journey!",
+                    //     .replaceAll(
+                    //   ".  ",
+                    //   "\n",
+
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,

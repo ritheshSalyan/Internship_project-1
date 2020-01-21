@@ -52,6 +52,12 @@ class ModuleTraverse with ChangeNotifier {
     notifyListeners();
   }
 
+  void navigateBack() {
+    order--;
+    print("navigate $order $modnum");
+    notifyListeners();
+  }
+
   Widget nextPage() {
     // order++;
     print("nextPage $order $modnum");

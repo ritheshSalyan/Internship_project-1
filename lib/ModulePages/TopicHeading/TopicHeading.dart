@@ -81,6 +81,16 @@ class _TopicHeadingPageState extends State<TopicHeadingPage>
             ),
           ),
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              traverse.navigateBack();
+            },
+          ),
             backgroundColor: Colors.white,
             elevation: 0,
             actions: <Widget>[

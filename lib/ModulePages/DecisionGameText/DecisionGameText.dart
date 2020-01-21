@@ -33,7 +33,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
   int item = 0;
   String documentId;
   fs.Firestore db = fb.firestore();
-  
+
   final _formkey = GlobalKey<FormState>();
 
   ModuleTraverse traverse;
@@ -53,7 +53,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     var uploadData = Map<String, dynamic>();
     uploadData['answer'] = data;
     // data['attempts'] = attempts;
-  db
+    db
         .collection("decisionGameText")
         .doc(widget.id)
         .collection("answers")
@@ -67,7 +67,6 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
     }
     return false;
   }
-
 
   List<Widget> formList(BuildContext context) {
     List<Widget> itemInside = [];
@@ -198,7 +197,7 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
 
   @override
   Widget build(BuildContext context) {
-    traverse =  Provider.of<ModuleTraverse>(context);
+    traverse = Provider.of<ModuleTraverse>(context);
     return CustomeOffline(
       onConnetivity: Scaffold(
         bottomNavigationBar: Padding(
@@ -218,6 +217,16 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
           ),
         ),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              traverse.navigateBack();
+            },
+          ),
           elevation: 0,
           actions: <Widget>[
             GestureDetector(

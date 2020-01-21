@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:intro_views_flutter/UI/pager_indicator.dart';
 import 'liquid_swipe/liquid_swipe.dart';
 import 'package:provider/provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
@@ -20,11 +22,6 @@ class IntroScreen_Liquid extends StatefulWidget {
 class IntroScreenState extends State<IntroScreen_Liquid> {
   List<Container> pages = [];
 
-  @override
-  void initState() {
-    create_slides();
-    // Analytics.analyticsBehaviour("Case_Study_Page", "Case_Study");
-  }
 
   void create_slides() {
     List<String> list = widget.dialogue;
@@ -157,6 +154,17 @@ class IntroScreenState extends State<IntroScreen_Liquid> {
     }
   }
 ModuleTraverse traverse;
+SwiperController controller;
+
+  @override
+  void initState() {
+    create_slides();
+    controller = SwiperController();
+    super.initState();
+    // Analytics.analyticsBehaviour("Case_Study_Page", "Case_Study");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     traverse =  Provider.of<ModuleTraverse>(context);
@@ -164,12 +172,27 @@ ModuleTraverse traverse;
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
+
+        body: Swiper(
+          controller: controller,
+          itemCount: pages.length,
+          itemBuilder: (context,index){
+            // print(controller.config.activeIndex);
+            return pages[index];
+          },
+          control: SwiperControl(),
+          loop: false,
+          layout: SwiperLayout.DEFAULT,
+          // onIndexChanged: (i){
+          //   print(i);
+          // },
+        ),
          
-        body:LiquidSwipe(
-                pages: pages,
-                fullTransitionValue: 350,
-                enableSlideIcon: true,
-              ),
+        // body:LiquidSwipe(
+        //         pages: pages,
+        //         fullTransitionValue: 350,
+        //         enableSlideIcon: true,
+        //       ),
       ),
     );
   }

@@ -129,6 +129,16 @@ class _VideoPlayState extends State<VideoPlay> {
         ),
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              traverse.navigateBack();
+            },
+          ),
         elevation: 0,
         actions: <Widget>[
           GestureDetector(
