@@ -88,21 +88,21 @@ class _TimelinePageState extends State<TimelinePage> {
 
   Widget lockUnlock(int i, List<int> id) {
     final doodle = doodles[i];
-    for (var k = 0; k < id.length; k++) {
-      if (doodle.time == "Module ${id[k]}") {
+    // for (var k = 0; k < id.length; k++) {
+    //   if (doodle.time == "Module ${id[k]}") {
         return Icon(
           Icons.lock_open,
           size: 0.0,
         );
-      }
-    }
-    return Padding(
-      padding: EdgeInsets.only(top: 120),
-      child: Icon(
-        Icons.lock,
-        size: 20,
-      ),
-    );
+    //   }
+    // }
+    // return Padding(
+    //   padding: EdgeInsets.only(top: 120),
+    //   child: Icon(
+    //     Icons.lock,
+    //     size: 20,
+    //   ),
+    // );
   }
 
   void _sharedpreference(BuildContext context) async {
