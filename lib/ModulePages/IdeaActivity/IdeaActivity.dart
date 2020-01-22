@@ -10,6 +10,7 @@ import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 
 class IdeaActivity extends StatefulWidget {
   IdeaActivity({Key key, this.modNum, this.index}) : super(key: key);
@@ -145,11 +146,15 @@ class _IdeaActivityState extends State<IdeaActivity> {
                                 ),
                                 onPressed: () {
                                   // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                  SaveProgress.preferences(
-                                      widget.modNum, widget.index);
+                                  // SaveProgress.preferences(
+                                  //     widget.modNum, widget.index);
 
-                                  Navigator.of(context).popUntil(
-                                      ModalRoute.withName("TimelinePage"));
+                                  // Navigator.of(context).popUntil(
+                                  //     ModalRoute.withName("TimelinePage"));
+                                   Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                                 },
                               ),
                               FlatButton(

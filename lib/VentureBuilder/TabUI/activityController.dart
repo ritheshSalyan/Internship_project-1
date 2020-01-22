@@ -456,7 +456,7 @@ void showDialogHolder(BuildContext context) {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      "Activity Description",
+                      "Welcome to Venture Builder",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),

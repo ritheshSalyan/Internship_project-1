@@ -10,6 +10,7 @@ import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/saveProgress.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:video_player/video_player.dart';
 import '../../ModuleOrderController/Types.dart';
 
@@ -130,15 +131,15 @@ class _VideoPlayState extends State<VideoPlay> {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(
-              Icons.navigate_before,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              traverse.navigateBack();
-            },
+        leading: IconButton(
+          icon: Icon(
+            Icons.navigate_before,
+            color: Colors.black,
           ),
+          onPressed: () {
+            traverse.navigateBack();
+          },
+        ),
         elevation: 0,
         actions: <Widget>[
           GestureDetector(
@@ -160,12 +161,16 @@ class _VideoPlayState extends State<VideoPlay> {
                             style: TextStyle(color: Colors.red),
                           ),
                           onPressed: () {
+                            // return TimelinePage();
                             // SaveProgress.preferences(
                             //     widget.modNum, widget.index);
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                            // Navigator.of(context).popUntil(
-                            //     ModalRoute.withName("TimelinePage"));
-                            Provider.of<ModuleTraverse>(context).navigate();
+                            // Navigator.of(context).pop(
+                            // );
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                           },
                         ),
                         FlatButton(

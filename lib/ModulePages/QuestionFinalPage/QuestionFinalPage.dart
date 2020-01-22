@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:startupreneur/ModulePages/VideoController/VideoController.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 
 class QuestionFinalPage extends StatefulWidget {
   @override
@@ -70,8 +71,12 @@ class _QuestionFinalPageState extends State<QuestionFinalPage> {
                             ),
                             onPressed: () {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              Navigator.of(context)
-                                  .popUntil(ModalRoute.withName("TimelinePage"));
+                              // Navigator.of(context)
+                              //     .popUntil(ModalRoute.withName("TimelinePage"));
+                               Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                             },
                           ),
                           FlatButton(

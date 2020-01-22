@@ -5,6 +5,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/ModulePages/DownloadFileActivity/upload.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/globalKeys.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:startupreneur/timeline/data.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -169,11 +170,15 @@ class _DownloadFileActivityState extends State<DownloadFileActivity> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
-                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.preferences(
-                                  widget.modNum, widget.order);
-                              Navigator.of(context).popUntil(
-                                  ModalRoute.withName("TimelinePage"));
+                              // // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                              // SaveProgress.preferences(
+                              //     widget.modNum, widget.order);
+                              // Navigator.of(context).popUntil(
+                              //     ModalRoute.withName("TimelinePage"));
+                               Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                             },
                           ),
                           FlatButton(

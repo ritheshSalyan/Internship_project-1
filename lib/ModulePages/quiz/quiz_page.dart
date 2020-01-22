@@ -9,6 +9,7 @@ import 'package:firebase/firestore.dart' as fs;
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import '../../ModuleOrderController/Types.dart';
 
 class QuizPage extends StatefulWidget {
@@ -130,8 +131,12 @@ class _QuizPageState extends State<QuizPage> {
                               ),
                               onPressed: () {
                                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                Navigator.of(context).popUntil(
-                                    ModalRoute.withName("TimelinePage"));
+                                // Navigator.of(context).popUntil(
+                                //     ModalRoute.withName("TimelinePage"));
+                                 Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                               },
                             ),
                             FlatButton(

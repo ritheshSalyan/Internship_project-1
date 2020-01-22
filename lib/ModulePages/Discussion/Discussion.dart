@@ -7,6 +7,7 @@ import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'ImageViewer.dart';
 import '../../ModuleOrderController/Types.dart';
 // import 'package:extended_image/extended_image.dart';
@@ -302,10 +303,14 @@ class _DiscussionPageState extends State<DiscussionPage> {
                             style: TextStyle(color: Colors.red),
                           ),
                           onPressed: () {
-                            SaveProgress.preferences(
-                                widget.modNum, widget.index);
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName("TimelinePage"));
+                            // SaveProgress.preferences(
+                            //     widget.modNum, widget.index);
+                            // Navigator.of(context)
+                            //     .popUntil(ModalRoute.withName("TimelinePage"));
+                             Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                           },
                         ),
                         FlatButton(

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import '../../ModuleOrderController/Types.dart';
 import '../../saveProgress.dart';
 
@@ -249,10 +250,14 @@ class _DecisionGameTextPageState extends State<DecisionGameTextPage> {
                             ),
                             onPressed: () {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.preferences(
-                                  widget.modNum, widget.index);
-                              Navigator.of(context).popUntil(
-                                  ModalRoute.withName("TimelinePage"));
+                              // SaveProgress.preferences(
+                              //     widget.modNum, widget.index);
+                              // Navigator.of(context).popUntil(
+                              //     ModalRoute.withName("TimelinePage"));
+                               Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                             },
                           ),
                           FlatButton(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 import 'package:startupreneur/ModulePages/UserDetail.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'Page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -99,8 +100,12 @@ class FileUploadState extends State<FileUpload> {
                       SaveProgress.preferences(widget.modNum, widget.index);
 
                       // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                      Navigator.of(context)
-                          .popUntil(ModalRoute.withName("TimelinePage"));
+                      // Navigator.of(context)
+                      //     .popUntil(ModalRoute.withName("TimelinePage"));
+                       Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                     },
                   ),
                   FlatButton(

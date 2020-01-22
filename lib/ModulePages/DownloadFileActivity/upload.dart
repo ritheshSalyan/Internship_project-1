@@ -12,6 +12,7 @@ import 'package:startupreneur/ModulePages/UserDetail.dart';
 import 'package:startupreneur/OfflineBuilderWidget.dart';
 import 'package:startupreneur/progress_dialog/progress_dialog.dart';
 import 'package:startupreneur/saveProgress.dart';
+import 'package:startupreneur/timeline/MainRoadmap.dart';
 import 'package:toast/toast.dart';
 import 'package:path/path.dart' as p;
 
@@ -62,10 +63,14 @@ class _UploadState extends State<Upload> {
                             ),
                             onPressed: () {
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                              SaveProgress.preferences(
-                                  widget.modNum, widget.index);
-                              Navigator.of(context).popUntil(
-                                  ModalRoute.withName("TimelinePage"));
+                              // SaveProgress.preferences(
+                              //     widget.modNum, widget.index);
+                              // Navigator.of(context).popUntil(
+                              //     ModalRoute.withName("TimelinePage"));
+                               Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => TimelinePage()),
+                            );
                             },
                           ),
                           FlatButton(
