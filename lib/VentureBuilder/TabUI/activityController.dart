@@ -373,8 +373,89 @@ class _ActivityControllerState extends State<ActivityController>
                                 width: 2,
                               )
                             ),
-                            onPressed: (){
-                              Provider.of<ModuleTraverse>(context, listen: false).navigate();
+                            onPressed: () async {
+                               int progressNum = await SaveProgress.getProgerss(doodle.modNum);
+                               if(progressNum==0){
+                                  Provider.of<ModuleTraverse>(context, listen: false).navigate();
+
+                               }
+                               else{
+                                 showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text("Do you want to resume this Module?"),
+                        title: Text(
+                          "Continue",
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                              // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                  Provider.of<ModuleTraverse>(context, listen: false).order = progressNum;
+                  Provider.of<ModuleTraverse>(context, listen: false).navigate();
+
+                  //            Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ActivityController(
+                  //       modName: doodle.modName,
+                  //       modNum: doodle.modNum,
+                  //       intro: [""],
+                  //       index: 0,
+                  //       headings: [""],
+                  //       files: "",
+                  //       order: 0,
+                  //       buttons: [""],
+                  //       textBox: [''],
+                  //       suggestion: [''],
+                  //       tableView: [''],
+                  //     ), //FolderBuilder(completedCourse: completedCourse)),
+                  //   ),
+                  // );
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "No",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                  Provider.of<ModuleTraverse>(context, listen: false).navigate();
+
+                              // if (doodle.modNum == 11 || doodle.modNum == 14) {
+                              //   Navigator.of(context).push(
+                              //     MaterialPageRoute(
+                              //       builder: (context) => ModuleOverviewLoading(
+                              //           modNum: doodle.modNum),
+                              //     ),
+                              //   );
+                              // } else if (doodle.modNum != 12) {
+                              //   Navigator.of(context).push(
+                              //     MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           QuoteLoading(modNum: doodle.modNum),
+                              //     ),
+                              //   );
+                              // } else {
+                              //   Navigator.of(context).push(
+                              //     MaterialPageRoute(
+                              //       builder: (context) => (HustleStoreLoader()),
+                              //     ),
+                              //   );
+                              // }
+                            },
+                          ),
+                        ],
+                      );
+                    });
+                               }
+                              // Provider.of<ModuleTraverse>(context, listen: false).order = progressNum;
                             },
                             child: Text("Start"),
                           ),

@@ -26,9 +26,9 @@ class ModuleTraverse with ChangeNotifier {
   static List<Type> modOrder = [];
 
   ModuleTraverse({this.modnum = 2, int order = 0}) {
-    SaveProgress.getProgerss(modnum).then((onValue){
-        this.order = onValue;
-    });
+    // SaveProgress.getProgerss(modnum).then((onValue){
+    //     this.order = onValue;
+    // });
     print(
         "ModuleTraverse modnum is  =============================================================================================================================== $modnum");
     SaveProgress.getEventsFromFirestore(modnum);
