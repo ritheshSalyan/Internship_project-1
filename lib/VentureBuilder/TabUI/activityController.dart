@@ -308,10 +308,51 @@ class _ActivityControllerState extends State<ActivityController>
             ),
           ),
           Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.25,
+                left: MediaQuery.of(context).size.height * 0.01,
+                right: MediaQuery.of(context).size.height * 0.01,
+                bottom: MediaQuery.of(context).size.height * 0.005),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                color: Colors.grey[50],
+                // width: MediaQuery.of(context).size.width * 0.5,
+                // height: MediaQuery.of(context).size.height * 0.5,
+                child: GradientCard(
+                  margin: EdgeInsets.all(0),
+                  gradient: LinearGradient(colors: doodle.colors),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      )),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.02,
+                        left: 10,
+                        right: 10,
+                        bottom: 20),
+                    child: AutoSizeText(
+                      "${doodle.modDec}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      minFontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
             child: Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: Container(
                 color: Colors.grey[50],
                 // width: MediaQuery.of(context).size.width*0.5,
@@ -367,14 +408,15 @@ class _ActivityControllerState extends State<ActivityController>
                             textColor: Colors.black,
                             // hoverColor: Colors.green,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              side: BorderSide(
-                                color: Colors.green,
-                                width: 2,
-                              )
-                            ),
-                            onPressed: (){
-                              Provider.of<ModuleTraverse>(context, listen: false).navigate();
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(
+                                  color: Colors.green,
+                                  width: 2,
+                                )),
+                            onPressed: () {
+                              Provider.of<ModuleTraverse>(context,
+                                      listen: false)
+                                  .navigate();
                             },
                             child: Text("Start"),
                           ),
@@ -384,40 +426,6 @@ class _ActivityControllerState extends State<ActivityController>
                   ),
                 ),
                 //                )
-              ),
-            ),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.55,left: MediaQuery.of(context).size.height * 0.01,right: MediaQuery.of(context).size.height * 0.01,bottom: MediaQuery.of(context).size.height*0.01),
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                color: Colors.grey[50],
-                // width: MediaQuery.of(context).size.width * 0.5,
-                // height: MediaQuery.of(context).size.height * 0.5,
-                child: GradientCard(
-                  margin: EdgeInsets.all(0),
-                  gradient: LinearGradient(colors: doodle.colors),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(
-                        color: Colors.green,
-                        width: 2,
-                      )),
-                  child: Padding(
-                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04,left: 10,right: 10,bottom: 20),
-                    child: AutoSizeText(
-                      "${doodle.modDec}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      minFontSize: 16,
-                    ),
-                  ),
-                ),
               ),
             ),
           ),

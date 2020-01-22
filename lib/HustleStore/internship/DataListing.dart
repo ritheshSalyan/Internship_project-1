@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
+// import 'package:url_launcher/url_launcher.dart' as l;
+import 'package:url_launcher/url_launcher.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flushbar/flushbar.dart';
@@ -83,54 +85,12 @@ class _ListingDataState extends State<ListingData> {
     UserId = sharedPreferences.getString("UserId");
   }
 
-  _launchURL(String toMailId, String subject, String body, File file,
-      BuildContext context) async {
-    progressDialog = ProgressDialog(context, ProgressDialogType.Normal);
-    progressDialog.setMessage("Please wait");
-    try {
-      progressDialog.show();
-      await db.collection("user").doc(UserId).get().then((document) {
-        resumeDownload = document.data()["resume"];
-        print(resumeDownload);
-      });
-      if (resumeDownload == "") {
-        progressDialog.hide();
-        return Flushbar(
-          isDismissible: true,
-          duration: Duration(seconds: 3),
-          title: "Warning!",
-          message:
-              "Seems like you have not uploaded your Resume`! Please upload your resume to continue.",
-        )..show(context);
-      }
-      String uri = Uri.decodeFull(resumeDownload);
-      final RegExp regex = RegExp('([^?/]*\.(pdf))');
-      fileName = regex.stringMatch(uri);
-//      progressDialog.update(message: "Loading Resume`");
-      // tempDir = Directory.systemTemp;
-      final dir = (await getExternalStorageDirectory()).path;
-      print("File path $dir");
-      file = File('$dir/$fileName');
-      print("hello world ${file.path}");
-      print(UserId);
-      storageReference =
-          FirebaseStorage.instance.ref().child(UserId).child(fileName);
-      progressDialog.update(message: "Preparing Mail Server");
-      final StorageFileDownloadTask downloadTask =
-          storageReference.writeToFile(file);
-      final int byteNumber = (await downloadTask.future).totalByteCount;
-      print(byteNumber);
-      print("done");
-      progressDialog.hide();
-      await platform.invokeMethod("sendEmail", {
-        "toMail": toMailId,
-        "subject": subject,
-        "body": body,
-        "attachment": file.path,
-        "filename": fileName
-      });
-    } on PlatformException catch (e) {
-      print(e);
+  _launchURL(String toMailId) async {
+    var url = 'mailto:$toMailId';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -186,9 +146,8 @@ class _ListingDataState extends State<ListingData> {
                 borderRadius: BorderRadius.circular(20),
               ),
               borderSide: BorderSide(color: Colors.green, width: 1.5),
-              onPressed: () {
-                _launchURL(list[lengthVal].email, "Trial mail", "Trial Mail",
-                    file, context);
+              onPressed: () async{
+               await  _launchURL(list[lengthVal].email);
               },
               child: Text("Apply"),
             ),
