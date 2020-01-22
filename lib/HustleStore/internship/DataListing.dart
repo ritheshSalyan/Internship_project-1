@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
@@ -7,13 +8,13 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:startupreneur/Analytics/Analytics.dart';
 // import 'package:url_launcher/url_launcher.dart' as l;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher_web/url_launcher_web.dart';
 import '../../progress_dialog/progress_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flushbar/flushbar.dart';
 import '../ViewDocs/ViewDocs.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:firebase/firestore.dart' as fs ;
+import 'package:firebase/firestore.dart' as fs;
 
 class Internships {
   String name;
@@ -85,10 +86,11 @@ class _ListingDataState extends State<ListingData> {
     UserId = sharedPreferences.getString("UserId");
   }
 
-  _launchURL(String toMailId) async {
-    var url = 'mailto:$toMailId';
-    if (await canLaunch(url)) {
-      await launch(url);
+  _launchUrl(String toMailId) async {
+    UrlLauncherPlugin urlLauncherPlugin = UrlLauncherPlugin();
+    var url = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&to=$toMailId';
+    if (await urlLauncherPlugin.canLaunch(url)) {
+      await urlLauncherPlugin.launch(url,headers: {},universalLinksOnly: true,useWebView: true,enableDomStorage: true,enableJavaScript: true,useSafariVC: false);
     } else {
       throw 'Could not launch $url';
     }
@@ -146,8 +148,19 @@ class _ListingDataState extends State<ListingData> {
                 borderRadius: BorderRadius.circular(20),
               ),
               borderSide: BorderSide(color: Colors.green, width: 1.5),
-              onPressed: () async{
-               await  _launchURL(list[lengthVal].email);
+              onPressed: () async {
+                _launchUrl(list[lengthVal].email);
+                // final Email email = Email(
+                //   body: 'Email body',
+                //   subject: 'Email subject',
+                //   recipients: [list[lengthVal].email],
+                //   // cc: ['cc@example.com'],
+                //   // bcc: ['bcc@example.com'],
+                //   // attachmentPath: '/path/to/attachment.zip',
+                //   isHTML: false,
+                // );
+
+                // await FlutterEmailSender.send(email);
               },
               child: Text("Apply"),
             ),
@@ -200,40 +213,43 @@ class _ListingDataState extends State<ListingData> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!status) {
-      Flushbar(
-        title: "Note: ",
-        backgroundColor: Colors.green,
-        messageText: Column(
-          children: <Widget>[
-            Text(
-              "More Internships and Projects coming soon! Stay Tuned",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,),
-            ),
-            OutlineButton(
-              color: Colors.black,
-              onPressed: () {
-                setState(() {
-                 status = true; 
-                });
-                Navigator.of(context).pop();
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                "OK",
+        Flushbar(
+          title: "Note: ",
+          backgroundColor: Colors.green,
+          messageText: Column(
+            children: <Widget>[
+              Text(
+                "More Internships and Projects coming soon! Stay Tuned",
                 style: TextStyle(
-                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-          ],
-        ),
-        // duration: Duration(seconds: 5),
-      )..show(context);
-      // setState(() {
-      //   widget.status = false;
-      // });
+              OutlineButton(
+                color: Colors.black,
+                onPressed: () {
+                  setState(() {
+                    status = true;
+                  });
+                  Navigator.of(context).pop();
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // duration: Duration(seconds: 5),
+        )..show(context);
+        // setState(() {
+        //   widget.status = false;
+        // });
       }
     });
     return Scaffold(
@@ -260,8 +276,7 @@ class _ListingDataState extends State<ListingData> {
                   ),
                 ),
                 StreamBuilder<fs.QuerySnapshot>(
-                  stream:
-                     db.collection("Internship").onSnapshot,
+                  stream: db.collection("Internship").onSnapshot,
                   builder: (context, AsyncSnapshot<fs.QuerySnapshot> snapshot) {
                     switch (snapshot.data) {
                       case null:

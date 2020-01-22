@@ -9,6 +9,8 @@ import '../../ModuleOrderController/Types.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 
+import '../../saveProgress.dart';
+
 class ImagePagePage extends StatefulWidget {
   ImagePagePage({
     Key key,
@@ -133,6 +135,8 @@ class _ImagePagePageState extends State<ImagePagePage>
                                                     //     .popUntil(
                                                     //         ModalRoute.withName(
                                                     //             "TimelinePage"));
+                                                     SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                                                      Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => TimelinePage()),

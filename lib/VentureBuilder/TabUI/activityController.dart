@@ -116,7 +116,7 @@ class _ActivityControllerState extends State<ActivityController>
               children: <Widget>[
                 Container(
                   width: size.width * 0.7,
-                  height: size.height,
+                  height: size.height*9,
                   child: Container(
                     height: size.height,
                     child: Column(
@@ -352,7 +352,7 @@ class _ActivityControllerState extends State<ActivityController>
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
             child: Align(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomCenter,
               child: Container(
                 color: Colors.grey[50],
                 // width: MediaQuery.of(context).size.width*0.5,
@@ -454,8 +454,8 @@ void showDialogHolder(BuildContext context) {
         return Center(
           child: Material(
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              height: MediaQuery.of(context).size.height * 0.4,
+              width: MediaQuery.of(context).size.width * 0.5,
+              height: MediaQuery.of(context).size.height * 0.5,
               padding: EdgeInsets.all(20),
               color: Colors.white,
               child: Stack(

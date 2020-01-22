@@ -10,6 +10,7 @@ import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class videoPlayerPage extends StatefulWidget {
   @override
@@ -98,6 +99,8 @@ class _videoPlayerPageState extends State<videoPlayerPage> {
                                     // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                                     // Navigator.of(context).popUntil(
                                     //     ModalRoute.withName("TimelinePage"));
+                                     SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                                      Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => TimelinePage()),

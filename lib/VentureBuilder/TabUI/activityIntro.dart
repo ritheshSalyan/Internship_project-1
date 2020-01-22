@@ -181,7 +181,7 @@ class _ActivityIntroState extends State<ActivityIntro> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Align(
           alignment: Alignment.topCenter,

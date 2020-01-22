@@ -167,6 +167,8 @@ class _VideoPlayState extends State<VideoPlay> {
                             // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                             // Navigator.of(context).pop(
                             // );
+                             SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => TimelinePage()),
