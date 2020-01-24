@@ -171,8 +171,8 @@ class _ActivityPageState extends State<ActivityPage> {
                                 ),
                                 onPressed: () {
                                   // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                  // SaveProgress.preferences(
-                                  //     widget.modNum, widget.index);
+                                  SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                                   // Navigator.of(context).popUntil(
                                   //     ModalRoute.withName("TimelinePage"));
                                    Navigator.of(context).pushReplacement(

@@ -125,6 +125,8 @@ class _DecisionGameState extends State<DecisionGame>
                                     //     widget.modNum, widget.order);
                                     // Navigator.of(context).popUntil(
                                     //     ModalRoute.withName("TimelinePage"));
+                                     SaveProgress.preferences(
+                                      widget.modNum, widget.order);
                                      Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => TimelinePage()),

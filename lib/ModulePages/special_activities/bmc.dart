@@ -89,12 +89,12 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                         child: Text(
                                           "Key Partners",
                                           style: TextStyle(color: Colors.green),
-                                        ),
+                                        ),  
                                       ),
                                       Card(
                                         child: (keyPartners != "")
                                             ? Text("$keyPartners")
-                                            : Text("Who can help you leverage your business? You won’t be performing all key activities yourself, or own or key resources from the start yourself. Who will you need to work with to accomplish these key infrastructural points?",style: TextStyle(color: Colors.grey[50]),),
+                                            : Text("Who can help you leverage your business? You won’t be performing all key activities yourself, or own or key resources from the start yourself. Who will you need to work with to accomplish these key infrastructural points?",style: TextStyle(color: Colors.grey),),
                                       ),
                                     ],
                                   ),
@@ -169,7 +169,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                 child: Card(
                                   child: (keyActivities != "")
                                       ? Text("$keyActivities")
-                                      : Text("What do you need to do to have your business perform well? What are the key activities that drive your business model? ",style: TextStyle(color: Colors.grey[50])),
+                                      : Text("What do you need to do to have your business perform well? What are the key activities that drive your business model? ",style: TextStyle(color: Colors.grey)),
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -237,7 +237,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                 child: Card(
                                   child: (keyResource != "")
                                       ? Text("$keyResource")
-                                      : Text("Which assets are indispensable for your business? ",style: TextStyle(color: Colors.grey[50]),),
+                                      : Text("Which assets are indispensable for your business? ",style: TextStyle(color: Colors.grey),),
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -305,7 +305,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                 child: Card(
                                   child: (costStructure != "")
                                       ? Text("$costStructure")
-                                      : Text("What will the specific cost structure be for your business, how will the revenue and profits be divided and what will these funds be used for. ",style: TextStyle(color: Colors.grey[50],),)
+                                      : Text("What will the specific cost structure be for your business, how will the revenue and profits be divided and what will these funds be used for. ",style: TextStyle(color: Colors.grey,),)
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -373,7 +373,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                 child: Card(
                                   child: (revenueStream != "")
                                       ? Text("$revenueStream")
-                                      : Text("How and through which pricing mechanisms is your business capturing value?",style: TextStyle(color: Colors.grey[50]),),
+                                      : Text("How and through which pricing mechanisms is your business capturing value?",style: TextStyle(color: Colors.grey),),
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -446,7 +446,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                   child: Card(
                                     child: (valueProposition != "")
                                         ? Text("$valueProposition")
-                                        : Text("The products and services that create value for your customers, i.e. the product your business is selling. ",style: TextStyle(color: Colors.grey[50])),
+                                        : Text("The products and services that create value for your customers, i.e. the product your business is selling. ",style: TextStyle(color: Colors.grey)),
                                   ),
                                   onTap: () {
                                     showDialog(
@@ -519,7 +519,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                   child: Card(
                                     child: (customerRelationship != "")
                                         ? Text("$customerRelationship")
-                                        : Text("What kind of relationship are you establishing with your customer? Do you work closely with clients on a long-term basis, or are you looking for short-term transactional relationships",style: TextStyle(color: Colors.grey[50])),
+                                        : Text("What kind of relationship are you establishing with your customer? Do you work closely with clients on a long-term basis, or are you looking for short-term transactional relationships",style: TextStyle(color: Colors.grey)),
                                   ),
                                   onTap: () {
                                     showDialog(
@@ -596,7 +596,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                         : Text(
                                             "All the people or organisations for which you are creating value, including simple users and paying customers.",
                                             style: TextStyle(
-                                                color: Colors.grey[50]),
+                                                color: Colors.grey),
                                           ),
                                   ),
                                   onTap: () {
@@ -670,7 +670,7 @@ class _BusinessModelCanvasState extends State<BusinessModelCanvas> {
                                   child: Card(
                                     child: (channels != "")
                                         ? Text("$channels")
-                                        : Text("How do you interact with customers and deliver your value? Are you an online platform? B2B? B2C? etc. ",style: TextStyle(color: Colors.grey[50]),),
+                                        : Text("How do you interact with customers and deliver your value? Are you an online platform? B2B? B2C? etc. ",style: TextStyle(color: Colors.grey),),
                                   ),
                                   onTap: () {
                                     showDialog(

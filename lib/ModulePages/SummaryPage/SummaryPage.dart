@@ -11,6 +11,8 @@ import '../../ModuleOrderController/Types.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 
+import '../../saveProgress.dart';
+
 class SummaryTheoryPage extends StatefulWidget {
   SummaryTheoryPage(
       {Key key,
@@ -207,6 +209,8 @@ class _SummaryTheoryPageState extends State<SummaryTheoryPage> {
                               style: TextStyle(color: Colors.red),
                             ),
                             onPressed: () {
+                               SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                               // Navigator.of(context).popUntil(
                               //     ModalRoute.withName("TimelinePage"));

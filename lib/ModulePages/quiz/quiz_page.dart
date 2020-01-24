@@ -11,6 +11,7 @@ import 'package:startupreneur/VentureBuilder/TabUI/module_controller.dart';
 import 'package:startupreneur/globalKeys.dart';
 import 'package:startupreneur/timeline/MainRoadmap.dart';
 import '../../ModuleOrderController/Types.dart';
+import '../../saveProgress.dart';
 
 class QuizPage extends StatefulWidget {
   QuizPage({Key key, this.modNum, this.order, this.index}) : super(key: key);
@@ -133,6 +134,8 @@ class _QuizPageState extends State<QuizPage> {
                                 // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
                                 // Navigator.of(context).popUntil(
                                 //     ModalRoute.withName("TimelinePage"));
+                                 SaveProgress.preferences(
+                                      widget.modNum, widget.index);
                                  Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => TimelinePage()),
