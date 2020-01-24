@@ -43,8 +43,8 @@ class _ModuleVocabularyLoading extends State<ModuleVocabularyLoading> {
             return ModuleVocabulary(
               index: widget.index,
               modNum: widget.modNum,
-              word: snapshot.data.data(),
-              meaning: snapshot.data.data(),
+              word:words,// snapshot.data.data(),
+              meaning: meanings,//snapshot.data.data(),
             );
           }
           return Scaffold(

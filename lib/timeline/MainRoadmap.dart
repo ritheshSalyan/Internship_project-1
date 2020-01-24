@@ -1354,18 +1354,18 @@ class _TimelinePageState extends State<TimelinePage> {
                                                   Navigator.of(context)
                                                       .pop(true);
                                                   // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                                  SaveProgress
-                                                          .getEventsFromFirestore(
-                                                              doodle.modNum)
-                                                      .then((_) {
-                                                    List<int> arguments = [
-                                                      doodle.modNum,
-                                                      progressNum
-                                                    ];
-                                                    orderManagement
-                                                        .moveNextIndex(
-                                                            context, arguments);
-                                                  });
+                                                  // SaveProgress
+                                                  //         .getEventsFromFirestore(
+                                                  //             doodle.modNum)
+                                                  //     .then((_) {
+                                                  //   List<int> arguments = [
+                                                  //     doodle.modNum,
+                                                  //     progressNum
+                                                  //   ];
+                                                  //   orderManagement
+                                                  //       .moveNextIndex(
+                                                  //           context, arguments);
+                                                  // });
                                                 },
                                               ),
                                               FlatButton(

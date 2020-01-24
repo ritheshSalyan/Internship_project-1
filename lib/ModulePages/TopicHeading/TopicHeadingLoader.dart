@@ -42,7 +42,7 @@ class _TopicHeadingLoading extends State<TopicHeadingLoading> {
             title: snapshot.data[0],
           );
         } else {
-          Scaffold(
+         return Scaffold(
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

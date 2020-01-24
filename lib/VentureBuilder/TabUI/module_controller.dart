@@ -50,7 +50,12 @@ class ModuleTraverse with ChangeNotifier {
   }
 
   void navigate() {
-    order++;
+    if(order<modOrder.length){
+      order++;
+    }
+    else{
+      order = 0;
+    }
     SaveProgress.preferences(modnum, order);
     print("navigate $order $modnum");
     notifyListeners();

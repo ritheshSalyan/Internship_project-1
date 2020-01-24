@@ -30,42 +30,42 @@ class _DecisionGameLoading extends State<DecisionGameLoading> {
     //     ),
     //   );
     // });
-    return FutureBuilder(
-        future: null,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+    // return FutureBuilder(
+    //     future: null,
+    //     builder: (context, snapshot) {
+          // if (snapshot.hasData) {
             return DecisionGame(
               modNum: widget.modNum,
               order: widget.index,
             );
-          }
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new CircularProgressIndicator(
-                    strokeWidth: 5,
-                    value: null,
-                    valueColor: new AlwaysStoppedAnimation(Colors.green),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      "Loading... Please Wait",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+        //   }
+        //   return Scaffold(
+        //     body: Center(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: <Widget>[
+        //           new CircularProgressIndicator(
+        //             strokeWidth: 5,
+        //             value: null,
+        //             valueColor: new AlwaysStoppedAnimation(Colors.green),
+        //           ),
+        //           SizedBox(
+        //             height: 10,
+        //           ),
+        //           Material(
+        //             color: Colors.transparent,
+        //             child: Text(
+        //               "Loading... Please Wait",
+        //               style: TextStyle(
+        //                 color: Colors.black,
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   );
+        // });
   }
 
   static Future<void> getEventsFromFirestore() async {}

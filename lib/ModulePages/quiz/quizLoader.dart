@@ -37,43 +37,43 @@ class _QuizLoading extends State<QuizLoading> {
     //     ),
     //   );
     // });
-    return FutureBuilder(
-        future: getEventsFromFirestore(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+    // return FutureBuilder(
+    //     future: getEventsFromFirestore(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
             return QuizPage(
               modNum: widget.modNum,
-              order: orderManagement.currentIndex,
+              order: widget.index + 1,
               index: widget.index + 1,
             );
-          }
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new CircularProgressIndicator(
-                    strokeWidth: 5,
-                    value: null,
-                    valueColor: new AlwaysStoppedAnimation(Colors.green),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      "Loading... Please Wait",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+        //   }
+        //   return Scaffold(
+        //     body: Center(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: <Widget>[
+        //           new CircularProgressIndicator(
+        //             strokeWidth: 5,
+        //             value: null,
+        //             valueColor: new AlwaysStoppedAnimation(Colors.green),
+        //           ),
+        //           SizedBox(
+        //             height: 10,
+        //           ),
+        //           Material(
+        //             color: Colors.transparent,
+        //             child: Text(
+        //               "Loading... Please Wait",
+        //               style: TextStyle(
+        //                 color: Colors.black,
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   );
+        // });
   }
 
   static Future<void> getEventsFromFirestore() async {}
