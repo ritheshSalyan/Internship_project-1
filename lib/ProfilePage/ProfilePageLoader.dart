@@ -28,40 +28,50 @@ class _ProfileLoading extends State<ProfileLoading> {
 
   @override
   Widget build(BuildContext context) {
-    getEventsFromFirestore(widget.uid).then((title){
-      print("Title is "+title.points.toString());
-         Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => FriendDetailsPage(friend: title),
-      ),
-    );
+    // ;
+    // .then((title){
+    //   print("Title is "+title.points.toString());
+    //      Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (context) =>,
+    //   ),
+    // );
 
-    });
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new CircularProgressIndicator(
-              strokeWidth: 5,
-              value: null,
-              valueColor: new AlwaysStoppedAnimation(Colors.green),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Material(
-              color: Colors.transparent,
-              child: Text(
-                "Loading... Please Wait",
-                style: TextStyle(
-                 color: Colors.black,
+    // });
+    return FutureBuilder(
+      future: getEventsFromFirestore(widget.uid),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          print("Recieved Profile Data");
+          return  FriendDetailsPage(friend: snapshot.data);
+        }
+        return Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new CircularProgressIndicator(
+                  strokeWidth: 5,
+                  value: null,
+                  valueColor: new AlwaysStoppedAnimation(Colors.green),
                 ),
-              ),
+                SizedBox(
+                  height: 10,
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    "Loading... Please Wait",
+                    style: TextStyle(
+                     color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
   static String avatar;

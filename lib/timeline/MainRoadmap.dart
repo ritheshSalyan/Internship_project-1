@@ -1334,82 +1334,82 @@ class _TimelinePageState extends State<TimelinePage> {
                                       );
                                     }
                                   } else {
-                                    showDialog<bool>(
-                                        context: context,
-                                        builder: (_) {
-                                          return AlertDialog(
-                                            content: Text(
-                                                "Do you want to resume this Module?"),
-                                            title: Text(
-                                              "Continue",
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text(
-                                                  "Yes",
-                                                  style: TextStyle(
-                                                      color: Colors.green),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(true);
-                                                  // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
-                                                  // SaveProgress
-                                                  //         .getEventsFromFirestore(
-                                                  //             doodle.modNum)
-                                                  //     .then((_) {
-                                                  //   List<int> arguments = [
-                                                  //     doodle.modNum,
-                                                  //     progressNum
-                                                  //   ];
-                                                  //   orderManagement
-                                                  //       .moveNextIndex(
-                                                  //           context, arguments);
-                                                  // });
-                                                },
-                                              ),
-                                              FlatButton(
-                                                child: Text(
-                                                  "No",
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(true);
-                                                  if (doodle.modNum == 11 ||
-                                                      doodle.modNum == 14) {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ModuleOverviewLoading(
-                                                                modNum: doodle
-                                                                    .modNum),
-                                                      ),
-                                                    );
-                                                  } else if (doodle.modNum !=
-                                                      12) {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            QuoteLoading(
-                                                                modNum: doodle
-                                                                    .modNum),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            (HustleStoreLoader()),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
+                                    // showDialog<bool>(
+                                    //     context: context,
+                                    //     builder: (_) {
+                                    //       return AlertDialog(
+                                    //         content: Text(
+                                    //             "Do you want to resume this Module?"),
+                                    //         title: Text(
+                                    //           "Continue",
+                                    //         ),
+                                    //         actions: <Widget>[
+                                    //           FlatButton(
+                                    //             child: Text(
+                                    //               "Yes",
+                                    //               style: TextStyle(
+                                    //                   color: Colors.green),
+                                    //             ),
+                                    //             onPressed: () {
+                                    //               Navigator.of(context)
+                                    //                   .pop(true);
+                                    //               // Navigator.of(context).popUntil(ModalRoute.withName("/QuoteLoading"));
+                                    //               // SaveProgress
+                                    //               //         .getEventsFromFirestore(
+                                    //               //             doodle.modNum)
+                                    //               //     .then((_) {
+                                    //               //   List<int> arguments = [
+                                    //               //     doodle.modNum,
+                                    //               //     progressNum
+                                    //               //   ];
+                                    //               //   orderManagement
+                                    //               //       .moveNextIndex(
+                                    //               //           context, arguments);
+                                    //               // });
+                                    //             },
+                                    //           ),
+                                    //           FlatButton(
+                                    //             child: Text(
+                                    //               "No",
+                                    //               style: TextStyle(
+                                    //                   color: Colors.red),
+                                    //             ),
+                                    //             onPressed: () {
+                                    //               Navigator.of(context)
+                                    //                   .pop(true);
+                                    //               if (doodle.modNum == 11 ||
+                                    //                   doodle.modNum == 14) {
+                                    //                 Navigator.of(context).push(
+                                    //                   MaterialPageRoute(
+                                    //                     builder: (context) =>
+                                    //                         ModuleOverviewLoading(
+                                    //                             modNum: doodle
+                                    //                                 .modNum),
+                                    //                   ),
+                                    //                 );
+                                    //               } else if (doodle.modNum !=
+                                    //                   12) {
+                                    //                 Navigator.of(context).push(
+                                    //                   MaterialPageRoute(
+                                    //                     builder: (context) =>
+                                    //                         QuoteLoading(
+                                    //                             modNum: doodle
+                                    //                                 .modNum),
+                                    //                   ),
+                                    //                 );
+                                    //               } else {
+                                    //                 Navigator.of(context).push(
+                                    //                   MaterialPageRoute(
+                                    //                     builder: (context) =>
+                                    //                         (HustleStoreLoader()),
+                                    //                   ),
+                                    //                 );
+                                    //               }
+                                    //             },
+                                    //           ),
+                                    //         ],
+                                    //       );
+                                    //     });
                                   }
                                 } else {
                                   print(" false");

@@ -111,7 +111,6 @@ class ModuleTraverse with ChangeNotifier {
         //   MaterialPageRoute(
         //     builder: (context) =>
         return IdeaActivity(modNum: modnum, index: order);
-        //   ),
         // );
         break;
 

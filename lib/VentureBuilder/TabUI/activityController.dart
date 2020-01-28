@@ -668,6 +668,14 @@ class ActivityChangeNotifier with ChangeNotifier {
     suggestion.clear();
     tableView.clear();
 
+    headings.add("What will you do in this module");
+    intro.add("This is your Activity Screen which will involve you undertaking a series of exciting and practical activities.  You can have a look at the module theory and explanation on the right side of this platform. You will learn in-depth strategies, exciting case studies, tips and tricks about each module as you look through the theory. Go ahead! continue your Startupreneur Journey!");
+  buttons.add("Start");
+textBox.add("");
+suggestion.add("");
+tableView.add("");
+
+
     print("snapshot.docs.length ${snapshot.docs[order].data()}");
     print("Entering Page");
     snapshot.docs[order].data()['Page'].forEach((value) {
@@ -693,6 +701,8 @@ class ActivityChangeNotifier with ChangeNotifier {
     snapshot.docs[order].data()['tableView'].forEach((value) {
       tableView.add(value);
     });
+
+
 
     files = snapshot.docs[order].data()['file'];
     moduleOrderNo = snapshot.docs[order].data()['order'];

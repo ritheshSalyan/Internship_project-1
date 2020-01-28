@@ -301,6 +301,12 @@ class _ActivityIntroState extends State<ActivityIntro> {
                           child: RaisedButton(
                             // alignment: Alignment.center,
                             onPressed: () {
+                              if(widget.index == 0){
+                              widget.index = 1;
+                            setState(() {
+                              
+                            });
+                              }
                               if (widget.index == widget.btnLength - 1) {
                                 print("inside if ");
                                 getFilePath();

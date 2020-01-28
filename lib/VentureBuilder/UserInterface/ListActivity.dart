@@ -163,6 +163,7 @@ class _ListActivitiesState extends State<ListActivities>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 0,
       length: widget.intro.length,
       child: Builder(
         builder: (context) {
@@ -171,7 +172,7 @@ class _ListActivitiesState extends State<ListActivities>
               builder: (context) => Stack(
                 children: [
                   Swiper.children(
-                    control: SwiperControl(color: Colors.white),
+                    control: SwiperControl(color: Colors.white,),
                     children: List<Widget>.generate(
                       widget.intro.length,
                       (int index) {
